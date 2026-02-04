@@ -2,6 +2,9 @@
 import random
 from collections import defaultdict
 
+# 设置固定随机种子以确保结果可重现
+random.seed(42)
+
 def introduce_sequencing_errors(sequence, error_rate=0.01, error_type="sequencing"):
     """
     在序列中引入测序错误，包括替换、插入和删除
