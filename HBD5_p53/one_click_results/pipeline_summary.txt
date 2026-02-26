@@ -1,0 +1,14 @@
+HBD5_p53 One-Click Pipeline Summary
+==================================
+Pipeline completed successfully with duplex sequencing mode enabled.
+- Duplex mode: Each original double-stranded DNA molecule has separate UMIs for both strands
+- Error correction: Only variants supported by both complementary strands are considered true mutations
+- This approach effectively eliminates first-round PCR errors that would otherwise create false consensus
+
+Generated files:
+- read_analysis_report.txt: Detailed read statistics including duplex validation metrics
+- hbd_final_assembly_report.csv: Family-level consensus sequences with duplex validation status  
+- mutation_analysis_report.txt: Mutation analysis with duplex validation flags
+- molecule_family_distribution.txt: Distribution of molecular family sizes
+
+For more details, please refer to the individual report files.

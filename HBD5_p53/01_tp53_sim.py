@@ -56,14 +56,20 @@ def generate_secondary_sample_index():
     """生成8碱基的二级样本index"""
     return ''.join(random.choices(['A', 'T', 'C', 'G'], k=8))
 
-def generate_tp53_data():
+def get_reverse_complement(sequence):
+    """获取序列的反向互补序列"""
+    complement = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
+    return ''.join([complement[base] for base in sequence])[::-1]
+
+def generate_tp53_data_duplex():
     # TP53 某外显子真实序列片段
     tp53_seq = "TGCAGCTGTGGGTTGATTCCACACCCCCGCCCGGCACCCGCGTCCGCGCCATGGCCATCTACAAGCAGTCACAGCACATGACGGAGGTTGTGAGGCGCTGCCCCCACCATGAGCGCTGCTCAGATAGCGATG"
 
-    # 根据HBD文库结构：
+    # 根据HBD文库结构（duplex模式）：
     # 8碱基的一级i5 index (从Read1起始位置提取)
     # 8碱基的二级样本index 
-    # 6碱基的UMI
+    # 6碱基的alpha UMI (正链/Watson链)
+    # 6碱基的beta UMI (负链/Crick链/互补链)
     # GGG锚点
     # 插入序列 (目标序列)
     
@@ -108,7 +114,7 @@ def generate_tp53_data():
     # Track family information for output
     family_info = []
 
-    # 生成每个家族的UMI和序列
+    # 生成每个家族的UMI和序列（duplex模式）
     for fam_idx, fam_size in enumerate(family_sizes):
         # 从预定义的样本index中随机选择一个
         sample_index = random.choice(sample_indexes)
@@ -116,20 +122,24 @@ def generate_tp53_data():
         # 生成8碱基一级i5 index
         primary_index = generate_primary_index()
 
-        # 生成6碱基UMI
-        umi = generate_random_umi(6)
+        # 为双链的两条链分别生成UMI (明确命名为alpha和beta)
+        alpha_umi = generate_random_umi(6)  # 正链UMI (Watson strand)
+        beta_umi = generate_random_umi(6)   # 负链UMI (Crick strand/互补链)
 
         # 为每个家族生成一个独特的原始序列（基于TP53序列的一个片段）
         start_pos = random.randint(0, len(tp53_seq) - 100)
-        original_seq = tp53_seq[start_pos:start_pos + 100]
+        original_seq_watson = tp53_seq[start_pos:start_pos + 100]  # Watson链 (正链)
+        original_seq_crick = get_reverse_complement(original_seq_watson)  # Crick链 (负链/互补链)
 
         # Store family info
         family_data = {
             'family_id': fam_idx,
             'primary_index': primary_index,
             'sample_index': sample_index,
-            'umi': umi,
-            'original_seq': original_seq,
+            'alpha_umi': alpha_umi,  # 明确标识为alpha UMI
+            'beta_umi': beta_umi,    # 明确标识为beta UMI
+            'original_seq_watson': original_seq_watson,
+            'original_seq_crick': original_seq_crick,
             'start_pos': start_pos,
             'family_size': fam_size,
             'members': []
@@ -137,6 +147,18 @@ def generate_tp53_data():
 
         # 对于家族中的每个read，模拟PCR扩增和测序错误
         for read_idx in range(fam_size):
+            # 随机决定这个read来自哪条链（Watson或Crick）
+            is_watson_strand = random.choice([True, False])
+            
+            if is_watson_strand:
+                original_seq = original_seq_watson
+                umi_used = alpha_umi
+                strand_label = "watson"  # 使用更标准的命名
+            else:
+                original_seq = original_seq_crick
+                umi_used = beta_umi
+                strand_label = "crick"   # 使用更标准的命名
+
             # 从原始序列开始，引入第一次PCR扩增错误（早期错误）
             first_pcr_seq, first_pcr_errors = introduce_sequencing_errors(original_seq, error_rate=0.002, error_type="PCR_first")
             
@@ -162,14 +184,17 @@ def generate_tp53_data():
                 'start_pos': start_pos,  # Fixed: add start_pos to read_info
                 'first_pcr_errors': first_pcr_errors,
                 'second_pcr_errors': second_pcr_errors,
-                'seq_errors': seq_errors
+                'seq_errors': seq_errors,
+                'strand': strand_label,
+                'umi_used': umi_used,
+                'umi_type': 'alpha' if strand_label == 'watson' else 'beta'  # 明确标识UMI类型
             }
 
             family_data['members'].append(read_info)
 
             # 构建R1序列 (包含所有文库组件)
             # 文库结构：primary_index(8nt) + sample_index(8nt) + UMI(6nt) + anchor(GGG) + insert
-            r1_seq = f"{primary_index}{sample_index}{umi}GGG{insert}"
+            r1_seq = f"{primary_index}{sample_index}{umi_used}GGG{insert}"
 
             # R2是插入序列的反向互补（代表read2，用于确定随机断裂点）
             complement = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
@@ -187,7 +212,7 @@ def main():
 
     with open("raw_R1.fastq", "w") as f1, open("raw_R2.fastq", "w") as f2:
         read_counter = 0
-        for r1_seq, r2_seq, family_data, read_info in generate_tp53_data():
+        for r1_seq, r2_seq, family_data, read_info in generate_tp53_data_duplex():
             # 保存家族信息
             if family_data['family_id'] >= len(family_info_list):
                 family_info_list.append(family_data)
@@ -196,26 +221,27 @@ def main():
             r1_qual = generate_quality_scores(len(r1_seq))
             r2_qual = generate_quality_scores(len(r2_seq))
 
-            # 写入FASTQ格式
-            f1.write(f"@READ_{read_counter}\n{r1_seq}\n+\n{r1_qual}\n")
-            f2.write(f"@READ_{read_counter}\n{r2_seq}\n+\n{r2_qual}\n")
+            # 写入FASTQ格式 (使用更清晰的命名)
+            f1.write(f"@READ_{read_counter}_{read_info['strand']}_{read_info['umi_type']}_{read_info['umi_used']}\n{r1_seq}\n+\n{r1_qual}\n")
+            f2.write(f"@READ_{read_counter}_{read_info['strand']}_{read_info['umi_type']}_{read_info['umi_used']}\n{r2_seq}\n+\n{r2_qual}\n")
 
             read_counter += 1
 
     # Write family information to a separate file for tracking
     with open("molecular_family_info.txt", "w") as f:
-        f.write("FamilyID\tPrimaryIndex\tSampleIndex\tUMI\tOriginalSeqStartPos\tFamilySize\tRandomFragmentStart\tFirstPCRErrors\tSecondPCRErrors\tSequencingErrors\n")
+        f.write("FamilyID\tPrimaryIndex\tSampleIndex\tAlphaUMI\tBetaUMI\tOriginalSeqStartPos\tFamilySize\tStrand\tUMIType\tUMIUsed\tRandomFragmentStart\tFirstPCRErrors\tSecondPCRErrors\tSequencingErrors\n")
         for family_data in family_info_list:
             for member in family_data['members']:
                 first_pcr_err_str = ";".join([f"{pos}:{orig}->{mut}({err_type})" for pos, orig, mut, err_type in member['first_pcr_errors']])
                 second_pcr_err_str = ";".join([f"{pos}:{orig}->{mut}({err_type})" for pos, orig, mut, err_type in member['second_pcr_errors']])
                 seq_err_str = ";".join([f"{pos}:{orig}->{mut}({err_type})" for pos, orig, mut, err_type in member['seq_errors']])
 
-                f.write(f"{family_data['family_id']}\t{family_data['primary_index']}\t{family_data['sample_index']}\t{family_data['umi']}\t{member['start_pos']}\t{family_data['family_size']}\t{member['random_fragment_start']}\t{first_pcr_err_str}\t{second_pcr_err_str}\t{seq_err_str}\n")
+                f.write(f"{family_data['family_id']}\t{family_data['primary_index']}\t{family_data['sample_index']}\t{family_data['alpha_umi']}\t{family_data['beta_umi']}\t{member['start_pos']}\t{family_data['family_size']}\t{member['strand']}\t{member['umi_type']}\t{member['umi_used']}\t{member['random_fragment_start']}\t{first_pcr_err_str}\t{second_pcr_err_str}\t{seq_err_str}\n")
 
-    print(f"Step 1: TP53 复杂数据模拟完成，共生成 {read_counter} 对 reads。")
+    print(f"Step 1: TP53 duplex模式数据模拟完成，共生成 {read_counter} 对 reads。")
     print("文库结构: primary_index(8nt) + sample_index(8nt) + UMI(6nt) + anchor(GGG) + insert_seq")
-    print("分析流程: 数据拆分 -> 样本拆分 -> UMI家族统计 -> 分子组装")
+    print("Duplex模式: 为原始双链DNA的Watson链(alpha UMI)和Crick链(beta UMI)分别分配独立UMI")
+    print("分析流程: 数据拆分 -> 样本拆分 -> UMI家族统计 -> duplex分子组装")
     print(f"生成了 {len(family_info_list)} 个分子家族的信息文件 molecular_family_info.txt")
 
 if __name__ == "__main__":

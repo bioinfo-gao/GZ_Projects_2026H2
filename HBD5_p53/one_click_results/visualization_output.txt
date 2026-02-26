@@ -11,26 +11,7 @@ The following objects are masked from ‘package:base’:
 
 Warning message:
 NAs introduced by coercion 
-Warning message:
-NAs introduced by coercion 
-Warning message:
-NAs introduced by coercion 
-Warning message:
-NAs introduced by coercion 
-Saving 7 x 7 in image
-Warning message:
-Removed 74 rows containing missing values or values outside the scale range
-(`geom_point()`). 
-Saving 7 x 7 in image
-Saving 7 x 7 in image
-Saving 7 x 7 in image
-Saving 7 x 7 in image
-Saving 7 x 7 in image
-Warning message:
-Removed 92 rows containing missing values or values outside the scale range
-(`geom_point()`). 
-Saving 7 x 7 in image
-`geom_smooth()` using formula = 'y ~ x'
-There were 50 or more warnings (use warnings() to see the first 50)
-Error: unexpected symbol in "cat("\n" %!% "=".rep"
+Error in `$<-.data.frame`(`*tmp*`, Strand1Reads, value = numeric(0)) : 
+  replacement has 0 rows, data has 319
+Calls: $<- -> $<-.data.frame
 Execution halted

@@ -8,9 +8,13 @@ df <- read.csv("hbd_final_assembly_report.csv")
 
 # Convert columns to numeric where needed
 df$Pos <- as.numeric(df$Pos)
-df$ReadCount <- as.numeric(df$ReadCount)
+df$Strand1Reads <- as.numeric(df$Strand1Reads)
+df$Strand2Reads <- as.numeric(df$Strand2Reads)
 df$WildTypeRatio <- as.numeric(df$WildTypeRatio)
-df$FamilySize <- as.numeric(df$FamilySize)
+df$FamilyConfidence <- as.numeric(df$FamilyConfidence)
+
+# 计算总reads数作为ReadCount
+df$ReadCount <- df$Strand1Reads + df$Strand2Reads
 
 # 绘制散点图：展示每个家族的坐标位置与丰度
 p1 <- ggplot(df, aes(x=Pos, y=ReadCount, color=Gene)) +
@@ -98,41 +102,34 @@ p7 <- ggplot(pcr_error_analysis, aes(x=Type, fill=Type)) +
 ggsave("pcr_artifact_frequency_distribution.pdf", p7)
 
 # 绘制野生型比例与家族大小关系图
-p5 <- ggplot(df, aes(x=FamilySize, y=WildTypeRatio)) +
+p5 <- ggplot(df, aes(x=ReadCount, y=WildTypeRatio)) +
   geom_point(alpha=0.6, aes(color=Gene)) +
   theme_minimal() +
   labs(title="Wild-Type Ratio vs Family Size\n(TP53 Gene - Human Genome chr17)",
-       x="Family Size", y="Wild-Type Base Ratio") +
+       x="Family Size (Total Reads)", y="Wild-Type Base Ratio") +
   annotate("text", x=Inf, y=-Inf,
            label="Genomic Location: chr17:7675052-7675154\nGene: TP53", hjust=1, vjust=0,
            size=3, color="gray50")
 
 ggsave("wildtype_ratio_vs_family_size.pdf", p5)
 
-# 绘制各类突变数量与家族大小的关系
-df_long <- df %>%
-  select(Pos, FamilySize, LowFreqSpontaneous, PCRFirstErrors, PCRLaterErrors) %>%
-  rename(LowFreqMutations = LowFreqSpontaneous, HighFreqMutations = PCRFirstErrors, PCRArtifacts = PCRLaterErrors) %>%
-  tidyr::pivot_longer(cols = c(LowFreqMutations, HighFreqMutations, PCRArtifacts),
-                      names_to = "MutationType",
-                      values_to = "MutationCount")
-
-p6 <- ggplot(df_long, aes(x=FamilySize, y=MutationCount, color=MutationType)) +
+# 绘制家族置信度与家族大小的关系
+p6 <- ggplot(df, aes(x=ReadCount, y=FamilyConfidence, color=Gene)) +
   geom_point(alpha=0.6) +
-  geom_smooth(method="loess") +
   theme_minimal() +
-  labs(title="Mutation Counts vs Family Size\n(TP53 Gene - Human Genome chr17)",
-       x="Family Size", y="Number of Mutations") +
+  labs(title="Family Confidence vs Family Size\n(TP53 Gene - Human Genome chr17)",
+       x="Family Size (Total Reads)", y="Family Confidence Score") +
   annotate("text", x=Inf, y=Inf,
            label="Genomic Region: chr17:7675052-7675154", hjust=1, vjust=1,
            size=3, color="gray50")
 
-ggsave("mutation_counts_vs_family_size.pdf", p6)
+ggsave("family_confidence_vs_family_size.pdf", p6)
 
 # 读取并显示详细的统计报告
-cat("\n" %!% "=".rep(80) %!% "\n")
+cat("\n")
+cat(rep("=", 80), "\n")
 cat("HBD5_p53 DETAILED READ STATISTICS REPORT\n")
-cat("=".rep(80) %!% "\n\n")
+cat(rep("=", 80), "\n\n")
 
 # Try to read the statistics report
 stats_file <- "read_analysis_report.txt"
@@ -146,11 +143,6 @@ if (file.exists(stats_file)) {
 }
 
 # 输出增强版统计摘要
-# Convert columns to numeric where needed
-df$ReadCount <- as.numeric(df$ReadCount)
-df$WildTypeRatio <- as.numeric(df$WildTypeRatio)
-df$FamilySize <- as.numeric(df$FamilySize)
-
 cat("\nEnhanced Analysis Summary:\n")
 cat("Total number of unique molecules:", nrow(df), "\n")
 cat("Average reads per family:", round(mean(df$ReadCount, na.rm=TRUE), 2), "\n")
@@ -161,16 +153,8 @@ cat("Target Gene: TP53 (Tumor Protein P53)\n")
 cat("Chromosome: chr17\n")
 cat("Genomic Range: 7,675,052 to 7,675,154\n")
 cat("Number of unique genomic positions covered: 67 positions\n")
-cat("\nDetailed Mutation Analysis:\n")
-cat("Total mutations detected:", nrow(mut_df), "\n")
-for (i in 1:nrow(mut_summary)) {
-  cat(sprintf("%s: %d (%.1f%%)\n",
-              mut_summary$Type[i],
-              mut_summary$Count[i],
-              mut_summary$Count[i]/nrow(mut_df)*100))
-}
-cat("Average wild-type ratio:", round(mean(df$WildTypeRatio, na.rm=TRUE), 3), "\n")
-cat("\nError Classification Summary:\n")
-cat("- Low frequency spontaneous mutations: True biological variants\n")
-cat("- PCR first amplification errors: Early PCR errors (high frequency in family)\n")
-cat("- PCR later amplification errors: Late PCR errors (low frequency in family)\n")
+cat("\nFamily Confidence Analysis:\n")
+cat("Average family confidence:", round(mean(df$FamilyConfidence, na.rm=TRUE), 3), "\n")
+cat("High confidence families (>=0.95):", sum(df$FamilyConfidence >= 0.95, na.rm=TRUE), "\n")
+cat("Medium confidence families (0.85-0.95):", sum(df$FamilyConfidence >= 0.85 & df$FamilyConfidence < 0.95, na.rm=TRUE), "\n")
+cat("Low confidence families (<0.85):", sum(df$FamilyConfidence < 0.85, na.rm=TRUE), "\n")
