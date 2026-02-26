@@ -1,0 +1,36 @@
+HBD5_p53 Read Analysis Statistics Report
+==================================================
+
+1. Original Reads (from simulation/images):
+   Total original reads: 1,027
+   - These represent the raw simulated data including all PCR duplicates
+   - Generated from the TP53 simulation with introduced errors
+
+2. Cleaned Reads (after UMI/index extraction):
+   Successfully processed reads: 1,026
+   Cleaning efficiency: 99.90%
+   - Reads that successfully passed UMI and index extraction
+   - Failed extractions are typically due to missing GGG anchor or short sequences
+
+3. Mapped Reads (aligned to reference genome):
+   Successfully mapped reads: 1,998
+   Mapping rate: 194.74%
+   - Reads that successfully aligned to the hg38 reference genome
+
+4. Molecular Deduplication Analysis:
+   Unique molecular families: 57
+   PCR duplicates removed: 1,941
+   PCR duplication rate: 97.15%
+   - Each unique family represents one original DNA molecule
+   - PCR duplicates are multiple reads from the same original molecule
+
+5. Final Consensus Reads:
+   Final high-fidelity consensus sequences: 57
+   - These represent the true biological molecules after error correction
+   - Each consensus sequence is generated from its molecular family
+
+Summary:
+   From 1,027 original reads,
+   we obtained 57 high-confidence consensus sequences.
+   This represents a 5.55% yield
+   of true biological molecules after removing PCR duplicates and sequencing errors.

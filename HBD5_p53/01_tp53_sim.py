@@ -79,14 +79,31 @@ def generate_tp53_data():
     family_sizes = []
     remaining_reads = total_reads
     for i in range(family_count - 1):
+        if remaining_reads <= 0:
+            break
         # 随机分配read数量给每个家族，遵循长尾分布
         size = max(1, int(random.expovariate(0.5)))  # 指数分布，偏向小家族
         if size > remaining_reads:
             size = remaining_reads
         family_sizes.append(size)
         remaining_reads -= size
-
-    family_sizes.append(remaining_reads)  # 把剩余的reads分配给最后一个家族
+    
+    # 确保至少有一个家族
+    if not family_sizes:
+        family_sizes = [total_reads]
+        remaining_reads = 0
+        
+    if remaining_reads > 0:
+        family_sizes.append(remaining_reads)  # 把剩余的reads分配给最后一个家族
+    elif remaining_reads < 0:
+        # 如果超出，调整最后一个家族的大小
+        family_sizes[-1] += remaining_reads
+    
+    # 确保总和正好是total_reads
+    actual_total = sum(family_sizes)
+    if actual_total != total_reads:
+        # 调整最后一个家族
+        family_sizes[-1] += (total_reads - actual_total)
 
     # Track family information for output
     family_info = []
