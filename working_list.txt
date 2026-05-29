@@ -1,0 +1,91 @@
+===============================================================================================================================================================================
+Weekly Work Report
+Period: May 15, 2026 – May 21, 2026
+Prepared by: Gao Zhen
+Total Hours: 14 Hours
+
+1. Raw Data Management (2 Hours)
+Downloaded raw sequencing data from Novogene.
+Synchronized and uploaded files to cloud storage via Dropbox.
+Monitored network performance and verified data integrity for both download and upload processes.
+
+2. RNA-seq Custom Group Integration (2.5 Hours)
+Adjusted Differential Expression (DE) thresholds: Down-regulated (0.67) and Up-regulated (1.5).
+Refined table definitions to standardize "A-vs-B" comparison directions (Control vs. Treatment).
+Filtered low-quality DE genes with insufficient read counts to minimize data noise.
+Generated DE gene reports for new comparison groups using updated analytical methodologies.
+
+3. DNA Degradation Analysis & Validation (5.5 Hours)
+Fragmentation Analysis: Confirmed severe degradation via fastp, identifying ultra-short 58–60 bp inserts and >97% merge rates.
+Genomic Validation: Identified high GC bias (60–65%) and 98% sequence uniqueness, confirming biological origin rather than technical primer artifacts.
+Structural Audit: Manually verified genomic-to-adapter transitions to map fragmentation patterns.
+Strategic Outcome: Provided scientific justification to pivot the project strategy, preventing further resource waste on compromised data.
+
+4. Technical Consultation & Reporting for internal team and customs (2.5 Hours)
+Drafted the corrected rationale for DE significance for team and clients.
+Authored a professional DNA Degradation Analysis Report detailing the debugging process and root-cause findings.
+Briefed the team on insert size research strategies, GC content bias, and sequence complexity validation.
+
+5. System Monitoring & Maintenance (1.5 Hours)
+Monitored memory usage and storage capacity for upcoming hardware upgrades.
+Evaluated disk write speeds and overall system stability.
+Verified automatic start-up protocols for essential analysis software.
+
+Total Hours Worked: 14 Hours
+Date of Submission: May 21, 2026
+
+===============================================================================================================================================================================================
+Weekly Work Report
+Period: May 22, 2026 – May 28, 2026
+Prepared by: Gao Zhen
+Total Hours: 23 Hours
+
+1. Research about how to intergrtate the experienced staff's procedures to agent (5 Hours)
+Providede the detailed procedures for the new staffs to use agent with aims:
+1.1 avoid the data loss or damage to system
+1.2 assure the data integrity
+1.3 fully usage of the expriences of senior staff in the beginging and reduce the dependency of the senior staffs later
+
+2. remote system manegement (1 Hour)
+
+3. local system mangement, hardware installation, and driver update (16 Hours)
+3.1 Totally reorganized the physical systems
+3.1 Installed the SSD drive
+3.2 updated some hardware drivers
+
+4. Technical Consultation & Reporting for internal team and customs (1 Hours)
+Briefed the team on on hardware, agents, and manegement.
+
+Total Hours Worked: 23 Hours
+Date of Submission: May 28, 2026
+===============================================================================================================================================================================================
+Weekly Work Report
+Period: May 22, 2026 – May 28, 2026
+Prepared by: Gao Zhen
+Total Hours: 23 Hours
+
+1. Agent Integration & SOP Standardization for new staff (5 Hours)
+Research and development on integrating expert Standard Operating Procedures (SOPs) into AI agents.
+1.1 Disaster Prevention: Developed detailed protocols to mitigate data loss and system-level damage for new staff when using the agent.
+1.2 Data Integrity: Established verification steps to ensure data integrity within agent workflows.
+1.3 Knowledge Transfer: Codified senior staff expertise into the agent usage to accelerate new staff onboarding and reduce long-term dependency on senior resources.
+
+2. Remote System Management (1 Hour)
+Performed routine maintenance and configuration via SSH.
+
+3. Infrastructure Stabilization & Hardware Management (16 Hours)
+3.1 Physical Infrastructure Reorganization: Conducted a comprehensive audit and reorganization of server hardware components to enhance system stability and airflow.
+3.2 Firmware Restoration: Successfully performed low-level firmware restoration.
+3.3 Storage Expansion: Integrated an 8-TB SSD subsystem and stabilized external HDD array for high-capacity data processing.
+3.4 Memory Optimization: Conducted high-load memory training and diagnostic testing to ensure 128GB RAM stability in a Quad-Channel configuration.
+
+4. Technical Consultation & Internal Briefing (1 Hour)
+Briefed the internal team on the latest hardware infrastructure status.
+Provided technical guidance on system management strategies.
+
+Total Hours Worked: 23 Hours
+Date of Submission: May 28, 2026
+
+===============================================================================================================================================================================================
+
+scRNA 3 hours already done
