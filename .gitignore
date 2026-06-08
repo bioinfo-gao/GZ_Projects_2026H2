@@ -1,0 +1,171 @@
+# ==========================================
+# 1. 优先排除所有内容 (全局兜底)
+# ==========================================
+# 如果项目非常大，通常建议只追踪代码。以下是具体的排除规则：
+
+# ==========================================
+# 2. Nextflow & nf-core 运行过程文件 (核心排除)
+# ==========================================
+.nextflow/
+.nextflow.log*
+work/
+bin/
+*/work/*
+*-nf-*
+
+# ==========================================
+# 3. 测序原始数据与大型中间结果 (重点排除)
+# ==========================================
+# --- 原始数据 ---
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+*.fast5
+*.pod5
+*_1.fq.gz
+*_2.fq.gz
+
+# --- 对比与索引文件 (BAM/SAM/CRAM/BAI/Index) ---
+*.bam
+*.bai
+*.sam
+*.cram
+*.crai
+*.bw
+*.bigWig
+*.bt2
+*.fai
+*.tbi
+*.index*
+
+# --- nf-core/rnaseq & 组装特定输出 ---
+*.transcripts.gtf
+*.gtf
+*.gff*
+*.bed
+*.coverage.gtf
+*.merged.gtf
+*.bam.flagstat
+*.bam.idxstats
+*.bam.stats
+salmon_quant/
+star_salmon/
+stringtie/
+samtools_stats/
+multiqc_data/
+
+# ==========================================
+# 4. 项目特定的输出目录 (按你提供的路径)
+# ==========================================
+2026_Item6_UIC_02122603/output_nf_fast/
+*/Final_Filtered_Results/
+*/output_results/
+*/output/
+*/conda_envs/
+conda_envs/
+.conda/
+venv/
+
+# QC folders (root and nested)
+QC/
+*/QC/
+
+# gene and genome folders (root and nested)
+Genes/
+*/Genes/
+
+# data directory (added to fix sparse-checkout issue)
+local_data/
+local/
+# data/ # 这个非常重要，用来同步的 <<==============
+
+# ==========================================
+# 4. IDE and Editor Settings (Local Only)
+# ==========================================
+.vscode/
+
+# ==========================================
+# 5. 临时文件、日志与备份
+# ==========================================
+*.log
+*.err
+*.tmp
+tmp/
+temp/
+local_tmp/
+rubbish/
+junk/
+bak/
+bac/
+# BACKUP/  # 这个非常重要，是用来同步的 <<==============
+# Backup/  # 这个非常重要，是用来同步的 <<==============
+# backup/  # 这个非常重要，是用来同步的 <<==============
+# BACK/    # 这个非常重要，是用来同步的 <<==============
+# Back/    # 这个非常重要，是用来同步的 <<==============
+# back/    # 这个非常重要，是用来同步的 <<==============
+local_bak/
+local_backup/
+local_bac/
+download/
+downloads/
+__pycache__/
+.ipynb_checkpoints/
+.snakemake/
+*/QC/
+
+# ==========================================
+# 6. 压缩包与二进制大文件
+# ==========================================
+*.zip
+*.tar.gz
+*.7z
+*.rar
+*.iso
+*.h5
+*.h5ad
+*.h5seurat
+*x86_64.sh
+
+# ==========================================
+# 7. 操作系统与编辑器文件
+# ==========================================
+.DS_Store
+Thumbs.db
+.RData
+.Rhistory
+.Rproj.user/
+.vscode/
+
+# ==========================================
+# 8. 数据库文件和大型数据, 地理文件， license 文件
+# ==========================================
+*bad*
+*.pdb
+*.db
+*.sql
+*.sqlite
+*.pkl
+*.cif
+*LICENSE*
+*license*
+*.geojson
+
+# ==========================================
+# 9. js and css
+# ==========================================
+*.js
+*.css
+
+# ==========================================
+# 8. 个人设置垃圾位置
+# ==========================================
+*bad*
+.copy*
+
+# 9. 特例白名单 (明确需要 Git 追踪的小型文件)
+# ==========================================
+# 使用 ! 符号确保这些目录及其内容不被上述规则过滤
+!2026_Item6_UIC_02122603/results/
+!2026_Item6_UIC_02122603/scripts/
+!2026_Item6_UIC_02122603/config/data/

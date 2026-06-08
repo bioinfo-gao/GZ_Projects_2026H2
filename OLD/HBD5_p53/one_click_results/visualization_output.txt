@@ -1,0 +1,17 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Warning message:
+NAs introduced by coercion 
+Error in `$<-.data.frame`(`*tmp*`, Strand1Reads, value = numeric(0)) : 
+  replacement has 0 rows, data has 319
+Calls: $<- -> $<-.data.frame
+Execution halted
