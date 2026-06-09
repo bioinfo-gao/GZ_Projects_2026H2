@@ -4,7 +4,6 @@ tmux new -s download_opossum
 # 2. 激活你的常规生信环境，以调用相应的索引工具
 mamba activate regular_bioinfo
 
-
 # 3. 安装 ncbi-datasets-cli 工具 (如果之前没有安装过)
 mamba install -c conda-forge -c bioconda ncbi-datasets-cli -y
 
@@ -14,7 +13,6 @@ cd /Work_bio/references/Didelphis_virginiana/mDidVir1/ncbi_refseq
 
 # 4. 下载最新 Didelphis virginiana 基因组 + 注释（GTF）
 datasets download genome taxon 9265 --include genome,gtf,protein,seq-report --filename didelphis_virginiana_genome.zip
-
 
 # 5. 解压并重命名文件，对齐人类目录中的命名规范
 unzip didelphis_virginiana_genome.zip -d didelphis_virginiana
@@ -64,31 +62,24 @@ cd didelphis_virginiana/ncbi_dataset/data
 # # 查看 GCF_027887165.1 的元数据
 # grep "GCF_027887165.1" assembly_data_report.jsonl | jq '.assembly_stats'
 
-
+# 6.cp and keep the same directory structure as Home genome directory
 cd /Work_bio/references/Didelphis_virginiana/mDidVir1/ncbi_refseq/didelphis_virginiana/data
 
-# 1. 选取最完整的版本 (GCF_027887165.1) 并提取关键文件
+# 6.1. 选取最完整的版本 (GCF_027887165.1) 并提取关键文件
 # 注意：NCBI 下载的文件通常在子目录下
 cp GCF_027887165.1/*.fna ../../mDidVir1.genome.fa
 cp GCF_027887165.1/*.gtf ../../mDidVir1.annotation.gff
 
-
-# 3. 创建索引目录 (保持结构一致)
-mkdir -p star_index
-
-
-# 6. 生成 Samtools 的 faidx 索引 (对应你人类目录里的 .fai 文件)
+# 7. 生成 Samtools 的 faidx 索引 (对应你人类目录里的 .fai 文件)
 samtools faidx mDidVir1.genome.fa
 
-
-# 7. 生成 bwa-mem2 索引 (对应你人类目录里的 .bwt.2bit.64 等文件)
+# 8. 生成 bwa-mem2 索引 (对应你人类目录里的 .bwt.2bit.64 等文件)
 # 注意：该步骤极其消耗内存，请确保服务器处于空闲状态
 bwa-mem2 index mDidVir1.genome.fa
 
-# 8. 为下一步的单细胞/转录组比对创建 star_index 空目录
+# 9. 为下一步的单细胞/转录组比对创建 star_index 空目录
 mkdir star_index
-
-# (可选) 9. 如果你要接着直接构建 STAR 索引，请根据你的测序读长(如 --sjdbOverhang 149)执行以下命令
+# 如果你要接着直接构建 STAR 索引，请根据你的测序读长(如 --sjdbOverhang 149)执行以下命令
 STAR --runThreadN 16 \
      --runMode genomeGenerate \
      --genomeDir ./star_index \
