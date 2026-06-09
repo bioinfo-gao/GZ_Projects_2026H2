@@ -16,14 +16,25 @@ cd /Work_bio/references/Didelphis_virginiana/mDidVir1/ncbi_refseq
 datasets download genome taxon 9265 --include genome,gtf,protein,seq-report --filename didelphis_virginiana_genome.zip
 
 # 5. 解压并重命名文件，对齐人类目录中的命名规范
-gunzip GCF_011100635.1_mDidVir1.pri_genomic.fna.gz
-gunzip GCF_011100635.1_mDidVir1.pri_genomic.gtf.gz
+unzip didelphis_virginiana_genome.zip -d didelphis_virginiana
 
-mv GCF_011100635.1_mDidVir1.pri_genomic.fna mDidVir1.genome.fa
-mv GCF_011100635.1_mDidVir1.pri_genomic.gtf mDidVir1.annotation.gtf
+# 进入目录查看
+cd didelphis_virginiana/ncbi_dataset/data
+
+# 推荐重命名（方便后续使用）
+ls -1   # 查看 assembly 名称
+# 假设 assembly 是 GCF_XXXXXX.X ，执行以下命令：
+mv GCF_*/ GCF_latest/
+
+# 常用文件路径示例：
+# 基因组：   GCF_latest/GCF_*.fna.gz
+# 注释文件： GCF_latest/genomic.gtf.gz
+
 
 # 6. 生成 Samtools 的 faidx 索引 (对应你人类目录里的 .fai 文件)
 samtools faidx mDidVir1.genome.fa
+
+
 
 # 7. 生成 bwa-mem2 索引 (对应你人类目录里的 .bwt.2bit.64 等文件)
 # 注意：该步骤极其消耗内存，请确保服务器处于空闲状态
