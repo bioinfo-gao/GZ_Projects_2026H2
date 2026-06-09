@@ -67,7 +67,7 @@ cd didelphis_virginiana/ncbi_dataset/data
 
 cd /Work_bio/references/Didelphis_virginiana/mDidVir1/ncbi_refseq/didelphis_virginiana/data
 
-# 1. 选取最完整的版本 (GCF_016433145.1027887165.1) 并提取关键文件
+# 1. 选取最完整的版本 (GCF_027887165.1) 并提取关键文件
 # 注意：NCBI 下载的文件通常在子目录下
 cp GCF_027887165.1/*.fna ../../mDidVir1.genome.fa
 cp GCF_027887165.1/*.gtf ../../mDidVir1.annotation.gff
