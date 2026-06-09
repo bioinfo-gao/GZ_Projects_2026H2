@@ -74,7 +74,7 @@ cp GCF_027887165.1/*.gtf ../../mDidVir1.annotation.gff
 samtools faidx mDidVir1.genome.fa
 
 # 8. 生成 bwa-mem2 索引 (对应你人类目录里的 .bwt.2bit.64 等文件)
-# 注意：该步骤极其消耗内存，请确保服务器处于空闲状态 <<<========== 30 min , used 67G memory !
+# 注意：该步骤极其消耗内存，请确保服务器处于空闲状态 <<<========== 1h30 min , used 67G memory !
 bwa-mem2 index mDidVir1.genome.fa
 
 # 9. 为下一步的单细胞/转录组比对创建 star_index 空目录
