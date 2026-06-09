@@ -4,13 +4,19 @@ tmux new -s download_opossum
 # 2. 激活你的常规生信环境，以调用相应的索引工具
 mamba activate regular_bioinfo
 
+
+# 3. 安装 ncbi-datasets-cli 工具 (如果之前没有安装过)
+mamba install -c conda-forge -c bioconda ncbi-datasets-cli -y
+
 # 3. 创建北美负鼠的标准参考目录并进入
 mkdir -p /Work_bio/references/Didelphis_virginiana/mDidVir1/ncbi_refseq
 cd /Work_bio/references/Didelphis_virginiana/mDidVir1/ncbi_refseq
 
-# 4. 从 NCBI RefSeq 下载最新的 mDidVir1 参考基因组与注释文件
-wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/011/100/635/GCF_011100635.1_mDidVir1.pri/GCF_011100635.1_mDidVir1.pri_genomic.fna.gz
-wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/011/100/635/GCF_011100635.1_mDidVir1.pri/GCF_011100635.1_mDidVir1.pri_genomic.gtf.gz
+
+# 5. 自动检索并下载北美负鼠（Didelphis virginiana）的基因组及相关注释文件
+datasets download genome taxon "Didelphis virginiana" \
+    --include gff3,rna,cds,protein,genome,seq-report \
+    --filename D_virginiana_genome.zip
 
 # 5. 解压并重命名文件，对齐人类目录中的命名规范
 gunzip GCF_011100635.1_mDidVir1.pri_genomic.fna.gz
