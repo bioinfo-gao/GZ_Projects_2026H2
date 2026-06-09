@@ -77,6 +77,24 @@ samtools faidx mDidVir1.genome.fa
 # 注意：该步骤极其消耗内存，请确保服务器处于空闲状态 <<<========== 1h30 min , used 67G memory !
 bwa-mem2 index mDidVir1.genome.fa
 
+bwa-mem2 index mDidVir1.genome.fa
+Looking to launch executable "/Work_bio/gao/configs/.conda/envs/regular_bioinfo/bin/bwa-mem2.avx2", simd = .avx2
+Launching executable "/Work_bio/gao/configs/.conda/envs/regular_bioinfo/bin/bwa-mem2.avx2"
+[bwa_index] Pack FASTA... 16.07 sec
+* Entering FMI_search
+init ticks = 229341528960
+ref seq len = 7172333146
+binary seq ticks = 151621243260                                                                                                                                           build suffix-array ticks = 9253966856130
+ref_seq_len = 7172333146
+count = 0, 2222417160, 3586166573, 4949915986, 7172333146
+BWT[4597844237] = 4
+CP_SHIFT = 6, CP_MASK = 63
+sizeof CP_OCC = 64
+pos: 896541644, ref_seq_len__: 896541643
+max_occ_ind = 112067705
+build fm-index ticks = 1447204028640
+Total time taken: 3726.3268
+
 # 9. 为下一步的单细胞/转录组比对创建 star_index 空目录
 mkdir star_index
 # 如果你要接着直接构建 STAR 索引，请根据你的测序读长(如 --sjdbOverhang 149)执行以下命令 
