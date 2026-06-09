@@ -79,10 +79,12 @@ bwa-mem2 index mDidVir1.genome.fa
 
 # 9. 为下一步的单细胞/转录组比对创建 star_index 空目录
 mkdir star_index
-# 如果你要接着直接构建 STAR 索引，请根据你的测序读长(如 --sjdbOverhang 149)执行以下命令
+# 如果你要接着直接构建 STAR 索引，请根据你的测序读长(如 --sjdbOverhang 149)执行以下命令 
 STAR --runThreadN 16 \
      --runMode genomeGenerate \
      --genomeDir ./star_index \
      --genomeFastaFiles mDidVir1.genome.fa \
      --sjdbGTFfile mDidVir1.annotation.gtf \
      --sjdbOverhang 149
+     
+# 注意：这个参数在 STAR 构建索引时的定义是：读长减去 1 (Read Length - 1)
