@@ -12,11 +12,8 @@ mamba install -c conda-forge -c bioconda ncbi-datasets-cli -y
 mkdir -p /Work_bio/references/Didelphis_virginiana/mDidVir1/ncbi_refseq
 cd /Work_bio/references/Didelphis_virginiana/mDidVir1/ncbi_refseq
 
-
-# 5. 自动检索并下载北美负鼠（Didelphis virginiana）的基因组及相关注释文件
-datasets download genome taxon "Didelphis virginiana" \
-    --include gff3,rna,cds,protein,genome,seq-report \
-    --filename D_virginiana_genome.zip
+# 4. 下载最新 Didelphis virginiana 基因组 + 注释（GTF）
+datasets download genome taxon 9265 --include genome,gtf,protein,seq-report --filename didelphis_virginiana_genome.zip
 
 # 5. 解压并重命名文件，对齐人类目录中的命名规范
 gunzip GCF_011100635.1_mDidVir1.pri_genomic.fna.gz
