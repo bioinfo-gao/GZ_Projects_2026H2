@@ -11,6 +11,9 @@ mamba install -c conda-forge -c bioconda ncbi-datasets-cli -y
 mkdir -p /Work_bio/references/Didelphis_virginiana/mDidVir1/ncbi_refseq
 cd /Work_bio/references/Didelphis_virginiana/mDidVir1/ncbi_refseq
 
+
+# 注意下载的是灰色短尾负鼠 (Monodelphis domestica) ，
+# GCF_027887165.1 是灰色短尾负鼠 (Monodelphis domestica) 的基因组，而不是北美负鼠 (Didelphis virginiana)
 # 4. 下载最新 Didelphis virginiana 基因组 + 注释（GTF）
 datasets download genome taxon 9265 --include genome,gtf,protein,seq-report --filename didelphis_virginiana_genome.zip
 
@@ -95,9 +98,36 @@ max_occ_ind = 112067705
 build fm-index ticks = 1447204028640
 Total time taken: 3726.3268
 
+# 故 /Work_bio/references/Didelphis_virginiana/mDidVir1/ncbi_refseq/ 被move 到 /Work_bio/references/Monodelphis_domestica/MonDom5/  
+
 # 9. 为下一步的单细胞/转录组比对创建 star_index 空目录
 mkdir star_index
 # 如果你要接着直接构建 STAR 索引，请根据你的测序读长(如 --sjdbOverhang 149)执行以下命令 
+
+# # 1. 转换为标准 GTF
+# gffread mDidVir1.annotation.gff -T -o mDidVir1.annotation.gtf
+
+# # -w-dup: 忽略重复的转录本 ID
+# # --E: 对格式不规范的异常行进行丢弃/容错，不直接中断
+# gffread mDidVir1.annotation.gff -T -w-dup --E -o mDidVir1.annotation.gtf
+
+# 方案二：使用 agat 工具箱进行标准清洗（最推荐、最稳妥） <<=====================
+# 如果 gffread 加上参数后依然报错，说明该 GFF 文件中存在结构性冲突。在处理 NCBI 复杂的 GFF3 时，生信界现在更推崇使用 AGAT (Another GFF Analysis Toolkit)，它能完美修复各种不规范的 GFF 记录并转换为标准的 GTF。
+
+# Bash
+# # 1. 安装 AGAT (如果环境中没有的话)
+mamba install -c bioconda agat -y 
+
+# 2. 使用 AGAT 的专用脚本进行转换（它会自动识别并修复没有有效 ID 的行）
+agat_convert_sp_gff2gtf.pl --gff mDidVir1.annotation.gff -o mDidVir1.annotation.gtf
+
+
+tmux a 
+
+cd /Work_bio/references/Monodelphis_domestica/MonDom5/ncbi_refseq/
+ll -h
+mamba activate regular_bioinfo
+# 2. 这时就可以完美运行标准的 STAR 命令了（注意：后缀改成了 .gtf）
 STAR --runThreadN 16 \
      --runMode genomeGenerate \
      --genomeDir ./star_index \
@@ -105,4 +135,7 @@ STAR --runThreadN 16 \
      --sjdbGTFfile mDidVir1.annotation.gtf \
      --sjdbOverhang 149
 
+
 # 注意：这个参数在 STAR 构建索引时的定义是：读长减去 1 (Read Length - 1)
+
+
