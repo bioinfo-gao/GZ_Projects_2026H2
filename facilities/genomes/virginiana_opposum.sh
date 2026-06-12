@@ -116,7 +116,7 @@ grep -c ">" dv-2k.fasta
 vim run_fixed_star.sh
 
 # STAR --runThreadN 16 \
-#      --runMode genomeGenerate \
+#      --runMode genomeGenerate \ # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  准备索引做基因组
 #      --genomeDir ./star_index \
 #      --genomeFastaFiles dv-2k.fasta \
 #      --limitGenomeGenerateRAM 120000000000 \
@@ -127,7 +127,11 @@ vim run_fixed_star.sh
 # --genomeChrBinNbits 11: 这是解决 50 万条序列报错的最核心参数。
 # --limitGenomeGenerateRAM 120000000000: 限制内存使用在 120GB。如果你的服务器只有 32GB 内存，请改成 30000000000。
 
-bash run_fixed_star.sh
+# 世界也只是用了30几个G 的内存，所以这个索引文件也只占用30G
+# Tasks: 873 total,   2 running, 871 sleeping,   0 stopped,   0 zombie
+# %Cpu(s):  2.0 us,  0.7 sy,  0.0 ni, 97.2 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+# MiB Mem : 128731.2 total,  53756.0 free,  34203.8 used,  40771.4 buff/cache
+
 
 # 4. 关于后续比对（Mapping）的警告
 # 由于这个索引是针对 50 万个碎片建立的，你后续在使用 STAR 进行比对时，也需要消耗比平常更多的内存。
