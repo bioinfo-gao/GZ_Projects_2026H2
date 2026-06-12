@@ -46,3 +46,6 @@ STAR --runMode genomeGenerate --genomeDir ./star_index --genomeFastaFiles genome
 # STAR	star_index/ 目录	            RNA-Seq 剪接比对、表达定量
 
 # 如果你刚才是在重构 .git 环境，记得确保这三种索引文件放在 .gitignore 的排除列表里（或者像我们之前确认的那样，只追踪代码，不要把这些巨大的二进制索引文件传到 GitHub 上）。你的本地服务器硬盘空间很大，这三种索引建议常驻存放在 /Work_bio/references/ 下对应的物种文件夹中，通过绝对路径调用，这样就不会乱了。
+
+# 4
+hisat2 索引 also useful 

@@ -26,8 +26,10 @@ TARGET_FA="/Work_bio/references/Didelphis_virginiana/mDidVir1/DNA_Zoo/dv-2k.fast
 
 liftoff -g $REF_GTF -o Didelphis_v.liftoff.gtf -u unmapped.txt -p 16 -sc 0.85 $TARGET_FA $REF_FA
 
+tmux attach -t sftp_work
+
 # 启动命令：
-sudo nohup bash stage1_prep.sh > stage1.log 2>&1 &
+bash stage1_prep.sh
 
 # 第二阶段：批量比对脚本（适配嵌套目录）
 # 预计耗时：10 - 12 小时

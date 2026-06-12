@@ -131,12 +131,35 @@ Date of Submission: Jun 4, 2026
 ===============================================================================================================================================================================================
 ===============================================================================================================================================================================================
 Weekly Work Report
-Period: May 22, 2026 – May 28, 2026
+Period: Jun 4, 2026 – Jun 11, 2026
 Prepared by: Gao Zhen
 Total Hours: 23 Hours
 
+1. RNA-seq Data reanalysisi & anwer systemic questions (4.5 Hours)
+Totally re-anlysis based on custom's requirements and results delivery.
+Answer mulitple questions about RNA-seq data strategies, design and analysis.
+
+2. Projects communiation, technical Consultation & Internal Briefing (2.5 Hours)
+Discussed with the internal team and outside customs for timely communication and technical guidance.
+Discuss the project priority , status and plan.
+Provided the data for sFTP download and upload.
+
+3.single cell RNA-seq pipleline development (9 Hours)
+The Current mainstream scRNA-seq protocols, analysis strtegy, and envrionments.  
+The nextflow scRNA-seq pipeline: Standard input and outside, the options in different steps.
+Researcg the module developped by Henan Li.
+
+4. System Mangement and data reorganization(1.5 Hours)
+Move all genome data to the new SSD for further frequent acess.
+Delete some outdated data and set working project repository to the new SSD for better performance.
+
+5. Didelphis_virginiana RNAseq 
+The newest Didelphis_virginiana and Monodelphis_domestica genome download and 4 types index by star, hiast,  
+
+
+
 Total Hours Worked: 23 Hours
-Date of Submission: May 28, 2026
+Date of Submission: Jun 11, 2026
 
 ===============================================================================================================================================================================================
 ===============================================================================================================================================================================================
