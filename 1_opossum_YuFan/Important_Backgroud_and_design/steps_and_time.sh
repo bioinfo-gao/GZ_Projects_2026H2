@@ -6,6 +6,10 @@
 mamba install -c bioconda hisat2 -y
 mamba install -c bioconda liftoff -y
 
+which hisat2-build
+which liftoff
+which samtools
+
 vim stage1_prep.sh
 
 # 在 Vim 中输入：
