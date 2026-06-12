@@ -135,28 +135,28 @@ Period: Jun 4, 2026 – Jun 11, 2026
 Prepared by: Gao Zhen
 Total Hours: 24 Hours
 
-1. RNA-seq Data reanalysisi & anwer systemic questions (4.5 Hours)
-Totally re-anlysis based on custom's requirements and results delivery.
-Answer mulitple questions about RNA-seq data strategies, design and analysis.
+1. RNA-seq Data Reanalysis & Answering Systemic Questions (4.5 Hours)
+Totally re-analyzed based on customer's refined requirements.
+Answered multiple questions about RNA-seq data strategies, design, and analysis.
 
-2. Projects communiation, technical Consultation & Internal Briefing (2.5 Hours)
-Discussed with the internal team and outside customs for timely communication and technical guidance.
-Discuss the module finished, project priority , status and plan.
-Provided the data for sFTP download and upload.
+2. Project Communication, data delivery & Internal Briefing (2.5 Hours)
+Discussed with the internal team and outside customers for technical issues.
+Discussed the module finished, project priority, status, and plan.
+Provided the data for SFTP download and activated sFTP 
 
-3.single cell RNA-seq pipleline development (8 Hours)
-The Current mainstream scRNA-seq protocols, analysis strtegy, and envrionments.  
-The nextflow scRNA-seq pipeline: Standard input and outside, the options in different steps.
-Researcg the module developped by Henan Li.
+3. Single-Cell RNA-seq Pipeline Development (8 Hours)
+Reviewed current mainstream scRNA-seq protocols, analysis strategy, and environments.
+Developed the Nextflow scRNA-seq pipeline: standard input and output, options in different steps.
+Researched the module developed by Henan Li.
 
-4. System Mangement and data reorganization(1.5 Hours)
-Move all genome data to the new SSD for further frequent acess.
-Delete some outdated data and set working project repository to the new SSD for better performance.
+4. System Management and Data Reorganization (1.5 Hours)
+Moved all genome data to the new SSD for more frequent access.
+Deleted outdated data and set working project repository to the new SSD for better performance.
 
-5. Didelphis_virginiana RNAseq (7.5h)
-The newest Didelphis_virginiana and Monodelphis_domestica genome download and 4 types index by star, hiast,  
-The annotation of Didelphis_virginiana genome by the closed species with clear genome annotation Monodelphis_domesti
-
+5. Didelphis virginiana RNA-seq (7.5 Hours)
+System review and design the research strategies for the genome without annotation.
+Downloaded the newest Didelphis virginiana and Monodelphis domestica genomes and built 4 types of indexes by STAR, HISAT2.
+Annotated the Didelphis virginiana genome using the closely related species with clear genome annotation, Monodelphis domestica.
 
 Total Hours Worked: 24 Hours
 Date of Submission: Jun 11, 2026
