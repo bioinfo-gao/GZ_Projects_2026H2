@@ -21,7 +21,7 @@
 # 成功的标志： 当你在 star_index 目录下看到一个没有数字后缀的 SA 文件，且目录下出现了 Genome 和 SAindex 文件时，才算彻底完成。
 
 # Log.out： 你可以用 Vim 查看这个日志文件的最后几行，确认当前的具体百分比进度：
-# tail -n 20 star_index/Log.out
+tail -n 20 star_index/Log.out
 
 # 3. 操作建议
 # 1. 暂时不要运行 HISAT2
