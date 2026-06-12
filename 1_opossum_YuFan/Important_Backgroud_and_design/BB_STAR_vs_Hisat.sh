@@ -29,7 +29,10 @@ vim -R star_index/Log.out
 
 3. 准备接下来的工作
 一旦 STAR 完成（Log.out 中出现 DONE），你就可以按照我们之前的计划：
+
 运行 hisat2-build（建立比对索引）。
+
 运行 Liftoff（利用南美负鼠的 GTF 迁移注释）。
+
 总结：
 你的 STAR 索引构建得非常好，参数修改（--genomeChrBinNbits 11）显然生效了，否则在处理这 50 万条序列时，它早就因为申请 300G 内存而报错退出了。现在只需耐心等待它完成合并即可。
