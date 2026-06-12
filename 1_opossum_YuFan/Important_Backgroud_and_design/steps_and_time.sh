@@ -4,8 +4,7 @@
 # 预计耗时：4 - 6 小时
 
 mamba install -c bioconda hisat2 -y
-
-pip install liftoff
+mamba install -c bioconda liftoff -y
 
 vim stage1_prep.sh
 
