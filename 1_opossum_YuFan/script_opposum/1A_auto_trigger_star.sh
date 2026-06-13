@@ -1,6 +1,6 @@
 #!/bin/bash
 source ~/.bashrc
-mamba activate R44_RNA
+mamba activate regular_bioinfo
 
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] ⏳ 监控启动：等待 Liftoff 任务完成..."
 
