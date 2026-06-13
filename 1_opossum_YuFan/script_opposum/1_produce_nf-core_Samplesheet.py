@@ -9,12 +9,13 @@ import os
 # 配置路径
 fastq_base_dir = "/home/gao/Dropbox/Quote_2605011001_OP/"
 
-original_csv = "/home/gao/projects_2026H1/2026_Item16_ZhenYan/scripts/zy.csv"
-output_samplesheet = "/home/gao/projects_2026H1/2026_Item16_ZhenYan/scripts/nf_core_samplesheet.csv"
+original_csv = "/home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/op.csv"
+output_samplesheet = "/home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/nf_core_samplesheet.csv"
 
 # 读取原始表格
 df = pd.read_csv(original_csv)
 samples = df['Name in File'].unique() # 获取所有样本名称, ATH 使用这个固定格式
+samples
 
 def convert_sample_name(csv_name):
     """Convert CSV sample name to directory name format by replacing hyphens with underscores"""
@@ -37,6 +38,7 @@ for sample in samples:
     # 格式: {dir_name}_CKDL..._1.fq.gz / {dir_name}_CKDL..._2.fq.gz
     r1_files = glob.glob(os.path.join(sample_dir, f"{dir_name}_*_1.fq.gz"))
     r2_files = glob.glob(os.path.join(sample_dir, f"{dir_name}_*_2.fq.gz"))
+
     
     r1 = None
     r2 = None

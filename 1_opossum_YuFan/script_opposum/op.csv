@@ -1,0 +1,9 @@
+Customer Name,Group,Name in File,Species,Analysis Type,Strand Specific,machine Type,Sequencing Type,Analysis
+Yu Fan,NC,NC_1,Didelphis virginiana,Bulk RNA Seq,Yes,Nova Seq X Plus,PE150,NC vs 5pi
+Yu Fan,NC,NC_2,Didelphis virginiana,Bulk RNA Seq,Yes,Nova Seq X Plus,PE150,
+Yu Fan,NC,NC_3,Didelphis virginiana,Bulk RNA Seq,Yes,Nova Seq X Plus,PE150,
+Yu Fan,NC,NC_4,Didelphis virginiana,Bulk RNA Seq,Yes,Nova Seq X Plus,PE150,
+Yu Fan,pi5,pi5_1,Didelphis virginiana,Bulk RNA Seq,Yes,Nova Seq X Plus,PE150,
+Yu Fan,pi5,pi5_2,Didelphis virginiana,Bulk RNA Seq,Yes,Nova Seq X Plus,PE150,
+Yu Fan,pi5,pi5_3,Didelphis virginiana,Bulk RNA Seq,Yes,Nova Seq X Plus,PE150,
+Yu Fan,pi5,pi5_4,Didelphis virginiana,Bulk RNA Seq,Yes,Nova Seq X Plus,PE150,
