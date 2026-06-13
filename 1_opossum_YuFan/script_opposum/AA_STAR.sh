@@ -8,9 +8,10 @@
 # 2. STAR 有没有用 twopassMode 自我发现新位点？
 # 是的，使用了。 加入 --twopassMode Basic 后，STAR 会执行极其智能的两步走：
 
-# 第一轮（Pass 1）： 读取你喂给它的 Liftoff GTF（作为已知参考），同时在比对 RNA-seq reads 时，如果发现大量的 reads 在某段基因组区域发生了“跳跃（剪接）”，且这个跳跃不在 Liftoff 的 GTF 里，STAR 会将这个新的剪接位点（Novel Splice Junction）记录下来。
-
-# 第二轮（Pass 2）： STAR 会把 Liftoff 的已知位点加上第一轮发现的北美负鼠特有的全新位点合并，实时在内存中重建一个超级索引，再把所有的 reads 重新比对一次。这对处理跨物种注释迁移带来的误差是绝佳的弥补手段。
+# 第一轮（Pass 1）： 读取你喂给它的 Liftoff GTF（作为已知参考），同时在比对 RNA-seq reads 时，如果发现大量的 reads 在某段基因组区域发生了“跳跃（剪接）”，
+# 且这个跳跃不在 Liftoff 的 GTF 里，STAR 会将这个新的剪接位点（Novel Splice Junction）记录下来。
+# 第二轮（Pass 2）： STAR 会把 Liftoff 的已知位点加上第一轮发现的北美负鼠特有的全新位点合并，实时在内存中重建一个超级索引，再把所有的 reads 重新比对一次。
+# 这对处理跨物种注释迁移带来的误差是绝佳的弥补手段。
 
 # 🚀 终极方案：编写自动串联与监控脚本
 # 既然 Liftoff 目前已经在 liftoff_task 这个 tmux 会话中全速运行了，我们不需要打断它。我们可以写一个“监听器”脚本，让它在后台盯着，一旦发现 Liftoff 的进程结束且生成了最终的 GTF 文件，就立刻无缝启动包含修复后命令的 STAR 流程。
@@ -20,9 +21,8 @@
 # 步骤一：更新 STAR 管线脚本（补充 GTF 参数）
 # 直接覆盖你之前的工作目录下的文件：
 
-# Bash
-# cd /home/gao/Code/Bioinfo_Analysis_Projects
-# vim run_star_pipeline.sh
+cd /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/
+vim 1_run_star_pipeline.sh
 # 填入修正后的完整内容：
 
 # Bash
@@ -66,11 +66,11 @@
 
 # wait
 # echo "[$(date '+%Y-%m-%d %H:%M:%S')] 🎉 所有样本 STAR 2-pass 比对全部平稳完成！"
+
 # 步骤二：创建“智能触发”监控脚本
 # 在同一个目录下创建一个监听器：
 
-# Bash
-# vim auto_trigger_star.sh
+vim 1A_auto_trigger_star.sh
 # 填入以下内容：
 
 # Bash
