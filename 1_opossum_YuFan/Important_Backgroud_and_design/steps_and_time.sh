@@ -12,24 +12,56 @@ which samtools
 
 vim stage1_prep.sh
 
-# 在 Vim 中输入：
-#!/bin/bash
-# 1. 构建 HISAT2 索引
-echo "Building HISAT2 index..."
-hisat2-build -p 16 dv-2k.fasta dv_index
+# # 在 Vim 中输入：
+# #!/bin/bash
+# # 1. 构建 HISAT2 索引
+# echo "Building HISAT2 index..."
+# hisat2-build -p 16 dv-2k.fasta dv_index
 
-# 2. 运行 Liftoff 迁移注释
-echo "Running Liftoff..."
-REF_FA="/Work_bio/references/Monodelphis_domestica/MonDom5/ncbi_refseq/mDidVir1.genome.fa"
-REF_GTF="/Work_bio/references/Monodelphis_domestica/MonDom5/ncbi_refseq/mDidVir1.annotation.gtf"
-TARGET_FA="/Work_bio/references/Didelphis_virginiana/mDidVir1/DNA_Zoo/dv-2k.fasta"
+# # 2. 运行 Liftoff 迁移注释
+# echo "Running Liftoff..."
+# REF_FA="/Work_bio/references/Monodelphis_domestica/MonDom5/ncbi_refseq/mDidVir1.genome.fa"
+# REF_GTF="/Work_bio/references/Monodelphis_domestica/MonDom5/ncbi_refseq/mDidVir1.annotation.gtf"
+# TARGET_FA="/Work_bio/references/Didelphis_virginiana/mDidVir1/DNA_Zoo/dv-2k.fasta"
 
-liftoff -g $REF_GTF -o Didelphis_v.liftoff.gtf -u unmapped.txt -p 16 -sc 0.85 $TARGET_FA $REF_FA
+# liftoff -g $REF_GTF -o Didelphis_v.liftoff.gtf -u unmapped.txt -p 16 -sc 0.85 $TARGET_FA $REF_FA
 
-tmux attach -t sftp_work
+# tmux attach -t sftp_work
 
-# 启动命令：
-bash stage1_prep.sh
+# # 启动命令：
+# bash stage1_prep.sh
+
+# 1. 确保在南美灰负鼠的工作目录
+cd /Work_bio/references/Monodelphis_domestica/MonDom5/ncbi_refseq
+
+# 2. 自动提取 GFF3 中所有的特征类型（比如 mRNA, exon, CDS 等），生成 features.txt
+awk -F'\t' '$1 !~ /^#/ {print $3}' clean_ref_annotation.gff3 | sort | uniq > feature_types.txt
+
+# 3. 彻底删除刚才运行中断产生的数据库缓存
+rm -f *.db *.db-shm *.db-wal
+
+# 4. 使用 vim 修改运行脚本
+vim run_liftoff.sh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # 第二阶段：批量比对脚本（适配嵌套目录）
 # 预计耗时：10 - 12 小时

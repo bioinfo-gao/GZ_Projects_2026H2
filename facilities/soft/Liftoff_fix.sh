@@ -59,9 +59,68 @@ vim run_liftoff.sh
 # 回到会话： tmux attach -t sftp_work
 # 启动脚本： 
 bash run_liftoff.sh
-
- extracting features
+# extracting features
 # Populating features table and first-order relations: 484000 features
+
+rm -f *.db
+
+vim check_gtf.py
+
+# # 3. 进入你的北美负鼠基因组工作目录
+# cd /Work_bio/references/Didelphis_virginiana/mDidVir1/DNA_Zoo/
+
+# 1. 启动全新的会话来执行修复和映射流程
+tmux new -s liftoff 
+#tmux a 
+
+# 2. 激活我们约定好的新环境
+mamba activate regular_bioinfo
+
+# 3. 进入南美灰负鼠 
+cd /Work_bio/references/Monodelphis_domestica/MonDom5/ncbi_refseq
+
+# 4 彻底删除上次运行失败残留的损坏数据库文件 (非常重要，否则 Liftoff 会一直报错)
+# 4. 清理上次运行失败残留的损坏数据库文件
+rm -f *.db *.db-shm *.db-wal
+
+# 2. 过滤 GTF 文件：只保留表头注释行(^#) 和 包含 'gene_id' 的标准基因/转录本/外显子行
+grep -E "^#|gene_id" mDidVir1.annotation.gtf > clean_temp.gtf
+
+# 3. 重新运行 gffread
+# (这里去掉了 -E 和 -O，让 gffread 自动为你重构最标准的 GFF3 层级 ID，这正是 Liftoff 最喜欢的格式)
+gffread clean_temp.gtf -o clean_ref_annotation.gff3
+
+# 6. 使用 vim 编辑你的运行脚本，将里面的注释文件参数修改为刚刚生成的 clean_ref_annotation.gff3
+vim run_liftoff.sh
+# 全部内容如下：
+
+
+#!/bin/bash
+# 1. 彻底删除之前运行失败留下的数据库残余，否则会一直报错
+rm -f *.db
+rm -f *.db-shm *.db-wal
+
+# 2. 定义路径（指向刚才清理后的文件）
+REF_FA="/Work_bio/references/Monodelphis_domestica/MonDom5/ncbi_refseq/mDidVir1.simple.fa"
+REF_GTF="/Work_bio/references/Monodelphis_domestica/MonDom5/ncbi_refseq/clean_ref_annotation.gff3"
+TARGET_FA="/Work_bio/references/Didelphis_virginiana/mDidVir1/DNA_Zoo/dv-2k.fasta"
+
+# 3. 运行 Liftoff
+# 注意：$TARGET_FA（北美负鼠）在前，$REF_FA（南美负鼠）在后。
+liftoff -g $REF_GTF \
+	-o Didelphis_v.liftoff.gtf \
+	-u unmapped.txt \
+	-p 16 \
+	-sc 0.85 \
+	-flank 0.1 \
+	$TARGET_FA \
+	$REF_FA
+
+
+
+# 7. 重新运行你的 Liftoff 映射脚本
+bash run_liftoff.sh
+
 
 # 4. 使用修正后的脚本重新运行 Liftoff
 # 使用 Vim 修改你的 run_liftoff.sh：
