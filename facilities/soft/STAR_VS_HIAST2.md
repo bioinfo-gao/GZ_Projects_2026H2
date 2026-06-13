@@ -13,7 +13,7 @@ HISAT2 (Hierarchical Indexing for Spliced Alignment of Transcripts):
 特性	STAR	HISAT2
 内存消耗	极高 (人类需 30G+, 你的负鼠需 40G+)。	极低 (通常只需 4G - 8G)。
 比对速度	极快。目前速度最快的工具。	快，但通常比 STAR 慢 2-3 倍。
-准确性	公认的“金标准”。对剪接位点的识别非常精准。	高。但在某些复杂剪接区域可能不如 STAR。
+准确性	公认的“金标准”。对剪接位点的识别非常精准。	t高。但在某些复杂剪接区域可能不如 STAR。
 寻找新剪接点	非常强 (特别是 2-Pass 模式)。	较强，但在处理 novel junctions 时略逊。
 对碎片化基因组	敏感。50万个 Scaffolds 会导致索引内存爆炸。	友好。对 Scaffolds 数量不敏感。
 输出结果	直接生成 Sorted BAM, Gene counts 等。	通常生成 SAM，需手动用 samtools 转换。
