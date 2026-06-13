@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 1. 进入您的脚本工作目录
-cd /home/gao/projects_2026H1/2026_Item16_ZhenYan/scripts
+cd /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum
 
 # 2. 清理可能存在的旧会话并创建新的 rnaseq 会话
 tmux kill-session -t rnaseq 2>/dev/null || true
