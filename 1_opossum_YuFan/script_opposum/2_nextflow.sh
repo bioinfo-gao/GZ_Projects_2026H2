@@ -64,6 +64,7 @@ nextflow run nf-core/rnaseq \
     --max_cpus 28 \
     --max_memory '108.GB' 
     -resume
+
 # 首次运行，不resume，避免引入无关历史记录
 echo "Nextflow 已在 tmux 会话 'rnaseq' 中启动"
 echo "使用 'tmux a' 连接查看输出"
