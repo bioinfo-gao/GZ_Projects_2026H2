@@ -9,6 +9,7 @@ tmux kill-session -t rnaseq 2>/dev/null || true
 # 1. 创建并进入 rnaseq 会话
 tmux new -s rnaseq                    # 创建名为 'rnaseq' 的新会话并立即进入（前台运行，您会直接看到终端切换到该会话）
 # tmux new-session -d -s rnaseq         # 创建名为 'rnaseq' 的新会话但在后台运行（-d 参数表示 detached，不会自动进入会话）
+# tmux attach -t rnaseq
 
 # 注意：这两行不能同时存在，因为它们会创建两个同名会话导致冲突
 # 如果您想创建并立即进入会话，请使用第一行（取消注释第一行，删除或注释第二行）
@@ -43,6 +44,10 @@ export NXF_SINGULARITY_CACHEDIR="/home/gao/.singularity/nf-core"
 
 # 在新的 tmux 会话中运行 Nextflow
 #  删除 --remove_ribo_rna 因为是polyA 测序，所以不需要这行
+# 注意，本项目的STAR 只跑2个，且star 设置了2-pass，  -c local_optimized.config  文件中  <<<===========================
+# // 🌟 在这里同时注入 2-pass、内存限制、以及未比对 reads 的保留参数
+#        ext.args = '--twopassMode Basic --limitBAMsortRAM 30000000000 --outSAMunmapped Within'
+
 
 # WARN: Singularity cache directory has not been defined -- Remote image will be stored in the path: /Work_bio/gao/projects_2026H1/2026_Item16_ZhenYan/scripts/work/singularity -- Use the environment variable NXF_SINGULARITY_CACHEDIR to specify a different location
 nextflow run nf-core/rnaseq \
@@ -51,9 +56,9 @@ nextflow run nf-core/rnaseq \
     -c local_optimized.config \
     --input nf_core_samplesheet.csv \
     --outdir ../output_results \
-    --fasta /Work_bio/references/Homo_sapiens/GRCh38/human_gencode_v45/GRCh38.primary_assembly.genome.fa \
-    --gtf /Work_bio/references/Homo_sapiens/GRCh38/human_gencode_v45/gencode.v45.annotation.gtf \
-    --star_index '/Work_bio/references/Homo_sapiens/GRCh38/human_gencode_v45/star_index' \
+    --fasta /Work_bio/references/Didelphis_virginiana/mDidVir1/DNA_Zoo/dv-2k.fasta \
+    --gtf /Work_bio/references/Didelphis_virginiana/mDidVir1/DNA_Zoo/Didelphis_v.liftoff.gtf \
+    --star_index /Work_bio/references/Didelphis_virginiana/mDidVir1/DNA_Zoo/star_index \
     --gencode \
     --aligner star_salmon \
     --max_cpus 28 \
@@ -65,3 +70,11 @@ echo "Nextflow 已在 tmux 会话 'rnaseq' 中启动"
 echo "使用 'tmux a' 连接查看输出"
 
 # Ctrl + B , then D 退出 tmux 会话
+# 🛠️ 最优雅的解决策略：跳过该 QC 步骤
+# 为了防止管线在后续强制执行 Biotype QC 脚本时报错中断，最官方且不动原文件的做法是：直接告诉 Nextflow “不要去检查 Biotype 了”。
+
+# 在你的启动命令中追加一个原生参数：--skip_biotype_qc。
+
+# 以下是为你整理好的包含了上述参数修正，并严格遵守后台防护规范的完整启动指令：
+tmux attach -t rnaseq
+tmux a 
