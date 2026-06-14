@@ -50,7 +50,7 @@ export NXF_SINGULARITY_CACHEDIR="/home/gao/.singularity/nf-core"
 
 
 # WARN: Singularity cache directory has not been defined -- Remote image will be stored in the path: /Work_bio/gao/projects_2026H1/2026_Item16_ZhenYan/scripts/work/singularity -- Use the environment variable NXF_SINGULARITY_CACHEDIR to specify a different location
-extflow run nf-core/rnaseq \
+nextflow run nf-core/rnaseq \
     -r 3.15.1 \
     -profile singularity \
     -c local_optimized.config \
@@ -66,7 +66,7 @@ extflow run nf-core/rnaseq \
     --max_time '72h' \
     --star_align_extra_args "--outFilterMultimapNmax 8 --alignSJoverhangMin 8" \
     -resume
-    
+
 # 首次运行，不resume，避免引入无关历史记录
 echo "Nextflow 已在 tmux 会话 'rnaseq' 中启动"
 echo "使用 'tmux a' 连接查看输出"
