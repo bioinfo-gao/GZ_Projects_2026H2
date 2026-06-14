@@ -59,10 +59,10 @@ nextflow run nf-core/rnaseq \
     --fasta /Work_bio/references/Didelphis_virginiana/mDidVir1/DNA_Zoo/dv-2k.fasta \
     --gtf /Work_bio/references/Didelphis_virginiana/mDidVir1/DNA_Zoo/Didelphis_v.liftoff.gtf \
     --star_index /Work_bio/references/Didelphis_virginiana/mDidVir1/DNA_Zoo/star_index \
-    --gencode \
+    --skip_biotype_qc \
     --aligner star_salmon \
     --max_cpus 28 \
-    --max_memory '108.GB' 
+    --max_memory '108.GB' \
     -resume
 
 # 首次运行，不resume，避免引入无关历史记录
