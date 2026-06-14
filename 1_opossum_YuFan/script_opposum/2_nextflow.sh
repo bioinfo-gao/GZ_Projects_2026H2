@@ -76,5 +76,5 @@ echo "使用 'tmux a' 连接查看输出"
 # 在你的启动命令中追加一个原生参数：--skip_biotype_qc。
 
 # 以下是为你整理好的包含了上述参数修正，并严格遵守后台防护规范的完整启动指令：
-tmux attach -t rnaseq
+tmux attach -t rnaseq # goto the session with name
 tmux a 
