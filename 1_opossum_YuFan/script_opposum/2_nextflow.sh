@@ -50,6 +50,24 @@ export NXF_SINGULARITY_CACHEDIR="/home/gao/.singularity/nf-core"
 
 
 # WARN: Singularity cache directory has not been defined -- Remote image will be stored in the path: /Work_bio/gao/projects_2026H1/2026_Item16_ZhenYan/scripts/work/singularity -- Use the environment variable NXF_SINGULARITY_CACHEDIR to specify a different location
+# # nextflow run nf-core/rnaseq \
+#     -r 3.15.1 \
+#     -profile singularity \
+#     -c local_optimized.config \
+#     --input nf_core_samplesheet.csv \
+#     --outdir ../output_results \
+#     --fasta /Work_bio/references/Didelphis_virginiana/mDidVir1/DNA_Zoo/dv-2k.fasta \
+#     --gtf /Work_bio/references/Didelphis_virginiana/mDidVir1/DNA_Zoo/Didelphis_v.liftoff.gtf \
+#     --star_index /Work_bio/references/Didelphis_virginiana/mDidVir1/DNA_Zoo/star_index \
+#     --skip_biotype_qc \
+#     --aligner star_salmon \
+#     --max_cpus 28 \
+#     --max_memory '120.GB' \
+#     --max_time '72h' \
+#     --star_align_extra_args "--outFilterMultimapNmax 8 --alignSJoverhangMin 8" \
+#     -resume
+
+#  # ← 关键：改成 1-pass
 nextflow run nf-core/rnaseq \
     -r 3.15.1 \
     -profile singularity \
@@ -61,11 +79,9 @@ nextflow run nf-core/rnaseq \
     --star_index /Work_bio/references/Didelphis_virginiana/mDidVir1/DNA_Zoo/star_index \
     --skip_biotype_qc \
     --aligner star_salmon \
-    --max_cpus 28 \
-    --max_memory '120.GB' \
-    --max_time '72h' \
-    --star_align_extra_args "--outFilterMultimapNmax 8 --alignSJoverhangMin 8" \
+    --star_twopass false \
     -resume
+
 
 # 首次运行，不resume，避免引入无关历史记录
 echo "Nextflow 已在 tmux 会话 'rnaseq' 中启动"
