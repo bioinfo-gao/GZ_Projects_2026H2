@@ -102,20 +102,20 @@ echo "报告已保存: $OUTPUT"
 cat $OUTPUT
 
 # 更快的方法：用现有工具
-# bash
-# # 方法1: seqkit 快速统计（如果已安装）
-# for d in J_*; do
-#     echo "=== $d ==="
-#     seqkit stats ${d}/*.fq.gz 2>/dev/null | head -2
-# done
 
-# # 方法2: 检查MD5确保文件完整
-# for d in J_*; do
-#     (cd $d && md5sum -c MD5.txt 2>/dev/null) && echo "$d: MD5 OK" || echo "$d: MD5 FAIL"
-# done
+# 方法1: seqkit 快速统计（如果已安装）
+for d in J_*; do
+    echo "=== $d ==="
+    seqkit stats ${d}/*.fq.gz 2>/dev/null | head -2
+done
 
-# # 方法3: 快速看reads数和文件大小
-# du -sh J_*/*
+# 方法2: 检查MD5确保文件完整
+for d in J_*; do
+    (cd $d && md5sum -c MD5.txt 2>/dev/null) && echo "$d: MD5 OK" || echo "$d: MD5 FAIL"
+done
+
+# 方法3: 快速看reads数和文件大小
+du -sh J_*/*
 # 关键判断指标
 # 表格
 # 指标	正常范围	异常提示
