@@ -24,17 +24,15 @@ which bwa-mem2 2>/dev/null && echo "bwa-mem2 found" || echo "bwa-mem2 NOT found"
 
 # 创建目录 + 下载 + 解压 + 建索引
 
-
-mkdir -p /Work_bio/references/Cricetulus_griseus/CriGri-PICR/ncbi_refseq && \
 cd /Work_bio/references/Cricetulus_griseus/CriGri-PICR/ncbi_refseq && \
 echo "=== Downloading CHO genome ===" && \
-wget -c https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/003/668/045/GCF_003668045.3_CriGri-PICR/GCF_003668045.3_CriGri-PICR_genomic.fna.gz && \
-wget -c https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/003/668/045/GCF_003668045.3_CriGri-PICR/GCF_003668045.3_CriGri-PICR_genomic.gff.gz && \
+wget -c https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/003/668/045/GCF_003668045.1_CriGri-PICR/GCF_003668045.1_CriGri-PICR_genomic.fna.gz && \
+wget -c https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/003/668/045/GCF_003668045.1_CriGri-PICR/GCF_003668045.1_CriGri-PICR_genomic.gff.gz && \
 echo "=== Decompressing ===" && \
-gunzip -k GCF_003668045.3_CriGri-PICR_genomic.fna.gz && \
+gunzip -k GCF_003668045.1_CriGri-PICR_genomic.fna.gz && \
 echo "=== Building samtools faidx ===" && \
-samtools faidx GCF_003668045.3_CriGri-PICR_genomic.fna && \
-echo "=== Building bwa-mem2 index (约30-60分钟) ===" && \
-bwa-mem2 index GCF_003668045.3_CriGri-PICR_genomic.fna && \
+samtools faidx GCF_003668045.1_CriGri-PICR_genomic.fna && \
+echo "=== Building bwa-mem2 index (~30-60 min) ===" && \
+bwa-mem2 index GCF_003668045.1_CriGri-PICR_genomic.fna && \
 echo "=== Done! ===" && \
 ls -lh
