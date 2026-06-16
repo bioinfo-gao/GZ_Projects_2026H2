@@ -36,3 +36,19 @@ echo "=== Building bwa-mem2 index (~30-60 min) ===" && \
 bwa-mem2 index GCF_003668045.1_CriGri-PICR_genomic.fna && \
 echo "=== Done! ===" && \
 ls -lh
+
+# bwa-mem2 index 被 OOM Killed 了 — 因为 STAR 正在占用 ~80GB RAM，bwa-mem2 index 也需要大量内存（~20-30GB），超出了剩余内存。
+
+# 两个方案：
+
+# 方案	操作	等待时间
+# A：用常规 bwa index	内存需求小得多（~5-8GB），现在就能跑	约 30 分钟
+# B：等 STAR 跑完再建 bwa-mem2 index	NC_2/NC_3 快完成了	等 1-2 小时
+# 建议用方案 A，常规 bwa 功能完全一样，只是速度稍慢，对你这个任务没有影响：
+
+cd /Work_bio/references/Cricetulus_griseus/CriGri-PICR/ncbi_refseq && \
+echo "=== Building bwa index ===" && \
+bwa index GCF_003668045.1_CriGri-PICR_genomic.fna && \
+echo "=== Done! ===" && \
+ls -lh
+# 建好索引后，比对时用 bwa mem 代替 bwa-mem2 mem 即可，分析结果完全相同。
