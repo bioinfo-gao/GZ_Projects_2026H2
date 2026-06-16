@@ -5,15 +5,11 @@ OUTDIR="/home/gao/projects_2026H2/2_jingpeng_wgs_quality/qc_out"
 SAMPDIR="${OUTDIR}/sampled"
 THREADS=8
 NREADS=1000000
-LINES=$((NREADS * 4))
 
 mkdir -p "${OUTDIR}" "${SAMPDIR}"
 
-# 清理旧的抽样文件
-rm -f "${SAMPDIR}"/*.fastq
-
 echo "=============================="
-echo "Step 1: 取前 ${NREADS} 条 reads / 样品"
+echo "Step 1: seqtk 抽样 ${NREADS} 条 reads / 样品"
 echo "=============================="
 for fq in $(find "${INDIR}" -maxdepth 1 \( -name "*.fq.gz" -o -name "*.fastq.gz" \) | sort); do
     fname=$(basename "$fq")
@@ -21,7 +17,7 @@ for fq in $(find "${INDIR}" -maxdepth 1 \( -name "*.fq.gz" -o -name "*.fastq.gz"
     outname="${outname%.fastq.gz}.sampled.fastq"
     out="${SAMPDIR}/${outname}"
     echo "  Sampling: $fname"
-    seqtk seq -l 0 "$fq" | awk -v n=${LINES} '{print} NR==n{exit}' > "$out"
+    seqtk sample -s42 "$fq" ${NREADS} > "$out"
     reads_out=$(($(wc -l < "$out") / 4))
     echo "    Done: ${reads_out} reads"
 done

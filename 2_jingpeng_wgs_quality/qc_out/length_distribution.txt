@@ -1,48 +1,48 @@
---- 3685_R1.fastq ---
+--- 3685_R1.sampled.fastq ---
       8 150
---- 3685_R2.fastq ---
+--- 3685_R2.sampled.fastq ---
       8 150
---- 3689_R1.fastq ---
+--- 3689_R1.sampled.fastq ---
       8 150
---- 3689_R2.fastq ---
+--- 3689_R2.sampled.fastq ---
       8 150
---- 3852_R0_B1TP_R1.fastq ---
+--- 3852_R0_B1TP_R1.sampled.fastq ---
       8 150
---- 3852_R0_B1TP_R2.fastq ---
+--- 3852_R0_B1TP_R2.sampled.fastq ---
       8 150
---- 3852_R0_B2TP_R1.fastq ---
+--- 3852_R0_B2TP_R1.sampled.fastq ---
       8 150
---- 3852_R0_B2TP_R2.fastq ---
+--- 3852_R0_B2TP_R2.sampled.fastq ---
       8 150
---- 3852_R0_origin_R1.fastq ---
+--- 3852_R0_origin_R1.sampled.fastq ---
       8 150
---- 3852_R0_origin_R2.fastq ---
+--- 3852_R0_origin_R2.sampled.fastq ---
       8 150
---- 3868_1st_R1.fastq ---
+--- 3868_1st_R1.sampled.fastq ---
       8 150
---- 3868_1st_R2.fastq ---
+--- 3868_1st_R2.sampled.fastq ---
       8 150
---- 7352_2nd_R1.fastq ---
+--- 7352_2nd_R1.sampled.fastq ---
       8 150
---- 7352_2nd_R2.fastq ---
+--- 7352_2nd_R2.sampled.fastq ---
       8 150
---- 8464__R1.fastq ---
+--- 8464__R1.sampled.fastq ---
       8 150
---- 8464_R2.fastq ---
+--- 8464_R2.sampled.fastq ---
       8 150
---- 8465_R1.fastq ---
+--- 8465_R1.sampled.fastq ---
       8 150
---- 8465_R2.fastq ---
+--- 8465_R2.sampled.fastq ---
       8 150
---- 8599_3rd_R1.fastq ---
+--- 8599_3rd_R1.sampled.fastq ---
       8 150
---- 8599_3rd_R2.fastq ---
+--- 8599_3rd_R2.sampled.fastq ---
       8 150
---- A2353_R1.fastq ---
+--- A2353_R1.sampled.fastq ---
       8 150
---- A2353_R2.fastq ---
+--- A2353_R2.sampled.fastq ---
       8 150
---- A2371_R1.fastq ---
+--- A2371_R1.sampled.fastq ---
       8 150
---- A2371_R2.fastq ---
+--- A2371_R2.sampled.fastq ---
       8 150
