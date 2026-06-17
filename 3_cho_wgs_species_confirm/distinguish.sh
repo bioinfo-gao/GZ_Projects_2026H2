@@ -222,3 +222,7 @@ echo "    BAM file:    ${PROJDIR}/align/wt1_cho.bam"
 echo "    Flagstat:    ${PROJDIR}/results/cho_flagstat.txt"
 echo "    DHFR info:   ${PROJDIR}/results/dhfr_gff_entries.txt"
 echo "============================================================"
+
+multiqc /home/gao/projects_2026H2/3_cho_wgs_species_confirm/qc/ \
+  -o /home/gao/projects_2026H2/3_cho_wgs_species_confirm/qc/multiqc \
+  --force
