@@ -1,0 +1,1 @@
+NW_020822461.1	BestRefSeq	gene	37643639	37667418	.	-	.	ID=gene-Dhfr;Dbxref=GeneID:100689028;Name=Dhfr;description=dihydrofolate reductase;gbkey=Gene;gene=Dhfr;gene_biotype=protein_coding
