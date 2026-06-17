@@ -1,0 +1,25 @@
+# 忽略单细胞核心大文件
+*.rds
+*.RData
+*.h5ad
+*.h5
+*.loom
+
+# 忽略高通量测序及比对大文件
+*.bam
+*.sam
+*.bai
+*.fq
+*.fastq
+*.gz
+*.vcf
+*.vcf.gz
+
+# 忽略常规大文本、日志及R环境历史记录
+*.log
+*.txt
+*.csv
+*.tsv
+.Rhistory
+.Rproj.user/
+.Rdata
