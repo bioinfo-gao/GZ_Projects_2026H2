@@ -13,3 +13,4 @@ cp /home/gao/projects_2026H2/3_cho_wgs_species_confirm/results/dhfr_gff.txt /hom
 tree /home/gao/projects_2026H2/3_cho_wgs_species_confirm/delivery/
 
 mv /home/gao/projects_2026H2/3_cho_wgs_species_confirm/delivery /home/gao/projects_2026H2/3_cho_wgs_species_confirm/Research_Report
+
