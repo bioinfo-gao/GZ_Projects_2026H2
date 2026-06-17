@@ -49,4 +49,5 @@ echo "=== Flanking coverage ==="
 samtools depth -r "${DHFR_CHR}:$((DHFR_S-500000))-$((DHFR_E+500000))" align/wt1_cho.bam | awk '{sum+=$3;n++} END{print "Flanking depth: "sum/n"x"}'
 
 echo "=== ALL DONE ==="
-tmux attach -t cho
+tmux attach -t
+ cho
