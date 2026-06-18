@@ -42,7 +42,7 @@ tail -3 /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/8c/bfffa03
 
 # STAR_ALIGN 总进度：7/8 即将完成。
 
-tail -3 /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/8c/bfffa0314b7b899be50ccf24bad072/NC_4.Log.progress.out
-Jun 18 00:12:01      5.9    72765918      296    87.8%    290.6     0.7%     3.2%     0.0%     0.0%     9.0%     0.0%4.Log.progress.out
-Jun 18 00:13:27      5.9    72933831      296    87.8%    290.6     0.7%     3.2%     0.0%     0.0%     9.0%     0.0%
-ALL DONE!
+# tail -3 /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/8c/bfffa0314b7b899be50ccf24bad072/NC_4.Log.progress.out
+# Jun 18 00:12:01      5.9    72765918      296    87.8%    290.6     0.7%     3.2%     0.0%     0.0%     9.0%     0.0%4.Log.progress.out
+# Jun 18 00:13:27      5.9    72933831      296    87.8%    290.6     0.7%     3.2%     0.0%     0.0%     9.0%     0.0%
+# ALL DONE!
