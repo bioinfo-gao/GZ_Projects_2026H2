@@ -22,10 +22,6 @@ find /Work_bio/lhn_work/cellranger/BCR /Work_bio/lhn_work/cellranger/Demo2 -maxd
 # /Work_bio/lhn_work/cellranger/Demo2/work_for_ath.sh
 # /Work_bio/lhn_work/cellranger/Demo2/demo_fq
 # /Work_bio/lhn_work/cellranger/Demo2/test.o
-# /Work_bio/lhn_work/cellranger/BCR/humanized_rat
-# /Work_bio/lhn_work/cellranger/BCR/human
-# /Work_bio/lhn_work/cellranger/BCR/mouse
-# /Work_bio/lhn_work/cellranger/BCR/humanized_mouse
 # /Work_bio/lhn_work/cellranger/Demo2/01.QC/N2-SI_TT_D1_23575YLT4
 # /Work_bio/lhn_work/cellranger/Demo2/N2-SI_TT_D1_23575YLT4/SC_VDJ_ASSEMBLER_CS
 # /Work_bio/lhn_work/cellranger/Demo2/N2-SI_TT_D1_23575YLT4/outs
@@ -49,10 +45,8 @@ find /Work_bio/lhn_work/cellranger/BCR /Work_bio/lhn_work/cellranger/Demo2 -maxd
 # /Work_bio/lhn_work/cellranger/Demo2/demo_fq/N2-SI_TT_D1_23575YLT4_S3_L003_I2_001.fastq.gz
 # /Work_bio/lhn_work/cellranger/Demo2/demo_fq/N2-SI_TT_D1_23575YLT4_S3_L003_R2_001.fastq.gz
 # /Work_bio/lhn_work/cellranger/Demo2/demo_fq/N2-SI_TT_D1_23575YLT4_S3_L003_I1_001.fastq.gz
-# /Work_bio/lhn_work/cellranger/BCR/humanized_rat/refdata
-# /Work_bio/lhn_work/cellranger/BCR/human/refdata
-# /Work_bio/lhn_work/cellranger/BCR/mouse/refdata
-# /Work_bio/lhn_work/cellranger/BCR/humanized_mouse/refdata
+
+
 # /Work_bio/lhn_work/cellranger/Demo2/01.QC/N2-SI_TT_D1_23575YLT4/N2-SI_TT_D1_23575YLT4_S2_L002_R1_001.fastq.gz
 # /Work_bio/lhn_work/cellranger/Demo2/01.QC/N2-SI_TT_D1_23575YLT4/N2-SI_TT_D1_23575YLT4.html
 # /Work_bio/lhn_work/cellranger/Demo2/01.QC/N2-SI_TT_D1_23575YLT4/N2-SI_TT_D1_23575YLT4.json
@@ -94,6 +88,16 @@ find /Work_bio/lhn_work/cellranger/BCR /Work_bio/lhn_work/cellranger/Demo2 -maxd
 # /Work_bio/lhn_work/cellranger/Demo2/N2-SI_TT_D1_23575YLT4/outs/consensus.bam
 # /Work_bio/lhn_work/cellranger/Demo2/N2-SI_TT_D1_23575YLT4/outs/all_contig_annotations.bed
 # /Work_bio/lhn_work/cellranger/Demo2/N2-SI_TT_D1_23575YLT4/outs/web_summary.html
+
+# /Work_bio/lhn_work/cellranger/BCR/humanized_rat
+# /Work_bio/lhn_work/cellranger/BCR/human
+# /Work_bio/lhn_work/cellranger/BCR/mouse
+# /Work_bio/lhn_work/cellranger/BCR/humanized_mouse
+# /Work_bio/lhn_work/cellranger/BCR/humanized_rat/refdata
+# /Work_bio/lhn_work/cellranger/BCR/human/refdata
+# /Work_bio/lhn_work/cellranger/BCR/mouse/refdata
+# /Work_bio/lhn_work/cellranger/BCR/humanized_mouse/refdata
+
 # /Work_bio/lhn_work/cellranger/BCR/humanized_rat/refdata/reference.json
 # /Work_bio/lhn_work/cellranger/BCR/humanized_rat/refdata/fasta
 # /Work_bio/lhn_work/cellranger/BCR/human/refdata/reference.json
