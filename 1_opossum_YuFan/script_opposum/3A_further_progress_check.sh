@@ -47,19 +47,19 @@ tail -3 /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/8c/bfffa03
 # Jun 18 00:13:27      5.9    72933831      296    87.8%    290.6     0.7%     3.2%     0.0%     0.0%     9.0%     0.0%
 # ALL DONE!
 
--        ] NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:BAM_SORT_STATS_SAMTOOLS:SAMTOOLS_INDEX                       -
-executor >  local (8)
-[54/b347ff] NFCORE_RNASEQ:PREPARE_GENOME:GTF_FILTER (dv-2k.fasta)                                        [100%] 1 of 1, cached: 1 ✔                                                                                                      "us1" 23:46 17-Jun-26
-[05/039a6b] NFCORE_RNASEQ:PREPARE_GENOME:GTF2BED (dv-2k.filtered.gtf)                                    [100%] 1 of 1, cached: 1 ✔
-[c5/ba0a82] NFCORE_RNASEQ:PREPARE_GENOME:MAKE_TRANSCRIPTS_FASTA (rsem/dv-2k.fasta)                       [100%] 1 of 1, cached: 1 ✔
-[c9/ca4b36] NFCORE_RNASEQ:PREPARE_GENOME:CUSTOM_GETCHROMSIZES (dv-2k.fasta)                              [100%] 1 of 1, cached: 1 ✔
-[-        ] NFCORE_RNASEQ:RNASEQ:FASTQ_QC_TRIM_FILTER_SETSTRANDEDNESS:CAT_FASTQ                          -
-[55/2194e6] NFC…SEQ:FASTQ_QC_TRIM_FILTER_SETSTRANDEDNESS:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:FASTQC (pi5_1) [100%] 8 of 8, cached: 8 ✔
-[a5/b4b52f] NFC…FASTQ_QC_TRIM_FILTER_SETSTRANDEDNESS:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE (pi5_4) [100%] 8 of 8, cached: 8 ✔
-[-        ] NFC…NASEQ:RNASEQ:FASTQ_QC_TRIM_FILTER_SETSTRANDEDNESS:FASTQ_SUBSAMPLE_FQ_SALMON:SALMON_INDEX -
-[-        ] NFC…NASEQ:RNASEQ:FASTQ_QC_TRIM_FILTER_SETSTRANDEDNESS:FASTQ_SUBSAMPLE_FQ_SALMON:FQ_SUBSAMPLE -
-[-        ] NFC…NASEQ:RNASEQ:FASTQ_QC_TRIM_FILTER_SETSTRANDEDNESS:FASTQ_SUBSAMPLE_FQ_SALMON:SALMON_QUANT -
-[8c/bfffa0] NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN (NC_4)                                            [ 75%] 6 of 8
-[-        ] NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:BAM_SORT_STATS_SAMTOOLS:SAMTOOLS_SORT                        [  0%] 0 of 6
-[-        ] NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:BAM_SORT_STATS_SAMTOOLS:SAMTOOLS_INDEX                       -
-[-        ] NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:BAM_SORT_STATS_SAMTOOLS:BAM_STATS_SAMTOOLS:SAMTOOLS_STATS    -
+# -        ] NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:BAM_SORT_STATS_SAMTOOLS:SAMTOOLS_INDEX                       -
+# executor >  local (8)
+# [54/b347ff] NFCORE_RNASEQ:PREPARE_GENOME:GTF_FILTER (dv-2k.fasta)                                        [100%] 1 of 1, cached: 1 ✔                                                                                                      "us1" 23:46 17-Jun-26
+# [05/039a6b] NFCORE_RNASEQ:PREPARE_GENOME:GTF2BED (dv-2k.filtered.gtf)                                    [100%] 1 of 1, cached: 1 ✔
+# [c5/ba0a82] NFCORE_RNASEQ:PREPARE_GENOME:MAKE_TRANSCRIPTS_FASTA (rsem/dv-2k.fasta)                       [100%] 1 of 1, cached: 1 ✔
+# [c9/ca4b36] NFCORE_RNASEQ:PREPARE_GENOME:CUSTOM_GETCHROMSIZES (dv-2k.fasta)                              [100%] 1 of 1, cached: 1 ✔
+# [-        ] NFCORE_RNASEQ:RNASEQ:FASTQ_QC_TRIM_FILTER_SETSTRANDEDNESS:CAT_FASTQ                          -
+# [55/2194e6] NFC…SEQ:FASTQ_QC_TRIM_FILTER_SETSTRANDEDNESS:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:FASTQC (pi5_1) [100%] 8 of 8, cached: 8 ✔
+# [a5/b4b52f] NFC…FASTQ_QC_TRIM_FILTER_SETSTRANDEDNESS:FASTQ_FASTQC_UMITOOLS_TRIMGALORE:TRIMGALORE (pi5_4) [100%] 8 of 8, cached: 8 ✔
+# [-        ] NFC…NASEQ:RNASEQ:FASTQ_QC_TRIM_FILTER_SETSTRANDEDNESS:FASTQ_SUBSAMPLE_FQ_SALMON:SALMON_INDEX -
+# [-        ] NFC…NASEQ:RNASEQ:FASTQ_QC_TRIM_FILTER_SETSTRANDEDNESS:FASTQ_SUBSAMPLE_FQ_SALMON:FQ_SUBSAMPLE -
+# [-        ] NFC…NASEQ:RNASEQ:FASTQ_QC_TRIM_FILTER_SETSTRANDEDNESS:FASTQ_SUBSAMPLE_FQ_SALMON:SALMON_QUANT -
+# [8c/bfffa0] NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN (NC_4)                                            [ 75%] 6 of 8
+# [-        ] NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:BAM_SORT_STATS_SAMTOOLS:SAMTOOLS_SORT                        [  0%] 0 of 6
+# [-        ] NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:BAM_SORT_STATS_SAMTOOLS:SAMTOOLS_INDEX                       -
+# [-        ] NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:BAM_SORT_STATS_SAMTOOLS:BAM_STATS_SAMTOOLS:SAMTOOLS_STATS    -
