@@ -2,28 +2,18 @@
 
 # 请给我总结一下我同事写的这个项目是什么？ 什么功能？ /Work_bio/lhn_work/cellranger
 
-# ls -la /Work_bio/lhn_work/cellranger 2>&1 | head -100
+ls -la /Work_bio/lhn_work/cellranger 2>&1 | head -100
 
-# OUT
-# total 4461216
-# drwxrwxr-x 4 lhn lhn       4096 Jun  6 04:42 .
-# drwxrwxr-x 6 lhn lhn       4096 Jun 16 09:38 ..
 # drwxrwxr-x 6 lhn lhn       4096 Jan 19 20:25 BCR
 # -rwx--x--x 1 lhn lhn 4568260608 Jun  6 01:00 cellranger_10.0.0.tar
 # drwxrwxr-x 5 lhn lhn       4096 Jun  6 02:09 Demo2
 # -rw-rw-r-- 1 lhn lhn        348 Jun  6 04:42 Readme
-# Read Readme
-# Bash List BCR and Demo2 subdirectory structure
-# Reason: always yes
-# IN
-# find /Work_bio/lhn_work/cellranger/BCR /Work_bio/lhn_work/cellranger/Demo2 -maxdepth 3 | head -200
 
-# Read Readme
+Read Readme
 # Bash List BCR and Demo2 subdirectory structure
-# IN
-# find /Work_bio/lhn_work/cellranger/BCR /Work_bio/lhn_work/cellranger/Demo2 -maxdepth 3
 
-# OUT
+find /Work_bio/lhn_work/cellranger/BCR /Work_bio/lhn_work/cellranger/Demo2 -maxdepth 3 | head -200
+
 # /Work_bio/lhn_work/cellranger/BCR
 # /Work_bio/lhn_work/cellranger/Demo2
 # /Work_bio/lhn_work/cellranger/Demo2/01.QC
