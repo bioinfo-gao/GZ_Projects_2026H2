@@ -108,7 +108,7 @@ find /Work_bio/lhn_work/cellranger/BCR    /Work_bio/lhn_work/cellranger/Demo2 -m
 # /Work_bio/lhn_work/cellranger/BCR/humanized_mouse/refdata/fasta
 
 # Read work_for_ath.sh
-source /Work_bio/lhn_work/cellranger/work_for_ath.sh 
+source /Work_bio/lhn_work/cellranger/Demo2/work_for_ath.sh 
 
 # Bash Inspect job logs, reference data sizes, and output metrics
 # IN
@@ -216,14 +216,17 @@ source /Work_bio/lhn_work/cellranger/work_for_ath.sh
 # 目录结构与功能
 # 目录/文件	作用
 # cellranger_10.0.0.tar	Cell Ranger 10.0.0 的 Docker 镜像离线包（约 4.6GB）
-# BCR/	四个物种/品系的 V(D)J 参考数据库：human、mouse、humanized_mouse、humanized_rat（各约12-13MB）
+# BCR/	四个物种/品系的 V(D)J 参考数据库：
+human、mouse、humanized_mouse、humanized_rat（各约12-13MB）
 # Demo2/	测试用的示例流程，包含输入 fastq、QC 结果、Cell Ranger 输出
-# Demo2/work_for_ath.sh	核心运行脚本，定义了完整两步分析流程
+# Demo2/work_for_ath.sh	
+核心运行脚本，定义了完整两步分析流程
 # Readme	简要说明：目录介绍 + 所需输入参数 + 脚本引用位置
-# 核心分析流程（work_for_ath.sh）
-# Step1 - QC（质控/过滤）：用 Docker 容器内的 fastp 对 R1/R2 原始 fastq 做质控（去除含N过多的reads、长度过滤、生成 QC 报告 html/json）。
 
-# Step2 - Cell Ranger VDJ 分析：用容器内的 cellranger vdj 命令，针对指定物种的参考库，对 QC 后的 fastq 做免疫库（IG，即 BCR 重链/轻链）的组装与注释，输出：
+# 核心分析流程（work_for_ath.sh）
+Step1 - QC（质控/过滤）：用 Docker 容器内的 fastp 对 R1/R2 原始 fastq 做质控（去除含N过多的reads、长度过滤、生成 QC 报告 html/json）。
+
+Step2 - Cell Ranger VDJ 分析：用容器内的 cellranger vdj 命令，针对指定物种的参考库，对 QC 后的 fastq 做免疫库（IG，即 BCR 重链/轻链）的组装与注释，输出：
 
 # 网页摘要报告 web_summary.html、指标汇总 metrics_summary.csv
 # Clonotype（克隆型）信息、CDR3 注释
