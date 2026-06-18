@@ -73,10 +73,12 @@ grep -E "Started|ALL DONE" /home/gao/projects_2026H2/1_opossum_YuFan/script_oppo
 # Jun 16 19:50:34 Started 1st pass mapping
 # ALL DONE!
 
-grep -E : /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/4d/bbe3f7d1330dac2ff7e63189ab94d2/pi5_1.Log.progress.out
 #grep -E "Started|ALL DONE" /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/4d/bbe3f7d1330dac2ff7e63189ab94d2/pi5_1.Log.progress.out
 grep -E "Started|Finished|ALL DONE" /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/4d/bbe3f7d1330dac2ff7e63189ab94d2/pi5_1.Log.progress.out
-grep -E "Started|AFinished|LL DONE" /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/31/ed6ca6a1735d3b13bcbad0b0fe697a/NC_1.Log.progress.out
+grep -E : /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/4d/bbe3f7d1330dac2ff7e63189ab94d2/pi5_1.Log.progress.out
+
+grep -E "Started|Finished|ALL DONE" /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/31/ed6ca6a1735d3b13bcbad0b0fe697a/NC_1.Log.progress.out
+grep -E : /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/31/ed6ca6a1735d3b13bcbad0b0fe697a/NC_1.Log.progress.out
 
 tail -3 /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/4d/bbe3f7d1330dac2ff7e63189ab94d2/pi5_1.Log.progress.out
 tail -3 /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/31/ed6ca6a1735d3b13bcbad0b0fe697a/NC_1.Log.progress.out
