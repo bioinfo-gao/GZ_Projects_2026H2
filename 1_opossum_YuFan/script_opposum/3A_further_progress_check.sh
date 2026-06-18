@@ -67,3 +67,44 @@ tail -3 /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/8c/bfffa03
 
 
 需要知道最后两个样pass-1 完成没有，pass-2 运行了多长时间
+grep -E "Started|ALL DONE" /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/8c/bfffa0314b7b899be50ccf24bad072/NC_4.Log.progress.out
+grep -E "Started|ALL DONE" /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/8c/bfffa0314b7b899be50ccf24bad072/NC_4.Log.progress.out
+Jun 16 21:48:30 Started 1st pass mapping
+ALL DONE!
+grep -E "Started|ALL DONE" /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/eb/0c3861f51392cc2188872eb71bec30/pi5_4.Log.progress.out
+(regular_bioinfo) [09:43:10] [/home/gao/projects_2026H2]:
+gao@us1 $ grep -E "Started|ALL DONE" /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/eb/0c3861f51392cc2188872eb71bec30/pi5_4.Log.progress.out
+Jun 16 19:50:34 Started 1st pass mapping
+ALL DONE!
+
+grep -E "Started|ALL DONE" /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/4d/bbe3f7d1330dac2ff7e63189ab94d2/pi5_1.Log.progress.out
+
+grep -E "Started|ALL DONE" /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/31/ed6ca6a1735d3b13bcbad0b0fe697a/NC_1.Log.progress.out
+
+tail -3 /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/4d/bbe3f7d1330dac2ff7e63189ab94d2/pi5_1.Log.progress.out
+tail -3 /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/31/ed6ca6a1735d3b13bcbad0b0fe697a/NC_1.Log.progress.out
+
+# grep -E "Started|ALL DONE" /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/4d/bbe3f7d1330dac2ff7e63189ab94d2/pi5_1.Log.progress.out
+# Jun 17 21:16:44 Started 1st pass mapping
+# (regular_bioinfo) [09:45:02] [/home/gao/projects_2026H2]:
+# gao@us1 $ grep -E "Started|ALL DONE" /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/31/ed6ca6a1735d3b13bcbad0b0fe697a/NC_1.Log.progress.out
+# Jun 18 00:21:16 Started 1st pass mapping
+# gao@us1 $ tail -3 /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/4d/bbe3f7d1330dac2ff7e63189ab94d2/pi5_1.Log.progress.out
+# Jun 18 09:41:28      5.6     1691828      295    87.7%    290.0     0.6%     3.2%     0.0%     0.0%     9.1%     0.0%_1.Log.progress.out
+# Jun 18 09:42:40      5.6     1818431      295    87.7%    290.0     0.6%     3.2%     0.0%     0.0%     9.1%     0.0%
+# Jun 18 09:44:21      5.5     1944935      295    87.7%    290.0     0.6%     3.2%     0.0%     0.0%     9.1%     0.0%
+# gao@us1 $ tail -3 /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/31/ed6ca6a1735d3b13bcbad0b0fe697a/NC_1.Log.progress.out
+# Jun 18 09:41:42      6.3    59245978      291    87.2%    286.1     0.7%     3.3%     0.0%     0.0%     9.4%     0.0%1.Log.progress.out
+# Jun 18 09:42:53      6.3    59374221      291    87.2%    286.1     0.7%     3.3%     0.0%     0.0%     9.4%     0.0%
+# Jun 18 09:44:25      6.3    59587669      291    87.2%    286.1     0.7%     3.3%     0.0%     0.0%     9.4%     0.0%
+
+grep -E "Started|Finished|ALL DONE" /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/bc/e4d72586ca63075fb50f2288eb6e00/pi5_2.Log.progress.out
+# 已知的 pi5_2 时间线（来自 Log.final.out）：
+
+# 事件	时间
+# Started job	Jun 14 18:49:21
+# Started mapping	Jun 15 05:57:51（基因组加载花了 11 小时，当时资源争抢）
+# Finished	Jun 15 16:57:06
+# 总比对时间	~11 小时
+# 上面那条 grep 命令会显示 pass-1 和 pass-2 的具体分界时间。
+grep -E : /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/bc/e4d72586ca63075fb50f2288eb6e00/pi5_2.Log.progress.out
