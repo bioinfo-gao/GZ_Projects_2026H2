@@ -59,3 +59,44 @@ Anthropic 官方开发的代码工具：即 Claude Code CLI 和 Claude Code for 
 总结：如何保住剩下的余额？
 
 不要纠结于包月了，在真实的项目开发中，按量计费的 API 是唯一能获得最高权限（操作服务器）的途径。为了让这 100 美元撑满一个月，您必须依靠 .claudeignore 文件来阻断不必要的文件扫描。
+
+
+
+在服务器端，claude code 作为agent， 是不是有每月100美元的订阅制
+
+2:27 PM
+
+Searched the web, viewed a file
+Searched the web, viewed a file
+这个问题的答案比较复杂，而且最近（2026年6月15日）刚刚发生了重要变化，让我来详细解释：
+
+Claude Code 服务器端 Agent 的费用结构
+不是简单的"$100/月订阅制"
+订阅计划（Claude.ai 订阅，不是纯 API）：
+
+Claude Code 订阅有几个档位：Pro $20/月、Max 5x $100/月、Max 20x $200/月、Team Premium $100/人/月（最少5席）。 
+UsageBox
+
+⚠️ 2026年6月15日的重大变化
+从2026年6月15日起，编程式使用（Agent SDK、claude -p 无头模式等）从共享订阅额度池中分离出来，移到了一个独立的月度 credit 池，按完整 API 费率计费：
+
+Pro：$20/月 credit
+Max 5x：$100/月 credit
+Max 20x：$200/月 credit
+未使用的 credit 不会滚入下月。 
+Find Skill.ai
+
+也就是说，$100/月的 Max 5x 订阅包含的服务器端 Agent SDK credit 是 $100，但：
+
+如果超出 credit，行为取决于是否开启了超额使用（extra usage）。开启了则继续按标准 API 费率计费；未开启则 SDK 请求会暂停，直到下个月 credit 刷新。 
+Claude Fast
+
+如果用量超过 $200/月怎么办？
+如果每月 Agent 用量超过 $200，建议直接走 API（pay-as-you-go）。订阅超额的费用比直接购买 token 更贵，因为还要叠加订阅的固定费用。 
+Find Skill.ai
+
+服务器端 API 直接计费（无订阅）
+直接走 API 的 token 定价（每百万 token）：Haiku 4.5 输入 $1/输出 $5，Sonnet 4.6 输入 $3/输出 $15，Opus 4.8 输入 $5/输出 $25。 
+Morph
+
+总结： "$100/月" 对应的是 Max 5x 订阅，其中包含 $100 的 Agent SDK credit，用完后按 API 费率计费。如果你的服务器端 agent 用量较大（超过 $200/月），更推荐直接使用 API key 按量付费，而不是走订阅计划。
