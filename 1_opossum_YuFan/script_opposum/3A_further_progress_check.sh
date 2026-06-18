@@ -32,3 +32,12 @@ tail -3 /home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/work/8c/bfffa03
 # [-        ] NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:BAM_SORT_STATS_SAMTOOLS:BAM_STATS_SAMTOOLS:SAMTOOLS_IDXSTATS -
 # [-        ] NFCORE_RNASEQ:RNASEQ:QUANTIFY_STAR_SALMON:SALMON_QUANT                                       [  0%] 0 of 5
 
+状态更新
+样本	状态	进度
+pi5_4	✅ 完成	ALL DONE!
+NC_4	🔄 运行中	64.3M / ~70M reads (92%)
+NC_4 预计还需 约 1 小时完成（5.8M reads/hr，剩余 ~5.7M reads）。
+
+NC_4 完成后，最后一批 STAR（pi5_1 + NC_1）会自动启动，预计再需 8-12 小时。
+
+STAR_ALIGN 总进度：7/8 即将完成。
