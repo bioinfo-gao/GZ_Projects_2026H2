@@ -12,7 +12,7 @@ ls -la /Work_bio/lhn_work/cellranger 2>&1 | head -100
 Read Readme
 # Bash List BCR and Demo2 subdirectory structure
 
-find /Work_bio/lhn_work/cellranger/BCR /Work_bio/lhn_work/cellranger/Demo2 -maxdepth 3 | head -200
+find /Work_bio/lhn_work/cellranger/BCR    /Work_bio/lhn_work/cellranger/Demo2 -maxdepth 3 | head -200
 
 # /Work_bio/lhn_work/cellranger/BCR
 # /Work_bio/lhn_work/cellranger/Demo2
@@ -106,7 +106,10 @@ find /Work_bio/lhn_work/cellranger/BCR /Work_bio/lhn_work/cellranger/Demo2 -maxd
 # /Work_bio/lhn_work/cellranger/BCR/mouse/refdata/fasta
 # /Work_bio/lhn_work/cellranger/BCR/humanized_mouse/refdata/reference.json
 # /Work_bio/lhn_work/cellranger/BCR/humanized_mouse/refdata/fasta
+
 # Read work_for_ath.sh
+source /Work_bio/lhn_work/cellranger/work_for_ath.sh 
+
 # Bash Inspect job logs, reference data sizes, and output metrics
 # IN
 # echo "--- test.o (tail) ---"; tail -50 /Work_bio/lhn_work/cellranger/Demo2/test.o; echo; echo "--- test.e (tail) ---"; tail -30 /Work_bio/lhn_work/cellranger/Demo2/test.e; echo; echo "--- BCR refdata sizes ---"; du -sh /Work_bio/lhn_work/cellranger/BCR/*/refdata 2>&1; echo; echo "--- metrics_summary ---"; cat /Work_bio/lhn_work/cellranger/Demo2/N2-SI_TT_D1_23575YLT4/outs/metrics_summary.csv
