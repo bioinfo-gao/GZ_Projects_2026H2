@@ -1,0 +1,144 @@
+你自己跑的 demo 验证流程已经成功完成（Pipestance completed successfully!），原始 Demo2 结果完全没被改动。
+
+主要输出路径：
+
+总览报告：/Work_bio/gao_test/cellranger_demo_rerun/N2-SI_TT_D1_23575YLT4/outs/web_summary.html
+指标汇总：/Work_bio/gao_test/cellranger_demo_rerun/N2-SI_TT_D1_23575YLT4/outs/metrics_summary.csv
+克隆型结果：/Work_bio/gao_test/cellranger_demo_rerun/N2-SI_TT_D1_23575YLT4/outs/clonotypes.csv
+其余文件结构与之前讲解的同事原版输出一致（都在 outs/ 目录下）
+需要我对比一下这次跑出来的 metrics_summary.csv 和原版结果是否一致（验证降低资源参数后结果没有变化）吗？
+
+lee2py.aider-composer.Aider Composer.log
+需要
+Bash Compare metrics_summary.csv between original run and the gao rerun
+IN
+echo "=== 原版 (同事跑的，localcores=20 localmem=80) ==="
+cat /Work_bio/lhn_work/cellranger/Demo2/N2-SI_TT_D1_23575YLT4/outs/metrics_summary.csv
+echo
+echo "=== 我跑的 (localcores=6 localmem=12) ==="
+cat /Work_bio/gao_test/cellranger_demo_rerun/N2-SI_TT_D1_23575YLT4/outs/metrics_summary.csv
+
+OUT
+=== 原版 (同事跑的，localcores=20 localmem=80) ===
+Estimated Number of Cells,Mean Read Pairs per Cell,Number of Cells With Productive V-J Spanning Pair,Number of Read Pairs,Valid Barcodes,Q30 Bases in Barcode,Q30 Bases in RNA Read 1,Q30 Bases in RNA Read 2,Q30 Bases in UMI,Reads Mapped to Any V(D)J Gene,Reads Mapped to IGH,Reads Mapped to IGK,Reads Mapped to IGL,Mean Used Read Pairs per Cell,Fraction Reads in Cells,Median IGH UMIs per Cell,Median IGK UMIs per Cell,Median IGL UMIs per Cell,Cells With Productive V-J Spanning Pair,"Cells With Productive V-J Spanning (IGK, IGH) Pair","Cells With Productive V-J Spanning (IGL, IGH) Pair",Paired Clonotype Diversity,Cells With IGH Contig,Cells With IGK Contig,Cells With IGL Contig,Cells With CDR3-annotated IGH Contig,Cells With CDR3-annotated IGK Contig,Cells With CDR3-annotated IGL Contig,Cells With V-J Spanning IGH Contig,Cells With V-J Spanning IGK Contig,Cells With V-J Spanning IGL Contig,Cells With Productive IGH Contig,Cells With Productive IGK Contig,Cells With Productive IGL Contig
+"2,267","16,568","1,722","37,559,174",83.0%,95.5%,97.4%,95.3%,96.6%,73.9%,22.2%,51.7%,0.0%,"3,771",49.9%,60.0,1302.0,0.0,76.0%,76.0%,0.0%,217.06,80.5%,98.7%,0.0%,79.6%,98.7%,0.0%,79.4%,98.7%,0.0%,77.4%,98.5%,0.0%
+
+=== 我跑的 (localcores=6 localmem=12) ===
+Estimated Number of Cells,Mean Read Pairs per Cell,Number of Cells With Productive V-J Spanning Pair,Number of Read Pairs,Valid Barcodes,Q30 Bases in Barcode,Q30 Bases in RNA Read 1,Q30 Bases in RNA Read 2,Q30 Bases in UMI,Reads Mapped to Any V(D)J Gene,Reads Mapped to IGH,Reads Mapped to IGK,Reads Mapped to IGL,Mean Used Read Pairs per Cell,Fraction Reads in Cells,Median IGH UMIs per Cell,Median IGK UMIs per Cell,Median IGL UMIs per Cell,Cells With Productive V-J Spanning Pair,"Cells With Productive V-J Spanning (IGK, IGH) Pair","Cells With Productive V-J Spanning (IGL, IGH) Pair",Paired Clonotype Diversity,Cells With IGH Contig,Cells With IGK Contig,Cells With IGL Contig,Cells With CDR3-annotated IGH Contig,Cells With CDR3-annotated IGK Contig,Cells With CDR3-annotated IGL Contig,Cells With V-J Spanning IGH Contig,Cells With V-J Spanning IGK Contig,Cells With V-J Spanning IGL Contig,Cells With Productive IGH Contig,Cells With Productive IGK Contig,Cells With Productive IGL Contig
+"2,267","16,568","1,722","37,559,174",83.0%,95.5%,97.4%,95.3%,96.6%,73.9%,22.2%,51.7%,0.0%,"3,771",49.9%,60.0,1302.0,0.0,76.0%,76.0%,0.0%,217.06,80.5%,98.7%,0.0%,79.6%,98.7%,0.0%,79.4%,98.7%,0.0%,77.4%,98.5%,0.0%
+两次结果完全一致，逐列对比所有指标（细胞数2,267、Q30碱基占比、各链UMI中位数、克隆型多样性217.06等）完全相同，没有任何差异。
+
+这验证了一个重要结论：--localcores/--localmem 只影响运行速度和资源占用上限，不影响分析结果的确定性——Cell Ranger VDJ 的算法本身是确定性的，降低核数/内存只是让它跑得慢一点，结果完全可复现。
+
+可以再快速确认一下 clonotypes.csv 是否也完全一致（保险起见，因为它是更细粒度的结果）。
+
+Bash Diff clonotypes.csv between original and rerun to confirm identical results
+IN
+diff /Work_bio/lhn_work/cellranger/Demo2/N2-SI_TT_D1_23575YLT4/outs/clonotypes.csv /Work_bio/gao_test/cellranger_demo_rerun/N2-SI_TT_D1_23575YLT4/outs/clonotypes.csv && echo "完全一致，无差异"
+
+OUT
+完全一致，无差异
+clonotypes.csv（更细粒度的克隆型分组结果）也完全一致，无任何差异。
+
+结论：用降低后的资源参数（6核/12G）重跑这个 demo，得到的结果和同事原版（20核/80G）完全一致——证明流程是确定性、可复现的，资源参数调整不影响分析正确性，只影响运行速度。
+
+run_demo_gao.sh
+原版和降低资源消耗之后的，分别跑了多少时间
+Bash Inspect timestamps to determine original run's QC and VDJ runtime
+IN
+echo "=== 原版 test.e 首尾 ==="
+head -3 /Work_bio/lhn_work/cellranger/Demo2/test.e
+echo "..."
+grep -E "time used" /Work_bio/lhn_work/cellranger/Demo2/test.e
+echo
+echo "=== 原版文件时间戳 (QC输入->QC输出->最终outs) ==="
+stat -c '%y %n' /Work_bio/lhn_work/cellranger/Demo2/demo_fq/N2-SI_TT_D1_23575YLT4_S3_L003_R1_001.fastq.gz
+stat -c '%y %n' /Work_bio/lhn_work/cellranger/Demo2/01.QC/N2-SI_TT_D1_23575YLT4/N2-SI_TT_D1_23575YLT4.json
+stat -c '%y %n' /Work_bio/lhn_work/cellranger/Demo2/N2-SI_TT_D1_23575YLT4/outs/web_summary.html
+echo
+echo "=== 原版 test.o 首末时间戳 ==="
+grep -oE "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}" /Work_bio/lhn_work/cellranger/Demo2/test.o | head -1
+grep -oE "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}" /Work_bio/lhn_work/cellranger/Demo2/test.o | tail -1
+
+OUT
+=== 原版 test.e 首尾 ===
+nohup: ignoring input
+Read1 before filtering:
+total reads: 38859170
+...
+fastp v1.0.1, time used: 178 seconds
+
+=== 原版文件时间戳 (QC输入->QC输出->最终outs) ===
+2026-06-06 01:36:08.149929906 -0400 /Work_bio/lhn_work/cellranger/Demo2/demo_fq/N2-SI_TT_D1_23575YLT4_S3_L003_R1_001.fastq.gz
+2026-06-06 02:09:26.405370402 -0400 /Work_bio/lhn_work/cellranger/Demo2/01.QC/N2-SI_TT_D1_23575YLT4/N2-SI_TT_D1_23575YLT4.json
+2026-06-06 02:58:59.601602402 -0400 /Work_bio/lhn_work/cellranger/Demo2/N2-SI_TT_D1_23575YLT4/outs/web_summary.html
+
+=== 原版 test.o 首末时间戳 ===
+2026-06-06 06:09:32
+2026-06-06 07:00:50
+Bash Check timestamps for the gao rerun to compute its total runtime
+IN
+echo "=== 我的版本 run.log 时间戳范围 ==="
+grep -oE "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}" /Work_bio/gao_test/cellranger_demo_rerun/run.log | head -1
+grep -oE "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}" /Work_bio/gao_test/cellranger_demo_rerun/run.log | tail -1
+echo
+echo "=== 我的版本 fastp time used ==="
+grep -E "time used" /Work_bio/gao_test/cellranger_demo_rerun/run.log
+echo
+echo "=== 我的版本各阶段文件时间戳 ==="
+stat -c '%y %n' /Work_bio/gao_test/cellranger_demo_rerun/01.QC/N2-SI_TT_D1_23575YLT4/N2-SI_TT_D1_23575YLT4.json
+stat -c '%y %n' /Work_bio/gao_test/cellranger_demo_rerun/run_demo_rerun.sh
+stat -c '%y %n' /Work_bio/gao_test/cellranger_demo_rerun/N2-SI_TT_D1_23575YLT4/outs/web_summary.html
+echo
+echo "=== run.log 总行数附近第一条与最后一条非空时间线 ==="
+grep -n "runtime" /Work_bio/gao_test/cellranger_demo_rerun/run.log | head -1
+grep -n "runtime" /Work_bio/gao_test/cellranger_demo_rerun/run.log | tail -1
+
+OUT
+=== 我的版本 run.log 时间戳范围 ===
+2026-06-18 23:15:43
+2026-06-19 03:58:17
+
+=== 我的版本 fastp time used ===
+fastp v1.0.1, time used: 771 seconds
+
+=== 我的版本各阶段文件时间戳 ===
+2026-06-18 19:15:11.630710637 -0400 /Work_bio/gao_test/cellranger_demo_rerun/01.QC/N2-SI_TT_D1_23575YLT4/N2-SI_TT_D1_23575YLT4.json
+2026-06-18 19:01:51.368803578 -0400 /Work_bio/gao_test/cellranger_demo_rerun/run_demo_rerun.sh
+2026-06-18 23:58:05.016698268 -0400 /Work_bio/gao_test/cellranger_demo_rerun/N2-SI_TT_D1_23575YLT4/outs/web_summary.html
+
+=== run.log 总行数附近第一条与最后一条非空时间线 ===
+68:2026-06-18 23:15:43 [runtime] (ready)           ID.N2-SI_TT_D1_23575YLT4.SC_VDJ_ASSEMBLER_CS.SC_MULTI_CORE.LIBRARY_CELL_ANNOTATION_VIABLE_BUT_NOT_REQUESTED
+516:2026-06-19 03:58:08 [runtime] (chunks_complete) ID.N2-SI_TT_D1_23575YLT4.SC_VDJ_ASSEMBLER_CS.PICK_VDJ_OUTS
+Bash Compute precise durations for both runs
+IN
+python3 -c "
+from datetime import datetime
+qc_o_start='2026-06-06 02:06:00'
+qc_o_end='2026-06-06 02:09:26'
+vdj_o_start='2026-06-06 06:09:32'
+vdj_o_end='2026-06-06 07:00:50'
+qc_g_start='2026-06-18 23:01:51'
+qc_g_end='2026-06-18 23:15:11'
+vdj_g_start='2026-06-18 23:15:43'
+vdj_g_end='2026-06-19 03:58:08'
+fmt='%Y-%m-%d %H:%M:%S'
+def dur(a,b):
+    return (datetime.strptime(b,fmt)-datetime.strptime(a,fmt))
+print('原版 QC:', dur(qc_o_start,qc_o_end))
+print('原版 VDJ:', dur(vdj_o_start,vdj_o_end))
+print('原版 总计:', dur(qc_o_start,vdj_o_end))
+print('我的 QC:', dur(qc_g_start,qc_g_end))
+print('我的 VDJ:', dur(vdj_g_start,vdj_g_end))
+print('我的 总计:', dur(qc_g_start,vdj_g_end))
+"
+
+OUT
+原版 QC: 0:03:26
+原版 VDJ: 0:51:18
+
+原版 总计: 4:54:50
+
+我的 QC: 0:13:20
+我的 VDJ: 4:42:25
+我的 总计: 4:56:17
