@@ -163,23 +163,92 @@ Date of Submission: Jun 11, 2026
 
 ===============================================================================================================================================================================================
 ===============================================================================================================================================================================================
-Weekly Work Report
-Period: May 22, 2026 – May 28, 2026
-Prepared by: Gao Zhen
-Total Hours: 23 Hours
 
-Total Hours Worked: 23 Hours
-Date of Submission: May 28, 2026
+Weekly Work Report
+Period: Jun 11, 2026 – Jun 18, 2026
+Prepared by: Gao Zhen
+Total Hours:  14 hours  ==== + ==== 16 Hours (Do NOT count the 16 hours for Didelphis virginiana and AI tools)
+
+1. Jinpeng wgs project & explain Answering Systemic quality Questions (2.5 Hours)
+Analysis the sample quality and sytem review the quanlity of each samples.
+Answered multiple questions why each of samples are low quality.
+
+2. Identification of Chinese hamster species/cells and strains （5.5 hours）
+Downloade the CHO reference genome, annotation and peformed the 3 types of index 
+Determinated the sample belongs to Chinese hamster cells
+Determinated the sample belongs to CHO-K1 or CHO-s
+Communicated within internal team , Summary the results with evidence and Compose the Research Report for external customers. 
+
+3. Check all detailed outputs and Repeated the demo of li-henan single cell (2 Hours)
+run demon, check the details of outputs
+Compare the difference of the outputs with standard nf-core scRNAse.
+
+4. The integration of AI agent in Positron IDE (1 Hours)
+
+5. Report the details of rationale for projects within team (3 hours) 
+Report the serious techinical issue of for the Didelphis virginiana projects 
+Report the system requirement of 30x wgs and our server situation
+Suggest the modification of internal sample name and format
+
+========================== Do Not Count the following ============================= 
+6. Didelphis virginiana RNA-seq (7 Hours)
+Repeated the failed genome liftoff.
+Check all the details of outputs of each samples in each day 
+monitor the system burdon and other softwars running
+
+7. System review the price, the power, the performance of many AI tools (9 Hours)
+Including cli , sytem bar tools, standalone tools, the intergration front-end tools.
+The diffent token comsuption of each tool combination the cost
+Observe the quicky charging system and get the one mos cost-effective . 
+
+Total Hours Worked: 14 hours  ==== + ==== 16 Hours (Do NOT count the 16 hours for Didelphis virginiana and AI tools)
+Date of Submission: Jun 18, 2026
+
 
 ===============================================================================================================================================================================================
 ===============================================================================================================================================================================================
 Weekly Work Report
-Period: May 22, 2026 – May 28, 2026
+Period: Jun 11, 2026 – Jun 18, 2026
 Prepared by: Gao Zhen
-Total Hours: 23 Hours
 
-Total Hours Worked: 23 Hours
-Date of Submission: May 28, 2026
+Total Billable Hours: 14 Hours (Core Projects)
+Internal R&D / Tech Debt: 16 Hours ( Do Not count these two items please)
+
+1. WGS Project Quality Control & Root Cause Analysis (2.5 Hours)
+Performed systematic Quality Control (QC) for the Jinpeng WGS project.
+Provided technical justification and data-driven evidence explaining the low-quality metrics across multiple samples, 
+report the team the details of quality issues and the rationale.
+
+2. Genomic Profiling of Chinese Hamster Strains (5.5 Hours)
+Download for the CHO reference genome and annotations, and peformed the 3 types of index. 
+Successfully identified the cell line origin and differentiated between CHO-K1 and CHO-S strains.
+Authored a comprehensive Research Report for external clients, providing evidence-based verification of cell line authenticity.
+
+3. Single-Cell RNA-seq Benchmarking (2 Hours)
+Validated the Li-Henan single-cell pipeline by replicating demo runs and auditing detailed outputs.
+Conducted a gap analysis between the internal pipeline and the nf-core/scrnaseq standard, identifying specific output variances for future optimization.
+
+4. Workflow Optimization: AI Agent Integration (1 Hour)
+Integrated AI-driven coding agents into the Positron IDE to remote server management and R-based visualization workflows.
+
+5. Strategic Technical Briefing & Infrastructure Planning (3 Hours)
+Briefed the internal team on the high-complexity genomic challenges encountered in the Didelphis virginiana project.
+Defined system requirements for 30x WGS coverage and assessed current server capacity.
+Proposed a standardized modification for internal sample naming conventions and metadata formats to improve pipeline compatibility.
+
+========= [Internal Technical Tracking - do Not count hours] =========
+
+6. Didelphis virginiana RNA-seq Pipeline (7 Hours):
+Resolved failed genome liftoff tasks due to high scaffold fragmentation (500k+ scaffolds).
+Monitored system load and memory allocation and output everyday.
+Check all the details of outputs of each samples in each day.
+
+7. AI Ecosystem Performance & Cost Analysis (9 Hours):
+Benchmarked various AI Agents (CLI, IDE-integrated, standalone, local open-source AI tools, and frontend pair programming tools) for bioinformatic workflows.
+Conducted a cost-performance audit to identify the most cost-effective token-consumption model for long-running server-side tasks.
+
+Total Hours Worked: 14 hours  ==== + ==== 16 Hours (Do NOT count the 16 hours for Didelphis virginiana and AI tools)
+Date of Submission: Jun 18, 2026
 
 ===============================================================================================================================================================================================
 ===============================================================================================================================================================================================
