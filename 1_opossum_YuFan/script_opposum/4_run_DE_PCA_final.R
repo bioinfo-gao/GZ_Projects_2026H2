@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
-# env in bash 各种包装在了 DE_R45 环境 , Regular_bioinfo lacks ggrepel and ashr
-# mamba activate DE_R45                 # # mamba activate regular_bioinfo
+# env in bash 各种包装在了 DE_R45 环境  
+# mamba activate DE_R45               # mamba activate regular_bioinfo # === Regular_bioinfo lacks ggrepel and ashr ， by CC
 # [MODIFIED-0] 补充R解释器路径注释（运行环境用 mamba 创建，非 conda）
 # R interpreter: /Work_bio/gao/configs/.conda/envs/DE_R45/bin/R
 
@@ -35,11 +35,10 @@ library(tidyr)
 library(ggrepel)
 
 # ================= 1. 路径设置 =================
-# [MODIFIED-2] META_FILE 改为本项目的样本元数据表 op.csv (只有 NC / pi5 两组)，原为 zy.csv
-META_FILE <- "op.csv"                                                                                  #META_FILE   <- "Analysis_LZJ.csv"
+META_FILE  <- "op.csv"                 
 COUNT_FILE <- "../output_results/star_salmon/salmon.merged.gene_counts.tsv"
-TPM_FILE <- "../output_results/star_salmon/salmon.merged.gene_tpm.tsv"
-OUT_DIR <- "../Data_Analysis/DE_PCA_Results"
+TPM_FILE   <- "../output_results/star_salmon/salmon.merged.gene_tpm.tsv"
+OUT_DIR    <- "../Data_Analysis/DE_PCA_Results"
 dir.create(OUT_DIR, showWarnings = FALSE, recursive = TRUE)
 
 READS_DIR <- "../Data_Analysis/Reads"
@@ -51,7 +50,6 @@ dir.create(READS_DIR, showWarnings = FALSE, recursive = TRUE)
 READS_DIR
 
 # 定义需要拷贝的文件列表及其目标文件名
-# [MODIFIED] Updated file list to include specific source paths
 files_to_copy <- list(
   list(
     source = COUNT_FILE,
