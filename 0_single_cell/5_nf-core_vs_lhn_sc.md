@@ -1,0 +1,31 @@
+没有发现本地有跑过 nf-core/scrnaseq（看到的是你在跑的 nf-core/rnaseq，那个是bulk RNA-seq），所以下面是基于 nf-core/scrnaseq（业界标准的 Nextflow 单细胞流程）和同事这套 Cell Ranger VDJ 脚本的概念性对比，两者本质上解决的是不同问题，但你大概想知道"工程实现"上差在哪。
+
+一、本质目标不同（最核心的区别）
+同事的程序	nf-core/scrnaseq
+分析对象	免疫库（VDJ）测序数据——重建抗体/TCR的重链+轻链序列	标准转录组单细胞测序数据——统计每个细胞表达了哪些基因、表达多少
+核心问题	"这个细胞的抗体序列是什么？属于哪个克隆型？"	"这个细胞表达谱长什么样？属于哪种细胞类型/状态？"
+底层算法	序列组装（assembly）——把reads拼成完整的contig再比对回V(D)J参考	比对/伪比对+计数（alignment/pseudo-alignment + counting）——把reads比对到基因组/转录本，按UMI去重计数到基因
+核心工具	cellranger vdj（10x官方专有算法）	STARsolo / Salmon Alevin / Cell Ranger count / Kallisto-bustools（可选）
+最终输出	clonotypes.csv、CDR3序列、抗体contig（FASTA/BAM）	细胞×基因的count matrix（h5ad/Seurat格式），供聚类、UMAP、差异表达分析
+这两者甚至不是"互相替代"关系——如果一个10x实验同时测了基因表达库(GEX)和免疫库(VDJ)，正常流程是 GEX用 cellranger count/STARsolo做表达定量，VDJ用 cellranger vdj做免疫库分析，两者结果再合并解读（细胞表达谱 + 它的抗体序列）。同事这套程序只覆盖了VDJ那一半。
+
+二、工程实现/工作流编排上的差异
+维度	同事的脚本 (work_for_ath.sh)	nf-core/scrnaseq (Nextflow)
+编排引擎	纯 Bash 脚本，顺序执行 docker run 两次	Nextflow DSL2 工作流引擎，自动管理任务依赖图(DAG)、并行调度
+多样本处理	硬编码单个样本名 (sam=N2-SI_TT...)，跑多个样本要手动改脚本逐个跑	通过 samplesheet (CSV) 一次性声明所有样本，自动并行处理
+断点续跑	依赖 Cell Ranger 自身的 mrp（Martian Runtime）断点续跑能力，QC步骤(fastp)本身没有断点续跑	Nextflow 原生支持 -resume，任何一步失败/中断都能从断点继续，不用从头跑
+容器化粒度	整个流程用同一个巨大的 cellranger:10.0.0 镜像（4.6GB，里面塞了fastp+cellranger）	每个process可以用不同的容器（一个工具一个容器），更新某个工具不用重建整个大镜像
+资源调度	手动写死 --localcores=20 --localmem=80，不感知机器当前负载	可配置 executor（local/SLURM/SGE/AWS Batch/K8s），每个 process 可单独配置 cpu/mem，支持排队而非硬抢资源
+参数管理	改脚本里的变量（species=、sam=），容易出错、难版本控制	统一的 params/config 文件（nextflow.config），命令行 --input --outdir 等参数化调用，参数变更不用碰代码
+可复现性/版本管理	脚本本身没有版本号，依赖人工维护；镜像版本写死在脚本里	nf-core 流程有正式发布版本号（如 -r 3.15.1，正是你跑的rnaseq用的方式），CI测试保证每个release可复现
+日志/报告	各步骤日志分散在 test.o/test.e，需要自己翻看	自动生成 MultiQC 汇总报告、执行时间线(timeline)、资源使用报告
+社区维护	个人/团队自己写的一次性脚本，无社区review	nf-core 社区标准流程，经过同行评审、持续维护更新
+三、为什么会有这种差异（背景原因）
+VDJ分析本身不太需要"大规模并行调度"——一个样本通常就是两步（QC+组装），Cell Ranger 自己内部（Martian Runtime, 也是10x自研的小型workflow引擎）已经做了stage级别的并行和容错，所以没有强烈动机再套一层Nextflow。这也是为什么你看到 test.o 日志里有 [runtime] (ready) 这种东西——Cell Ranger 内部其实也有一个简化版的"工作流引擎"，只是没有Nextflow那么通用。
+
+VDJ的下游工具生态没有scRNAseq那么标准化——基因表达定量(scRNAseq)已经形成了STARsolo/Alevin/Cell Ranger等多种可互换工具+nf-core这种成熟社区流程；但VDJ免疫库重建几乎是 Cell Ranger vdj 的事实垒断（少数替代品如 TRUST4、MiXCR，但还没形成nf-core级别的标准化整合流程），所以"自己包一层Docker脚本调用Cell Ranger"是目前这个细分领域很常见的做法，并不是同事偷懒，而是这个领域工具链本身就没那么"Nextflow化"。
+
+使用场景不同——同事这套是"单样本demo验证用"，不需要排队调度多样本；如果你们以后要批量处理几十个样本的VDJ数据，确实值得考虑参考 nf-core 的模式（比如写个简单的Nextflow wrapper包住 cellranger vdj，用samplesheet批量管理，这样能解决"改脚本变量"这种手工易错的问题，并享受 -resume 断点续跑）。
+
+一句话总结
+同事这套程序是单一专用工具（Cell Ranger VDJ）的轻量Docker封装脚本，解决的是"重建抗体序列+克隆型"这个垂直问题；nf-core/scrnaseq是通用工作流引擎驱动的标准化基因表达定量流程，解决的是完全不同的"细胞表达谱定量"问题，且在工程上（多样本调度、断点续跑、资源管理、版本化）比手写脚本更工业化。两者不是同一类工具的"替代选择"，而是单细胞测序分析里两个不同分析模块用了不同复杂度的实现方式。
