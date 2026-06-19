@@ -1,8 +1,9 @@
 #!/usr/bin/env Rscript
 # env in bash 各种包装在了 DE_R45 环境 , Regular_bioinfo lacks ggrepel and ashr
 # mamba activate DE_R45                 # # mamba activate regular_bioinfo
+# R interpreter: /Work_bio/gao/configs/.conda/envs/DE_R45/bin/R
 
-setwd("/home/gao/projects_2026H1/2026_Item16_ZhenYan/scripts/")
+setwd("/home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/")
 getwd()
 # 跑完的输出文件：
 # DEG_Test_1vsControl.csv
@@ -32,7 +33,7 @@ library(tidyr)
 library(ggrepel)
 
 # ================= 1. 路径设置 =================
-META_FILE <- "zy.csv"                                                                                  #META_FILE   <- "Analysis_LZJ.csv"
+META_FILE <- "op.csv"                                                                                  #META_FILE   <- "Analysis_LZJ.csv"
 COUNT_FILE <- "../output_results/star_salmon/salmon.merged.gene_counts.tsv"
 TPM_FILE <- "../output_results/star_salmon/salmon.merged.gene_tpm.tsv"
 OUT_DIR <- "../Data_Analysis/DE_PCA_Results"
@@ -80,18 +81,8 @@ for (file_info in files_to_copy) {
 # Define path for Gene Annotation file
 # [MODIFIED] Added logic to copy gene annotation file
 
-GENE_ANNOTATION_SRC <- "/home/gao/projects_2026H1/Genes/human_Gene_annotation_20260202.xlsx"
-GENE_ANNOTATION_DEST <- file.path(
-  OUT_DIR,
-  "human_Gene_annotation_20260202.xlsx"
-)
-
-if (file.exists(GENE_ANNOTATION_SRC)) {
-  file.copy(GENE_ANNOTATION_SRC, GENE_ANNOTATION_DEST, overwrite = TRUE)
-  cat("✅ 基因注释文件已拷贝:", GENE_ANNOTATION_DEST, "\n")
-} else {
-  cat("⚠️  警告: 基因注释文件不存在，已跳过: ", GENE_ANNOTATION_SRC, "\n")
-}
+# 本项目物种为 Didelphis virginiana（opossum），无对应的人类基因注释表可用；
+# 基因注释改由 5B_annotation.R（GTF转注释表）单独处理，此处跳过。
 
 # 定义 QC 文件夹源路径 (请根据实际路径调整，例如 nf-core 的 multiqc 输出或自定义 QC 文件夹)
 # 假设 QC 文件夹位于项目根目录下的 output_results/multiqc 或当前目录下的 QC 文件夹
@@ -115,7 +106,7 @@ QC_SRC
 if (!is.null(QC_SRC)) {
   # Define the specific destination path for QC files
   # [MODIFIED] Hardcoded destination path for QC folder
-  QC_DEST_DIR <- "/home/gao/projects_2026H1/2026_Item16_ZhenYan/Data_Analysis/QC"
+  QC_DEST_DIR <- "/home/gao/projects_2026H2/1_opossum_YuFan/Data_Analysis/QC"
 
   # Create the destination directory if it doesn't exist
   dir.create(QC_DEST_DIR, showWarnings = FALSE, recursive = TRUE)
@@ -153,9 +144,9 @@ meta <- meta_raw %>%
   select(Group, `Name in File`) %>%       # 选择两列 “Group` 和 “Name in File”
   rename(sample_id = `Name in File`) %>%  # 重命名“Name in File”列名为 sample_id
   filter(!is.na(Group))           %>%       # 删除 Group 为 NA 的行
-  mutate(Group = factor(Group, levels = c("CTRL", "SMA4", "SMC2" , "ME13"))) # Group = factor(...): 将 Group 列转换为因子（factor）类型，并指定因子的水平（levels）顺序。 
+  mutate(Group = factor(Group, levels = c("NC", "pi5"))) # Group = factor(...): 将 Group 列转换为因子（factor）类型，并指定因子的水平（levels）顺序。
 
-# levels = c("CTRL", "SMA4", "SMC2" , "ME13"): 明确定义因子的水平顺序为："CTRL" (对照组) "SMA4" "SMC2" "ME13"
+# levels = c("NC", "pi5"): 明确定义因子的水平顺序为："NC" (对照组) "pi5" (处理组)
 # 为什么要这样做？
 # 在 R 中，因子的水平顺序非常重要，特别是在进行统计分析时：
 # DESeq2 差异表达分析会将第一个水平（"CTRL"）作为参照组（baseline/reference）
@@ -184,8 +175,7 @@ counts_mat <- counts_mat[, meta$sample_id]
 head(counts_mat)
 
 counts_mat <- round(counts_mat)                                   # to integer
-#keep <- rowSums(counts_mat >= 10) >= 4                            # 删除极低表达基因，至少在12/2 = 6个样本中至少有 10 个 reads才保留
-keep <- rowSums(counts_mat >= 10) >= 6                            # 删除极低表达基因，至少在12/2 = 6个样本中至少有 10 个 reads才保留
+keep <- rowSums(counts_mat >= 10) >= 4                            # 删除极低表达基因，至少在8/2 = 4个样本中至少有 10 个 reads才保留
 counts_mat <- counts_mat[keep, ]
 
 
@@ -241,12 +231,9 @@ cat("✅ PCA plot saved (optimized display)\n")
 # log2FC = log2(处理组均值 / 对照组均值)
 # 正数 = 在处理组(第一个)中上调；负数 = 在对照组(第二个)中上调
 
-# c("CTRL", "SMA4", "SMC2" , "ME13")
-contrasts <- list(                                                                                  #c("DMSO", "MQ-07-99", "VK-8-101" , "MQ-07-81")
-  c("Group", "SMA4", "CTRL"),               # ✅ Test_1 vs Control → log2FC>0 = Test_1 上调
-  c("Group", "SMC2", "CTRL"),               # ✅ Test_2 vs Control → log2FC>0 = Test_2 上调
-  c("Group", "ME13", "CTRL")               # ✅ Test_2 vs Control → log2FC>0 = Test_2 上调
-
+# c("NC", "pi5")
+contrasts <- list(
+  c("Group", "pi5", "NC")               # ✅ pi5 vs NC → log2FC>0 = pi5 上调
 )
 
 res_list <- list()
@@ -504,7 +491,7 @@ report_content <- c(
   "# Bioinformatics Analysis Report",
   "",
   paste("Date:", Sys.Date()),
-  paste("Project:", "2026_Item16_ZhenYan"),
+  paste("Project:", "1_opossum_YuFan (Didelphis virginiana, NC vs pi5)"),
   "",
   "## 1. Overview",
   "This report summarizes the differential expression analysis and quality control metrics for the RNA-seq dataset.",
