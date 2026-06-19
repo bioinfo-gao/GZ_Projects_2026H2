@@ -85,12 +85,18 @@ for (file_info in files_to_copy) {
 
 # 定义 QC 文件夹源路径 (请根据实际路径调整，例如 nf-core 的 multiqc 输出或自定义 QC 文件夹)
 # 假设 QC 文件夹位于项目根目录下的 output_results/multiqc 或当前目录下的 QC 文件夹
+# 按优先级列出几个"候选"路径——数组顺序即优先级顺序，排前面的优先采用：
+#   1. nf-core 流程生成的 multiqc 汇总报告（最理想，图文并茂）
+#   2. 没有multiqc时，退而求其次找 pipeline_info（流程运行记录，不是真正的QC报告，但好过没有）
+#   3. 都没有就找当前目录下手动放的 QC 文件夹
 QC_SOURCE_CANDIDATES <- c(
   "../output_results/multiqc",
   "../output_results/pipeline_info",
   "QC"
 )
 
+# 依次检查候选路径是否存在，命中第一个存在的就 break 退出循环，
+# 即"取优先级最高且实际存在的那一个"；如果一个都不存在，QC_SRC 保持 NULL
 QC_SRC <- NULL
 for (path in QC_SOURCE_CANDIDATES) {
   if (dir.exists(path)) {
@@ -102,6 +108,7 @@ for (path in QC_SOURCE_CANDIDATES) {
 QC_SRC
 
 
+# 只有找到了QC源目录才执行拷贝，否则跳过（见下面 else 分支）
 if (!is.null(QC_SRC)) {
   # Define the specific destination path for QC files
   # [MODIFIED-4] QC_DEST_DIR 改为本项目的 Data_Analysis/QC，原为 2026_Item16_ZhenYan/Data_Analysis/QC
@@ -112,6 +119,8 @@ if (!is.null(QC_SRC)) {
 
   # Copy contents of QC_SRC into QC_DEST_DIR
   # file.copy with recursive=TRUE copies the source folder INTO the destination if destination exists
+  # 注意 file.copy 在 to 已存在的情况下，是把 QC_SRC 这个文件夹本身作为子目录拷进 QC_DEST_DIR，
+  # 而不是把里面的文件铺平拷进去，所以实际产物会是 QC_DEST_DIR/multiqc/... 这样多一层目录
   success <- file.copy(
     from = QC_SRC,
     to = QC_DEST_DIR,
@@ -119,12 +128,14 @@ if (!is.null(QC_SRC)) {
     overwrite = TRUE
   )
 
+  # file.copy 对多文件/递归拷贝会返回一个逐项的逻辑向量，any(success)即"只要有一个文件拷成功就算成功"
   if (any(success)) {
     cat("✅ QC 文件夹已拷贝:", QC_SRC, "->", QC_DEST_DIR, "\n")
   } else {
     cat("⚠️  警告: QC 文件夹拷贝失败\n")
   }
 } else {
+  # 三个候选路径都不存在的情况，不报错、只警告，不影响后面DE分析继续跑
   cat("⚠️  警告: 未找到常见的 QC 文件夹路径，跳过拷贝\n")
 }
 
