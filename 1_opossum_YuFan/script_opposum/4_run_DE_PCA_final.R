@@ -1,8 +1,10 @@
 #!/usr/bin/env Rscript
 # env in bash 各种包装在了 DE_R45 环境 , Regular_bioinfo lacks ggrepel and ashr
 # mamba activate DE_R45                 # # mamba activate regular_bioinfo
+# [MODIFIED-0] 补充R解释器路径注释（运行环境用 mamba 创建，非 conda）
 # R interpreter: /Work_bio/gao/configs/.conda/envs/DE_R45/bin/R
 
+# [MODIFIED-1] setwd 改为本项目(opossum)的脚本目录，原为 2026_Item16_ZhenYan/scripts/
 setwd("/home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/")
 getwd()
 # 跑完的输出文件：
@@ -33,6 +35,7 @@ library(tidyr)
 library(ggrepel)
 
 # ================= 1. 路径设置 =================
+# [MODIFIED-2] META_FILE 改为本项目的样本元数据表 op.csv (只有 NC / pi5 两组)，原为 zy.csv
 META_FILE <- "op.csv"                                                                                  #META_FILE   <- "Analysis_LZJ.csv"
 COUNT_FILE <- "../output_results/star_salmon/salmon.merged.gene_counts.tsv"
 TPM_FILE <- "../output_results/star_salmon/salmon.merged.gene_tpm.tsv"
@@ -78,11 +81,9 @@ for (file_info in files_to_copy) {
 }
 
 # ================= 2.5 拷贝 QC 文件夹和生成分析报告 =================
-# Define path for Gene Annotation file
-# [MODIFIED] Added logic to copy gene annotation file
-
-# 本项目物种为 Didelphis virginiana（opossum），无对应的人类基因注释表可用；
-# 基因注释改由 5B_annotation.R（GTF转注释表）单独处理，此处跳过。
+# [MODIFIED-3] 删除了原来拷贝 human_Gene_annotation_20260202.xlsx 的代码块。
+# 原因：本项目物种为 Didelphis virginiana（opossum），人类基因注释表完全不适用；
+# 基因注释改由同目录下的 5B_annotation.R（GTF转注释表）单独处理，此处跳过。
 
 # 定义 QC 文件夹源路径 (请根据实际路径调整，例如 nf-core 的 multiqc 输出或自定义 QC 文件夹)
 # 假设 QC 文件夹位于项目根目录下的 output_results/multiqc 或当前目录下的 QC 文件夹
@@ -105,7 +106,7 @@ QC_SRC
 
 if (!is.null(QC_SRC)) {
   # Define the specific destination path for QC files
-  # [MODIFIED] Hardcoded destination path for QC folder
+  # [MODIFIED-4] QC_DEST_DIR 改为本项目的 Data_Analysis/QC，原为 2026_Item16_ZhenYan/Data_Analysis/QC
   QC_DEST_DIR <- "/home/gao/projects_2026H2/1_opossum_YuFan/Data_Analysis/QC"
 
   # Create the destination directory if it doesn't exist
@@ -144,6 +145,7 @@ meta <- meta_raw %>%
   select(Group, `Name in File`) %>%       # 选择两列 “Group` 和 “Name in File”
   rename(sample_id = `Name in File`) %>%  # 重命名“Name in File”列名为 sample_id
   filter(!is.na(Group))           %>%       # 删除 Group 为 NA 的行
+  # [MODIFIED-5] Group 水平改为本项目实际的两组 "NC","pi5"，原为 "CTRL","SMA4","SMC2","ME13" 四组
   mutate(Group = factor(Group, levels = c("NC", "pi5"))) # Group = factor(...): 将 Group 列转换为因子（factor）类型，并指定因子的水平（levels）顺序。
 
 # levels = c("NC", "pi5"): 明确定义因子的水平顺序为："NC" (对照组) "pi5" (处理组)
@@ -175,14 +177,16 @@ counts_mat <- counts_mat[, meta$sample_id]
 head(counts_mat)
 
 counts_mat <- round(counts_mat)                                   # to integer
+# [MODIFIED-6] 过滤阈值改为 >=4，原为 >=6（原项目12样本的一半=6；本项目共8样本，一半=4）
 keep <- rowSums(counts_mat >= 10) >= 4                            # 删除极低表达基因，至少在8/2 = 4个样本中至少有 10 个 reads才保留
 counts_mat <- counts_mat[keep, ]
 
 
+# [未修改/原项目遗留注释，与本项目(opossum)无关，仅保留作历史参考]
 # gene_id	gene_name	ME13-1	ME13-2	ME13-3	ME13-4	CTRL-1	CTRL-2	CTRL-3	CTRL-4	baseMean	log2FoldChange	lfcSE	pvalue	padj	sig (padj<0.05 & |log2FC|>=0.585)
 # ENSG00000278233.1	RNA5-8SN2	77.0	171.0	14.0	15.0	0.0	143.0	0.0	0.0	21.963509482370625	0.00668096140267046	0.35611598718401	0.851120448689936	0.9072712331508488	NS
 # 本实验出现一个意外结果，有一个基因在7个样本中均没有 reads，5个样本数中还不少。 导致 log2FC 很成问题计算，因此把该基因删除
-# 我的整体思想是最少一半的样本表达， 所以伤寒改成6 
+# 我的整体思想是最少一半的样本表达， 所以伤寒改成6
 
 
 head(counts_mat)
@@ -231,6 +235,7 @@ cat("✅ PCA plot saved (optimized display)\n")
 # log2FC = log2(处理组均值 / 对照组均值)
 # 正数 = 在处理组(第一个)中上调；负数 = 在对照组(第二个)中上调
 
+# [MODIFIED-7] contrasts 改为本项目唯一的一组对比 pi5 vs NC，原为 3组对比 (SMA4/SMC2/ME13 各 vs CTRL)
 # c("NC", "pi5")
 contrasts <- list(
   c("Group", "pi5", "NC")               # ✅ pi5 vs NC → log2FC>0 = pi5 上调
@@ -491,6 +496,7 @@ report_content <- c(
   "# Bioinformatics Analysis Report",
   "",
   paste("Date:", Sys.Date()),
+  # [MODIFIED-8] Project 名称改为本项目标识，原为 "2026_Item16_ZhenYan"
   paste("Project:", "1_opossum_YuFan (Didelphis virginiana, NC vs pi5)"),
   "",
   "## 1. Overview",
