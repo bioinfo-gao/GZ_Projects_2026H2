@@ -1,53 +1,54 @@
+#!/usr/bin/env Rscript
 # ==========================================================
-# 🌱 草图基因组 GTF 转客户友好型注释表 (一键运行)
-# 输入: T_majus.final.gtf
-# 输出: T_majus_Gene_Annotation_Client.csv
+# Liftoff GTF 转客户友好型基因注释表
+# 物种: Didelphis virginiana (opossum)
+# 输入: Didelphis_v.liftoff.gtf (来自 liftoff 同源迁移注释，无 "gene" feature，
+#       只有 transcript/exon/CDS，需按 gene_id 从 transcript 行聚合出基因坐标)
+# 输出: Didelphis_virginiana_Gene_Annotation_Client.csv
 # ==========================================================
 
 library(rtracklayer)
 library(dplyr)
 library(readr)
 
-GTF_FILE <- "T_majus.final.gtf"
-OUT_CSV  <- "T_majus_Gene_Annotation_Client.csv"
+setwd("/home/gao/projects_2026H2/1_opossum_YuFan/script_opposum/")
+
+GTF_FILE <- "/Work_bio/references/Didelphis_virginiana/mDidVir1/DNA_Zoo/Didelphis_v.liftoff.gtf"
+OUT_DIR  <- "../Data_Analysis"
+dir.create(OUT_DIR, showWarnings = FALSE, recursive = TRUE)
+OUT_CSV  <- file.path(OUT_DIR, "Didelphis_virginiana_Gene_Annotation_Client.csv")
 
 cat("📖 正在读取 GTF 注释文件...\n")
 gtf <- rtracklayer::import(GTF_FILE)
 df  <- as.data.frame(gtf)
 
 head(df)
+table(df$type)
 
-# # 仅保留基因级别注释
-# gene_df <- df %>% filter(type == "gene")
-
-# # 安全提取函数（兼容不同版本/质量的 GTF，缺失列自动补 NA 不报错）
-# safe_col <- function(df, name) {
-#   if (name %in% colnames(df)) df[[name]] else rep(NA_character_, nrow(df))
-# }
-
-# # 构建客户可读表格
-# client_df <- tibble(
-#   gene_id      = safe_col(gene_df, "gene_id"),
-#   gene_name    = safe_col(gene_df, "gene_name"),
-#   chromosome   = as.character(safe_col(gene_df, "seqnames")),
-#   start        = safe_col(gene_df, "start"),
-#   end          = safe_col(gene_df, "end"),
-#   strand       = as.character(safe_col(gene_df, "strand")),
-#   biotype      = safe_col(gene_df, "gene_biotype")
-# ) %>%
-#   mutate(
-#     # 若无 gene_name 或与 ID 完全一致，自动标记为预测基因
-#     gene_name = ifelse(is.na(gene_name) | gene_name == "" | gene_name == gene_id,
-#                        paste0("Predicted_", gene_id), gene_name),
-#     # 清理空白的生物类型
-#     biotype   = ifelse(is.na(biotype) | biotype == "", "unknown", biotype)
-#   ) %>%
-#   arrange(chromosome, start)
+# 该 GTF 没有 "gene" feature，按 transcript 行聚合到基因层级
+# （同一 gene_id 取最小 start / 最大 end，覆盖该基因全部转录本范围）
+client_df <- df %>%
+  filter(type == "transcript") %>%
+  group_by(gene_id) %>%
+  summarise(
+    gene_name   = first(gene_name),
+    chromosome  = first(as.character(seqnames)),
+    start       = min(start),
+    end         = max(end),
+    strand      = first(as.character(strand)),
+    n_transcripts = n()
+  ) %>%
+  ungroup() %>%
+  mutate(
+    # liftoff 注释里 gene_name 基本等于 gene_id；缺失时标记为预测基因
+    gene_name = ifelse(is.na(gene_name) | gene_name == "",
+                        paste0("Predicted_", gene_id), gene_name)
+  ) %>%
+  arrange(chromosome, start)
 
 # 导出
-#write_csv(client_df, OUT_CSV)
-write_csv(df, OUT_CSV)
+write_csv(client_df, OUT_CSV)
 
 cat("✅ 完成！客户友好型注释表已保存至:", OUT_CSV, "\n")
-cat("📊 共提取", nrow(client_df), "个基因位点\n")
+cat("📊 共提取", nrow(client_df), "个基因\n")
 cat("💡 提示: 可直接用 Excel 打开，或作为差异分析表的基因注释底表\n")
