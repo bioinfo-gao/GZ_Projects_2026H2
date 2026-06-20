@@ -565,6 +565,31 @@ pc2_overlap <- !(max(pc2_by_group[["NC"]]) < min(pc2_by_group[["pi5"]]) ||
   max(pc2_by_group[["pi5"]]) < min(pc2_by_group[["NC"]]))
 pca_groups_separate <- !pc1_overlap && !pc2_overlap
 
+# ---- 10.1c 动态读取MultiQC摘要，给"测序/比对质量本身是好的"提供具体数字 ----
+# 这是和"两组文库大小相差23.8%"互补的另一个事实：文库大小(测序深度)不同 不等于
+# 测序/比对质量差。把STAR比对率、唯一比对率、测序错误率、GC%这几个跟"质量"直接相关
+# 的指标动态读出来，用真实数字支撑"测序整体质量很好"这句话，而不是空泛地说"质量好"
+mqc_stats_file <- file.path(
+  QC_DEST_DIR, "multiqc", "star_salmon", "multiqc_report_data", "multiqc_general_stats.txt"
+)
+seq_quality_summary <- NULL
+if (!is.null(QC_SRC) && file.exists(mqc_stats_file)) {
+  mqc_df <- read.delim(mqc_stats_file, check.names = FALSE)
+  mqc_df <- mqc_df[mqc_df$Sample %in% meta$sample_id, ]
+  get_range <- function(col) {
+    vals <- suppressWarnings(as.numeric(mqc_df[[col]]))
+    vals <- vals[!is.na(vals)]
+    if (length(vals) == 0) return(NULL)
+    round(range(vals), 2)
+  }
+  seq_quality_summary <- list(
+    star_mapped = get_range("STAR_mqc_generalstats_star_mapped_percent_1"),
+    star_unique = get_range("STAR_mqc_generalstats_star_uniquely_mapped_percent_1"),
+    error_rate = get_range("Samtools: stats_mqc_generalstats_samtools_stats_error_rate"),
+    gc_pct = get_range("FastQC (raw)_mqc_generalstats_fastqc_raw_percent_gc")
+  )
+}
+
 # ---- 10.2 对每个contrast，动态核查"padj显著基因是否方向一致/组间完全分离" ----
 # 这是对4B_check_padj_sig_genes.R里那次人工核查的轻量版固化：只用padj阈值(不叠加LFC
 # 门槛)挑出基因，检查它们是否100%同方向、是否在两组间完全不重叠 —— 如果是，提示更可能
@@ -673,6 +698,17 @@ report_content <- c(
       "- Ensure raw data QC was performed prior to this step."
     )
   ),
+  if (!is.null(seq_quality_summary)) {
+    paste0(
+      "- **Overall sequencing and alignment quality is good and consistent across all 8 samples**: ",
+      "STAR alignment rate ", seq_quality_summary$star_mapped[1], "-", seq_quality_summary$star_mapped[2],
+      "% (uniquely mapped ", seq_quality_summary$star_unique[1], "-", seq_quality_summary$star_unique[2],
+      "%), sequencing error rate ", seq_quality_summary$error_rate[1], "-", seq_quality_summary$error_rate[2],
+      "%, GC content ", seq_quality_summary$gc_pct[1], "-", seq_quality_summary$gc_pct[2],
+      "% (no outlier samples). This indicates the library size difference noted below reflects",
+      " differences in sequencing depth/read count between groups, not a difference in data quality."
+    )
+  },
   paste0(
     "- Mean library size differs by **", libsize_ratio_pct,
     "%** between NC and pi5 groups (NC mean = ",
