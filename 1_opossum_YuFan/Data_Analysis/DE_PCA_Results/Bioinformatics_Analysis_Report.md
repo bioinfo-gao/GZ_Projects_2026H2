@@ -2,6 +2,7 @@
 
 Date: 2026-06-19
 Project: 1_opossum_YuFan (Didelphis virginiana, NC vs pi5)
+Author: Zhen Gao, PhD, Principal Bioinformatics Scientist
 
 ## 1. Overview
 This report summarizes the differential expression analysis and quality control metrics for the RNA-seq dataset.
@@ -10,7 +11,7 @@ This report summarizes the differential expression analysis and quality control 
 - **LFC shrinkage**: ashr (Stephens 2016) — adaptive, shrinkage strength depends on each gene's own standard error
 - **Significance Thresholds**: padj < 0.05, |log2FoldChange| >= 0.585
 
-## 2. ⚠️ Upstream Pipeline & Reference Caveats (本实验特有的背景局限，重要)
+## 2. Upstream Pipeline & Reference Caveats
 This experiment uses a non-model organism with a liftoff-transferred annotation, which has
 real implications for how the downstream DE results below should be interpreted.
 
@@ -28,19 +29,10 @@ real implications for how the downstream DE results below should be interpreted.
     `Didelphis_virginiana_Gene_Annotation_Client.csv` to identify which genes are affected.
 
 **Alignment (nf-core/rnaseq, aligner = star_salmon)**
-- **STAR was run with 2-pass mode (`--twopassMode Basic`)**, confirmed directly from the actual
-  per-sample `Log.out` command line in the nextflow work directories (e.g. sample NC_4: command
-  line shows `--twopassMode Basic`; a `_STARpass1` directory and a "Started 1st pass mapping"
-  entry in `Log.progress.out` are also present, both of which only exist for 2-pass runs).
-  Note: the pipeline's recorded `params_*.json` shows `star_twopass: false`, which does **not**
-  match what was actually run for this output — most likely this parameter was changed *after* the
-  alignment had already completed, and a later `-resume` reused the cached (2-pass) STAR_ALIGN
-  results rather than re-running with the new setting. The work-directory `Log.out` is the ground
-  truth here, not the params json.
-- Because 2-pass mode was actually used, splice junctions discovered across all samples in the
-  first pass were available when finalizing alignments — this partially compensates for the
-  liftoff annotation being an imperfect/incomplete transfer, by recovering species-specific or
-  novel junctions that the liftoff GTF alone would have missed.
+- STAR was run with 2-pass mode (`--twopassMode Basic`). Splice junctions discovered across all
+  samples in the first pass were used when finalizing alignments in the second pass, which
+  partially compensates for the liftoff annotation being an imperfect/incomplete transfer by
+  recovering species-specific or novel junctions that the liftoff GTF alone would have missed.
 - STAR filtering parameters were tightened for this non-model-organism / imperfect-reference
   scenario (see `local_optimized.config`): `--outFilterMultimapNmax 8`, `--alignSJoverhangMin 8`,
   `--alignSJDBoverhangMin 1`, `--outFilterMismatchNmax 2`.
@@ -57,7 +49,7 @@ real implications for how the downstream DE results below should be interpreted.
 - Of those, passing the |log2FC| >= 0.585 effect-size filter (final "sig" call): 0 (Up: 0, Down: 0)
 - Output File: `DEG_pi5_vs_NC.csv`
 
-## 5. ⚠️ Key Caveats Found During This Analysis (本次分析发现的需要谨慎解读的发现)
+## 5. Key Caveats Found During This Analysis
 
 - **PCA shows NC and pi5 samples do not separate** (see `PCA.pdf`) — samples from the two groups
   are interspersed rather than forming distinct clusters, indicating the overall transcriptome is
@@ -93,19 +85,24 @@ real implications for how the downstream DE results below should be interpreted.
   both become near-monotonic functions of the same underlying z-statistic.
 
 ### Heatmaps
-- **Files**: `Heatmap_top50_*.pdf`
-- **Description**: Hierarchical clustering of the top 50 differentially expressed genes for each contrast separately. Each heatmap shows expression patterns (Z-score normalized) for the most significant genes in that specific comparison across all samples.
+- No contrast had any gene passing both the padj and |log2FC| thresholds, so no `Heatmap_top50_*.pdf` files were produced.
+- **File**: `Heatmap_padj_sig_genes_pi5_vs_NC.pdf`
+- **Description**: Heatmap of all genes passing the padj threshold alone (regardless of fold-change size), generated separately for manual review.
+- **File**: `Check_padj_sig_genes_per_sample_dotplot.png`
+- **Description**: Per-sample normalized counts for the same genes, plotted individually, to verify that significance calls are not driven by a single outlier sample.
 
 ## 7. Generated Data Files
 
 | File Name | Description |
 | :--- | :--- |
-| `All_sample_gene_counts.tsv` | Raw count matrix for all samples. |
-| `All_sample_gene_tpm.tsv` | TPM (Transcripts Per Million) matrix, if available. |
-| `DEG_*.csv` | Detailed differential expression results including log2FC, p-values, and base means. |
+| `Bioinformatics_Analysis_Report.md` | This report. |
+| `All_sample_gene_counts.tsv` (in `Reads/`) | Raw count matrix for all samples. |
+| `All_sample_gene_tpm.tsv` (in `Reads/`) | TPM (Transcripts Per Million) matrix. |
+| `DEG_*.csv` | Differential expression results per contrast, including log2FC, p-values, and base means. |
 | `PCA.pdf` | PCA plot showing sample relationships. |
-| `Volcano_*.png` | Volcano plots for each contrast. |
-| `Heatmap_top50_*.pdf` | Heatmaps of top 50 DEGs for each contrast separately. |
-| `Didelphis_virginiana_Gene_Annotation_Client.csv` | Gene-level annotation derived from the liftoff GTF (see `5B_annotation.R`); check `n_loci` column for multi-locus genes. |
-| `Sig_padj_genes_manual_check.csv` / `Heatmap_padj_sig_genes_pi5_vs_NC.pdf` / `Check_padj_sig_genes_per_sample_dotplot.png` | Manual verification outputs for padj-significant genes (see `4B_check_padj_sig_genes.R`). |
-| `QC/` | Directory containing MultiQC and other QC reports. |
+| `Volcano_*.png` | Volcano plot for each contrast. |
+| `Heatmap_padj_sig_genes_pi5_vs_NC.pdf` | Heatmap of padj-significant genes (see Section 6). |
+| `Check_padj_sig_genes_per_sample_dotplot.png` | Per-sample verification plot for padj-significant genes (see Section 6). |
+| `Sig_padj_genes_manual_check.csv` | Per-sample raw and normalized counts plus pre/post-shrinkage log2FC for the padj-significant genes, for manual review. |
+| `Didelphis_virginiana_Gene_Annotation_Client.csv` (in `Data_Analysis/`) | Gene-level annotation derived from the liftoff GTF; see the `n_loci` column for genes with multiple candidate loci. |
+| `QC/` (in `Data_Analysis/`) | MultiQC and other QC reports. |
