@@ -11,6 +11,12 @@ This report summarizes the differential expression analysis and quality control 
 - **LFC shrinkage**: ashr (Stephens 2016) — adaptive, shrinkage strength depends on each gene's own standard error
 - **Significance Thresholds**: padj < 0.05, |log2FoldChange| >= 0.585 (approximately a 1.5-fold change in expression, up or down)
 
+**Key Finding**: Principal component analysis (PCA) shows that the NC and pi5 sample groups do
+not form separate, distinguishable clusters (PC1 explains 62% of variance, PC2 explains 15% of variance; samples from both groups overlap along both axes — see `PCA.pdf` and Section 6).
+This indicates that, overall, the transcriptomes of the two groups are highly similar at this
+sample size, and the differential expression results in Section 4 below should be read with that
+context in mind.
+
 ## 2. Upstream Pipeline & Reference Caveats
 This experiment uses a non-model organism with a liftoff-transferred annotation, which has
 real implications for how the downstream DE results below should be interpreted.
@@ -74,7 +80,8 @@ real implications for how the downstream DE results below should be interpreted.
 
 ### Principal Component Analysis (PCA)
 - **File**: `PCA.pdf`
-- **Description**: Shows sample clustering based on the top 500 most variable genes. Samples should cluster by biological group if the treatment effect is strong.
+- **Description**: Shows sample clustering based on the top 500 most variable genes.
+- **Result for this dataset**: NC and pi5 samples overlap and do not form separate clusters along PC1 (62% variance) and PC2 (15% variance) — see the Key Finding in Section 1 for what this means for interpreting the DE results below.
 
 ### Volcano Plots
 - **Files**: `Volcano_*.png`

@@ -624,6 +624,16 @@ report_content <- c(
     " (approximately a ", FOLD_CHANGE_THRESHOLD, "-fold change in expression, up or down)"
   ),
   "",
+  "**Key Finding**: Principal component analysis (PCA) shows that the NC and pi5 sample groups do",
+  paste0(
+    "not form separate, distinguishable clusters (PC1 explains ", percentVar[1],
+    "% of variance, PC2 explains ", percentVar[2],
+    "% of variance; samples from both groups overlap along both axes — see `PCA.pdf` and Section 6)."
+  ),
+  "This indicates that, overall, the transcriptomes of the two groups are highly similar at this",
+  "sample size, and the differential expression results in Section 4 below should be read with that",
+  "context in mind.",
+  "",
   "## 2. Upstream Pipeline & Reference Caveats",
   "This experiment uses a non-model organism with a liftoff-transferred annotation, which has",
   "real implications for how the downstream DE results below should be interpreted.",
@@ -750,7 +760,13 @@ report_content <- c(
   "",
   "### Principal Component Analysis (PCA)",
   "- **File**: `PCA.pdf`",
-  "- **Description**: Shows sample clustering based on the top 500 most variable genes. Samples should cluster by biological group if the treatment effect is strong.",
+  "- **Description**: Shows sample clustering based on the top 500 most variable genes.",
+  paste0(
+    "- **Result for this dataset**: NC and pi5 samples ",
+    ifelse(pca_groups_separate, "form separate clusters", "overlap and do not form separate clusters"),
+    " along PC1 (", percentVar[1], "% variance) and PC2 (", percentVar[2], "% variance) — see the",
+    " Key Finding in Section 1 for what this means for interpreting the DE results below."
+  ),
   "",
   "### Volcano Plots",
   "- **Files**: `Volcano_*.png`",
