@@ -639,8 +639,12 @@ deg_summary <- lapply(res_list, function(df) {
 report_content <- c(
   "# Bioinformatics Analysis Report",
   "",
-  paste("Date:", Sys.Date()),
-  paste("Project:", "1_opossum_YuFan (Didelphis virginiana, NC vs pi5)"),
+  # [MODIFIED] 行尾加两个空格 = Markdown的硬换行(hard line break)。
+  # 否则连续三行没有空行分隔，Markdown渲染器(如GitHub/VSCode预览)会把它们合并成一个段落、
+  # 挤在一行里显示，而不是按我们写的三行分别显示
+  # [MODIFIED] 顺序改为 Project / Date / Author，原来是 Date / Project / Author
+  paste0("Project: ", "1_opossum_YuFan (Didelphis virginiana, NC vs pi5)", "  "),
+  paste0("Date: ", Sys.Date(), "  "),
   "Author: Zhen Gao, PhD, Principal Bioinformatics Scientist",
   "",
   "## 1. Overview",

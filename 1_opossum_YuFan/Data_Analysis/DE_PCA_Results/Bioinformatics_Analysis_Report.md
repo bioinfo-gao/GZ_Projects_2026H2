@@ -1,7 +1,7 @@
 # Bioinformatics Analysis Report
 
-Date: 2026-06-19
-Project: 1_opossum_YuFan (Didelphis virginiana, NC vs pi5)
+Project: 1_opossum_YuFan (Didelphis virginiana, NC vs pi5)  
+Date: 2026-06-19  
 Author: Zhen Gao, PhD, Principal Bioinformatics Scientist
 
 ## 1. Overview
