@@ -245,18 +245,13 @@ cat("✅ PCA plot saved (optimized display)\n")
 # ✅ 对比组定义：c("分组列名", "处理组/分子", "对照组/分母")
 # log2FC = log2(处理组均值 / 对照组均值)
 # 正数 = 在处理组(第一个)中上调；负数 = 在对照组(第二个)中上调
-
-# [MODIFIED-7] contrasts 改为本项目唯一的一组对比 pi5 vs NC，原为 3组对比 (SMA4/SMC2/ME13 各 vs CTRL)
-# c("NC", "pi5")
 contrasts <- list(
   c("Group", "pi5", "NC")               # ✅ pi5 vs NC → log2FC>0 = pi5 上调
 )
 
-
 res_list <- list()
 
 # 只需要改这两行，其余地方会自动同步，不会再出现"标签和实际逻辑不一致"的问题。
-
 LFC_THRESHOLD <- 0.585          # log2(1.5) = 0.585
 PADJ_THRESHOLD <- 0.05          # 显著性 padj level
 
