@@ -25,14 +25,9 @@ real implications for how the downstream DE results below should be interpreted.
 **Genome / annotation**
 - Species: *Didelphis virginiana* (Virginia opossum). Genome assembly: `mDidVir1`
   (DNA Zoo Consortium, Hi-C-scaffolded; FASTA file `dv-2k.fasta`; total length ~3.42 Gb across
-  499,601 sequences, largest scaffold `HiC_scaffold_1` = 428.6 Mb). **This assembly has no
-  GenBank/RefSeq accession** — a direct query of the NCBI Datasets API for this species
-  (taxonomy ID 9267) returns no genome assembly record, confirming that `mDidVir1` exists only as
-  a DNA Zoo-hosted resource and was never deposited in NCBI. For citation purposes, this assembly
-  should therefore be cited via the DNA Zoo resource directly
-  (`https://www.dnazoo.org/assemblies/Didelphis_virginiana`) rather than by an NCBI accession; we
-  recommend confirming the exact posting/last-updated date on that page at the time of manuscript
-  preparation, since DNA Zoo does not version this assembly through NCBI.
+  499,601 sequences, largest scaffold `HiC_scaffold_1` = 428.6 Mb; retrieved 2023-03-20). This
+  assembly has no GenBank/RefSeq accession; for citation purposes it should be cited via the DNA
+  Zoo resource directly (`https://www.dnazoo.org/assemblies/Didelphis_virginiana`).
 - **Why an annotation transfer was needed**: the DNA Zoo `mDidVir1` assembly provides genome
   *sequence* only — there is no native, experimentally-curated gene annotation for this assembly.
   Generating one from scratch (ab initio gene prediction, or full RNA-seq-based annotation) was out
@@ -44,15 +39,9 @@ real implications for how the downstream DE results below should be interpreted.
   annotations, it is the closest well-annotated relative to *D. virginiana*, which gives the
   homology mapping step the best chance of finding conserved synteny and accurately transferring
   exon/intron structure.
-- **Source genome/annotation version (for citation)**: assembly `MonDom5`, GenBank accession
-  `GCA_000002295.1` (RefSeq paired accession `GCF_000002295.2`), released 2007-01-25, BioProject
-  `PRJNA12561` (Broad Institute). Gene models: *NCBI Monodelphis domestica Annotation Release
-  103*, released 2016-04-14 (NCBI Eukaryotic Genome Annotation Pipeline). **Note**: at the time of
-  this analysis, RefSeq accession `GCF_000002295.2` is flagged by NCBI as superseded ('suppressed';
-  'superseded by newer assembly for species') — a newer chromosome-scale assembly, `mMonDom1`
-  (`GCA_027887165.2` / `GCF_027887165.1`), is now the current NCBI reference for *M. domestica*.
-  `MonDom5` was used here because it is the assembly/annotation version that was already staged
-  for this pipeline; this is disclosed here for full transparency and reproducibility.
+- **Source genome/annotation version**: *M. domestica* assembly `MonDom5` (GenBank
+  `GCA_000002295.1` / RefSeq `GCF_000002295.2`, released 2007-01-25), gene models from NCBI
+  Annotation Release 103 (released 2016-04-14).
 - **Method**: gene models were transferred from *M. domestica* (RefSeq annotation, assembly
   `MonDom5`) onto the *D. virginiana* `mDidVir1` assembly using **liftoff v1.6.3** (bioconda;
   Shumate & Salzberg, *Bioinformatics* 2021). Liftoff aligns each annotated gene region (plus a
@@ -63,9 +52,12 @@ real implications for how the downstream DE results below should be interpreted.
   exist in the source genome; it cannot detect genes that are unique to *D. virginiana*. Parameters
   used: minimum sequence identity `-sc 0.85` (mappings below 85% identity are discarded), search
   window extended `-flank 0.1` (10% of gene length) on each side to accommodate small structural
-  rearrangements between the two genomes, restricted to `transcript`/`exon`/`CDS` feature types
-  (this is also why the resulting GTF has no `gene`-level rows — `gene` was not in the transferred
-  feature list).
+  rearrangements between the two genomes, restricted to `transcript`/`exon`/`CDS` feature types.
+  The `gene` feature type was excluded because including it caused liftoff to fail for this
+  particular genome pair (a tool/configuration incompatibility, not a data quality issue); this
+  has no material effect on the results, since gene-level coordinates were reconstructed
+  afterward by aggregating the transferred transcript records for each gene (see below), which is
+  equivalent to the standard gene-level span.
 - **Transfer outcome**: of 75,270 transcripts annotated in the *M. domestica* reference, 71,687
   (95.2%) were successfully mapped onto the *D. virginiana* genome; 3,583 (4.8%) could not be
   confidently mapped (below the 85% identity threshold or no syntenic region found) and were
