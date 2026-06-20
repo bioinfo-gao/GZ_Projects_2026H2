@@ -96,7 +96,7 @@ QC_SOURCE_CANDIDATES <- c(
 )
 
 # 依次检查候选路径是否存在，命中第一个存在的就 break 退出循环，
-# 即"取优先级最高且实际存在的那一个"；如果一个都不存在，QC_SRC 保持 NULL
+# 即"取优先级最高且实际存在的那一个"；如果一个都不存在，QC_SRC 保持 NULL <<< =========================== 理解关键点
 QC_SRC <- NULL
 for (path in QC_SOURCE_CANDIDATES) {
   if (dir.exists(path)) {
@@ -105,7 +105,8 @@ for (path in QC_SOURCE_CANDIDATES) {
   }
 }
 
-QC_SRC
+QC_SRC 
+# [1] "../output_results/multiqc"
 
 
 # 只有找到了QC源目录才执行拷贝，否则跳过（见下面 else 分支）
@@ -151,12 +152,15 @@ meta_raw
 #   rename(sample_id = `Name in File`) %>%
 #   filter(!is.na(Group)) 
 meta <- meta_raw %>%
-  select(Group, `Name in File`) %>%       # 选择两列 “Group` 和 “Name in File”
-  rename(sample_id = `Name in File`) %>%  # 重命名“Name in File”列名为 sample_id
+  select(Group, `Name in File`) %>%         # 选择两列 “Group` 和 “Name in File”
+  rename(sample_id = `Name in File`) %>%    # 重命名“Name in File”列名为 sample_id
   filter(!is.na(Group))           %>%       # 删除 Group 为 NA 的行
   # [MODIFIED-5] Group 水平改为本项目实际的两组 "NC","pi5"，原为 "CTRL","SMA4","SMC2","ME13" 四组
   mutate(Group = factor(Group, levels = c("NC", "pi5"))) # Group = factor(...): 将 Group 列转换为因子（factor）类型，并指定因子的水平（levels）顺序。
 
+meta
+
+# 前段代码解释：
 # levels = c("NC", "pi5"): 明确定义因子的水平顺序为："NC" (对照组) "pi5" (处理组)
 # 为什么要这样做？
 # 在 R 中，因子的水平顺序非常重要，特别是在进行统计分析时：
@@ -164,8 +168,6 @@ meta <- meta_raw %>%
 # 其他组会与参照组进行比较
 # 因子水平的顺序会影响结果的解释和可视化（如 PCA 图中组别的颜色顺序）
 # 通过显式设置 levels，可以确保分析的一致性和可重复性，避免 R 自动按字母顺序排列因子水平（那样可能会把 "CTRL" 排在后面）。
-
-meta
 
 cat("✅ 元数据加载完成，有效样本数:", nrow(meta), "\n")
 
@@ -249,6 +251,7 @@ cat("✅ PCA plot saved (optimized display)\n")
 contrasts <- list(
   c("Group", "pi5", "NC")               # ✅ pi5 vs NC → log2FC>0 = pi5 上调
 )
+
 
 res_list <- list()
 #sig_col_name <- "sig (padj<0.05 & |log2FC|>=1)" # log2(1.5) =0.585
