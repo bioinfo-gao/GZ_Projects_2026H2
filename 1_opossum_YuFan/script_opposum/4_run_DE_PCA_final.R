@@ -704,14 +704,17 @@ report_content <- c(
   #    (https://api.ncbi.nlm.nih.gov/datasets/v2/genome/taxon/9267/dataset_report)
   #    返回空结果 {} —— 确认该物种在NCBI GenBank/RefSeq里完全没有基因组组装记录，
   #    mDidVir1只存在于DNA Zoo自己的资源库(dnazoo.org)，没有GCA/GCF accession，
-  #    引用时应直接引用DNA Zoo页面而非NCBI。本地文件dv-2k.fasta的系统时间戳为
-  #    2023-03-20，只能作为下载时间的参考，不是DNA Zoo官方发布日期(该页面是
-  #    JS渲染的Wix站点，工具无法直接抓取确切发布日期，写论文前建议人工登陆
-  #    https://www.dnazoo.org/assemblies/Didelphis_virginiana 核实并截图存档)。
+  #    引用时应直接引用DNA Zoo页面而非NCBI。[修正] 本地文件dv-2k.fasta的系统
+  #    时间戳显示为2023-03-20，但这只是文件mtime——mtime在rsync/tar解压等传输
+  #    过程中会被保留下来，不代表"本机下载时间"，之前误判为下载时间是错误的；
+  #    用户确认本机实际下载时间是2026-06-11，报告里改用这个日期。DNA Zoo页面
+  #    本身是JS渲染的Wix站点，工具无法直接抓取其官方发布日期，写论文前如需要
+  #    更早的官方发布日期，建议人工登陆
+  #    https://www.dnazoo.org/assemblies/Didelphis_virginiana 核实。
   "**Genome / annotation**",
   "- Species: *Didelphis virginiana* (Virginia opossum). Genome assembly: `mDidVir1`",
   "  (DNA Zoo Consortium, Hi-C-scaffolded; FASTA file `dv-2k.fasta`; total length ~3.42 Gb across",
-  "  499,601 sequences, largest scaffold `HiC_scaffold_1` = 428.6 Mb; retrieved 2023-03-20). This",
+  "  499,601 sequences, largest scaffold `HiC_scaffold_1` = 428.6 Mb; downloaded 2026-06-11). This",
   "  assembly has no GenBank/RefSeq accession; for citation purposes it should be cited via the DNA",
   "  Zoo resource directly (`https://www.dnazoo.org/assemblies/Didelphis_virginiana`).",
   "- **Why an annotation transfer was needed**: the DNA Zoo `mDidVir1` assembly provides genome",

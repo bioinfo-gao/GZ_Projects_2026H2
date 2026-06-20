@@ -25,7 +25,7 @@ real implications for how the downstream DE results below should be interpreted.
 **Genome / annotation**
 - Species: *Didelphis virginiana* (Virginia opossum). Genome assembly: `mDidVir1`
   (DNA Zoo Consortium, Hi-C-scaffolded; FASTA file `dv-2k.fasta`; total length ~3.42 Gb across
-  499,601 sequences, largest scaffold `HiC_scaffold_1` = 428.6 Mb; retrieved 2023-03-20). This
+  499,601 sequences, largest scaffold `HiC_scaffold_1` = 428.6 Mb; downloaded 2026-06-11). This
   assembly has no GenBank/RefSeq accession; for citation purposes it should be cited via the DNA
   Zoo resource directly (`https://www.dnazoo.org/assemblies/Didelphis_virginiana`).
 - **Why an annotation transfer was needed**: the DNA Zoo `mDidVir1` assembly provides genome
