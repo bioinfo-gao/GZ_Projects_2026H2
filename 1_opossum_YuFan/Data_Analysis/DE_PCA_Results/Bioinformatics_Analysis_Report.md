@@ -9,7 +9,7 @@ This report summarizes the differential expression analysis and quality control 
 - **Analysis Tool**: DESeq2
 - **Normalization**: VST (Variance Stabilizing Transformation) for PCA/Heatmap, Median-of-ratios for DE
 - **LFC shrinkage**: ashr (Stephens 2016) — adaptive, shrinkage strength depends on each gene's own standard error
-- **Significance Thresholds**: padj < 0.05, |log2FoldChange| >= 0.585
+- **Significance Thresholds**: padj < 0.05, |log2FoldChange| >= 0.585 (approximately a 1.5-fold change in expression, up or down)
 
 ## 2. Upstream Pipeline & Reference Caveats
 This experiment uses a non-model organism with a liftoff-transferred annotation, which has
@@ -45,7 +45,7 @@ real implications for how the downstream DE results below should be interpreted.
 
 ### Contrast: pi5_vs_NC
 - Genes with padj < 0.05 (regardless of fold-change size): 16
-- Of those, passing the |log2FC| >= 0.585 effect-size filter (final "sig" call): 0 (Up: 0, Down: 0)
+- Of those, passing the |log2FC| >= 0.585 effect-size filter (i.e. at least a 1.5-fold change in expression; final "sig" call): 0 (Up: 0, Down: 0)
 - Output File: `DEG_pi5_vs_NC.csv`
 
 ## 5. Key Caveats Found During This Analysis
@@ -54,8 +54,8 @@ real implications for how the downstream DE results below should be interpreted.
   are interspersed rather than forming distinct clusters, indicating the overall transcriptome is
   highly similar between groups at this sample size.
 - **ashr shrinkage compresses nearly all effect sizes toward zero** (most genes' shrunk log2FC fall
-  within roughly ±0.1), consistent with the weak overall signal seen in the PCA. This is why the
-  `padj < 0.585`-filtered "sig" column above is much smaller than the raw padj-significant count.
+  within roughly ±0.1, i.e. well under a 1.1-fold change), consistent with the weak overall signal
+  seen in the PCA. This is why the |log2FC| >= 0.585 (~1.5-fold) filtered "sig" column above is much smaller than the raw padj-significant count.
 - For each contrast, the padj-significant genes (regardless of fold-change size) were checked for
   whether they are dominated by a single direction and/or show complete (non-overlapping) separation
   between groups despite modest effect sizes — a pattern that, when it affects *all* significant
