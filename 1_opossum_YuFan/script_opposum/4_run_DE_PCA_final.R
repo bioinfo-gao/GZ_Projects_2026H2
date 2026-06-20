@@ -593,6 +593,8 @@ report_content <- c(
   "",
   paste("Date:", Sys.Date()),
   paste("Project:", "1_opossum_YuFan (Didelphis virginiana, NC vs pi5)"),
+  # [MODIFIED] 加入Author信息，客户报告需要署名
+  "Author: Zhen Gao, PhD, Principal Bioinformatics Scientist",
   "",
   "## 1. Overview",
   "This report summarizes the differential expression analysis and quality control metrics for the RNA-seq dataset.",
@@ -604,7 +606,7 @@ report_content <- c(
     ", |log2FoldChange| >= ", LFC_THRESHOLD
   ),
   "",
-  "## 2. ⚠️ Upstream Pipeline & Reference Caveats (本实验特有的背景局限，重要)",
+  "## 2. Upstream Pipeline & Reference Caveats",
   "This experiment uses a non-model organism with a liftoff-transferred annotation, which has",
   "real implications for how the downstream DE results below should be interpreted.",
   "",
