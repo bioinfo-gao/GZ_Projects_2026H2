@@ -517,9 +517,67 @@ cat("✅ 所有热图生成完成\n")
 
 
 # ================= 10. 生成分析报告 =================
+# [MODIFIED-ALL] 本section整体重写。原模板是通用报告，没有任何针对本实验的特殊说明。
+# 本实验有几个非常特殊、足以影响结果解读的背景，原模板完全没有体现，必须写进报告：
+#   (a) 参考基因组注释是liftoff同源迁移注释，不是该物种原生注释，且发现415个基因有
+#       多locus歧义 (见 5B_annotation.R)
+#   (b) STAR比对实际跑的是2-pass模式（--twopassMode Basic）。
+#       [重要更正] params_*.json 里记录的 star_twopass:false 不可信 ——
+#       实际查看 work 目录下某样本(NC_4)的 Log.out，命令行明确写着
+#       `--twopassMode Basic`，且存在 _STARpass1 目录、Log.progress.out 里也写着
+#       "Started 1st pass mapping"，这些都是2-pass确实跑过的直接证据。
+#       推测是后来改了配置(改成false)但用 -resume 时复用了之前(true时)的缓存结果，
+#       所以params json记录的是"最新配置"而不是"实际产出这批结果时用的配置"。
+#       这提醒一个通用教训：nf-core/nextflow用-resume时，params json不能完全代表
+#       实际跑出这批数据用的参数，真正可信的证据是work目录里每个任务的Log.out/
+#       .command.sh —— 报告里必须按实际证据(2-pass已跑)来写，不能直接信params json。
+#   (c) 这次DE分析本身发现的几个统计层面的警示信号(PCA不分离、16个padj显著基因
+#       100%同方向且完全分离、文库大小两组相差~27%)，这些不是"bug"，是这批数据
+#       真实存在的、解读结果时必须考虑的局限性
+# 凡是能从脚本里已有的变量动态算出来的数字(文库大小比例、显著基因数、方向、分离情况)，
+# 全部动态计算，不写死数字，避免以后数据换了报告却没跟着更新。
 # Generate Bioinformatics_Analysis_Report.md with detailed content
 report_file <- file.path(OUT_DIR, "Bioinformatics_Analysis_Report.md")
 
+# ---- 10.1 动态计算文库大小差异 (回应 27% library size 差异这个发现) ----
+libsize_by_sample <- colSums(counts_raw[, meta$sample_id])
+libsize_by_group <- tapply(libsize_by_sample, meta$Group, mean)
+libsize_ratio_pct <- round(
+  100 * abs(libsize_by_group["NC"] - libsize_by_group["pi5"]) /
+    mean(libsize_by_group),
+  1
+)
+
+# ---- 10.2 对每个contrast，动态核查"padj显著基因是否方向一致/组间完全分离" ----
+# 这是对4B_check_padj_sig_genes.R里那次人工核查的轻量版固化：只用padj阈值(不叠加LFC
+# 门槛)挑出基因，检查它们是否100%同方向、是否在两组间完全不重叠 —— 如果是，提示更可能
+# 是系统性/技术性混杂因素，而不是16个独立的生物学调控事件
+check_sig_gene_pattern <- function(res_df, norm_mat, meta) {
+  sig <- res_df[!is.na(res_df$padj) & res_df$padj < PADJ_THRESHOLD, ]
+  if (nrow(sig) == 0) {
+    return(list(n = 0, note = "无padj显著基因，无需核查方向/分离情况"))
+  }
+  n_up <- sum(sig$log2FoldChange > 0)
+  n_down <- sum(sig$log2FoldChange < 0)
+  same_direction <- (n_up == 0 || n_down == 0)
+
+  groups <- levels(meta$Group)
+  sep_count <- 0
+  for (gid in sig$gene_id) {
+    vals_a <- norm_mat[gid, meta$sample_id[meta$Group == groups[1]]]
+    vals_b <- norm_mat[gid, meta$sample_id[meta$Group == groups[2]]]
+    if (max(vals_a) < min(vals_b) || max(vals_b) < min(vals_a)) sep_count <- sep_count + 1
+  }
+  list(
+    n = nrow(sig), n_up = n_up, n_down = n_down,
+    same_direction = same_direction, sep_count = sep_count
+  )
+}
+
+norm_counts_for_check <- counts(dds, normalized = TRUE)
+sig_pattern_by_contrast <- lapply(res_list, function(df) {
+  check_sig_gene_pattern(df, norm_counts_for_check, meta)
+})
 
 # Calculate summary statistics for the report
 deg_summary <- lapply(res_list, function(df) {
@@ -534,22 +592,55 @@ report_content <- c(
   "# Bioinformatics Analysis Report",
   "",
   paste("Date:", Sys.Date()),
-  # [MODIFIED-8] Project 名称改为本项目标识，原为 "2026_Item16_ZhenYan"
   paste("Project:", "1_opossum_YuFan (Didelphis virginiana, NC vs pi5)"),
   "",
   "## 1. Overview",
   "This report summarizes the differential expression analysis and quality control metrics for the RNA-seq dataset.",
   "- **Analysis Tool**: DESeq2",
   "- **Normalization**: VST (Variance Stabilizing Transformation) for PCA/Heatmap, Median-of-ratios for DE",
-  # [FIXED-BUG] 改为从 LFC_THRESHOLD / PADJ_THRESHOLD 变量动态生成，原来这里是硬编码
-  # "padj < 0.05, |log2FoldChange| >= 0.585"，跟实际判定阈值是独立写死的数字，
-  # 是同一类"标签和实际逻辑不一致"的bug
+  "- **LFC shrinkage**: ashr (Stephens 2016) — adaptive, shrinkage strength depends on each gene's own standard error",
   paste0(
     "- **Significance Thresholds**: padj < ", PADJ_THRESHOLD,
     ", |log2FoldChange| >= ", LFC_THRESHOLD
   ),
   "",
-  "## 2. Quality Control (QC)",
+  "## 2. ⚠️ Upstream Pipeline & Reference Caveats (本实验特有的背景局限，重要)",
+  "This experiment uses a non-model organism with a liftoff-transferred annotation, which has",
+  "real implications for how the downstream DE results below should be interpreted.",
+  "",
+  "**Genome / annotation**",
+  "- Species: *Didelphis virginiana* (opossum). Genome assembly: `dv-2k.fasta` (Hi-C scaffolded, DNA Zoo).",
+  "- Gene annotation: `Didelphis_v.liftoff.gtf` — produced by **liftoff** (homology-based annotation",
+  "  transfer from a related reference species), **not** a native, experimentally-curated annotation",
+  "  for this species. Two concrete data-quality issues were found and corrected during processing",
+  "  (see `5B_annotation.R`):",
+  "  - This GTF has **no `gene` feature rows** (only `transcript`/`exon`/`CDS`); gene-level coordinates",
+  "    had to be derived by aggregating transcript records.",
+  "  - **415 of 27,668 genes (~1.5%)** have their `gene_id` mapped to two different scaffolds",
+  "    simultaneously (a known liftoff artifact, e.g. paralog/repeat region mis-mapping). The locus",
+  "    with the most supporting transcripts was kept as primary; see the `n_loci` column in",
+  "    `Didelphis_virginiana_Gene_Annotation_Client.csv` to identify which genes are affected.",
+  "",
+  "**Alignment (nf-core/rnaseq, aligner = star_salmon)**",
+  "- **STAR was run with 2-pass mode (`--twopassMode Basic`)**, confirmed directly from the actual",
+  "  per-sample `Log.out` command line in the nextflow work directories (e.g. sample NC_4: command",
+  "  line shows `--twopassMode Basic`; a `_STARpass1` directory and a \"Started 1st pass mapping\"",
+  "  entry in `Log.progress.out` are also present, both of which only exist for 2-pass runs).",
+  "  Note: the pipeline's recorded `params_*.json` shows `star_twopass: false`, which does **not**",
+  "  match what was actually run for this output — most likely this parameter was changed *after* the",
+  "  alignment had already completed, and a later `-resume` reused the cached (2-pass) STAR_ALIGN",
+  "  results rather than re-running with the new setting. The work-directory `Log.out` is the ground",
+  "  truth here, not the params json.",
+  "- Because 2-pass mode was actually used, splice junctions discovered across all samples in the",
+  "  first pass were available when finalizing alignments — this partially compensates for the",
+  "  liftoff annotation being an imperfect/incomplete transfer, by recovering species-specific or",
+  "  novel junctions that the liftoff GTF alone would have missed.",
+  "- STAR filtering parameters were tightened for this non-model-organism / imperfect-reference",
+  "  scenario (see `local_optimized.config`): `--outFilterMultimapNmax 8`, `--alignSJoverhangMin 8`,",
+  "  `--alignSJDBoverhangMin 1`, `--outFilterMismatchNmax 2`.",
+  "- Quantification: Salmon, using a tx2gene mapping built from the same liftoff GTF.",
+  "",
+  "## 3. Quality Control (QC)",
   ifelse(
     !is.null(QC_SRC),
     c(
@@ -562,21 +653,35 @@ report_content <- c(
       "- Ensure raw data QC was performed prior to this step."
     )
   ),
+  paste0(
+    "- Mean library size differs by **", libsize_ratio_pct,
+    "%** between NC and pi5 groups (NC mean = ",
+    format(round(libsize_by_group["NC"]), big.mark = ","),
+    " reads; pi5 mean = ", format(round(libsize_by_group["pi5"]), big.mark = ","),
+    " reads). DESeq2 size-factor normalization corrects for this at the model-fitting level, but a",
+    " difference of this size is worth confirming against the sequencing/library-prep batch records",
+    " (see Section 6)."
+  ),
   "",
-  "## 3. Differential Expression Analysis Results",
+  "## 4. Differential Expression Analysis Results",
   ""
 )
 
 # Add DEG statistics for each contrast
-# heatmap ARE changed !, fold are log2(1.5)= 0.585
 for (name in names(deg_summary)) {
   stats <- deg_summary[[name]]
+  pat <- sig_pattern_by_contrast[[name]]
   report_content <- c(
     report_content,
     paste0("### Contrast: ", name),
-    paste0("- Total Significant Genes: ", stats$total),
-    paste0("  - Upregulated: ", stats$up),
-    paste0("  - Downregulated: ", stats$down),
+    paste0(
+      "- Genes with padj < ", PADJ_THRESHOLD, " (regardless of fold-change size): ",
+      pat$n
+    ),
+    paste0(
+      "- Of those, passing the |log2FC| >= ", LFC_THRESHOLD, " effect-size filter (final \"sig\" call): ",
+      stats$total, " (Up: ", stats$up, ", Down: ", stats$down, ")"
+    ),
     paste0("- Output File: `DEG_", name, ".csv`"),
     ""
   )
@@ -584,7 +689,50 @@ for (name in names(deg_summary)) {
 
 report_content <- c(
   report_content,
-  "## 4. Visualizations",
+  "## 5. ⚠️ Key Caveats Found During This Analysis (本次分析发现的需要谨慎解读的发现)",
+  "",
+  "- **PCA shows NC and pi5 samples do not separate** (see `PCA.pdf`) — samples from the two groups",
+  "  are interspersed rather than forming distinct clusters, indicating the overall transcriptome is",
+  "  highly similar between groups at this sample size.",
+  "- **ashr shrinkage compresses nearly all effect sizes toward zero** (most genes' shrunk log2FC fall",
+  "  within roughly ±0.1), consistent with the weak overall signal seen in the PCA. This is why the",
+  "  `padj < 0.585`-filtered \"sig\" column above is much smaller than the raw padj-significant count.",
+  "- For each contrast, the padj-significant genes (regardless of fold-change size) were checked for",
+  "  whether they are dominated by a single direction and/or show complete (non-overlapping) separation",
+  "  between groups despite modest effect sizes — a pattern that, when it affects *all* significant",
+  "  genes simultaneously, is more consistent with a shared systematic/technical confound (e.g. the",
+  "  library-size difference noted in Section 3, or an unmodeled batch effect correlated with Group)",
+  "  than with that many independent gene-specific biological regulation events:"
+)
+
+for (name in names(sig_pattern_by_contrast)) {
+  pat <- sig_pattern_by_contrast[[name]]
+  if (is.null(pat$n) || pat$n == 0) {
+    report_content <- c(report_content, paste0("  - ", name, ": ", pat$note))
+  } else {
+    report_content <- c(
+      report_content,
+      paste0(
+        "  - ", name, ": ", pat$n, " padj-significant genes — ",
+        pat$n_up, " up / ", pat$n_down, " down",
+        ifelse(pat$same_direction, " (**100% same direction**)", " (mixed directions, less concerning)"),
+        "; ", pat$sep_count, "/", pat$n,
+        " show complete non-overlapping separation between groups."
+      )
+    )
+  }
+}
+
+report_content <- c(
+  report_content,
+  "",
+  "- **Recommendation**: before treating any gene from this dataset's DEG list as a confirmed",
+  "  biological finding, (1) confirm with the wet-lab team whether NC and pi5 samples were",
+  "  prepared/sequenced in the same batch, (2) for genes of interest, inspect per-sample normalized",
+  "  counts individually (see `4B_check_padj_sig_genes.R` → `Check_padj_sig_genes_per_sample_dotplot.png`",
+  "  and `Sig_padj_genes_manual_check.csv`) rather than relying on padj/log2FC alone.",
+  "",
+  "## 6. Visualizations",
   "",
   "### Principal Component Analysis (PCA)",
   "- **File**: `PCA.pdf`",
@@ -593,31 +741,32 @@ report_content <- c(
   "### Volcano Plots",
   "- **Files**: `Volcano_*.png`",
   "- **Description**: Displays the relationship between statistical significance (-log10 padj) and magnitude of change (log2FC). Red points indicate upregulated genes, blue points indicate downregulated genes.",
+  "  Note: with strong ashr shrinkage and a narrow effect-size range, the two \"wings\" can look like a",
+  "  smooth curve rather than a scattered cloud — this is expected when shrunk LFC and -log10(padj)",
+  "  both become near-monotonic functions of the same underlying z-statistic.",
   "",
   "### Heatmaps",
   "- **Files**: `Heatmap_top50_*.pdf`",
   "- **Description**: Hierarchical clustering of the top 50 differentially expressed genes for each contrast separately. Each heatmap shows expression patterns (Z-score normalized) for the most significant genes in that specific comparison across all samples.",
   "",
-  "## 5. Generated Data Files",
+  "## 7. Generated Data Files",
   "",
   "| File Name | Description |",
   "| :--- | :--- |",
   "| `All_sample_gene_counts.tsv` | Raw count matrix for all samples. |",
   "| `All_sample_gene_tpm.tsv` | TPM (Transcripts Per Million) matrix, if available. |",
-  "| `Normalized_Counts.csv` | DESeq2 normalized counts for downstream analysis. |",
   "| `DEG_*.csv` | Detailed differential expression results including log2FC, p-values, and base means. |",
   "| `PCA.pdf` | PCA plot showing sample relationships. |",
   "| `Volcano_*.png` | Volcano plots for each contrast. |",
   "| `Heatmap_top50_*.pdf` | Heatmaps of top 50 DEGs for each contrast separately. |",
+  "| `Didelphis_virginiana_Gene_Annotation_Client.csv` | Gene-level annotation derived from the liftoff GTF (see `5B_annotation.R`); check `n_loci` column for multi-locus genes. |",
+  "| `Sig_padj_genes_manual_check.csv` / `Heatmap_padj_sig_genes_pi5_vs_NC.pdf` / `Check_padj_sig_genes_per_sample_dotplot.png` | Manual verification outputs for padj-significant genes (see `4B_check_padj_sig_genes.R`). |",
   ifelse(
     !is.null(QC_SRC),
     "| `QC/` | Directory containing MultiQC and other QC reports. |",
     "| `QC/` | Not available. |"
   )
 )
-
-# report_file
-# [1] "../Data_Analysis/DE_PCA_Results/Bioinformatics_Analysis_Report.md"
 
 writeLines(report_content, con = report_file)
 cat("✅ 详细分析报告已生成:", report_file, "\n")

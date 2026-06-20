@@ -7,20 +7,79 @@ Project: 1_opossum_YuFan (Didelphis virginiana, NC vs pi5)
 This report summarizes the differential expression analysis and quality control metrics for the RNA-seq dataset.
 - **Analysis Tool**: DESeq2
 - **Normalization**: VST (Variance Stabilizing Transformation) for PCA/Heatmap, Median-of-ratios for DE
+- **LFC shrinkage**: ashr (Stephens 2016) — adaptive, shrinkage strength depends on each gene's own standard error
 - **Significance Thresholds**: padj < 0.05, |log2FoldChange| >= 0.585
 
-## 2. Quality Control (QC)
-- QC reports were generated using MultiQC.
+## 2. ⚠️ Upstream Pipeline & Reference Caveats (本实验特有的背景局限，重要)
+This experiment uses a non-model organism with a liftoff-transferred annotation, which has
+real implications for how the downstream DE results below should be interpreted.
 
-## 3. Differential Expression Analysis Results
+**Genome / annotation**
+- Species: *Didelphis virginiana* (opossum). Genome assembly: `dv-2k.fasta` (Hi-C scaffolded, DNA Zoo).
+- Gene annotation: `Didelphis_v.liftoff.gtf` — produced by **liftoff** (homology-based annotation
+  transfer from a related reference species), **not** a native, experimentally-curated annotation
+  for this species. Two concrete data-quality issues were found and corrected during processing
+  (see `5B_annotation.R`):
+  - This GTF has **no `gene` feature rows** (only `transcript`/`exon`/`CDS`); gene-level coordinates
+    had to be derived by aggregating transcript records.
+  - **415 of 27,668 genes (~1.5%)** have their `gene_id` mapped to two different scaffolds
+    simultaneously (a known liftoff artifact, e.g. paralog/repeat region mis-mapping). The locus
+    with the most supporting transcripts was kept as primary; see the `n_loci` column in
+    `Didelphis_virginiana_Gene_Annotation_Client.csv` to identify which genes are affected.
+
+**Alignment (nf-core/rnaseq, aligner = star_salmon)**
+- **STAR was run with 2-pass mode (`--twopassMode Basic`)**, confirmed directly from the actual
+  per-sample `Log.out` command line in the nextflow work directories (e.g. sample NC_4: command
+  line shows `--twopassMode Basic`; a `_STARpass1` directory and a "Started 1st pass mapping"
+  entry in `Log.progress.out` are also present, both of which only exist for 2-pass runs).
+  Note: the pipeline's recorded `params_*.json` shows `star_twopass: false`, which does **not**
+  match what was actually run for this output — most likely this parameter was changed *after* the
+  alignment had already completed, and a later `-resume` reused the cached (2-pass) STAR_ALIGN
+  results rather than re-running with the new setting. The work-directory `Log.out` is the ground
+  truth here, not the params json.
+- Because 2-pass mode was actually used, splice junctions discovered across all samples in the
+  first pass were available when finalizing alignments — this partially compensates for the
+  liftoff annotation being an imperfect/incomplete transfer, by recovering species-specific or
+  novel junctions that the liftoff GTF alone would have missed.
+- STAR filtering parameters were tightened for this non-model-organism / imperfect-reference
+  scenario (see `local_optimized.config`): `--outFilterMultimapNmax 8`, `--alignSJoverhangMin 8`,
+  `--alignSJDBoverhangMin 1`, `--outFilterMismatchNmax 2`.
+- Quantification: Salmon, using a tx2gene mapping built from the same liftoff GTF.
+
+## 3. Quality Control (QC)
+- QC reports were generated using MultiQC.
+- Mean library size differs by **23.8%** between NC and pi5 groups (NC mean = 43,729,998 reads; pi5 mean = 34,437,340 reads). DESeq2 size-factor normalization corrects for this at the model-fitting level, but a difference of this size is worth confirming against the sequencing/library-prep batch records (see Section 6).
+
+## 4. Differential Expression Analysis Results
 
 ### Contrast: pi5_vs_NC
-- Total Significant Genes: 0
-  - Upregulated: 0
-  - Downregulated: 0
+- Genes with padj < 0.05 (regardless of fold-change size): 16
+- Of those, passing the |log2FC| >= 0.585 effect-size filter (final "sig" call): 0 (Up: 0, Down: 0)
 - Output File: `DEG_pi5_vs_NC.csv`
 
-## 4. Visualizations
+## 5. ⚠️ Key Caveats Found During This Analysis (本次分析发现的需要谨慎解读的发现)
+
+- **PCA shows NC and pi5 samples do not separate** (see `PCA.pdf`) — samples from the two groups
+  are interspersed rather than forming distinct clusters, indicating the overall transcriptome is
+  highly similar between groups at this sample size.
+- **ashr shrinkage compresses nearly all effect sizes toward zero** (most genes' shrunk log2FC fall
+  within roughly ±0.1), consistent with the weak overall signal seen in the PCA. This is why the
+  `padj < 0.585`-filtered "sig" column above is much smaller than the raw padj-significant count.
+- For each contrast, the padj-significant genes (regardless of fold-change size) were checked for
+  whether they are dominated by a single direction and/or show complete (non-overlapping) separation
+  between groups despite modest effect sizes — a pattern that, when it affects *all* significant
+  genes simultaneously, is more consistent with a shared systematic/technical confound (e.g. the
+  library-size difference noted in Section 3, or an unmodeled batch effect correlated with Group)
+  than with that many independent gene-specific biological regulation events:
+  - pi5_vs_NC: 16 padj-significant genes — 16 up / 0 down (**100% same direction**); 16/16 show complete non-overlapping separation between groups.
+
+- **Recommendation**: before treating any gene from this dataset's DEG list as a confirmed
+  biological finding, (1) confirm with the wet-lab team whether NC and pi5 samples were
+  prepared/sequenced in the same batch, (2) for genes of interest, inspect per-sample normalized
+  counts individually (see `4B_check_padj_sig_genes.R` → `Check_padj_sig_genes_per_sample_dotplot.png`
+  and `Sig_padj_genes_manual_check.csv`) rather than relying on padj/log2FC alone.
+
+## 6. Visualizations
 
 ### Principal Component Analysis (PCA)
 - **File**: `PCA.pdf`
@@ -29,20 +88,24 @@ This report summarizes the differential expression analysis and quality control 
 ### Volcano Plots
 - **Files**: `Volcano_*.png`
 - **Description**: Displays the relationship between statistical significance (-log10 padj) and magnitude of change (log2FC). Red points indicate upregulated genes, blue points indicate downregulated genes.
+  Note: with strong ashr shrinkage and a narrow effect-size range, the two "wings" can look like a
+  smooth curve rather than a scattered cloud — this is expected when shrunk LFC and -log10(padj)
+  both become near-monotonic functions of the same underlying z-statistic.
 
 ### Heatmaps
 - **Files**: `Heatmap_top50_*.pdf`
 - **Description**: Hierarchical clustering of the top 50 differentially expressed genes for each contrast separately. Each heatmap shows expression patterns (Z-score normalized) for the most significant genes in that specific comparison across all samples.
 
-## 5. Generated Data Files
+## 7. Generated Data Files
 
 | File Name | Description |
 | :--- | :--- |
 | `All_sample_gene_counts.tsv` | Raw count matrix for all samples. |
 | `All_sample_gene_tpm.tsv` | TPM (Transcripts Per Million) matrix, if available. |
-| `Normalized_Counts.csv` | DESeq2 normalized counts for downstream analysis. |
 | `DEG_*.csv` | Detailed differential expression results including log2FC, p-values, and base means. |
 | `PCA.pdf` | PCA plot showing sample relationships. |
 | `Volcano_*.png` | Volcano plots for each contrast. |
 | `Heatmap_top50_*.pdf` | Heatmaps of top 50 DEGs for each contrast separately. |
+| `Didelphis_virginiana_Gene_Annotation_Client.csv` | Gene-level annotation derived from the liftoff GTF (see `5B_annotation.R`); check `n_loci` column for multi-locus genes. |
+| `Sig_padj_genes_manual_check.csv` / `Heatmap_padj_sig_genes_pi5_vs_NC.pdf` / `Check_padj_sig_genes_per_sample_dotplot.png` | Manual verification outputs for padj-significant genes (see `4B_check_padj_sig_genes.R`). |
 | `QC/` | Directory containing MultiQC and other QC reports. |
