@@ -1,7 +1,7 @@
 # Bioinformatics Analysis Report
 
 Project: 1_opossum_YuFan (Didelphis virginiana, NC vs pi5)  
-Date: 2026-06-19  
+Date: 2026-06-20  
 by Zhen Gao, PhD  
 Principal Bioinformatics Scientist, Athenomics
 
@@ -23,16 +23,63 @@ This experiment uses a non-model organism with a liftoff-transferred annotation,
 real implications for how the downstream DE results below should be interpreted.
 
 **Genome / annotation**
-- Species: *Didelphis virginiana* (opossum). Genome assembly: `dv-2k.fasta` (Hi-C scaffolded, DNA Zoo).
-- Gene annotation: `Didelphis_v.liftoff.gtf` — produced by **liftoff** (homology-based annotation
-  transfer from a related reference species), **not** a native, experimentally-curated annotation
-  for this species. Two characteristics of this annotation should be noted:
-  - This liftoff GTF has only `transcript`/`exon`/`CDS` feature rows (no `gene` rows); gene-level
-    coordinates were derived by aggregating transcript records.
+- Species: *Didelphis virginiana* (Virginia opossum). Genome assembly: `mDidVir1`
+  (DNA Zoo Consortium, Hi-C-scaffolded; FASTA file `dv-2k.fasta`; total length ~3.42 Gb across
+  499,601 sequences, largest scaffold `HiC_scaffold_1` = 428.6 Mb). **This assembly has no
+  GenBank/RefSeq accession** — a direct query of the NCBI Datasets API for this species
+  (taxonomy ID 9267) returns no genome assembly record, confirming that `mDidVir1` exists only as
+  a DNA Zoo-hosted resource and was never deposited in NCBI. For citation purposes, this assembly
+  should therefore be cited via the DNA Zoo resource directly
+  (`https://www.dnazoo.org/assemblies/Didelphis_virginiana`) rather than by an NCBI accession; we
+  recommend confirming the exact posting/last-updated date on that page at the time of manuscript
+  preparation, since DNA Zoo does not version this assembly through NCBI.
+- **Why an annotation transfer was needed**: the DNA Zoo `mDidVir1` assembly provides genome
+  *sequence* only — there is no native, experimentally-curated gene annotation for this assembly.
+  Generating one from scratch (ab initio gene prediction, or full RNA-seq-based annotation) was out
+  of scope for this project, so a homology-based annotation transfer from a well-annotated relative
+  species was used instead.
+- **Why *Monodelphis domestica* was chosen as the source**: *M. domestica* (gray short-tailed
+  opossum) is, like *D. virginiana*, a New World marsupial (family Didelphidae) with a mature,
+  NCBI RefSeq-curated genome annotation. Within the marsupials with high-quality reference
+  annotations, it is the closest well-annotated relative to *D. virginiana*, which gives the
+  homology mapping step the best chance of finding conserved synteny and accurately transferring
+  exon/intron structure.
+- **Source genome/annotation version (for citation)**: assembly `MonDom5`, GenBank accession
+  `GCA_000002295.1` (RefSeq paired accession `GCF_000002295.2`), released 2007-01-25, BioProject
+  `PRJNA12561` (Broad Institute). Gene models: *NCBI Monodelphis domestica Annotation Release
+  103*, released 2016-04-14 (NCBI Eukaryotic Genome Annotation Pipeline). **Note**: at the time of
+  this analysis, RefSeq accession `GCF_000002295.2` is flagged by NCBI as superseded ('suppressed';
+  'superseded by newer assembly for species') — a newer chromosome-scale assembly, `mMonDom1`
+  (`GCA_027887165.2` / `GCF_027887165.1`), is now the current NCBI reference for *M. domestica*.
+  `MonDom5` was used here because it is the assembly/annotation version that was already staged
+  for this pipeline; this is disclosed here for full transparency and reproducibility.
+- **Method**: gene models were transferred from *M. domestica* (RefSeq annotation, assembly
+  `MonDom5`) onto the *D. virginiana* `mDidVir1` assembly using **liftoff v1.6.3** (bioconda;
+  Shumate & Salzberg, *Bioinformatics* 2021). Liftoff aligns each annotated gene region (plus a
+  flanking margin) from the source genome directly onto the target genome by sequence homology,
+  then maps the exact exon/intron structure onto the matching target sequence rather than
+  predicting genes from scratch
+  — this preserves the source annotation's structure but means liftoff can only transfer genes that
+  exist in the source genome; it cannot detect genes that are unique to *D. virginiana*. Parameters
+  used: minimum sequence identity `-sc 0.85` (mappings below 85% identity are discarded), search
+  window extended `-flank 0.1` (10% of gene length) on each side to accommodate small structural
+  rearrangements between the two genomes, restricted to `transcript`/`exon`/`CDS` feature types
+  (this is also why the resulting GTF has no `gene`-level rows — `gene` was not in the transferred
+  feature list).
+- **Transfer outcome**: of 75,270 transcripts annotated in the *M. domestica* reference, 71,687
+  (95.2%) were successfully mapped onto the *D. virginiana* genome; 3,583 (4.8%) could not be
+  confidently mapped (below the 85% identity threshold or no syntenic region found) and were
+  excluded.
+- Two characteristics of the resulting annotation should be noted when interpreting gene-level
+  results below:
+  - This liftoff GTF has only `transcript`/`exon`/`CDS` feature rows (no `gene` rows, as noted
+    above); gene-level coordinates were derived by aggregating transcript records.
   - **415 of 27,668 genes (~1.5%)** have their `gene_id` mapped to two different scaffolds
-    simultaneously (a known liftoff artifact, e.g. paralog/repeat region mis-mapping). The locus
-    with the most supporting transcripts was kept as primary; see the `n_loci` column in
-    `Didelphis_virginiana_Gene_Annotation_Client.csv` to identify which genes are affected.
+    simultaneously (a known liftoff artifact: when a gene has a paralog, repeat-region match, or
+    ambiguous syntenic candidate elsewhere in the target genome, liftoff can place a copy at more
+    than one locus). The locus with the most supporting transcripts was kept as primary; see the
+    `n_loci` column in `Didelphis_virginiana_Gene_Annotation_Client.csv` to identify which genes
+    are affected.
 
 **Alignment (nf-core/rnaseq, aligner = star_salmon)**
 - STAR was run with 2-pass mode (`--twopassMode Basic`). Splice junctions discovered across all
