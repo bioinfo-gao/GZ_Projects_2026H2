@@ -254,8 +254,22 @@ contrasts <- list(
 
 
 res_list <- list()
-#sig_col_name <- "sig (padj<0.05 & |log2FC|>=1)" # log2(1.5) =0.585
-sig_col_name <- "sig (padj<0.05 & |log2FC|>=0.585)" # log2(1.5) =0.585
+# [FIXED-BUG] 原脚本把"判定阈值"硬编码成了好几份：sig_col_name 的字符串标签里写的是 0.585，
+# 下面 case_when 里实际用的是 1，report里另一处文字又单独写了一份 0.585。三处数值互相不同步，
+# 导致列名说"阈值是0.585"，但实际判定用的是阈值1 —— 这就是上次"significant DEGs: 0"的根因之一。
+# [MODIFIED] 进一步把 padj 阈值也纳入统一管理：客户可能调整的不只是 fold-change 倍数，
+# 显著性 p值标准(padj)同样可能要按需调整，两者都属于"判定标准"，必须放在一起改、一起生效，
+# 否则只改一个会出现"标签说padj<0.05，但客户实际想要的是0.01"这种新的不一致。
+# 现改为只在这两行定义阈值(LFC_THRESHOLD / PADJ_THRESHOLD)，下面 sig_col_name 的文字、
+# case_when 的判定逻辑、以及最后报告里的文字说明，全部从这两个变量派生。以后客户要改判定
+# 标准，只需要改这两行，其余地方会自动同步，不会再出现"标签和实际逻辑不一致"的问题。
+
+LFC_THRESHOLD <- 0.585 # log2(1.5) = 0.585，对应 1.5倍 fold change；可按客户要求修改
+PADJ_THRESHOLD <- 0.05 # 显著性 padj 阈值；可按客户要求修改 (如 0.01、0.1 等)
+
+sig_col_name <- paste0(
+  "sig (padj<", PADJ_THRESHOLD, " & |log2FC|>=", LFC_THRESHOLD, ")"
+)
 
 for (comp in contrasts) {
   grp_treatment <- comp[2] # 处理组（分子）
@@ -307,9 +321,12 @@ for (comp in contrasts) {
   res_df <- res_df %>% arrange(padj)
 
   # ✅ 添加 sig 列（列名已含标准）
+  # [FIXED-BUG] fold-change阈值改用 LFC_THRESHOLD（与上面 sig_col_name 标签同源），原来这里
+  # 硬编码的是 1，跟列名标注的 0.585 不一致
+  # [MODIFIED] padj阈值改用 PADJ_THRESHOLD，原来这里硬编码的是 0.05，现在和标签、报告统一管理
   res_df[[sig_col_name]] <- case_when(
-    res_df$padj < 0.05 & res_df$log2FoldChange >= 1 ~ "Up",
-    res_df$padj < 0.05 & res_df$log2FoldChange <= -1 ~ "Down",
+    res_df$padj < PADJ_THRESHOLD & res_df$log2FoldChange >= LFC_THRESHOLD ~ "Up",
+    res_df$padj < PADJ_THRESHOLD & res_df$log2FoldChange <= -LFC_THRESHOLD ~ "Down",
     TRUE ~ "NS"
   )
 
@@ -389,6 +406,26 @@ for (comp in contrasts) {
     "\n"
   ))
 }
+
+# ✅ pi5_vs_NC completed, significant DEGs: 0
+# Warning message:
+# Removed 10024 rows containing missing values or values outside the scale range (`geom_point()`). 
+
+# 两个现象分别由两个独立原因造成，诊断结果如下：
+
+# 一、为什么有10024个missing value（geom_point的警告）
+# 这是 DESeq2 的标准行为，不是bug。 验证过了：
+
+# DESeq2 的 results() 默认会做"independent filtering"——自动算出一个 baseMean 阈值（这次算出来是 2651），低于这个阈值的基因直接把 padj 设为 NA（不参与多重检验校正）。
+# 实测：padj 为 NA 的 10,024 个基因，baseMean 全部 ≤ 2650.97；padj 非NA的3582个基因，baseMean 全部 ≥ 2651。完全精确对应，10024 恰好是总数13606的73.67%（和DESeq2自己报告的 filterThreshold百分位73.67%吻合）。
+# 原理：低表达基因的log2FC估计本身噪音很大，硬塞进多重检验校正只会拉低统计功效（让真正显著的基因也被牵连），所以DESeq2自动把它们排除在外。这是文献认可的标准统计学优化，不是数据或脚本问题。
+# geom_point() 的警告只是说"画图时这10024个点因为y轴(-log10 padj)是NA画不出来"，纯粹是画图层面的提示，完全正常，可以忽略。
+# 二、为什么 "significant DEGs: 0"（这是更值得关注的问题）
+# 这个和上面是两件独立的事，我往下查了两层：
+
+# 表层问题——脚本本身有个继承自原模板、从没被注意到的bug：
+
+
 
 # ================= 8. 热图 (🔻 字体已调整，去除黑体) =================
 # Generate separate heatmap for each comparison using their own top 50 DEGs
@@ -515,7 +552,13 @@ report_content <- c(
   "This report summarizes the differential expression analysis and quality control metrics for the RNA-seq dataset.",
   "- **Analysis Tool**: DESeq2",
   "- **Normalization**: VST (Variance Stabilizing Transformation) for PCA/Heatmap, Median-of-ratios for DE",
-  "- **Significance Thresholds**: padj < 0.05, |log2FoldChange| >= 0.585",
+  # [FIXED-BUG] 改为从 LFC_THRESHOLD / PADJ_THRESHOLD 变量动态生成，原来这里是硬编码
+  # "padj < 0.05, |log2FoldChange| >= 0.585"，跟实际判定阈值是独立写死的数字，
+  # 是同一类"标签和实际逻辑不一致"的bug
+  paste0(
+    "- **Significance Thresholds**: padj < ", PADJ_THRESHOLD,
+    ", |log2FoldChange| >= ", LFC_THRESHOLD
+  ),
   "",
   "## 2. Quality Control (QC)",
   ifelse(
