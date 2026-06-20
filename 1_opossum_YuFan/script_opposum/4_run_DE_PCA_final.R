@@ -553,6 +553,18 @@ libsize_ratio_pct <- round(
   1
 )
 
+# ---- 10.1b 动态核查PCA是否显示两组分离 ----
+# 客户报告必须把"PCA显示两组几乎没有系统性差异"作为重点强调，而不是埋在某条caveat里。
+# 这里直接用已经算好的pca_data/percentVar，检查PC1/PC2上两组样本的取值范围是否重叠，
+# 不写死"不分离"这个结论文字，而是动态判断+把实际数字(percentVar, 是否重叠)放进报告
+pc1_by_group <- split(pca_data$PC1, pca_data$Group)
+pc2_by_group <- split(pca_data$PC2, pca_data$Group)
+pc1_overlap <- !(max(pc1_by_group[["NC"]]) < min(pc1_by_group[["pi5"]]) ||
+  max(pc1_by_group[["pi5"]]) < min(pc1_by_group[["NC"]]))
+pc2_overlap <- !(max(pc2_by_group[["NC"]]) < min(pc2_by_group[["pi5"]]) ||
+  max(pc2_by_group[["pi5"]]) < min(pc2_by_group[["NC"]]))
+pca_groups_separate <- !pc1_overlap && !pc2_overlap
+
 # ---- 10.2 对每个contrast，动态核查"padj显著基因是否方向一致/组间完全分离" ----
 # 这是对4B_check_padj_sig_genes.R里那次人工核查的轻量版固化：只用padj阈值(不叠加LFC
 # 门槛)挑出基因，检查它们是否100%同方向、是否在两组间完全不重叠 —— 如果是，提示更可能
