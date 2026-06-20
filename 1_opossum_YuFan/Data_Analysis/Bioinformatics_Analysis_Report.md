@@ -103,8 +103,8 @@ real implications for how the downstream DE results below should be interpreted.
 
 | File Name | Description |
 | :--- | :--- |
-| `DE_PCA_Results/` | Main output folder for this analysis; contains this report and all files below up to `Reads/`. |
-| &nbsp;&nbsp;&nbsp;&nbsp;`Bioinformatics_Analysis_Report.md` | This report. |
+| `Bioinformatics_Analysis_Report.md` | This report (located directly in `Data_Analysis/`). |
+| `DE_PCA_Results/` | Output folder for this analysis; contains all files below up to `Reads/`. |
 | &nbsp;&nbsp;&nbsp;&nbsp;`DEG_*.csv` | Differential expression results per contrast, including log2FC, p-values, and base means. |
 | &nbsp;&nbsp;&nbsp;&nbsp;`PCA.pdf` | PCA plot showing sample relationships. |
 | &nbsp;&nbsp;&nbsp;&nbsp;`Volcano_*.png` | Volcano plot for each contrast. |
