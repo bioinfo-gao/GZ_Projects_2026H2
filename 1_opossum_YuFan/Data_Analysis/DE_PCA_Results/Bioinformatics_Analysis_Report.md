@@ -45,7 +45,7 @@ real implications for how the downstream DE results below should be interpreted.
 
 ## 3. Quality Control (QC)
 - QC reports were generated using MultiQC.
-- **Overall sequencing and alignment quality is good and consistent across all 8 samples**: STAR alignment rate 89.57-91.02% (uniquely mapped 86.57-87.8%), sequencing error rate 0.69-0.79%, GC content -% (no outlier samples). This indicates the library size difference noted below reflects differences in sequencing depth/read count between groups, not a difference in data quality.
+- **Overall sequencing and alignment quality is good and consistent across all 8 samples**: STAR alignment rate 89.57-91.02% (uniquely mapped 86.57-87.8%), sequencing error rate 0.69-0.79%, GC content 41-43% (no outlier samples). This indicates the library size difference noted below reflects differences in sequencing depth/read count between groups, not a difference in data quality.
 - Mean library size differs by **23.8%** between NC and pi5 groups (NC mean = 43,729,998 reads; pi5 mean = 34,437,340 reads). DESeq2 size-factor normalization corrects for this at the model-fitting level, but a difference of this size is worth confirming against the sequencing/library-prep batch records (see Section 6).
 
 ## 4. Differential Expression Analysis Results

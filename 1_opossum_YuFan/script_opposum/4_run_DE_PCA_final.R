@@ -574,19 +574,25 @@ mqc_stats_file <- file.path(
 )
 seq_quality_summary <- NULL
 if (!is.null(QC_SRC) && file.exists(mqc_stats_file)) {
-  mqc_df <- read.delim(mqc_stats_file, check.names = FALSE)
-  mqc_df <- mqc_df[mqc_df$Sample %in% meta$sample_id, ]
-  get_range <- function(col) {
-    vals <- suppressWarnings(as.numeric(mqc_df[[col]]))
+  mqc_df_all <- read.delim(mqc_stats_file, check.names = FALSE)
+  # MultiQC合并表里，STAR/比对层面的指标挂在"裸样本名"那一行(如 NC_1)，
+  # 但FastQC的GC%是按R1/R2分别报告的，只出现在"样本名_1"/"样本名_2"那两行 —— 这两类指标
+  # 要分别用不同的行子集去取，不能共用同一个过滤条件，否则GC%全部是NA
+  mqc_df_main <- mqc_df_all[mqc_df_all$Sample %in% meta$sample_id, ]
+  mqc_df_reads <- mqc_df_all[
+    mqc_df_all$Sample %in% paste0(rep(meta$sample_id, each = 2), c("_1", "_2")),
+  ]
+  get_range <- function(df, col) {
+    vals <- suppressWarnings(as.numeric(df[[col]]))
     vals <- vals[!is.na(vals)]
     if (length(vals) == 0) return(NULL)
     round(range(vals), 2)
   }
   seq_quality_summary <- list(
-    star_mapped = get_range("STAR_mqc_generalstats_star_mapped_percent_1"),
-    star_unique = get_range("STAR_mqc_generalstats_star_uniquely_mapped_percent_1"),
-    error_rate = get_range("Samtools: stats_mqc_generalstats_samtools_stats_error_rate"),
-    gc_pct = get_range("FastQC (raw)_mqc_generalstats_fastqc_raw_percent_gc")
+    star_mapped = get_range(mqc_df_main, "STAR_mqc_generalstats_star_mapped_percent_1"),
+    star_unique = get_range(mqc_df_main, "STAR_mqc_generalstats_star_uniquely_mapped_percent_1"),
+    error_rate = get_range(mqc_df_main, "Samtools: stats_mqc_generalstats_samtools_stats_error_rate"),
+    gc_pct = get_range(mqc_df_reads, "FastQC (raw)_mqc_generalstats_fastqc_raw_percent_gc")
   )
 }
 
