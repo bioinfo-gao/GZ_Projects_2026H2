@@ -542,7 +542,11 @@ cat("✅ 所有热图生成完成\n")
 # 凡是能从脚本里已有的变量动态算出来的数字(文库大小比例、显著基因数、方向、分离情况)，
 # 全部动态计算，不写死数字，避免以后数据换了报告却没跟着更新。
 # Generate Bioinformatics_Analysis_Report.md with detailed content
-report_file <- file.path(OUT_DIR, "Bioinformatics_Analysis_Report.md")
+# [MODIFIED] 报告文件改为放在 Data_Analysis/ 根目录下(OUT_DIR的上一级)，而不是塞进
+# DE_PCA_Results/ 子文件夹里——报告是整个分析交付物的入口，放在三个子文件夹(DE_PCA_Results/,
+# Reads/, QC/)外面、跟它们平级，比窝在某一个子文件夹里更合理。用dirname(OUT_DIR)动态算出
+# 上一级路径，不写死，以后OUT_DIR改了这里也不用跟着改
+report_file <- file.path(dirname(OUT_DIR), "Bioinformatics_Analysis_Report.md")
 
 # ---- 10.1 动态计算文库大小差异 (回应 27% library size 差异这个发现) ----
 libsize_by_sample <- colSums(counts_raw[, meta$sample_id])
@@ -645,8 +649,9 @@ report_content <- c(
   # [MODIFIED] 顺序改为 Project / Date / Author，原来是 Date / Project / Author
   paste0("Project: ", "1_opossum_YuFan (Didelphis virginiana, NC vs pi5)", "  "),
   paste0("Date: ", Sys.Date(), "  "),
-  # [MODIFIED] Author信息拆成两行：姓名/学位单独一行，职位/公司单独一行
-  "Author: Zhen Gao, PhD  ",
+  # [MODIFIED] 改用"by Zhen Gao, PhD"开头，第二行直接顶格写，不再尝试用&nbsp;对齐——
+  # 那种写法在不同markdown渲染器里表现不一致，容易出格式问题，顶格最简单可靠
+  "by Zhen Gao, PhD  ",
   "Principal Bioinformatics Scientist, Athenomics",
   "",
   "## 1. Overview",
@@ -844,27 +849,43 @@ report_content <- c(
   "",
   "## 7. Generated Data Files",
   "",
+  # [MODIFIED] 整体重排：报告文件本身现在直接放在Data_Analysis/根目录(与三个子文件夹平级)，
+  # 所以单独列为第一行，不再算作DE_PCA_Results/的子文件。下面按文件夹分组，每个文件夹一行
+  # (folder header)，文件夹下面的文件用&nbsp;缩进紧跟在该文件夹行之后，而不是按主题混在一起列。
+  # 三个文件夹相邻排列：DE_PCA_Results/ -> Reads/ -> QC/，最后是不属于任何子文件夹、
+  # 直接放在Data_Analysis/根目录下的文件。
+  # sub_row()辅助函数统一拼出缩进的子文件行，避免手写时漏掉首尾的"|"导致表格渲染错位
   "| File Name | Description |",
   "| :--- | :--- |",
-  "| `Bioinformatics_Analysis_Report.md` | This report. |",
-  "| `All_sample_gene_counts.tsv` (in `Reads/`) | Raw count matrix for all samples. |",
-  "| `All_sample_gene_tpm.tsv` (in `Reads/`) | TPM (Transcripts Per Million) matrix. |",
-  "| `DEG_*.csv` | Differential expression results per contrast, including log2FC, p-values, and base means. |",
-  "| `PCA.pdf` | PCA plot showing sample relationships. |",
-  "| `Volcano_*.png` | Volcano plot for each contrast. |",
+  "| `Bioinformatics_Analysis_Report.md` | This report (located directly in `Data_Analysis/`). |",
+  "| `DE_PCA_Results/` | Output folder for this analysis; contains all files below up to `Reads/`. |"
+)
+
+sub_row <- function(file, desc) {
+  paste0("| ", strrep("&nbsp;", 4), "`", file, "` | ", desc, " |")
+}
+
+report_content <- c(
+  report_content,
+  sub_row("DEG_*.csv", "Differential expression results per contrast, including log2FC, p-values, and base means."),
+  sub_row("PCA.pdf", "PCA plot showing sample relationships."),
+  sub_row("Volcano_*.png", "Volcano plot for each contrast."),
   if (any(sapply(deg_summary, function(x) x$total) > 0)) {
-    "| `Heatmap_top50_*.pdf` | Heatmap of the top 50 DEGs, for contrasts with genes passing both thresholds. |"
+    sub_row("Heatmap_top50_*.pdf", "Heatmap of the top 50 DEGs, for contrasts with genes passing both thresholds.")
   } else {
-    "| `Heatmap_padj_sig_genes_pi5_vs_NC.pdf` | Heatmap of padj-significant genes (see Section 6). |"
+    sub_row("Heatmap_padj_sig_genes_pi5_vs_NC.pdf", "Heatmap of padj-significant genes (see Section 6).")
   },
-  "| `Check_padj_sig_genes_per_sample_dotplot.png` | Per-sample verification plot for padj-significant genes (see Section 6). |",
-  "| `Sig_padj_genes_manual_check.csv` | Per-sample raw and normalized counts plus pre/post-shrinkage log2FC for the padj-significant genes, for manual review. |",
-  "| `Didelphis_virginiana_Gene_Annotation_Client.csv` (in `Data_Analysis/`) | Gene-level annotation derived from the liftoff GTF; see the `n_loci` column for genes with multiple candidate loci. |",
+  sub_row("Check_padj_sig_genes_per_sample_dotplot.png", "Per-sample verification plot for padj-significant genes (see Section 6)."),
+  sub_row("Sig_padj_genes_manual_check.csv", "Per-sample raw and normalized counts plus pre/post-shrinkage log2FC for the padj-significant genes, for manual review."),
+  "| `Reads/` | Folder containing copies of the raw count and TPM matrices used as input for this analysis. |",
+  sub_row("All_sample_gene_counts.tsv", "Raw count matrix for all samples."),
+  sub_row("All_sample_gene_tpm.tsv", "TPM (Transcripts Per Million) matrix."),
   ifelse(
     !is.null(QC_SRC),
-    "| `QC/` (in `Data_Analysis/`) | MultiQC and other QC reports. |",
+    "| `QC/` | MultiQC and other QC reports. |",
     "| `QC/` | Not available. |"
-  )
+  ),
+  "| `Didelphis_virginiana_Gene_Annotation_Client.csv` | Gene-level annotation derived from the liftoff GTF (located directly in `Data_Analysis/`, not inside the folders above); see the `n_loci` column for genes with multiple candidate loci. |"
 )
 
 writeLines(report_content, con = report_file)

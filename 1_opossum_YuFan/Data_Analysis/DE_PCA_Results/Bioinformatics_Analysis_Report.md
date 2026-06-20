@@ -2,7 +2,7 @@
 
 Project: 1_opossum_YuFan (Didelphis virginiana, NC vs pi5)  
 Date: 2026-06-19  
-Author: Zhen Gao, PhD  
+by Zhen Gao, PhD  
 Principal Bioinformatics Scientist, Athenomics
 
 ## 1. Overview
@@ -103,14 +103,16 @@ real implications for how the downstream DE results below should be interpreted.
 
 | File Name | Description |
 | :--- | :--- |
-| `Bioinformatics_Analysis_Report.md` | This report. |
-| `All_sample_gene_counts.tsv` (in `Reads/`) | Raw count matrix for all samples. |
-| `All_sample_gene_tpm.tsv` (in `Reads/`) | TPM (Transcripts Per Million) matrix. |
-| `DEG_*.csv` | Differential expression results per contrast, including log2FC, p-values, and base means. |
-| `PCA.pdf` | PCA plot showing sample relationships. |
-| `Volcano_*.png` | Volcano plot for each contrast. |
-| `Heatmap_padj_sig_genes_pi5_vs_NC.pdf` | Heatmap of padj-significant genes (see Section 6). |
-| `Check_padj_sig_genes_per_sample_dotplot.png` | Per-sample verification plot for padj-significant genes (see Section 6). |
-| `Sig_padj_genes_manual_check.csv` | Per-sample raw and normalized counts plus pre/post-shrinkage log2FC for the padj-significant genes, for manual review. |
-| `Didelphis_virginiana_Gene_Annotation_Client.csv` (in `Data_Analysis/`) | Gene-level annotation derived from the liftoff GTF; see the `n_loci` column for genes with multiple candidate loci. |
-| `QC/` (in `Data_Analysis/`) | MultiQC and other QC reports. |
+| `DE_PCA_Results/` | Main output folder for this analysis; contains this report and all files below up to `Reads/`. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`Bioinformatics_Analysis_Report.md` | This report. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`DEG_*.csv` | Differential expression results per contrast, including log2FC, p-values, and base means. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`PCA.pdf` | PCA plot showing sample relationships. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`Volcano_*.png` | Volcano plot for each contrast. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`Heatmap_padj_sig_genes_pi5_vs_NC.pdf` | Heatmap of padj-significant genes (see Section 6). |
+| &nbsp;&nbsp;&nbsp;&nbsp;`Check_padj_sig_genes_per_sample_dotplot.png` | Per-sample verification plot for padj-significant genes (see Section 6). |
+| &nbsp;&nbsp;&nbsp;&nbsp;`Sig_padj_genes_manual_check.csv` | Per-sample raw and normalized counts plus pre/post-shrinkage log2FC for the padj-significant genes, for manual review. |
+| `Reads/` | Folder containing copies of the raw count and TPM matrices used as input for this analysis. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`All_sample_gene_counts.tsv` | Raw count matrix for all samples. |
+| &nbsp;&nbsp;&nbsp;&nbsp;`All_sample_gene_tpm.tsv` | TPM (Transcripts Per Million) matrix. |
+| `QC/` | MultiQC and other QC reports. |
+| `Didelphis_virginiana_Gene_Annotation_Client.csv` | Gene-level annotation derived from the liftoff GTF (located directly in `Data_Analysis/`, not inside the folders above); see the `n_loci` column for genes with multiple candidate loci. |
