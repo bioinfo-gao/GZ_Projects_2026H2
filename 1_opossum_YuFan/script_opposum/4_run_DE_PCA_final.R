@@ -739,24 +739,46 @@ report_content <- c(
   "  both become near-monotonic functions of the same underlying z-statistic.",
   "",
   "### Heatmaps",
-  "- **Files**: `Heatmap_top50_*.pdf`",
-  "- **Description**: Hierarchical clustering of the top 50 differentially expressed genes for each contrast separately. Each heatmap shows expression patterns (Z-score normalized) for the most significant genes in that specific comparison across all samples.",
+  # [MODIFIED] 改为根据deg_summary动态判断：本次没有任何contrast有基因同时通过padj和
+  # |log2FC|门槛，所以根本没有生成Heatmap_top50_*.pdf这个文件。原模板写死引用这个文件名，
+  # 跟实际产出的文件完全不对应。改为动态判断 + 指向实际存在的文件
+  # (Heatmap_padj_sig_genes_pi5_vs_NC.pdf, 来自4B_check_padj_sig_genes.R)
+  if (any(sapply(deg_summary, function(x) x$total) > 0)) {
+    c(
+      "- **Files**: `Heatmap_top50_*.pdf`",
+      "- **Description**: Hierarchical clustering of the top 50 differentially expressed genes for contrasts that had at least one gene passing both the padj and |log2FC| thresholds. Each heatmap shows expression patterns (Z-score normalized) across all samples."
+    )
+  } else {
+    c(
+      "- No contrast had any gene passing both the padj and |log2FC| thresholds, so no `Heatmap_top50_*.pdf` files were produced.",
+      "- **File**: `Heatmap_padj_sig_genes_pi5_vs_NC.pdf`",
+      "- **Description**: Heatmap of all genes passing the padj threshold alone (regardless of fold-change size), generated separately for manual review.",
+      "- **File**: `Check_padj_sig_genes_per_sample_dotplot.png`",
+      "- **Description**: Per-sample normalized counts for the same genes, plotted individually, to verify that significance calls are not driven by a single outlier sample."
+    )
+  },
   "",
   "## 7. Generated Data Files",
   "",
   "| File Name | Description |",
   "| :--- | :--- |",
-  "| `All_sample_gene_counts.tsv` | Raw count matrix for all samples. |",
-  "| `All_sample_gene_tpm.tsv` | TPM (Transcripts Per Million) matrix, if available. |",
-  "| `DEG_*.csv` | Detailed differential expression results including log2FC, p-values, and base means. |",
+  "| `Bioinformatics_Analysis_Report.md` | This report. |",
+  "| `All_sample_gene_counts.tsv` (in `Reads/`) | Raw count matrix for all samples. |",
+  "| `All_sample_gene_tpm.tsv` (in `Reads/`) | TPM (Transcripts Per Million) matrix. |",
+  "| `DEG_*.csv` | Differential expression results per contrast, including log2FC, p-values, and base means. |",
   "| `PCA.pdf` | PCA plot showing sample relationships. |",
-  "| `Volcano_*.png` | Volcano plots for each contrast. |",
-  "| `Heatmap_top50_*.pdf` | Heatmaps of top 50 DEGs for each contrast separately. |",
-  "| `Didelphis_virginiana_Gene_Annotation_Client.csv` | Gene-level annotation derived from the liftoff GTF (see `5B_annotation.R`); check `n_loci` column for multi-locus genes. |",
-  "| `Sig_padj_genes_manual_check.csv` / `Heatmap_padj_sig_genes_pi5_vs_NC.pdf` / `Check_padj_sig_genes_per_sample_dotplot.png` | Manual verification outputs for padj-significant genes (see `4B_check_padj_sig_genes.R`). |",
+  "| `Volcano_*.png` | Volcano plot for each contrast. |",
+  if (any(sapply(deg_summary, function(x) x$total) > 0)) {
+    "| `Heatmap_top50_*.pdf` | Heatmap of the top 50 DEGs, for contrasts with genes passing both thresholds. |"
+  } else {
+    "| `Heatmap_padj_sig_genes_pi5_vs_NC.pdf` | Heatmap of padj-significant genes (see Section 6). |"
+  },
+  "| `Check_padj_sig_genes_per_sample_dotplot.png` | Per-sample verification plot for padj-significant genes (see Section 6). |",
+  "| `Sig_padj_genes_manual_check.csv` | Per-sample raw and normalized counts plus pre/post-shrinkage log2FC for the padj-significant genes, for manual review. |",
+  "| `Didelphis_virginiana_Gene_Annotation_Client.csv` (in `Data_Analysis/`) | Gene-level annotation derived from the liftoff GTF; see the `n_loci` column for genes with multiple candidate loci. |",
   ifelse(
     !is.null(QC_SRC),
-    "| `QC/` | Directory containing MultiQC and other QC reports. |",
+    "| `QC/` (in `Data_Analysis/`) | MultiQC and other QC reports. |",
     "| `QC/` | Not available. |"
   )
 )
