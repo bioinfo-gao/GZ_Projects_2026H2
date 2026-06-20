@@ -254,18 +254,11 @@ contrasts <- list(
 
 
 res_list <- list()
-# [FIXED-BUG] 原脚本把"判定阈值"硬编码成了好几份：sig_col_name 的字符串标签里写的是 0.585，
-# 下面 case_when 里实际用的是 1，report里另一处文字又单独写了一份 0.585。三处数值互相不同步，
-# 导致列名说"阈值是0.585"，但实际判定用的是阈值1 —— 这就是上次"significant DEGs: 0"的根因之一。
-# [MODIFIED] 进一步把 padj 阈值也纳入统一管理：客户可能调整的不只是 fold-change 倍数，
-# 显著性 p值标准(padj)同样可能要按需调整，两者都属于"判定标准"，必须放在一起改、一起生效，
-# 否则只改一个会出现"标签说padj<0.05，但客户实际想要的是0.01"这种新的不一致。
-# 现改为只在这两行定义阈值(LFC_THRESHOLD / PADJ_THRESHOLD)，下面 sig_col_name 的文字、
-# case_when 的判定逻辑、以及最后报告里的文字说明，全部从这两个变量派生。以后客户要改判定
-# 标准，只需要改这两行，其余地方会自动同步，不会再出现"标签和实际逻辑不一致"的问题。
 
-LFC_THRESHOLD <- 0.585 # log2(1.5) = 0.585，对应 1.5倍 fold change；可按客户要求修改
-PADJ_THRESHOLD <- 0.05 # 显著性 padj 阈值；可按客户要求修改 (如 0.01、0.1 等)
+# 只需要改这两行，其余地方会自动同步，不会再出现"标签和实际逻辑不一致"的问题。
+
+LFC_THRESHOLD <- 0.585          # log2(1.5) = 0.585
+PADJ_THRESHOLD <- 0.05          # 显著性 padj level
 
 sig_col_name <- paste0(
   "sig (padj<", PADJ_THRESHOLD, " & |log2FC|>=", LFC_THRESHOLD, ")"
