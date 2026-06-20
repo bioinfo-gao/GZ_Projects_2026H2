@@ -2,7 +2,8 @@
 
 Project: 1_opossum_YuFan (Didelphis virginiana, NC vs pi5)  
 Date: 2026-06-19  
-Author: Zhen Gao, PhD, Principal Bioinformatics Scientist
+Author: Zhen Gao, PhD  
+Principal Bioinformatics Scientist, Athenomics
 
 ## 1. Overview
 This report summarizes the differential expression analysis and quality control metrics for the RNA-seq dataset.

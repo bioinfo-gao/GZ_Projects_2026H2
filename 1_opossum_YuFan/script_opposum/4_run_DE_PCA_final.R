@@ -645,7 +645,9 @@ report_content <- c(
   # [MODIFIED] 顺序改为 Project / Date / Author，原来是 Date / Project / Author
   paste0("Project: ", "1_opossum_YuFan (Didelphis virginiana, NC vs pi5)", "  "),
   paste0("Date: ", Sys.Date(), "  "),
-  "Author: Zhen Gao, PhD, Principal Bioinformatics Scientist",
+  # [MODIFIED] Author信息拆成两行：姓名/学位单独一行，职位/公司单独一行
+  "Author: Zhen Gao, PhD  ",
+  "Principal Bioinformatics Scientist, Athenomics",
   "",
   "## 1. Overview",
   "This report summarizes the differential expression analysis and quality control metrics for the RNA-seq dataset.",
