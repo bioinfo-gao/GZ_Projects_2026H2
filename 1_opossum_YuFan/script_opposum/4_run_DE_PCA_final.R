@@ -413,8 +413,6 @@ for (comp in contrasts) {
 
 # 表层问题——脚本本身有个继承自原模板、从没被注意到的bug：
 
-
-
 # ================= 8. 热图 (🔻 字体已调整，去除黑体) =================
 # Generate separate heatmap for each comparison using their own top 50 DEGs
 heatmap_files <- c()
@@ -500,6 +498,9 @@ for (comp_name in names(res_list)) {
 }
 
 cat("✅ 所有热图生成完成\n")
+
+# 正在生成热图: pi5_vs_NC
+# ⚠️  警告: pi5_vs_NC 没有显著差异基因，跳过热图生成
 
 # # ================= 9. 保存标准化计数矩阵 =================
 # norm_counts <- counts(dds, normalized = TRUE)
