@@ -19,10 +19,9 @@ real implications for how the downstream DE results below should be interpreted.
 - Species: *Didelphis virginiana* (opossum). Genome assembly: `dv-2k.fasta` (Hi-C scaffolded, DNA Zoo).
 - Gene annotation: `Didelphis_v.liftoff.gtf` — produced by **liftoff** (homology-based annotation
   transfer from a related reference species), **not** a native, experimentally-curated annotation
-  for this species. Two concrete data-quality issues were found and corrected during processing
-  (see `5B_annotation.R`):
-  - This GTF has **no `gene` feature rows** (only `transcript`/`exon`/`CDS`); gene-level coordinates
-    had to be derived by aggregating transcript records.
+  for this species. Two characteristics of this annotation should be noted:
+  - This liftoff GTF has only `transcript`/`exon`/`CDS` feature rows (no `gene` rows); gene-level
+    coordinates were derived by aggregating transcript records.
   - **415 of 27,668 genes (~1.5%)** have their `gene_id` mapped to two different scaffolds
     simultaneously (a known liftoff artifact, e.g. paralog/repeat region mis-mapping). The locus
     with the most supporting transcripts was kept as primary; see the `n_loci` column in
@@ -34,7 +33,7 @@ real implications for how the downstream DE results below should be interpreted.
   partially compensates for the liftoff annotation being an imperfect/incomplete transfer by
   recovering species-specific or novel junctions that the liftoff GTF alone would have missed.
 - STAR filtering parameters were tightened for this non-model-organism / imperfect-reference
-  scenario (see `local_optimized.config`): `--outFilterMultimapNmax 8`, `--alignSJoverhangMin 8`,
+  scenario: `--outFilterMultimapNmax 8`, `--alignSJoverhangMin 8`,
   `--alignSJDBoverhangMin 1`, `--outFilterMismatchNmax 2`.
 - Quantification: Salmon, using a tx2gene mapping built from the same liftoff GTF.
 
@@ -68,8 +67,8 @@ real implications for how the downstream DE results below should be interpreted.
 - **Recommendation**: before treating any gene from this dataset's DEG list as a confirmed
   biological finding, (1) confirm with the wet-lab team whether NC and pi5 samples were
   prepared/sequenced in the same batch, (2) for genes of interest, inspect per-sample normalized
-  counts individually (see `4B_check_padj_sig_genes.R` → `Check_padj_sig_genes_per_sample_dotplot.png`
-  and `Sig_padj_genes_manual_check.csv`) rather than relying on padj/log2FC alone.
+  counts individually (see `Check_padj_sig_genes_per_sample_dotplot.png` and
+  `Sig_padj_genes_manual_check.csv`) rather than relying on padj/log2FC alone.
 
 ## 6. Visualizations
 

@@ -254,6 +254,11 @@ res_list <- list()
 # 只需要改这两行，其余地方会自动同步，不会再出现"标签和实际逻辑不一致"的问题。
 LFC_THRESHOLD <- 0.585          # log2(1.5) = 0.585
 PADJ_THRESHOLD <- 0.05          # 显著性 padj level
+# [MODIFIED] 客户报告里不能只写log2FC数值，没有统计背景的人看不懂；这里动态算出对应的
+# "倍数变化"(fold change = 2^LFC_THRESHOLD)，下面报告文字里用大白话"约等于X倍变化"配合
+# log2FC数值一起呈现。用动态计算而不是写死"1.5倍"，这样以后LFC_THRESHOLD改了，倍数说明
+# 会自动同步，不会出现数字和阈值不一致的情况
+FOLD_CHANGE_THRESHOLD <- round(2^LFC_THRESHOLD, 2)
 
 sig_col_name <- paste0(
   "sig (padj<", PADJ_THRESHOLD, " & |log2FC|>=", LFC_THRESHOLD, ")"
@@ -603,7 +608,8 @@ report_content <- c(
   "- **LFC shrinkage**: ashr (Stephens 2016) — adaptive, shrinkage strength depends on each gene's own standard error",
   paste0(
     "- **Significance Thresholds**: padj < ", PADJ_THRESHOLD,
-    ", |log2FoldChange| >= ", LFC_THRESHOLD
+    ", |log2FoldChange| >= ", LFC_THRESHOLD,
+    " (approximately a ", FOLD_CHANGE_THRESHOLD, "-fold change in expression, up or down)"
   ),
   "",
   "## 2. Upstream Pipeline & Reference Caveats",
@@ -614,10 +620,9 @@ report_content <- c(
   "- Species: *Didelphis virginiana* (opossum). Genome assembly: `dv-2k.fasta` (Hi-C scaffolded, DNA Zoo).",
   "- Gene annotation: `Didelphis_v.liftoff.gtf` — produced by **liftoff** (homology-based annotation",
   "  transfer from a related reference species), **not** a native, experimentally-curated annotation",
-  "  for this species. Two concrete data-quality issues were found and corrected during processing",
-  "  (see `5B_annotation.R`):",
-  "  - This GTF has **no `gene` feature rows** (only `transcript`/`exon`/`CDS`); gene-level coordinates",
-  "    had to be derived by aggregating transcript records.",
+  "  for this species. Two characteristics of this annotation should be noted:",
+  "  - This liftoff GTF has only `transcript`/`exon`/`CDS` feature rows (no `gene` rows); gene-level",
+  "    coordinates were derived by aggregating transcript records.",
   "  - **415 of 27,668 genes (~1.5%)** have their `gene_id` mapped to two different scaffolds",
   "    simultaneously (a known liftoff artifact, e.g. paralog/repeat region mis-mapping). The locus",
   "    with the most supporting transcripts was kept as primary; see the `n_loci` column in",
@@ -629,7 +634,7 @@ report_content <- c(
   "  partially compensates for the liftoff annotation being an imperfect/incomplete transfer by",
   "  recovering species-specific or novel junctions that the liftoff GTF alone would have missed.",
   "- STAR filtering parameters were tightened for this non-model-organism / imperfect-reference",
-  "  scenario (see `local_optimized.config`): `--outFilterMultimapNmax 8`, `--alignSJoverhangMin 8`,",
+  "  scenario: `--outFilterMultimapNmax 8`, `--alignSJoverhangMin 8`,",
   "  `--alignSJDBoverhangMin 1`, `--outFilterMismatchNmax 2`.",
   "- Quantification: Salmon, using a tx2gene mapping built from the same liftoff GTF.",
   "",
@@ -672,7 +677,8 @@ for (name in names(deg_summary)) {
       pat$n
     ),
     paste0(
-      "- Of those, passing the |log2FC| >= ", LFC_THRESHOLD, " effect-size filter (final \"sig\" call): ",
+      "- Of those, passing the |log2FC| >= ", LFC_THRESHOLD, " effect-size filter (i.e. at least a ",
+      FOLD_CHANGE_THRESHOLD, "-fold change in expression; final \"sig\" call): ",
       stats$total, " (Up: ", stats$up, ", Down: ", stats$down, ")"
     ),
     paste0("- Output File: `DEG_", name, ".csv`"),
@@ -688,8 +694,11 @@ report_content <- c(
   "  are interspersed rather than forming distinct clusters, indicating the overall transcriptome is",
   "  highly similar between groups at this sample size.",
   "- **ashr shrinkage compresses nearly all effect sizes toward zero** (most genes' shrunk log2FC fall",
-  "  within roughly ±0.1), consistent with the weak overall signal seen in the PCA. This is why the",
-  "  `padj < 0.585`-filtered \"sig\" column above is much smaller than the raw padj-significant count.",
+  "  within roughly ±0.1, i.e. well under a 1.1-fold change), consistent with the weak overall signal",
+  paste0(
+    "  seen in the PCA. This is why the |log2FC| >= ", LFC_THRESHOLD, " (~", FOLD_CHANGE_THRESHOLD,
+    "-fold) filtered \"sig\" column above is much smaller than the raw padj-significant count."
+  ),
   "- For each contrast, the padj-significant genes (regardless of fold-change size) were checked for",
   "  whether they are dominated by a single direction and/or show complete (non-overlapping) separation",
   "  between groups despite modest effect sizes — a pattern that, when it affects *all* significant",
@@ -722,8 +731,8 @@ report_content <- c(
   "- **Recommendation**: before treating any gene from this dataset's DEG list as a confirmed",
   "  biological finding, (1) confirm with the wet-lab team whether NC and pi5 samples were",
   "  prepared/sequenced in the same batch, (2) for genes of interest, inspect per-sample normalized",
-  "  counts individually (see `4B_check_padj_sig_genes.R` → `Check_padj_sig_genes_per_sample_dotplot.png`",
-  "  and `Sig_padj_genes_manual_check.csv`) rather than relying on padj/log2FC alone.",
+  "  counts individually (see `Check_padj_sig_genes_per_sample_dotplot.png` and",
+  "  `Sig_padj_genes_manual_check.csv`) rather than relying on padj/log2FC alone.",
   "",
   "## 6. Visualizations",
   "",
