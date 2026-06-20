@@ -635,7 +635,6 @@ report_content <- c(
   "",
   paste("Date:", Sys.Date()),
   paste("Project:", "1_opossum_YuFan (Didelphis virginiana, NC vs pi5)"),
-  # [MODIFIED] 加入Author信息，客户报告需要署名
   "Author: Zhen Gao, PhD, Principal Bioinformatics Scientist",
   "",
   "## 1. Overview",
