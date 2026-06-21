@@ -1,0 +1,2 @@
+patient,sample,variantcaller,vcf
+test,test,strelka,/home/gao/projects_2026H2/4_wgs_human_immu/test_run/outdir/variant_calling/strelka/test/test.strelka.variants.vcf.gz
