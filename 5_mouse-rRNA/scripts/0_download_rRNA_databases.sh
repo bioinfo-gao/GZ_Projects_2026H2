@@ -1,6 +1,7 @@
 
-cd cd 2026_Item12_rRNA/
-ln -s /Work_bio/gao/projects/2026_Item10_rRNA_removal/scripts/rRNA_databases   rRNA_databases
+cd /home/gao/projects_2026H2/5_mouse-rRNA/
+# cp -r /Work_bio/gao/projects/2026_Item10_rRNA_removal/scripts/rRNA_databases/   /Work_bio/references/
+ln -s /Work_bio/references/rRNA_databases   rRNA_databases
 # #!/bin/bash
 # # Script to download all required SortMeRNA rRNA databases
 # # Run this on a machine with internet access, then transfer the files to your server
