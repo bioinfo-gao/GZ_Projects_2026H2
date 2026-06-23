@@ -1,0 +1,60 @@
+解决方案
+既然所有必需的数据库文件都已经存在，我们可以强制 Nextflow 使用现有的本地文件，而不是尝试重新下载。
+
+方案：清理并重新启动（推荐）
+由于网络问题导致部分任务失败，最可靠的方法是：
+
+中止当前运行的进程
+bash
+# 查找 nextflow 进程
+ps aux | grep nextflow
+# 终止进程（替换实际的 PID）
+kill <PID>
+清理缓存但保留已下载的数据库
+bash
+# 删除 .nextflow 缓存目录（会清除失败的任务状态）
+rm -rf .nextflow/
+
+# 保留 work 目录中的数据库文件（不要删除 work 目录）
+修改配置避免重复下载
+创建一个配置文件 avoid_download.config:
+
+nextflow
+// 避免重新下载 rRNA 数据库
+process {
+    withName: 'SORTMERNA_INDEX' {
+        cache = true
+    }
+    withName: 'SORTMERNA' {
+        cache = true
+    }
+}
+重新运行命令
+bash
+nextflow run nf-core/rnaseq \
+    -r 3.15.1 \
+    -profile singularity \
+    -c local_optimized.config \
+    -c avoid_download.config \
+    --input /home/gao/projects/2026_Item10_rRNA_removal/scripts/Sample_Sheet2.csv \
+    --outdir ../output_results \
+    --fasta /Work_bio/references/Homo_sapiens/GRCh38/human_gencode_v45/GRCh38.primary_assembly.genome.fa \
+    --gtf /Work_bio/references/Homo_sapiens/GRCh38/human_gencode_v45/gencode.v45.annotation.gtf \
+    --star_index /Work_bio/references/Homo_sapiens/GRCh38/human_gencode_v45/star_index \
+    --gencode \
+    --aligner star_salmon \
+    --remove_ribo_rna \
+    --save_non_ribo_reads \
+    --max_cpus 28 \
+    --max_memory '90.GB'
+    # 暂时移除 -resume 参数
+替代方案：直接 resume
+如果你不想重新开始，也可以尝试直接 resume，因为数据库文件已经存在：
+
+bash
+# 确保在正确的目录下
+cd /home/gao/projects/2026_Item10_rRNA_removal/scripts/
+
+# 直接 resume（不添加新参数）
+nextflow run nf-core/rnaseq -resume
+推荐使用第一种方案，因为它能确保所有配置正确，并且避免缓存相关的潜在问题。

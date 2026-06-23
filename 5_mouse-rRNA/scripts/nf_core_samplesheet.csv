@@ -1,0 +1,4 @@
+sample,fastq_1,fastq_2,strandedness
+RN416,/home/gao/Dropbox/0505/01.RawData/rRNADepletionKitTest/RN416/RN416_CKDL260007561-1A_23H5GNLT4_L5_1.fq.gz,/home/gao/Dropbox/0505/01.RawData/rRNADepletionKitTest/RN416/RN416_CKDL260007561-1A_23H5GNLT4_L5_2.fq.gz,reverse
+YS12257,/home/gao/Dropbox/0505/01.RawData/rRNADepletionKitTest/YS12257/YS12257_CKDL260007561-1A_23H5GNLT4_L5_1.fq.gz,/home/gao/Dropbox/0505/01.RawData/rRNADepletionKitTest/YS12257/YS12257_CKDL260007561-1A_23H5GNLT4_L5_2.fq.gz,reverse
+YS12258,/home/gao/Dropbox/0505/01.RawData/rRNADepletionKitTest/YS12258/YS12258_CKDL260007561-1A_23H5GNLT4_L5_1.fq.gz,/home/gao/Dropbox/0505/01.RawData/rRNADepletionKitTest/YS12258/YS12258_CKDL260007561-1A_23H5GNLT4_L5_2.fq.gz,reverse

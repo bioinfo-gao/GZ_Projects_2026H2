@@ -1,0 +1,5 @@
+Customer Name,Group,Name in File,Species,Analysis Type,Strand Specific,machine Type,Sequencing Type,"Data Delivery Method
+(Required)",i7 index,i5 index
+Minxue,RN416,RN416,Human,Bulk RNA Seq,Yes,Nova Seq X Plus,PE150,Partial lane sequencing-With Demultiplexing,ATTACTCG,ATAGAGGC
+Minxue,YS12257,YS12257,Human,Bulk RNA Seq,Yes,Nova Seq X Plus,PE150,Partial lane sequencing-With Demultiplexing,CGCTCATT,CCTATCCT
+Minxue,YS12258,YS12258,Human,Bulk RNA Seq,Yes,Nova Seq X Plus,PE151,Partial lane sequencing-With Demultiplexing,CGCTCATT,CCTATCCT
