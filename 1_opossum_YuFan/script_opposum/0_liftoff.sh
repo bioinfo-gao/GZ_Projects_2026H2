@@ -1,7 +1,7 @@
 # Two things worth flagging:
 
 # On stage1_prep.sh: I checked file timestamps and it's actually an earlier, discarded attempt — not the script that produced the annotation currently in use. 
-# Evidence: it sits in a folder named rubbish/, dates to 2026-06-11 20:55, 
+# Evidence: it sits in a folder named rubbish/, dates to 2026-06-11 20:55, =====================<<<<<
 
 # and its liftoff command uses the raw, uncleaned mDidVir1.annotation.gtf with no -flank/-f parameters. The actual run was 
 # run_liftoff.sh (in /Work_bio/references/Didelphis_virginiana/mDidVir1/DNA_Zoo/, dated 06-12 22:10), which ran right after the cleaned clean_ref_annotation.gff3 was created (06-12 21:54) 
