@@ -2,7 +2,16 @@ cd /home/gao/projects/2026_Item12_rRNA/scripts
 bash 2_command_final_for_rRNA.sh
 
 # 1. 查看当前所有 tmux 会话：
-# tmux ls
+tmux ls
+# cho: 1 windows (created Wed Jun 17 01:33:02 2026)
+# liftoff: 1 windows (created Fri Jun 12 21:30:35 2026)
+# move_refs: 1 windows (created Mon Jun  8 19:16:38 2026)
+# rnaseq: 1 windows (created Sat Jun 13 12:52:31 2026)
+# star_watcher: 1 windows (created Fri Jun 12 22:59:48 2026)
+
+tmux kill-server                     # Close All Sessions
+# tmux kill-session -a                 # Close everything except your current session, 除了最后一个session 
+# tmux kill-session -t session_name    # Close a specific session by name
 
 # 2. 连接到 RNA5_rRNA 会话：
 tmux attach -t RNA5_rRNA
