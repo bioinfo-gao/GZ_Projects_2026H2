@@ -13,10 +13,11 @@ import os
 
 # 配置路径
 # fastq_base_dir = "/home/gao/Dropbox/Quote_03032601/"
-fastq_base_dir = "/home/gao/Dropbox/0505/01.RawData/rRNADepletionKitTest"
+# fastq_base_dir = "/home/gao/Dropbox/0505/01.RawData/rRNADepletionKitTest"
+fastq_base_dir = "/home/gao/Dropbox/Quote_260428002_mouse_rRNA"
 
-original_csv = "/home/gao/projects/2026_Item12_rRNA/scripts/samples.csv"
-output_samplesheet = "/home/gao/projects/2026_Item12_rRNA/scripts/nf_core_samplesheet.csv"
+original_csv = "/home/gao/projects_2026H2/5_mouse-rRNA/scripts/mouse.csv"
+output_samplesheet = "/home/gao/projects/5_mouse-rRNA/scripts/nf_core_samplesheet.csv"
 
 def convert_sample_name(csv_name):
     """Convert CSV sample name to directory name format by replacing hyphens with underscores"""
