@@ -1,4 +1,5 @@
 cd /home/gao/projects/2026_Item12_rRNA/scripts
+cd /home/gao/projects/2026_Item12_rRNA/scripts
 
 find work -name "*.sortmerna.log" -exec grep -H "Total reads passing E-value threshold" {} \;
 
