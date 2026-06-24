@@ -1,5 +1,5 @@
 # 运行方法
-# cd /home/gao/projects/2026_Item7_LJZ/scripts
+# cd /home/gao/projects_2026H2/2026_Item7_LJZ/scripts
 # python 1_produce_nf-core_Samplesheet.py
 # 必要注释，在 1_produce_nf-core_Samplesheet.py (line 22) 里主要解释了 3 件事：
 
@@ -17,7 +17,7 @@ import os
 fastq_base_dir = "/home/gao/Dropbox/Quote_260428002_mouse_rRNA"
 
 original_csv = "/home/gao/projects_2026H2/5_mouse-rRNA/scripts/mouse.csv"
-output_samplesheet = "/home/gao/projects/5_mouse-rRNA/scripts/nf_core_samplesheet.csv"
+output_samplesheet = "/home/gao/projects_2026H2/5_mouse-rRNA/scripts/nf_core_samplesheet.csv"
 
 def convert_sample_name(csv_name):
     """Convert CSV sample name to directory name format by replacing hyphens with underscores"""

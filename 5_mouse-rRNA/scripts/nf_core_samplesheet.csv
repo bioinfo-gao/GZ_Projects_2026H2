@@ -1,4 +1,10 @@
 sample,fastq_1,fastq_2,strandedness
-RN416,/home/gao/Dropbox/0505/01.RawData/rRNADepletionKitTest/RN416/RN416_CKDL260007561-1A_23H5GNLT4_L5_1.fq.gz,/home/gao/Dropbox/0505/01.RawData/rRNADepletionKitTest/RN416/RN416_CKDL260007561-1A_23H5GNLT4_L5_2.fq.gz,reverse
-YS12257,/home/gao/Dropbox/0505/01.RawData/rRNADepletionKitTest/YS12257/YS12257_CKDL260007561-1A_23H5GNLT4_L5_1.fq.gz,/home/gao/Dropbox/0505/01.RawData/rRNADepletionKitTest/YS12257/YS12257_CKDL260007561-1A_23H5GNLT4_L5_2.fq.gz,reverse
-YS12258,/home/gao/Dropbox/0505/01.RawData/rRNADepletionKitTest/YS12258/YS12258_CKDL260007561-1A_23H5GNLT4_L5_1.fq.gz,/home/gao/Dropbox/0505/01.RawData/rRNADepletionKitTest/YS12258/YS12258_CKDL260007561-1A_23H5GNLT4_L5_2.fq.gz,reverse
+mouse_28,/home/gao/Dropbox/Quote_260428002_mouse_rRNA/mouse_28/mouse_28_CKDL260010147-1A_23JH5GLT3_L8_1.fq.gz,/home/gao/Dropbox/Quote_260428002_mouse_rRNA/mouse_28/mouse_28_CKDL260010147-1A_23JH5GLT3_L8_2.fq.gz,reverse
+mouse_29,/home/gao/Dropbox/Quote_260428002_mouse_rRNA/mouse_29/mouse_29_CKDL260010147-1A_23JH5GLT3_L8_1.fq.gz,/home/gao/Dropbox/Quote_260428002_mouse_rRNA/mouse_29/mouse_29_CKDL260010147-1A_23JH5GLT3_L8_2.fq.gz,reverse
+mouse_32,/home/gao/Dropbox/Quote_260428002_mouse_rRNA/mouse_32/mouse_32_CKDL260010147-1A_23JH5GLT3_L8_1.fq.gz,/home/gao/Dropbox/Quote_260428002_mouse_rRNA/mouse_32/mouse_32_CKDL260010147-1A_23JH5GLT3_L8_2.fq.gz,reverse
+mouse_41,/home/gao/Dropbox/Quote_260428002_mouse_rRNA/mouse_41/mouse_41_CKDL260010147-1A_23JH5GLT3_L8_1.fq.gz,/home/gao/Dropbox/Quote_260428002_mouse_rRNA/mouse_41/mouse_41_CKDL260010147-1A_23JH5GLT3_L8_2.fq.gz,reverse
+mouse_42,/home/gao/Dropbox/Quote_260428002_mouse_rRNA/mouse_42/mouse_42_CKDL260010147-1A_23JH5GLT3_L8_1.fq.gz,/home/gao/Dropbox/Quote_260428002_mouse_rRNA/mouse_42/mouse_42_CKDL260010147-1A_23JH5GLT3_L8_2.fq.gz,reverse
+mouse_45,/home/gao/Dropbox/Quote_260428002_mouse_rRNA/mouse_45/mouse_45_CKDL260010147-1A_23JH5GLT3_L8_1.fq.gz,/home/gao/Dropbox/Quote_260428002_mouse_rRNA/mouse_45/mouse_45_CKDL260010147-1A_23JH5GLT3_L8_2.fq.gz,reverse
+mouse_46,/home/gao/Dropbox/Quote_260428002_mouse_rRNA/mouse_46/mouse_46_CKDL260010147-1A_23JH5GLT3_L8_1.fq.gz,/home/gao/Dropbox/Quote_260428002_mouse_rRNA/mouse_46/mouse_46_CKDL260010147-1A_23JH5GLT3_L8_2.fq.gz,reverse
+mouse_47,/home/gao/Dropbox/Quote_260428002_mouse_rRNA/mouse_47/mouse_47_CKDL260010147-1A_23JH5GLT3_L8_1.fq.gz,/home/gao/Dropbox/Quote_260428002_mouse_rRNA/mouse_47/mouse_47_CKDL260010147-1A_23JH5GLT3_L8_2.fq.gz,reverse
+mouse_48,/home/gao/Dropbox/Quote_260428002_mouse_rRNA/mouse_48/mouse_48_CKDL260010147-1A_23JH5GLT3_L8_1.fq.gz,/home/gao/Dropbox/Quote_260428002_mouse_rRNA/mouse_48/mouse_48_CKDL260010147-1A_23JH5GLT3_L8_2.fq.gz,reverse
