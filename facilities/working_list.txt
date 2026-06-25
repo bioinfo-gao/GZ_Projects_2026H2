@@ -346,7 +346,7 @@ Standardization: Proposed modifications for internal sample naming conventions a
 [Internal Technical Tracking - Non-Billable]
 6. Didelphis virginiana RNA-seq Pipeline (4 Hours):
 Completed full analysis and generated technical reports detailing multi-step processing and quality control metrics.
-Finalized all deliverables and visualizations for internal archiving.
+Finalized all deliverables and visualizations for delivery.
 
 
 Total Hours Worked: 19 hours  ==== + ==== 4 Hours (Do NOT count the 4 hours for Didelphis virginiana)
