@@ -253,22 +253,97 @@ Date of Submission: Jun 18, 2026
 ===============================================================================================================================================================================================
 ===============================================================================================================================================================================================
 Weekly Work Report
-Period: May 22, 2026 – May 28, 2026
+Period: Jun 18, 2026 – Jun 25, 2026
 Prepared by: Gao Zhen
-Total Hours: 23 Hours
 
-Total Hours Worked: 23 Hours
-Date of Submission: May 28, 2026
+Total Billable Hours: 19 Hours (Core Projects)
+Internal R&D / Tech Debt: 4 Hours (Do Not count please)
+
+1. Genomic Profiling of Chinese Hamster Strains (4 Hours)
+Use all the 30X fastq data to rerun the identification CHO and differentiated between CHO-K1 and CHO-S strains.
+Get all unmapping reads, do denoval assemble, filteriing the CHO reads to get the external genes 
+(Still running and take large resources)
+
+2. WGS pipeline setup and test run (4 Hours)
+Set up all the enrienments
+Set the pipeline from nf-core/wgs and test run 
+Now the pipeline is ready to run real samples
+
+3. the rRNA,  dimer analysis, and unimapping gene analysis for mouse samples (6 Hours) 
+The inital run cost all resources due to the large rRNA content caused pipeline failed
+The second run was successful with 1/3 samples sucessed 
+Determined the all the dimer percentage
+Determined the all the unimapping gene analysis 
+Performed alld regular rRNA analysis but still hugne amout of samples cannot be Determinated
+Further detrmination of the rRNA content with the Metagenomec Methods and detemined the species and the possible reasons of contaimination
+Send client analysis report
+
+4. Workflow Optimization:  Claude Code Cli coding agents (1 Hour)
+Integrated Claude Code Cli coding agents, created reugular setting markdown files for cross analysis general requrements.
+
+5. Strategic Technical Briefing & Infrastructure Planning (4 Hours)
+Briefed the internal team on the 4 types of Metagenomics pipeline.
+Briefed the internal team on the complex and mulitple RNAseq quality issues of mouse samples.
+Briefed the internal team on the cost of Cloud Based analysis without storage.
+Briefed the internal team on methods, machine time, and hand time of transgene discovery based on the CHO genes excluded fastq reads.
+
+Proposed a standardized modification for internal sample naming conventions and metadata formats to improve pipeline compatibility.
+
+========= [Internal Technical Tracking - do Not count hours] =========
+
+6. Didelphis virginiana RNA-seq Pipeline (4 Hours):
+Finished all the analysis of Didelphis virginiana RNA-seq Pipeline.
+Created the report about the mulitple steps and all known quality issues, as well as how to understanding of the plots
+Add all results and report for delivery. 
+
+
+Total Hours Worked: 19 hours  ==== + ==== 4 Hours (Do NOT count the 4 hours for Didelphis virginiana)
+Date of Submission: Jun 25, 2026
 
 ===============================================================================================================================================================================================
 ===============================================================================================================================================================================================
 Weekly Work Report
-Period: May 22, 2026 – May 28, 2026
+Period: June 18, 2026 – June 25, 2026
 Prepared by: Gao Zhen
-Total Hours: 23 Hours
+Total Billable Hours: 19 Hours (Core Projects)
+Date of Submission: June 25, 2026
 
-Total Hours Worked: 23 Hours
-Date of Submission: May 28, 2026
+1. Genomic Profiling of Chinese Hamster Strains (4 Hours)
+Utilized 30X coverage FASTQ data to rerun strain identification for CHO as well as CHO-K1 and CHO-S strains.
+Extracted unmapped reads for de novo assembly and filtered against CHO reference genomes to identify external/transgene sequences.
+Status: Ongoing; processing requires significant computational resources.
+
+2. WGS Pipeline Setup & Validation (4 Hours)
+Configured the complete environment for Whole Genome Sequencing (WGS) analysis.
+Deployed the nf-core/wgs pipeline and performed successful test runs to ensure workflow stability.
+
+3. rRNA, Dimer, and Unimapping Analysis - Mouse Samples (6 Hours)
+Resolved pipeline failures caused by exceptionally high rRNA content in initial runs.
+Successfully processed remaining samples; quantified dimer percentages and performed uni-mapping gene analysis.
+Executed metagenomic analysis on unclassified rRNA content to identify specific contaminant species and determine the root cause of high rRNA levels,
+as well as the possible source for contamination:  Mesomycoplasma hyorhinis, Vibrio furnissii, and Cutibacterium acnes
+Delivered comprehensive analysis report to the client.
+
+4. Workflow Optimization: Coding Agents (1 Hour)
+Integrated Claude Code CLI coding agents into the development workflow.
+Developed standardized Markdown configuration files to streamline cross-analysis requirements and general project settings.
+
+5. Strategic Technical Briefing & Infrastructure Planning (4 Hours)
+Technical Briefing: Presented four types of Metagenomics pipelines and addressed complex RNA-seq quality issues identified in recent mouse samples.
+Cost Analysis: Briefed the internal team on the cost-efficiency of Cloud-based analysis (excluding storage) versus on-site infrastructure.
+Methodology: Outlined machine time, manual labor requirements, and specific methods for transgene discovery based on CHO-excluded FASTQ datasets.
+Standardization: Proposed modifications for internal sample naming conventions and metadata formats to improve multi-pipeline compatibility.
+
+[Internal Technical Tracking - Non-Billable]
+6. Didelphis virginiana RNA-seq Pipeline (4 Hours):
+Completed full analysis and generated technical reports detailing multi-step processing and quality control metrics.
+Finalized all deliverables and visualizations for internal archiving.
+
+
+Total Hours Worked: 19 hours  ==== + ==== 4 Hours (Do NOT count the 4 hours for Didelphis virginiana)
+Date of Submission: Jun 25, 2026
+
+
 
 ===============================================================================================================================================================================================
 ===============================================================================================================================================================================================
