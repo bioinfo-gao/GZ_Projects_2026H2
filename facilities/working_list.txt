@@ -321,6 +321,7 @@ Configured the complete environment for Whole Genome Sequencing (WGS) analysis.
 Deployed the nf-core/wgs pipeline and performed successful test runs to ensure workflow stability.
 
 3. rRNA, Dimer, and Unimapping Analysis of Mouse Samples (6.5 Hours)
+Understanding the analysis aims and design of the analysis strategies
 Composed the samples table and run the pipeline
 Resolved pipeline failures caused by exceptionally high rRNA content in initial runs.
 Figured the detaild reasons for the failure: the primary reason is memory is exhasued (OOM) and the second is the running time is way too long and been killed by the system
