@@ -269,13 +269,16 @@ Set up all the enrienments
 Set the pipeline from nf-core/wgs and test run 
 Now the pipeline is ready to run real samples
 
-3. the rRNA,  dimer analysis, and unimapping gene analysis for mouse samples (6 Hours) 
+3. the rRNA,  dimer analysis, and unimapping gene analysis for mouse samples (7 Hours) 
+Composed the samples table and run the pipeline
 The inital run cost all resources due to the large rRNA content caused pipeline failed
+Figured the detaild reason for failure: the primary reason is memory is exhasued (OOM) and the second is the running time is way too long and been killed by the system
+(Both the reason is cuased by the large rRNA content as root cause of the failure)
 The second run was successful with 1/3 samples sucessed 
 Determined the all the dimer percentage
 Determined the all the unimapping gene analysis 
-Performed alld regular rRNA analysis but still hugne amout of samples cannot be Determinated
-Further detrmination of the rRNA content with the Metagenomec Methods and detemined the species and the possible reasons of contaimination
+Performed alld regular rRNA analysis but still hugne amout of samples cannot be Determinated the sourcess 
+Further detrmination of the rRNA content with the Metagenomec Methods () and detemined the species and the possible reasons of contaimination
 Send client analysis report
 
 4. Workflow Optimization:  Claude Code Cli coding agents (1 Hour)
@@ -308,7 +311,7 @@ Prepared by: Gao Zhen
 Total Billable Hours: 19 Hours (Core Projects)
 Date of Submission: June 25, 2026
 
-1. Genomic Profiling of Chinese Hamster Strains (4 Hours)
+1. Genomic Profiling of Chinese Hamster Strains (2.5 Hours)
 Utilized 30X coverage FASTQ data to rerun strain identification for CHO as well as CHO-K1 and CHO-S strains.
 Extracted unmapped reads for de novo assembly and filtered against CHO reference genomes to identify external/transgene sequences.
 Status: Ongoing; processing requires significant computational resources.
@@ -317,20 +320,24 @@ Status: Ongoing; processing requires significant computational resources.
 Configured the complete environment for Whole Genome Sequencing (WGS) analysis.
 Deployed the nf-core/wgs pipeline and performed successful test runs to ensure workflow stability.
 
-3. rRNA, Dimer, and Unimapping Analysis - Mouse Samples (6 Hours)
+3. rRNA, Dimer, and Unimapping Analysis - Mouse Samples (7 Hours)
+Composed the samples table and run the pipeline
 Resolved pipeline failures caused by exceptionally high rRNA content in initial runs.
-Successfully processed remaining samples; quantified dimer percentages, rRNA percentage and performed uni-mapping gene analysis.
+Figured the detaild reasons for the failure: the primary reason is memory is exhasued (OOM) and the second is the running time is way too long and been killed by the system
+(Both the reason is caused by the large rRNA content as root cause of the failure)
+The second run was successful with 1/3 samples sucessed 
+Processed all samples; quantified dimer percentages, rRNA percentage and performed uni-mapping gene analysis.
 Executed metagenomic analysis on unclassified rRNA content to identify specific contaminant species and determine the root cause of high rRNA levels,
 as well as the possible source for contamination:  Mesomycoplasma hyorhinis, Vibrio furnissii, and Cutibacterium acnes
-Delivered comprehensive analysis report to the client.
+Composed and Delivered comprehensive analysis report.
 
-4. Workflow Optimization: Coding Agents (1 Hour)
+4. Workflow Optimization: Coding Agents (1.5 Hour)
 Integrated Claude Code CLI coding agents into the development workflow.
 Developed standardized Markdown configuration files to streamline cross-analysis requirements and general project settings.
 
 5. Strategic Technical Briefing & Infrastructure Planning (4 Hours)
 Technical Briefing: Presented four types of Metagenomics pipelines and addressed complex RNA-seq quality issues identified in recent mouse samples.
-Cost Analysis: Briefed the internal team on the cost-efficiency of Cloud-based analysis (excluding storage) versus on-site infrastructure.
+Cost Analysis: Briefed the internal team on the cost-efficiency of Cloud-based analysis (excluding storage).
 Methodology: Outlined machine time, manual labor requirements, and specific methods for transgene discovery based on CHO-excluded FASTQ datasets.
 Standardization: Proposed modifications for internal sample naming conventions and metadata formats to improve multi-pipeline compatibility.
 
