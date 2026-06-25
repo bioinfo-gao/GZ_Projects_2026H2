@@ -1,0 +1,2 @@
+sample,fastq_1,fastq_2,strandedness
+mouse_28,/home/gao/projects_2026H2/5_mouse-rRNA/SortMeRNA_issue/subsampled_10M/mouse_28_sub10M_1.fq.gz,/home/gao/projects_2026H2/5_mouse-rRNA/SortMeRNA_issue/subsampled_10M/mouse_28_sub10M_2.fq.gz,reverse
