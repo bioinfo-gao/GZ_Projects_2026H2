@@ -339,6 +339,7 @@ Developed standardized Markdown configuration files to streamline cross-analysis
 Technical Briefing: Presented four types of Metagenomics pipelines and addressed complex RNA-seq quality issues identified in recent mouse samples.
 Cost Analysis: Briefed the internal team on the cost-efficiency of Cloud-based analysis (excluding storage).
 Methodology: Outlined machine time, manual labor requirements, and specific methods for transgene discovery based on CHO-excluded FASTQ datasets.
+Contaimination Tracting: discuss the possible reasons of variable contaiminations
 Standardization: Proposed modifications for internal sample naming conventions and metadata formats to improve multi-pipeline compatibility.
 
 [Internal Technical Tracking - Non-Billable]
