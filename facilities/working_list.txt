@@ -319,7 +319,7 @@ Deployed the nf-core/wgs pipeline and performed successful test runs to ensure w
 
 3. rRNA, Dimer, and Unimapping Analysis - Mouse Samples (6 Hours)
 Resolved pipeline failures caused by exceptionally high rRNA content in initial runs.
-Successfully processed remaining samples; quantified dimer percentages and performed uni-mapping gene analysis.
+Successfully processed remaining samples; quantified dimer percentages, rRNA percentage and performed uni-mapping gene analysis.
 Executed metagenomic analysis on unclassified rRNA content to identify specific contaminant species and determine the root cause of high rRNA levels,
 as well as the possible source for contamination:  Mesomycoplasma hyorhinis, Vibrio furnissii, and Cutibacterium acnes
 Delivered comprehensive analysis report to the client.
