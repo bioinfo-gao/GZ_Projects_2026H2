@@ -50,6 +50,13 @@ bin/
 *.fai
 *.tbi
 *.index*
+*.fasta
+*.fa
+*.gz
+*.stats
+*.bam.bai
+*.dat
+*/SortMeRNA_issue/*
 
 # --- nf-core/rnaseq & 组装特定输出 ---
 *.transcripts.gtf
@@ -110,6 +117,9 @@ rubbish/
 junk/
 bak/
 bac/
+pilot/
+pilot_work/
+pilot_results/
 # BACKUP/  # 这个非常重要，是用来同步的 <<==============
 # Backup/  # 这个非常重要，是用来同步的 <<==============
 # backup/  # 这个非常重要，是用来同步的 <<==============
