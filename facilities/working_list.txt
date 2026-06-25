@@ -326,7 +326,7 @@ Composed the samples table and run the pipeline
 Resolved pipeline failures caused by exceptionally high rRNA content in initial runs.
 Figured the detaild reasons for the failure: the primary reason is memory is exhasued (OOM) and the second is the running time is way too long and been killed by the system
 (Both the reason is caused by the large rRNA content as root cause of the failure)
-The second run was successful with 1/3 samples sucessed 
+The second run was successful with 1/3 samples loaded 
 Processed all samples; quantified dimer percentages, rRNA percentage and performed uni-mapping gene analysis.
 Executed metagenomic analysis (kraken2 contamination) on unclassified reads to identify specific contaminant species,
 as well as the possible source for contamination:  Mesomycoplasma hyorhinis, Vibrio furnissii, and Cutibacterium acnes
