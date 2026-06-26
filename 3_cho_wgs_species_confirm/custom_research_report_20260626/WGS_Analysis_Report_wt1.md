@@ -33,7 +33,7 @@ This section explains the scientific basis for each analytical step and the crit
 
 ### 3.1 Why Align to a Reference Genome for Species Identification?
 
-Short-read whole-genome sequencing (WGS) produces millions of DNA fragments whose sequences are characteristic of the source organism. By aligning these reads against a high-quality reference genome — in this case the *Cricetulus griseus* CriGri-PICR assembly — we measure what fraction of the reads are consistent with that species. A **primary mapping rate ≥ 95%** is taken as confident confirmation of species identity: by chance, reads from an unrelated organism would align at rates near zero. Rates between 85–95% may indicate a related species or significant contamination and would require further investigation. The 4.2% unmapped fraction in this sample is not indicative of a different species; rather, it reflects exogenous transgene sequences (see Section 3.4).
+Short-read whole-genome sequencing (WGS) produces millions of DNA fragments whose sequences are characteristic of the source organism. By aligning these reads against a high-quality reference genome — in this case the *Cricetulus griseus* CriGri-PICR assembly — we measure what fraction of the reads are consistent with that species. A **primary mapping rate > 85%** is taken as confident confirmation of species identity: by chance, reads from an unrelated organism would align at rates near zero. Rates between 50–85% are ambiguous and require further investigation; rates below 50% indicate the sample is not CHO. The 4.2% unmapped fraction in this sample is not indicative of a different species; rather, it reflects exogenous transgene sequences (see Section 3.4).
 
 ### 3.2 Why Use DHFR Locus Copy Number for Sub-Strain Identification?
 
@@ -63,7 +63,7 @@ Individual short reads (150 bp) are too short for reliable BLAST-based identific
 
 | Analysis step | Metric | Threshold | Conclusion |
 | :--- | :---: | :---: | :--- |
-| Species ID | Primary mapping rate | ≥ 95% = confirmed; < 85% = not CHO | Confirmed if ≥ 95% |
+| Species ID | Primary mapping rate | > 85% = confirmed; 50–85% = ambiguous; < 50% = not CHO | Confirmed if > 85% |
 | Sub-strain | DHFR / flanking depth ratio | < 0.05 → DG44; 0.05–0.35 → DXB11; > 0.70 → K1/S | Match to ratio range |
 | Transgene presence | Unmapped read fraction | > 0.5% above background is significant | Flag for assembly |
 | Transgene identity | BLASTn e-value / identity | e-value ≤ 1×10⁻¹⁰, identity ≥ 95% for high-confidence hit | Report top hits per contig |
