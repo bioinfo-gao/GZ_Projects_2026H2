@@ -27,27 +27,73 @@
 
 ---
 
-## 3. Methods
+## 3. Analysis Rationale and Decision Criteria
 
-### 3.1 Read Quality Control
+This section explains the scientific basis for each analytical step and the criteria used to reach conclusions, so that results can be independently interpreted.
+
+### 3.1 Why Align to a Reference Genome for Species Identification?
+
+Short-read whole-genome sequencing (WGS) produces millions of DNA fragments whose sequences are characteristic of the source organism. By aligning these reads against a high-quality reference genome — in this case the *Cricetulus griseus* CriGri-PICR assembly — we measure what fraction of the reads are consistent with that species. A **primary mapping rate ≥ 95%** is taken as confident confirmation of species identity: by chance, reads from an unrelated organism would align at rates near zero. Rates between 85–95% may indicate a related species or significant contamination and would require further investigation. The 4.2% unmapped fraction in this sample is not indicative of a different species; rather, it reflects exogenous transgene sequences (see Section 3.4).
+
+### 3.2 Why Use DHFR Locus Copy Number for Sub-Strain Identification?
+
+The dihydrofolate reductase (*DHFR*) gene locus is the defining genomic marker for distinguishing the three major CHO sub-strains used in biopharmaceutical manufacturing:
+
+- **CHO-DG44**: Both copies of *DHFR* are deleted. The locus is absent, yielding near-zero sequencing depth relative to flanking regions.
+- **CHO-DXB11**: One copy of *DHFR* is deleted and one remains. Sequencing depth at the locus is approximately half the flanking depth (ratio ~0.5).
+- **CHO-K1 / CHO-S**: Both copies of *DHFR* are intact. Sequencing depth at the locus equals the flanking depth (ratio ~1.0).
+
+WGS provides quantitative, locus-specific sequencing depth at single-nucleotide resolution. By computing the mean depth over the annotated *DHFR* exon region and comparing it to a 1 Mb flanking control region (which has no known copy-number variation in any CHO sub-strain), we obtain a robust, normalization-free depth ratio. This approach is insensitive to overall sequencing depth and is unaffected by GC bias because both the locus and its flanking control are on the same chromosome and share similar sequence composition.
+
+### 3.3 Why Use a Host-Subtraction Strategy for Transgene Detection?
+
+Direct de novo assembly of the entire ~30× WGS dataset (~460 M reads, 33 GB) is computationally prohibitive for transgene discovery: it would require >500 GB RAM and would produce a genome-scale assembly dominated by CHO host sequence. The **host-subtraction** strategy bypasses this problem:
+
+1. Reads that fail to align to the CHO reference genome are, by definition, derived from sequences not present in the reference — including integrated transgenes, viral vector elements, and expression cassettes.
+2. These non-host reads are isolated and assembled independently. Because the unmapped fraction is small (here ~19 M reads), de novo assembly is fast, memory-efficient, and produces high-quality contigs enriched for transgene content.
+3. The strategy detects **any** foreign sequence regardless of prior knowledge of the transgene — it does not require the client to provide a vector map in advance.
+
+**Limitation:** If a transgene sequence is highly similar to an endogenous CHO gene (e.g., a humanized gene whose rodent ortholog is in the reference), the corresponding reads may align to the CHO genome and be excluded from the unmapped pool, potentially reducing sensitivity. In such cases, targeted re-alignment using only the transgene sequence as reference is recommended.
+
+### 3.4 Why De Novo Assembly Rather Than Direct BLAST of Reads?
+
+Individual short reads (150 bp) are too short for reliable BLAST-based identification: many reads match repetitive elements or low-complexity sequences shared across many organisms, generating noisy, ambiguous results. De novo assembly with MEGAHIT reconstructs longer contiguous sequences (contigs) by finding overlaps among reads. Longer contigs (≥200 bp, preferably ≥1,000 bp) provide sufficient sequence context for BLAST to distinguish closely related sequences and assign confident taxonomic or functional identity. Assembly also consolidates coverage: dozens or hundreds of reads supporting the same transgene region collapse into a single representative contig, dramatically reducing the number of BLAST queries while increasing specificity.
+
+### 3.5 Decision Criteria Summary
+
+| Analysis step | Metric | Threshold | Conclusion |
+| :--- | :---: | :---: | :--- |
+| Species ID | Primary mapping rate | ≥ 95% = confirmed; < 85% = not CHO | Confirmed if ≥ 95% |
+| Sub-strain | DHFR / flanking depth ratio | < 0.05 → DG44; 0.05–0.35 → DXB11; > 0.70 → K1/S | Match to ratio range |
+| Transgene presence | Unmapped read fraction | > 0.5% above background is significant | Flag for assembly |
+| Transgene identity | BLASTn e-value / identity | e-value ≤ 1×10⁻¹⁰, identity ≥ 95% for high-confidence hit | Report top hits per contig |
+| Unknown sequences | No BLAST hit | Contigs ≥ 1,000 bp with zero hits | Likely proprietary; request vector map |
+
+---
+
+## 4. Methods
+
+> Key parameters are listed here for reproducibility. For the scientific rationale behind each step, see Section 3.
+
+### 4.1 Read Quality Control
 - **Tool:** fastp v0.23 (`-w 8`)
 - Adapter trimming, quality filtering, and per-read statistics
 - Outputs: filtered paired-end FASTQ files + HTML/JSON QC report
 - **MultiQC v1.35** used to aggregate QC metrics
 
-### 3.2 Genome Alignment
+### 4.2 Genome Alignment
 - **Reference:** *Cricetulus griseus* CriGri-PICR assembly (GCF_003668045.1)
 - **Aligner:** BWA-MEM (`-t 20`)
 - **Sorting:** SAMtools sort (`-@ 8 -m 8G`)
 - **Indexing:** SAMtools index (`-@ 8`)
 - Read-group tag added: `@RG ID:wt1 SM:wt1 PL:ILLUMINA`
 
-### 3.3 DHFR Locus Depth Analysis
+### 4.3 DHFR Locus Depth Analysis
 - SAMtools depth over DHFR gene coordinates (GFF annotation: NW_020822461.1:37,643,639–37,667,418)
 - Flanking control region: ±500 kb around DHFR locus
 - Depth ratio (DHFR / flanking) used for CHO sub-strain classification
 
-### 3.4 Transgene Detection (Host-Subtraction Strategy)
+### 4.4 Transgene Detection (Host-Subtraction Strategy)
 - **Step 1 — Unmapped read extraction:**
   - Both-ends unmapped pairs: `samtools view -f 12 -F 256 -F 2048`
   - Singleton unmapped reads: `samtools view -f 4 -F 8 -F 256 -F 2048`
@@ -57,9 +103,9 @@
 
 ---
 
-## 4. Results
+## 5. Results
 
-### 4.1 Read Quality Control
+### 5.1 Read Quality Control
 
 | Metric | Value |
 | :--- | :--- |
@@ -67,9 +113,9 @@
 | Q30 rate | See `wt1_full_fastp.html` |
 | Adapter content | Detected and trimmed |
 
-Full QC report: `wt1_full_fastp.html` · Aggregated report: `multiqc_report.html`
+Full QC report: `qc/wt1_full_fastp.html` · Aggregated report: `qc/multiqc_report.html`
 
-### 4.2 Species Identification
+### 5.2 Species Identification
 
 | Metric | Value | Interpretation |
 | :--- | :---: | :--- |
@@ -80,9 +126,9 @@ Full QC report: `wt1_full_fastp.html` · Aggregated report: `multiqc_report.html
 
 A primary mapping rate of 95.83% to the CriGri-PICR reference genome unambiguously confirms the sample is derived from *Cricetulus griseus* (Chinese hamster ovary, CHO).
 
-Full alignment statistics: `cho_flagstat.txt`
+Full alignment statistics: `species_strain/cho_flagstat.txt`
 
-### 4.3 CHO Sub-Strain Identification
+### 5.3 CHO Sub-Strain Identification
 
 | Metric | Value |
 | :--- | :--- |
@@ -100,7 +146,7 @@ Full alignment statistics: `cho_flagstat.txt`
 
 The DHFR/flanking depth ratio of **1.008** indicates that both copies of the DHFR locus are intact. This is consistent with **CHO-K1 or CHO-S** sub-strains and excludes CHO-DG44 and CHO-DXB11.
 
-### 4.4 Transgene Detection
+### 5.4 Transgene Detection
 
 **Unmapped Read Yield**
 
@@ -135,12 +181,12 @@ The unmapped fraction (4.2%) substantially exceeds the typical CHO background (<
 
 **33 contigs ≥1,000 bp returned no BLAST hits** against the NCBI nt database. These sequences are likely proprietary transgene or vector elements not yet deposited in public databases.
 
-Full BLAST results: `blast_results.txt`  
-Assembly FASTA (all contigs): `transgene_all_contigs.fa`
+Full BLAST results: `transgene/blast_results.txt`  
+Assembly FASTA (all contigs): `transgene/transgene_all_contigs.fa`
 
 ---
 
-## 5. Conclusions
+## 6. Conclusions
 
 | Question | Conclusion |
 | :--- | :--- |
@@ -155,19 +201,23 @@ Assembly FASTA (all contigs): `transgene_all_contigs.fa`
 
 ---
 
-## 6. Deliverable Files
+## 7. Deliverable Files
 
-| File | Description |
-| :--- | :--- |
-| `WGS_Analysis_Report_wt1.md` | This report |
-| `wt1_full_fastp.html` | Full-dataset fastp QC report (interactive HTML) |
-| `wt1_full_fastp.json` | fastp QC metrics (machine-readable) |
-| `multiqc_report.html` | MultiQC aggregated QC report |
-| `cho_flagstat.txt` | SAMtools flagstat — alignment statistics |
-| `dhfr_depth.txt` | DHFR and flanking region sequencing depth |
-| `blast_results.txt` | BLASTn tabular results (all hits, ≥1,000 bp contigs) |
-| `transgene_contigs_1000bp.fa` | Assembled contigs ≥1,000 bp (BLAST input) |
-| `transgene_all_contigs.fa` | All assembled contigs ≥200 bp (complete assembly) |
+```
+delivery/
+├── WGS_Analysis_Report_wt1.md          ← This report
+├── qc/
+│   ├── wt1_full_fastp.html             ← Full-dataset fastp QC (interactive HTML)
+│   ├── wt1_full_fastp.json             ← fastp QC metrics (machine-readable)
+│   └── multiqc_report.html             ← MultiQC aggregated QC report
+├── species_strain/
+│   ├── cho_flagstat.txt                ← SAMtools flagstat — alignment statistics
+│   └── dhfr_depth.txt                  ← DHFR and flanking region sequencing depth
+└── transgene/
+    ├── blast_results.txt               ← BLASTn tabular results (all hits, ≥1,000 bp contigs)
+    ├── transgene_contigs_1000bp.fa     ← Assembled contigs ≥1,000 bp (BLAST input)
+    └── transgene_all_contigs.fa        ← All assembled contigs ≥200 bp (complete assembly)
+```
 
 ---
 
