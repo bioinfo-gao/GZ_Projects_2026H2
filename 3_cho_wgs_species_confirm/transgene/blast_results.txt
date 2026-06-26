@@ -1,0 +1,679 @@
+k141_1060	gi|3171167722|gb|CP145838.1|	85.643	801	1029	0.0	815	Myodes glareolus isolate 2345 chromosome 9
+k141_1060	gi|354799878|gb|JN964379.1|	80.253	790	1029	1.85e-149	545	Mus musculus targeted non-conditional, lacZ-tagged mutant allele Cygb:tm1e(EUCOMM)Wtsi; transgenic
+k141_1060	gi|354799304|gb|JN963805.1|	80.253	790	1029	1.85e-149	545	Mus musculus targeted KO-first, conditional ready, lacZ-tagged mutant allele Cygb:tm1a(EUCOMM)Wtsi; transgenic
+k141_1060	gi|354791876|gb|JN956377.1|	80.253	790	1029	1.85e-149	545	Mus musculus targeted non-conditional, lacZ-tagged mutant allele 1810032O08Rik:tm1e(EUCOMM)Hmgu; transgenic
+k141_1060	gi|354785123|gb|JN949624.1|	80.253	790	1029	1.85e-149	545	Mus musculus targeted KO-first, conditional ready, lacZ-tagged mutant allele 1810032O08Rik:tm1a(EUCOMM)Hmgu; transgenic
+k141_267	gi|2663409541|emb|OZ004798.1|	84.076	157	3647	1.72e-30	152	Micromys minutus genome assembly, chromosome: 18
+k141_267	gi|2663409541|emb|OZ004798.1|	78.481	237	3647	2.22e-29	148	Micromys minutus genome assembly, chromosome: 18
+k141_267	gi|2663409541|emb|OZ004798.1|	78.696	230	3647	3.72e-27	141	Micromys minutus genome assembly, chromosome: 18
+k141_267	gi|2663409541|emb|OZ004798.1|	80.519	154	3647	8.11e-19	113	Micromys minutus genome assembly, chromosome: 18
+k141_267	gi|1894914087|emb|LR877232.1|	78.481	237	3647	2.22e-29	148	Acomys russatus genome assembly, chromosome: 21
+k141_267	gi|1894914087|emb|LR877232.1|	79.775	178	3647	1.74e-20	119	Acomys russatus genome assembly, chromosome: 21
+k141_267	gi|111815141|ref|NG_005612.1|	77.824	239	3647	1.34e-26	139	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_267	gi|111815141|ref|NG_005612.1|	80.899	178	3647	2.24e-24	132	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_267	gi|50300923|gb|AY591696.1|	77.824	239	3647	1.34e-26	139	Mus musculus clone IgKVk11-127 immunoglobulin kappa-like gene, partial sequence
+k141_267	gi|61741009|gb|AC140385.3|	77.824	239	3647	1.34e-26	139	Mus musculus BAC clone RP23-173G20 from chromosome 6, complete sequence
+k141_1723	gi|2476205547|emb|OX460482.1|	84.809	2146	2173	0.0	2021	Peromyscus eremicus genome assembly, chromosome: 16_21
+k141_1723	gi|2476179538|emb|OX460410.1|	86.172	1967	2173	0.0	2019	Peromyscus eremicus genome assembly, chromosome: 16_21
+k141_1723	gi|3349474969|emb|OZ475083.1|	84.627	1945	2173	0.0	1823	Microtus ochrogaster genome assembly, chromosome: 19
+k141_1723	gi|3349474994|emb|OZ475109.1|	84.552	1942	2173	0.0	1820	Microtus ochrogaster genome assembly, chromosome: 19
+k141_1723	gi|3349474994|emb|OZ475109.1|	78.488	172	2173	1.74e-13	95.3	Microtus ochrogaster genome assembly, chromosome: 19
+k141_1723	gi|3222213064|emb|OZ416242.1|	84.465	1944	2173	0.0	1797	Myodes glareolus genome assembly, chromosome: 18
+k141_1324	gi|3349474993|emb|OZ475103.1|	77.597	1165	1173	4.40e-176	634	Microtus ochrogaster genome assembly, chromosome: 13
+k141_1324	gi|3349474959|emb|OZ475077.1|	77.082	1165	1173	4.47e-166	601	Microtus ochrogaster genome assembly, chromosome: 13
+k141_1324	gi|2813041291|emb|OZ186492.1|	78.545	550	1173	3.89e-82	322	Acomys minous genome assembly, chromosome: 18
+k141_400	gi|2476204570|emb|OX460478.1|	81.851	1124	1111	0.0	900	Peromyscus eremicus genome assembly, chromosome: 12
+k141_400	gi|2476179121|emb|OX460406.1|	81.851	1124	1111	0.0	900	Peromyscus eremicus genome assembly, chromosome: 12
+k141_400	gi|2259031732|emb|OW971778.1|	77.904	1059	1111	3.24e-172	621	Mus musculus musculus genome assembly, chromosome: 16
+k141_400	gi|2452958198|emb|OX439031.1|	77.715	1059	1111	7.01e-169	610	Mus musculus genome assembly, chromosome: 16
+k141_400	gi|2415280273|emb|OX390159.1|	77.715	1059	1111	7.01e-169	610	Mus musculus genome assembly, chromosome: 16
+k141_1726	gi|2476205825|emb|OX460483.1|	82.857	1085	1108	0.0	904	Peromyscus eremicus genome assembly, chromosome: 17
+k141_1726	gi|2476187635|emb|OX460434.1|	82.601	1092	1108	0.0	893	Onychomys leucogaster genome assembly, chromosome: 17
+k141_1726	gi|2476174115|emb|OX460363.1|	81.123	1086	1108	0.0	798	Onychomys arenicola genome assembly, chromosome: 17
+k141_1726	gi|2499297401|emb|OX465468.1|	83.652	679	1108	1.51e-165	599	Chionomys nivalis genome assembly, chromosome: 20
+k141_1726	gi|2499297401|emb|OX465468.1|	92.000	75	1108	4.02e-17	106	Chionomys nivalis genome assembly, chromosome: 20
+k141_1726	gi|2476196766|emb|OX460458.1|	82.824	687	1108	2.55e-158	575	Onychomys arenicola genome assembly, chromosome: 17
+k141_663	gi|2025797105|ref|XR_005871923.1|	78.329	383	1954	6.81e-57	239	PREDICTED: Mesocricetus auratus uncharacterized LOC106022184 (LOC106022184), transcript variant X22, ncRNA
+k141_663	gi|2025797104|ref|XR_005871922.1|	78.329	383	1954	6.81e-57	239	PREDICTED: Mesocricetus auratus uncharacterized LOC106022184 (LOC106022184), transcript variant X21, ncRNA
+k141_663	gi|2025797103|ref|XR_005871921.1|	78.329	383	1954	6.81e-57	239	PREDICTED: Mesocricetus auratus uncharacterized LOC106022184 (LOC106022184), transcript variant X20, ncRNA
+k141_663	gi|2025797102|ref|XR_005871920.1|	78.329	383	1954	6.81e-57	239	PREDICTED: Mesocricetus auratus uncharacterized LOC106022184 (LOC106022184), transcript variant X19, ncRNA
+k141_663	gi|2025797101|ref|XR_005871919.1|	78.329	383	1954	6.81e-57	239	PREDICTED: Mesocricetus auratus uncharacterized LOC106022184 (LOC106022184), transcript variant X18, ncRNA
+k141_1070	gi|1894914070|emb|LR877215.1|	78.182	1265	1228	0.0	734	Acomys russatus genome assembly, chromosome: 4
+k141_1070	gi|3222184251|emb|OZ416234.1|	77.946	925	1228	2.27e-134	496	Myodes glareolus genome assembly, chromosome: 10
+k141_1070	gi|3171167721|gb|CP145837.1|	77.946	925	1228	2.27e-134	496	Myodes glareolus isolate 2345 chromosome 10
+k141_18	gi|2476173970|emb|OX460362.1|	81.836	1046	1032	0.0	824	Onychomys arenicola genome assembly, chromosome: 16
+k141_18	gi|2477391969|emb|OX460897.1|	81.722	1045	1032	0.0	819	Onychomys torridus genome assembly, chromosome: 16
+k141_18	gi|1894914058|emb|LR877203.1|	81.722	1045	1032	0.0	819	Onychomys torridus genome assembly, chromosome: 16
+k141_18	gi|2476205891|emb|OX460486.1|	82.169	673	1032	1.85e-154	562	Peromyscus eremicus genome assembly, chromosome: 20
+k141_18	gi|2476205891|emb|OX460486.1|	88.889	369	1032	1.50e-120	449	Peromyscus eremicus genome assembly, chromosome: 20
+k141_18	gi|2476180411|emb|OX460414.1|	82.169	673	1032	1.85e-154	562	Peromyscus eremicus genome assembly, chromosome: 20
+k141_18	gi|2476180411|emb|OX460414.1|	88.618	369	1032	6.97e-119	444	Peromyscus eremicus genome assembly, chromosome: 20
+k141_940	gi|2476195623|emb|OX460452.1|	87.807	1099	1436	0.0	1264	Onychomys arenicola genome assembly, chromosome: 11
+k141_940	gi|2476172955|emb|OX460357.1|	87.807	1099	1436	0.0	1264	Onychomys arenicola genome assembly, chromosome: 11
+k141_940	gi|2476185969|emb|OX460428.1|	86.457	1115	1436	0.0	1186	Onychomys leucogaster genome assembly, chromosome: 11
+k141_940	gi|22213500|gb|AC122904.2|	88.662	979	1436	0.0	1181	Mus musculus BAC clone RP23-46H15 from 1, complete sequence
+k141_940	gi|37700382|gb|AC113597.12|	88.662	979	1436	0.0	1181	Mus musculus chromosome 1, clone RP23-375F6, complete sequence
+k141_1998	gi|75991827|gb|AC157994.2|	78.808	453	1113	3.74e-72	289	Mus musculus BAC clone RP24-349B6 from chromosome 9, complete sequence
+k141_1864	gi|2845967018|emb|OZ199635.1|	85.488	379	1941	1.36e-103	394	Cricetus cricetus genome assembly, chromosome: 10
+k141_942	gi|2476205547|emb|OX460482.1|	79.784	1484	1432	0.0	977	Peromyscus eremicus genome assembly, chromosome: 16_21
+k141_942	gi|2476179538|emb|OX460410.1|	79.784	1484	1432	0.0	977	Peromyscus eremicus genome assembly, chromosome: 16_21
+k141_942	gi|2477392797|emb|OX460899.1|	78.944	1477	1432	0.0	918	Onychomys torridus genome assembly, chromosome: 18
+k141_942	gi|1894914060|emb|LR877205.1|	78.944	1477	1432	0.0	918	Onychomys torridus genome assembly, chromosome: 18
+k141_942	gi|2476187749|emb|OX460435.1|	78.972	1479	1432	0.0	915	Onychomys leucogaster genome assembly, chromosome: 18
+k141_288	gi|2499297383|emb|OX465459.1|	79.921	1016	1610	0.0	669	Chionomys nivalis genome assembly, chromosome: 11
+k141_288	gi|2499297383|emb|OX465459.1|	77.223	641	1610	1.94e-81	320	Chionomys nivalis genome assembly, chromosome: 11
+k141_288	gi|2063366579|emb|OU015386.1|	79.409	981	1610	7.95e-170	614	Acomys dimidiatus genome assembly, chromosome: 13
+k141_288	gi|2063332329|emb|OU015367.1|	78.942	1002	1610	1.33e-167	606	Acomys kempi genome assembly, chromosome: 13
+k141_288	gi|2063367164|emb|OU015754.1|	78.433	983	1610	2.26e-155	566	Acomys percivali genome assembly, chromosome: 13
+k141_288	gi|22035704|emb|AL627134.9|	78.700	892	1610	8.23e-145	531	Mouse DNA sequence from clone RP23-71I19 on chromosome 4, complete sequence
+k141_1333	gi|84794426|emb|CT025532.15|	86.036	444	1070	9.23e-128	473	Mouse DNA sequence from clone RP23-231K10 on chromosome 9, complete sequence
+k141_1333	gi|1894914080|emb|LR877225.1|	86.130	447	1070	3.32e-127	472	Acomys russatus genome assembly, chromosome: 14
+k141_1333	gi|2663409653|emb|OZ004796.1|	87.719	342	1070	4.45e-101	385	Micromys minutus genome assembly, chromosome: 16
+k141_1463	gi|3171167722|gb|CP145838.1|	80.233	946	1050	0.0	665	Myodes glareolus isolate 2345 chromosome 9
+k141_1463	gi|1894914082|emb|LR877227.1|	84.962	133	1050	2.26e-24	130	Acomys russatus genome assembly, chromosome: 16
+k141_25	gi|2476180483|emb|OX460415.1|	81.102	1016	1009	0.0	767	Peromyscus eremicus genome assembly, chromosome: 22
+k141_25	gi|2476188110|emb|OX460438.1|	80.588	1020	1009	0.0	737	Onychomys leucogaster genome assembly, chromosome: 21
+k141_25	gi|2476160515|emb|OX460391.1|	80.569	1019	1009	0.0	736	Onychomys leucogaster genome assembly, chromosome: 21
+k141_25	gi|2476206203|emb|OX460487.1|	80.157	1018	1009	0.0	712	Peromyscus eremicus genome assembly, chromosome: 22
+k141_25	gi|2476197861|emb|OX460462.1|	80.958	877	1009	4.84e-180	647	Onychomys arenicola genome assembly, chromosome: 21
+k141_804	gi|2664577664|gb|PP179531.1|	100.000	1699	5522	0.0	3138	Cloning vector pLV[Exp]-CBA>P301L, complete sequence
+k141_804	gi|2664577664|gb|PP179531.1|	98.323	954	5522	0.0	1659	Cloning vector pLV[Exp]-CBA>P301L, complete sequence
+k141_804	gi|2664577664|gb|PP179531.1|	94.969	159	5522	1.51e-57	243	Cloning vector pLV[Exp]-CBA>P301L, complete sequence
+k141_804	gi|2664577609|gb|PP179530.1|	100.000	1699	5522	0.0	3138	Cloning vector pLV[Exp]-CBA>hMAPT[NM_005910.6](ns):T2A:mRuby3, complete sequence
+k141_804	gi|2664577609|gb|PP179530.1|	98.323	954	5522	0.0	1659	Cloning vector pLV[Exp]-CBA>hMAPT[NM_005910.6](ns):T2A:mRuby3, complete sequence
+k141_804	gi|2664577609|gb|PP179530.1|	94.969	159	5522	1.51e-57	243	Cloning vector pLV[Exp]-CBA>hMAPT[NM_005910.6](ns):T2A:mRuby3, complete sequence
+k141_804	gi|2664577572|gb|PP179529.1|	100.000	1699	5522	0.0	3138	Cloning vector pLV[Exp]-CBA>P301L:T2A:mRuby3, complete sequence
+k141_804	gi|2664577572|gb|PP179529.1|	98.323	954	5522	0.0	1659	Cloning vector pLV[Exp]-CBA>P301L:T2A:mRuby3, complete sequence
+k141_804	gi|2664577572|gb|PP179529.1|	94.969	159	5522	1.51e-57	243	Cloning vector pLV[Exp]-CBA>P301L:T2A:mRuby3, complete sequence
+k141_804	gi|2664577536|gb|PP179528.1|	100.000	1699	5522	0.0	3138	Cloning vector pLV[Exp]-CBA>mRuby3/NFAT3 fusion protein, complete sequence
+k141_804	gi|2664577536|gb|PP179528.1|	98.323	954	5522	0.0	1659	Cloning vector pLV[Exp]-CBA>mRuby3/NFAT3 fusion protein, complete sequence
+k141_804	gi|2664577536|gb|PP179528.1|	95.092	163	5522	9.01e-60	250	Cloning vector pLV[Exp]-CBA>mRuby3/NFAT3 fusion protein, complete sequence
+k141_804	gi|2664577502|gb|PP179527.1|	100.000	1699	5522	0.0	3138	Cloning vector pLV[Exp]-CBA>mRuby3, complete sequence
+k141_804	gi|2664577502|gb|PP179527.1|	98.323	954	5522	0.0	1659	Cloning vector pLV[Exp]-CBA>mRuby3, complete sequence
+k141_804	gi|2664577502|gb|PP179527.1|	94.969	159	5522	1.51e-57	243	Cloning vector pLV[Exp]-CBA>mRuby3, complete sequence
+k141_1338	gi|2499297383|emb|OX465459.1|	79.713	1114	1084	0.0	750	Chionomys nivalis genome assembly, chromosome: 11
+k141_1338	gi|3349475231|emb|OZ475153.1|	79.658	1111	1084	0.0	750	Microtus pennsylvanicus genome assembly, chromosome: 13
+k141_1338	gi|3349475033|emb|OZ475131.1|	80.781	999	1084	0.0	743	Microtus pennsylvanicus genome assembly, chromosome: 13
+k141_1338	gi|3349474957|emb|OZ475075.1|	79.472	1023	1084	0.0	682	Microtus ochrogaster genome assembly, chromosome: 11
+k141_1338	gi|3349474990|emb|OZ475101.1|	79.374	1023	1084	0.0	676	Microtus ochrogaster genome assembly, chromosome: 11
+k141_31	gi|3349474963|emb|OZ475081.1|	78.508	1247	1228	0.0	776	Microtus ochrogaster genome assembly, chromosome: 17
+k141_31	gi|2477391500|emb|OX460896.1|	78.797	1264	1228	0.0	771	Onychomys torridus genome assembly, chromosome: 15
+k141_31	gi|3349474997|emb|OZ475107.1|	78.849	1182	1228	0.0	765	Microtus ochrogaster genome assembly, chromosome: 17
+k141_31	gi|2476173403|emb|OX460361.1|	78.686	1248	1228	0.0	758	Onychomys arenicola genome assembly, chromosome: 15
+k141_31	gi|2476196632|emb|OX460456.1|	78.606	1248	1228	0.0	750	Onychomys arenicola genome assembly, chromosome: 15
+k141_414	gi|1885978918|emb|LR862394.1|	80.000	1405	1588	0.0	963	Arvicola amphibius genome assembly, chromosome: 14
+k141_414	gi|3171167714|gb|CP145830.1|	79.750	1358	1588	0.0	891	Myodes glareolus isolate 2345 chromosome 17
+k141_414	gi|3222211798|emb|OZ416241.1|	79.676	1358	1588	0.0	885	Myodes glareolus genome assembly, chromosome: 17
+k141_414	gi|50727082|gb|AC132240.3|	78.853	1395	1588	0.0	852	Mus musculus BAC clone RP24-411A22 from 3, complete sequence
+k141_414	gi|2663409627|emb|OZ004784.1|	79.918	971	1588	0.0	664	Micromys minutus genome assembly, chromosome: 4
+k141_554	gi|2716431428|emb|OZ030028.1|	73.657	577	1140	6.74e-35	165	Apodemus agrarius genome assembly, chromosome: 23
+k141_1474	gi|3171167722|gb|CP145838.1|	81.995	772	1008	2.26e-173	625	Myodes glareolus isolate 2345 chromosome 9
+k141_1474	gi|20068465|emb|AL591204.14|	80.037	541	1008	5.41e-100	381	Mouse DNA sequence from clone RP23-28C17 on chromosome 11, complete sequence
+k141_1474	gi|1894914082|emb|LR877227.1|	77.538	650	1008	5.49e-90	348	Acomys russatus genome assembly, chromosome: 16
+k141_1474	gi|1868044205|ref|XM_007633821.4|	98.286	175	1008	3.35e-77	305	PREDICTED: Cricetulus griseus dynein axonemal heavy chain 17 (Dnah17), transcript variant X2, mRNA
+k141_1474	gi|1868044204|ref|XM_003498821.4|	98.286	175	1008	3.35e-77	305	PREDICTED: Cricetulus griseus dynein axonemal heavy chain 17 (Dnah17), transcript variant X1, mRNA
+k141_1221	gi|1885912093|emb|LR862395.1|	77.553	2174	2115	0.0	1127	Arvicola amphibius genome assembly, chromosome: 15
+k141_1221	gi|2499297403|emb|OX465469.1|	77.885	1967	2115	0.0	1050	Chionomys nivalis genome assembly, chromosome: 21
+k141_1221	gi|3222219954|emb|OZ416246.1|	77.600	2000	2115	0.0	1044	Myodes glareolus genome assembly, chromosome: 22
+k141_1221	gi|3171167709|gb|CP145825.1|	77.384	1804	2115	0.0	911	Myodes glareolus isolate 2345 chromosome 22
+k141_1221	gi|2321893754|emb|OX359318.1|	80.775	671	2115	1.43e-133	494	Apodemus sylvaticus genome assembly, chromosome: 21
+k141_162	gi|3349474958|emb|OZ475076.1|	72.242	1142	1940	4.01e-64	263	Microtus ochrogaster genome assembly, chromosome: 12
+k141_162	gi|3349474992|emb|OZ475102.1|	72.164	1146	1940	6.71e-62	255	Microtus ochrogaster genome assembly, chromosome: 12
+k141_35	gi|3349474956|emb|OZ475074.1|	79.425	1288	1585	0.0	846	Microtus ochrogaster genome assembly, chromosome: 10
+k141_35	gi|3349474956|emb|OZ475074.1|	80.070	286	1585	5.58e-47	206	Microtus ochrogaster genome assembly, chromosome: 10
+k141_35	gi|3349474984|emb|OZ475100.1|	79.348	1288	1585	0.0	841	Microtus ochrogaster genome assembly, chromosome: 10
+k141_35	gi|3349474984|emb|OZ475100.1|	80.070	286	1585	5.58e-47	206	Microtus ochrogaster genome assembly, chromosome: 10
+k141_35	gi|3222184251|emb|OZ416234.1|	77.691	1282	1585	0.0	693	Myodes glareolus genome assembly, chromosome: 10
+k141_35	gi|3171167721|gb|CP145837.1|	78.011	1237	1585	0.0	693	Myodes glareolus isolate 2345 chromosome 10
+k141_35	gi|1894914070|emb|LR877215.1|	76.240	484	1585	5.58e-47	206	Acomys russatus genome assembly, chromosome: 4
+k141_35	gi|1894914070|emb|LR877215.1|	76.247	421	1585	3.36e-44	196	Acomys russatus genome assembly, chromosome: 4
+k141_958	gi|2813041290|emb|OZ186491.1|	79.978	924	1251	1.31e-176	636	Acomys minous genome assembly, chromosome: 17
+k141_958	gi|3349474992|emb|OZ475102.1|	88.503	461	1251	2.27e-149	545	Microtus ochrogaster genome assembly, chromosome: 12
+k141_958	gi|3349474992|emb|OZ475102.1|	85.806	310	1251	1.16e-82	324	Microtus ochrogaster genome assembly, chromosome: 12
+k141_958	gi|3349474958|emb|OZ475076.1|	88.503	461	1251	2.27e-149	545	Microtus ochrogaster genome assembly, chromosome: 12
+k141_958	gi|3349474958|emb|OZ475076.1|	85.761	309	1251	1.16e-82	324	Microtus ochrogaster genome assembly, chromosome: 12
+k141_958	gi|1894914079|emb|LR877224.1|	83.398	512	1251	1.83e-120	449	Acomys russatus genome assembly, chromosome: 13
+k141_958	gi|3053539666|ref|XM_042273577.2|	93.697	238	1251	1.91e-90	350	PREDICTED: Peromyscus maniculatus bairdii glutamine--fructose-6-phosphate transaminase 1 (Gfpt1), transcript variant X1, mRNA
+k141_421	gi|2476205891|emb|OX460486.1|	84.553	1353	1334	0.0	1304	Peromyscus eremicus genome assembly, chromosome: 20
+k141_421	gi|2476180411|emb|OX460414.1|	84.035	1353	1334	0.0	1256	Peromyscus eremicus genome assembly, chromosome: 20
+k141_421	gi|2476160000|emb|OX460386.1|	82.538	922	1334	0.0	785	Onychomys leucogaster genome assembly, chromosome: 16
+k141_421	gi|2476160000|emb|OX460386.1|	89.716	282	1334	3.39e-93	359	Onychomys leucogaster genome assembly, chromosome: 16
+k141_421	gi|2476187634|emb|OX460433.1|	80.621	1063	1334	0.0	769	Onychomys leucogaster genome assembly, chromosome: 16
+k141_421	gi|2476187634|emb|OX460433.1|	89.355	310	1334	4.32e-102	388	Onychomys leucogaster genome assembly, chromosome: 16
+k141_421	gi|37361090|gb|AC124345.4|	79.920	747	1334	6.83e-140	514	Mus musculus BAC clone RP24-459N19 from chromosome 15, complete sequence
+k141_421	gi|37361090|gb|AC124345.4|	78.089	607	1334	2.02e-95	366	Mus musculus BAC clone RP24-459N19 from chromosome 15, complete sequence
+k141_1089	gi|3349474992|emb|OZ475102.1|	77.143	210	1003	6.03e-20	115	Microtus ochrogaster genome assembly, chromosome: 12
+k141_1089	gi|3349474958|emb|OZ475076.1|	77.143	210	1003	2.17e-19	113	Microtus ochrogaster genome assembly, chromosome: 12
+k141_1746	gi|587099|emb|X79298.1|	95.159	1260	1238	0.0	1967	C.griseus repetitive DNA, clone pRU 2.8a
+k141_1746	gi|587100|emb|X79299.1|	90.954	807	1238	0.0	1079	C.griseus repetitive DNA, clone pRU 2.8b
+k141_1746	gi|587100|emb|X79299.1|	91.387	476	1238	5.98e-180	647	C.griseus repetitive DNA, clone pRU 2.8b
+k141_1746	gi|587096|emb|X79297.1|	100.000	119	1238	1.54e-51	220	C.griseus repetitive DNA, clone 1.2BS
+k141_302	gi|2499297401|emb|OX465468.1|	86.667	615	1306	0.0	656	Chionomys nivalis genome assembly, chromosome: 20
+k141_302	gi|2499297401|emb|OX465468.1|	92.529	174	1306	7.49e-60	248	Chionomys nivalis genome assembly, chromosome: 20
+k141_302	gi|3222221650|emb|OZ416247.1|	80.267	674	1306	1.90e-125	466	Myodes glareolus genome assembly, chromosome: 23
+k141_302	gi|3222221650|emb|OZ416247.1|	92.149	242	1306	1.20e-87	340	Myodes glareolus genome assembly, chromosome: 23
+k141_302	gi|3222221650|emb|OZ416247.1|	92.308	156	1306	4.54e-52	222	Myodes glareolus genome assembly, chromosome: 23
+k141_302	gi|3171167711|gb|CP145827.1|	80.147	680	1306	1.90e-125	466	Myodes glareolus isolate 2345 chromosome 20
+k141_302	gi|3171167711|gb|CP145827.1|	92.469	239	1306	1.20e-87	340	Myodes glareolus isolate 2345 chromosome 20
+k141_302	gi|3171167711|gb|CP145827.1|	91.411	163	1306	4.54e-52	222	Myodes glareolus isolate 2345 chromosome 20
+k141_302	gi|1868090167|ref|XM_035450394.1|	100.000	193	1306	1.19e-92	357	PREDICTED: Cricetulus griseus Janus kinase 3 (Jak3), transcript variant X2, mRNA
+k141_302	gi|1868090167|ref|XM_035450394.1|	99.351	154	1306	2.66e-69	279	PREDICTED: Cricetulus griseus Janus kinase 3 (Jak3), transcript variant X2, mRNA
+k141_302	gi|1868090167|ref|XM_035450394.1|	100.000	144	1306	2.07e-65	267	PREDICTED: Cricetulus griseus Janus kinase 3 (Jak3), transcript variant X2, mRNA
+k141_302	gi|1868045110|ref|XM_035451256.1|	100.000	193	1306	1.19e-92	357	PREDICTED: Cricetulus griseus Janus kinase 3 (Jak3), transcript variant X1, mRNA
+k141_302	gi|1868045110|ref|XM_035451256.1|	99.351	154	1306	2.66e-69	279	PREDICTED: Cricetulus griseus Janus kinase 3 (Jak3), transcript variant X1, mRNA
+k141_302	gi|1868045110|ref|XM_035451256.1|	100.000	144	1306	2.07e-65	267	PREDICTED: Cricetulus griseus Janus kinase 3 (Jak3), transcript variant X1, mRNA
+k141_423	gi|2845966708|emb|OZ199634.1|	90.544	1195	1171	0.0	1554	Cricetus cricetus genome assembly, chromosome: 9
+k141_423	gi|2477391969|emb|OX460897.1|	79.558	543	1171	1.37e-96	370	Onychomys torridus genome assembly, chromosome: 16
+k141_423	gi|1894914058|emb|LR877203.1|	79.558	543	1171	1.37e-96	370	Onychomys torridus genome assembly, chromosome: 16
+k141_423	gi|2476173970|emb|OX460362.1|	79.259	540	1171	8.24e-94	361	Onychomys arenicola genome assembly, chromosome: 16
+k141_423	gi|2476196764|emb|OX460457.1|	79.074	540	1171	3.83e-92	355	Onychomys arenicola genome assembly, chromosome: 16
+k141_1480	gi|1069562174|gb|KX576660.1|	99.514	1029	1047	0.0	1873	Cricetulus griseus mitochondrion, complete genome
+k141_1480	gi|186694636|gb|EU660217.1|	99.514	1029	1047	0.0	1873	Cricetulus griseus mitochondrion, complete genome
+k141_1480	gi|91176202|ref|NC_007936.1|	99.514	1029	1047	0.0	1873	Cricetulus griseus mitochondrion, complete genome
+k141_1480	gi|2018124600|ref|NC_053822.1|	97.279	1029	1047	0.0	1746	Cricetulus barabensis mitochondrion, complete genome
+k141_1480	gi|2055415120|ref|NC_056331.1|	91.634	1028	1047	0.0	1423	Cricetulus sokolovi mitochondrion, complete genome
+k141_1353	gi|2476179231|emb|OX460409.1|	86.103	1029	1026	0.0	1075	Peromyscus eremicus genome assembly, chromosome: 15
+k141_1353	gi|2476195623|emb|OX460452.1|	85.770	1026	1026	0.0	1048	Onychomys arenicola genome assembly, chromosome: 11
+k141_1353	gi|2476185969|emb|OX460428.1|	85.492	1027	1026	0.0	1031	Onychomys leucogaster genome assembly, chromosome: 11
+k141_1353	gi|2476159485|emb|OX460381.1|	85.492	1027	1026	0.0	1031	Onychomys leucogaster genome assembly, chromosome: 11
+k141_1353	gi|2477387871|emb|OX460892.1|	85.088	1026	1026	0.0	1009	Onychomys torridus genome assembly, chromosome: 11
+k141_41	gi|2414821744|ref|XR_008222358.1|	82.185	842	1039	0.0	662	PREDICTED: Peromyscus californicus insignis uncharacterized LOC128122214 (LOC128122214), transcript variant X4, ncRNA
+k141_41	gi|2414821743|ref|XR_008222357.1|	82.185	842	1039	0.0	662	PREDICTED: Peromyscus californicus insignis uncharacterized LOC128122214 (LOC128122214), transcript variant X3, ncRNA
+k141_41	gi|2414821742|ref|XR_008222356.1|	82.185	842	1039	0.0	662	PREDICTED: Peromyscus californicus insignis uncharacterized LOC128122214 (LOC128122214), transcript variant X2, ncRNA
+k141_41	gi|2414821741|ref|XR_008222355.1|	82.185	842	1039	0.0	662	PREDICTED: Peromyscus californicus insignis uncharacterized LOC128122214 (LOC128122214), transcript variant X1, ncRNA
+k141_41	gi|1894914082|emb|LR877227.1|	82.583	333	1039	5.83e-70	281	Acomys russatus genome assembly, chromosome: 16
+k141_963	gi|2476206466|emb|OX460488.1|	90.116	172	1125	1.40e-51	220	Peromyscus eremicus genome assembly, chromosome: 23
+k141_963	gi|2476180484|emb|OX460416.1|	90.116	172	1125	1.40e-51	220	Peromyscus eremicus genome assembly, chromosome: 23
+k141_963	gi|2476198681|emb|OX460463.1|	90.000	170	1125	5.03e-51	219	Onychomys arenicola genome assembly, chromosome: 22
+k141_963	gi|2476185927|emb|OX460439.1|	90.000	170	1125	5.03e-51	219	Onychomys leucogaster genome assembly, chromosome: 22
+k141_963	gi|2476174609|emb|OX460368.1|	90.000	170	1125	5.03e-51	219	Onychomys arenicola genome assembly, chromosome: 22
+k141_1481	gi|2477391500|emb|OX460896.1|	81.651	981	1078	0.0	787	Onychomys torridus genome assembly, chromosome: 15
+k141_1481	gi|1894914057|emb|LR877202.1|	81.651	981	1078	0.0	787	Onychomys torridus genome assembly, chromosome: 15
+k141_1481	gi|2476196632|emb|OX460456.1|	81.549	981	1078	0.0	782	Onychomys arenicola genome assembly, chromosome: 15
+k141_1481	gi|2476173403|emb|OX460361.1|	81.549	981	1078	0.0	782	Onychomys arenicola genome assembly, chromosome: 15
+k141_1481	gi|2476187344|emb|OX460432.1|	81.877	927	1078	0.0	756	Onychomys leucogaster genome assembly, chromosome: 15
+k141_1095	gi|2476205891|emb|OX460486.1|	86.264	1325	1319	0.0	1410	Peromyscus eremicus genome assembly, chromosome: 20
+k141_1095	gi|2476205891|emb|OX460486.1|	85.662	272	1319	5.77e-71	285	Peromyscus eremicus genome assembly, chromosome: 20
+k141_1095	gi|2476180411|emb|OX460414.1|	86.264	1325	1319	0.0	1410	Peromyscus eremicus genome assembly, chromosome: 20
+k141_1095	gi|2476160000|emb|OX460386.1|	86.197	1333	1319	0.0	1410	Onychomys leucogaster genome assembly, chromosome: 16
+k141_1095	gi|2476160000|emb|OX460386.1|	87.850	214	1319	2.10e-60	250	Onychomys leucogaster genome assembly, chromosome: 16
+k141_1095	gi|2476187634|emb|OX460433.1|	86.111	1332	1319	0.0	1402	Onychomys leucogaster genome assembly, chromosome: 16
+k141_1095	gi|2476187634|emb|OX460433.1|	86.449	214	1319	2.12e-55	233	Onychomys leucogaster genome assembly, chromosome: 16
+k141_1095	gi|2477391969|emb|OX460897.1|	85.971	1333	1319	0.0	1393	Onychomys torridus genome assembly, chromosome: 16
+k141_1095	gi|2477391969|emb|OX460897.1|	86.449	214	1319	2.12e-55	233	Onychomys torridus genome assembly, chromosome: 16
+k141_1885	gi|3349475245|emb|OZ475161.1|	80.628	733	1462	5.76e-146	534	Microtus pennsylvanicus genome assembly, chromosome: 21
+k141_1885	gi|3349475041|emb|OZ475139.1|	79.809	733	1462	7.56e-135	497	Microtus pennsylvanicus genome assembly, chromosome: 21
+k141_1885	gi|3349474960|emb|OZ475078.1|	82.310	554	1462	4.62e-122	455	Microtus ochrogaster genome assembly, chromosome: 14
+k141_1885	gi|3349474988|emb|OZ475104.1|	81.643	572	1462	7.72e-120	448	Microtus ochrogaster genome assembly, chromosome: 14
+k141_1096	gi|2025821075|ref|XR_005875551.1|	87.161	958	1581	0.0	1053	PREDICTED: Mesocricetus auratus uncharacterized LOC121138653 (LOC121138653), ncRNA
+k141_1096	gi|3222197610|emb|OZ416236.1|	80.625	160	1581	1.61e-17	108	Myodes glareolus genome assembly, chromosome: 12
+k141_1096	gi|3171167719|gb|CP145835.1|	80.625	160	1581	1.61e-17	108	Myodes glareolus isolate 2345 chromosome 12
+k141_1096	gi|1885978917|emb|LR862393.1|	84.906	106	1581	7.51e-16	102	Arvicola amphibius genome assembly, chromosome: 13
+k141_1363	gi|2476195623|emb|OX460452.1|	81.732	635	1004	1.86e-129	479	Onychomys arenicola genome assembly, chromosome: 11
+k141_1363	gi|2477387871|emb|OX460892.1|	81.575	635	1004	2.40e-128	475	Onychomys torridus genome assembly, chromosome: 11
+k141_1363	gi|1894914053|emb|LR877198.1|	81.575	635	1004	2.40e-128	475	Onychomys torridus genome assembly, chromosome: 11
+k141_1363	gi|2476172955|emb|OX460357.1|	81.575	635	1004	8.64e-128	473	Onychomys arenicola genome assembly, chromosome: 11
+k141_1363	gi|2476185969|emb|OX460428.1|	86.290	248	1004	5.66e-65	265	Onychomys leucogaster genome assembly, chromosome: 11
+k141_1363	gi|2476185969|emb|OX460428.1|	87.143	140	1004	3.56e-32	156	Onychomys leucogaster genome assembly, chromosome: 11
+k141_1097	gi|2321893253|emb|OX359311.1|	80.137	438	1303	2.03e-75	300	Apodemus sylvaticus genome assembly, chromosome: 14
+k141_1488	gi|3171167705|gb|CP145821.1|	78.016	887	1190	6.12e-135	497	Myodes glareolus isolate 2345 chromosome 26
+k141_1488	gi|1894914076|emb|LR877221.1|	76.987	478	1190	1.89e-60	250	Acomys russatus genome assembly, chromosome: 10
+k141_317	gi|3349475237|emb|OZ475155.1|	80.407	786	1323	1.86e-150	549	Microtus pennsylvanicus genome assembly, chromosome: 15
+k141_317	gi|3349475035|emb|OZ475133.1|	80.407	786	1323	1.86e-150	549	Microtus pennsylvanicus genome assembly, chromosome: 15
+k141_317	gi|3171167719|gb|CP145835.1|	79.924	787	1323	3.13e-143	525	Myodes glareolus isolate 2345 chromosome 12
+k141_317	gi|1885978917|emb|LR862393.1|	79.898	786	1323	3.13e-143	525	Arvicola amphibius genome assembly, chromosome: 13
+k141_317	gi|3222197610|emb|OZ416236.1|	79.288	787	1323	6.82e-135	497	Myodes glareolus genome assembly, chromosome: 12
+k141_182	gi|2063325095|emb|OU015368.1|	78.715	747	1753	9.24e-125	464	Acomys kempi genome assembly, chromosome: 14
+k141_577	gi|3171167722|gb|CP145838.1|	86.550	1145	1150	0.0	1256	Myodes glareolus isolate 2345 chromosome 9
+k141_577	gi|23337151|emb|AL606479.16|	84.669	1148	1150	0.0	1114	Mouse DNA sequence from clone RP23-10G21 on chromosome 11, complete sequence
+k141_577	gi|1894914091|emb|LR877236.1|	84.514	1143	1150	0.0	1105	Acomys russatus genome assembly, chromosome: 25
+k141_577	gi|2813041288|emb|OZ186490.1|	83.477	1162	1150	0.0	1042	Acomys minous genome assembly, chromosome: 16
+k141_577	gi|2663409645|emb|OZ004790.1|	83.464	1149	1150	0.0	1029	Micromys minutus genome assembly, chromosome: 10
+k141_2029	gi|1894914098|emb|LR877243.1|	74.565	460	1289	7.65e-35	165	Acomys russatus genome assembly, chromosome: 32
+k141_2029	gi|1894914098|emb|LR877243.1|	78.723	188	1289	1.68e-21	121	Acomys russatus genome assembly, chromosome: 32
+k141_2029	gi|2799134165|emb|OZ179189.1|	82.258	124	1289	2.19e-15	100	Heterocephalus glaber genome assembly, chromosome: 21
+k141_2029	gi|2799133931|emb|OZ179220.1|	82.258	124	1289	2.19e-15	100	Heterocephalus glaber genome assembly, chromosome: 21
+k141_2029	gi|2649718590|emb|OZ001126.1|	82.258	124	1289	2.19e-15	100	Heterocephalus glaber genome assembly, chromosome: 18
+k141_2029	gi|2649713647|emb|OZ001083.1|	82.258	124	1289	2.19e-15	100	Heterocephalus glaber genome assembly, chromosome: 18
+k141_1491	gi|2476179231|emb|OX460409.1|	81.433	1438	1378	0.0	1088	Peromyscus eremicus genome assembly, chromosome: 15
+k141_1491	gi|2476205097|emb|OX460481.1|	81.167	1439	1378	0.0	1066	Peromyscus eremicus genome assembly, chromosome: 15
+k141_1491	gi|2476159485|emb|OX460381.1|	79.746	1022	1378	1.86e-180	649	Onychomys leucogaster genome assembly, chromosome: 11
+k141_1491	gi|2476172955|emb|OX460357.1|	92.784	291	1378	2.05e-110	416	Onychomys arenicola genome assembly, chromosome: 11
+k141_1491	gi|2476172955|emb|OX460357.1|	81.546	401	1378	2.15e-75	300	Onychomys arenicola genome assembly, chromosome: 11
+k141_1491	gi|2477387871|emb|OX460892.1|	92.440	291	1378	9.54e-109	411	Onychomys torridus genome assembly, chromosome: 11
+k141_1491	gi|2477387871|emb|OX460892.1|	82.294	401	1378	2.14e-80	316	Onychomys torridus genome assembly, chromosome: 11
+k141_1232	gi|3171167719|gb|CP145835.1|	77.965	3449	6226	0.0	1938	Myodes glareolus isolate 2345 chromosome 12
+k141_1232	gi|3171167719|gb|CP145835.1|	83.410	217	6226	2.25e-41	189	Myodes glareolus isolate 2345 chromosome 12
+k141_1232	gi|3222197610|emb|OZ416236.1|	77.955	3452	6226	0.0	1936	Myodes glareolus genome assembly, chromosome: 12
+k141_1232	gi|3222197610|emb|OZ416236.1|	83.410	217	6226	2.25e-41	189	Myodes glareolus genome assembly, chromosome: 12
+k141_1232	gi|1885978917|emb|LR862393.1|	77.407	3510	6226	0.0	1831	Arvicola amphibius genome assembly, chromosome: 13
+k141_1232	gi|2499297385|emb|OX465460.1|	80.854	1264	6226	0.0	928	Chionomys nivalis genome assembly, chromosome: 12
+k141_1232	gi|2499297385|emb|OX465460.1|	77.644	1664	6226	0.0	881	Chionomys nivalis genome assembly, chromosome: 12
+k141_1232	gi|2499297385|emb|OX465460.1|	84.977	213	6226	2.23e-46	206	Chionomys nivalis genome assembly, chromosome: 12
+k141_1232	gi|3349474959|emb|OZ475077.1|	80.316	1265	6226	0.0	887	Microtus ochrogaster genome assembly, chromosome: 13
+k141_1232	gi|3349474959|emb|OZ475077.1|	80.488	943	6226	0.0	673	Microtus ochrogaster genome assembly, chromosome: 13
+k141_1896	gi|2476179809|emb|OX460412.1|	79.617	1359	1300	0.0	902	Peromyscus eremicus genome assembly, chromosome: 18
+k141_1896	gi|2476205827|emb|OX460484.1|	79.544	1359	1300	0.0	894	Peromyscus eremicus genome assembly, chromosome: 18
+k141_1896	gi|2476160513|emb|OX460390.1|	80.298	1208	1300	0.0	859	Onychomys leucogaster genome assembly, chromosome: 20
+k141_1896	gi|2477395510|emb|OX460901.1|	80.099	1211	1300	0.0	843	Onychomys torridus genome assembly, chromosome: 20
+k141_1896	gi|1894914062|emb|LR877207.1|	80.099	1211	1300	0.0	843	Onychomys torridus genome assembly, chromosome: 20
+k141_319	gi|2476206466|emb|OX460488.1|	80.086	929	1054	8.53e-173	623	Peromyscus eremicus genome assembly, chromosome: 23
+k141_319	gi|2476180484|emb|OX460416.1|	80.086	929	1054	8.53e-173	623	Peromyscus eremicus genome assembly, chromosome: 23
+k141_319	gi|2477395201|emb|OX460903.1|	78.341	928	1054	2.47e-143	525	Onychomys torridus genome assembly, chromosome: 22
+k141_319	gi|1894914064|emb|LR877209.1|	78.341	928	1054	2.47e-143	525	Onychomys torridus genome assembly, chromosome: 22
+k141_319	gi|2476185927|emb|OX460439.1|	77.730	925	1054	9.03e-133	490	Onychomys leucogaster genome assembly, chromosome: 22
+k141_446	gi|2476205547|emb|OX460482.1|	86.573	499	1055	5.29e-150	547	Peromyscus eremicus genome assembly, chromosome: 16_21
+k141_446	gi|2476179538|emb|OX460410.1|	86.573	499	1055	5.29e-150	547	Peromyscus eremicus genome assembly, chromosome: 16_21
+k141_446	gi|3222213064|emb|OZ416242.1|	83.991	456	1055	4.29e-116	435	Myodes glareolus genome assembly, chromosome: 18
+k141_446	gi|3171167712|gb|CP145828.1|	83.991	456	1055	4.29e-116	435	Myodes glareolus isolate 2345 chromosome 19
+k141_1653	gi|3349474997|emb|OZ475107.1|	81.496	1043	1307	0.0	800	Microtus ochrogaster genome assembly, chromosome: 17
+k141_1653	gi|2499297391|emb|OX465463.1|	81.650	1030	1307	0.0	797	Chionomys nivalis genome assembly, chromosome: 15
+k141_1653	gi|3349474963|emb|OZ475081.1|	81.310	1038	1307	0.0	787	Microtus ochrogaster genome assembly, chromosome: 17
+k141_1653	gi|2476179060|emb|OX460405.1|	81.431	1034	1307	0.0	785	Peromyscus eremicus genome assembly, chromosome: 11
+k141_1653	gi|2476204203|emb|OX460477.1|	81.335	1034	1307	0.0	780	Peromyscus eremicus genome assembly, chromosome: 11
+k141_1904	gi|2476188110|emb|OX460438.1|	79.457	1363	1583	0.0	876	Onychomys leucogaster genome assembly, chromosome: 21
+k141_1904	gi|2476174593|emb|OX460367.1|	78.384	1374	1583	0.0	795	Onychomys arenicola genome assembly, chromosome: 21
+k141_1904	gi|2476197861|emb|OX460462.1|	78.036	1375	1583	0.0	767	Onychomys arenicola genome assembly, chromosome: 21
+k141_1904	gi|2476206203|emb|OX460487.1|	83.234	674	1583	3.66e-163	592	Peromyscus eremicus genome assembly, chromosome: 22
+k141_1904	gi|2476180483|emb|OX460415.1|	83.234	674	1583	3.66e-163	592	Peromyscus eremicus genome assembly, chromosome: 22
+k141_1905	gi|1894914071|emb|LR877216.1|	76.240	484	1010	5.82e-50	215	Acomys russatus genome assembly, chromosome: 5
+k141_65	gi|3171167713|gb|CP145829.1|	77.005	187	2601	1.25e-15	102	Myodes glareolus isolate 2345 chromosome 18
+k141_65	gi|3222214899|emb|OZ416243.1|	76.471	187	2601	5.80e-14	97.1	Myodes glareolus genome assembly, chromosome: 19
+k141_1769	gi|1894914098|emb|LR877243.1|	87.961	1138	1123	0.0	1323	Acomys russatus genome assembly, chromosome: 32
+k141_1769	gi|2063325095|emb|OU015368.1|	87.227	1143	1123	0.0	1279	Acomys kempi genome assembly, chromosome: 14
+k141_1769	gi|2663409545|emb|OZ004801.1|	86.726	1130	1123	0.0	1243	Micromys minutus genome assembly, chromosome: 21
+k141_1769	gi|354793990|gb|JN958491.1|	86.198	1152	1123	0.0	1219	Mus musculus targeted non-conditional, lacZ-tagged mutant allele Ptpn23:tm1e(EUCOMM)Hmgu; transgenic
+k141_1769	gi|354782095|gb|JN946596.1|	86.198	1152	1123	0.0	1219	Mus musculus targeted KO-first, conditional ready, lacZ-tagged mutant allele Ptpn23:tm1a(EUCOMM)Hmgu; transgenic
+k141_1507	gi|2499297377|emb|OX465456.1|	91.681	1142	1179	0.0	1572	Chionomys nivalis genome assembly, chromosome: 8
+k141_1507	gi|2499297377|emb|OX465456.1|	86.897	145	1179	9.03e-34	161	Chionomys nivalis genome assembly, chromosome: 8
+k141_1507	gi|2499297377|emb|OX465456.1|	89.147	129	1179	3.25e-33	159	Chionomys nivalis genome assembly, chromosome: 8
+k141_1507	gi|3171167723|gb|CP145839.1|	91.703	1145	1179	0.0	1572	Myodes glareolus isolate 2345 chromosome 8
+k141_1507	gi|3171167723|gb|CP145839.1|	87.586	145	1179	1.94e-35	167	Myodes glareolus isolate 2345 chromosome 8
+k141_1507	gi|3171167723|gb|CP145839.1|	86.897	145	1179	9.03e-34	161	Myodes glareolus isolate 2345 chromosome 8
+k141_1507	gi|2063367169|emb|OU015757.1|	91.231	1129	1179	0.0	1528	Acomys percivali genome assembly, chromosome: 16
+k141_1507	gi|2063367169|emb|OU015757.1|	86.897	145	1179	9.03e-34	161	Acomys percivali genome assembly, chromosome: 16
+k141_1507	gi|2063367169|emb|OU015757.1|	86.713	143	1179	1.17e-32	158	Acomys percivali genome assembly, chromosome: 16
+k141_1507	gi|1894914071|emb|LR877216.1|	90.788	1129	1179	0.0	1500	Acomys russatus genome assembly, chromosome: 5
+k141_1507	gi|1894914071|emb|LR877216.1|	86.897	145	1179	9.03e-34	161	Acomys russatus genome assembly, chromosome: 5
+k141_1507	gi|1894914071|emb|LR877216.1|	86.014	143	1179	5.43e-31	152	Acomys russatus genome assembly, chromosome: 5
+k141_1507	gi|2063337464|emb|OU015370.1|	90.434	1129	1179	0.0	1478	Acomys kempi genome assembly, chromosome: 16
+k141_1507	gi|2063337464|emb|OU015370.1|	87.413	143	1179	2.51e-34	163	Acomys kempi genome assembly, chromosome: 16
+k141_1507	gi|2063337464|emb|OU015370.1|	86.897	145	1179	9.03e-34	161	Acomys kempi genome assembly, chromosome: 16
+k141_1377	gi|2476173063|emb|OX460358.1|	79.884	1546	1929	0.0	1048	Onychomys arenicola genome assembly, chromosome: 12
+k141_1377	gi|2476194649|emb|OX460453.1|	79.754	1546	1929	0.0	1037	Onychomys arenicola genome assembly, chromosome: 12
+k141_1377	gi|2476159872|emb|OX460382.1|	80.426	1456	1929	0.0	1035	Onychomys leucogaster genome assembly, chromosome: 12
+k141_1377	gi|2476186496|emb|OX460429.1|	80.357	1456	1929	0.0	1029	Onychomys leucogaster genome assembly, chromosome: 12
+k141_1377	gi|2476204570|emb|OX460478.1|	81.461	1246	1929	0.0	979	Peromyscus eremicus genome assembly, chromosome: 12
+k141_452	gi|2476179231|emb|OX460409.1|	82.532	1019	1030	0.0	865	Peromyscus eremicus genome assembly, chromosome: 15
+k141_452	gi|2476205097|emb|OX460481.1|	82.463	1015	1030	0.0	857	Peromyscus eremicus genome assembly, chromosome: 15
+k141_1660	gi|2476204203|emb|OX460477.1|	85.897	702	1492	0.0	723	Peromyscus eremicus genome assembly, chromosome: 11
+k141_1660	gi|2476179060|emb|OX460405.1|	85.085	704	1492	0.0	691	Peromyscus eremicus genome assembly, chromosome: 11
+k141_1660	gi|2499297391|emb|OX465463.1|	81.919	719	1492	1.60e-161	586	Chionomys nivalis genome assembly, chromosome: 15
+k141_1660	gi|3171167716|gb|CP145832.1|	83.703	632	1492	2.68e-159	579	Myodes glareolus isolate 2345 chromosome 15
+k141_1660	gi|3222208241|emb|OZ416239.1|	83.570	633	1492	3.47e-158	575	Myodes glareolus genome assembly, chromosome: 15
+k141_997	gi|2025811515|ref|XR_005873958.1|	83.113	983	1514	0.0	874	PREDICTED: Mesocricetus auratus uncharacterized LOC101836814 (LOC101836814), ncRNA
+k141_1661	gi|1894914080|emb|LR877225.1|	79.395	529	1167	4.94e-91	351	Acomys russatus genome assembly, chromosome: 14
+k141_1661	gi|2663409653|emb|OZ004796.1|	77.258	620	1167	2.99e-83	326	Micromys minutus genome assembly, chromosome: 16
+k141_718	gi|1894914098|emb|LR877243.1|	78.683	1093	1129	0.0	654	Acomys russatus genome assembly, chromosome: 32
+k141_718	gi|2246121810|ref|XM_048423646.1|	78.612	879	1129	1.24e-141	520	PREDICTED: Myodes glareolus hyaluronidase 2 (Hyal2), transcript variant X2, mRNA
+k141_718	gi|2325215647|ref|NG_099472.1|	83.553	304	1129	2.95e-68	276	Homo sapiens H3K27ac-H3K4me1 hESC enhancer GRCh37_chr3:50359913-50360586 (LOC127397503) on chromosome 3
+k141_718	gi|2337875|gb|AC002455.1|	83.553	304	1129	2.95e-68	276	Homo sapiens cosmid clone LUCA13 from 3p21.3, complete sequence
+k141_718	gi|3129438422|ref|XR_013413970.1|	84.674	261	1129	1.07e-62	257	PREDICTED: Macaca mulatta uncharacterized LOC144339207 (LOC144339207), ncRNA
+k141_70	gi|2499297377|emb|OX465456.1|	84.809	1310	1309	0.0	1243	Chionomys nivalis genome assembly, chromosome: 8
+k141_70	gi|2259034968|emb|OW971781.1|	83.537	1312	1309	0.0	1153	Mus musculus musculus genome assembly, chromosome: 19
+k141_70	gi|2244910432|emb|OW971592.1|	83.537	1312	1309	0.0	1153	Mus musculus genome assembly, chromosome: 19
+k141_70	gi|2243791014|emb|OW971823.1|	83.537	1312	1309	0.0	1153	Mus musculus genome assembly, chromosome: 19
+k141_70	gi|2243790644|emb|OW971623.1|	83.537	1312	1309	0.0	1153	Mus musculus domesticus genome assembly, chromosome: 19
+k141_2041	gi|2476195623|emb|OX460452.1|	80.882	952	1171	0.0	689	Onychomys arenicola genome assembly, chromosome: 11
+k141_2041	gi|2477387871|emb|OX460892.1|	80.927	949	1171	0.0	688	Onychomys torridus genome assembly, chromosome: 11
+k141_2041	gi|1894914053|emb|LR877198.1|	80.927	949	1171	0.0	688	Onychomys torridus genome assembly, chromosome: 11
+k141_2041	gi|2476185969|emb|OX460428.1|	79.663	949	1171	2.06e-169	612	Onychomys leucogaster genome assembly, chromosome: 11
+k141_2041	gi|2476172955|emb|OX460357.1|	79.003	943	1171	9.72e-158	573	Onychomys arenicola genome assembly, chromosome: 11
+k141_1664	gi|3222225741|emb|OZ416250.1|	78.664	928	1007	3.87e-156	568	Myodes glareolus genome assembly, chromosome: 26
+k141_1664	gi|2477395510|emb|OX460901.1|	80.619	614	1007	4.06e-121	451	Onychomys torridus genome assembly, chromosome: 20
+k141_1664	gi|2034238717|emb|LR862397.2|	79.832	595	1007	5.33e-110	414	Arvicola amphibius genome assembly, chromosome: 17
+k141_1664	gi|2034238717|emb|LR862397.2|	89.873	79	1007	2.19e-14	97.1	Arvicola amphibius genome assembly, chromosome: 17
+k141_1664	gi|2321893753|emb|OX359317.1|	80.328	305	1007	4.49e-51	219	Apodemus sylvaticus genome assembly, chromosome: 20
+k141_1664	gi|2716443548|emb|OZ030026.1|	79.276	304	1007	1.62e-45	200	Apodemus agrarius genome assembly, chromosome: 21
+k141_1514	gi|2476197834|emb|OX460460.1|	87.805	533	1163	1.58e-170	616	Onychomys arenicola genome assembly, chromosome: 19
+k141_1514	gi|2476174521|emb|OX460365.1|	87.805	533	1163	1.58e-170	616	Onychomys arenicola genome assembly, chromosome: 19
+k141_1514	gi|2476187990|emb|OX460436.1|	87.617	533	1163	7.35e-169	610	Onychomys leucogaster genome assembly, chromosome: 19
+k141_1514	gi|2476160456|emb|OX460389.1|	87.054	533	1163	2.66e-163	592	Onychomys leucogaster genome assembly, chromosome: 19
+k141_1514	gi|2477395472|emb|OX460900.1|	86.867	533	1163	3.45e-162	588	Onychomys torridus genome assembly, chromosome: 19
+k141_1515	gi|2477392379|emb|OX460898.1|	79.008	948	1647	6.38e-161	584	Onychomys torridus genome assembly, chromosome: 17
+k141_1515	gi|2476205825|emb|OX460483.1|	80.200	500	1647	4.24e-88	342	Peromyscus eremicus genome assembly, chromosome: 17
+k141_1515	gi|2476179808|emb|OX460411.1|	80.200	500	1647	4.24e-88	342	Peromyscus eremicus genome assembly, chromosome: 17
+k141_1515	gi|3349474972|emb|OZ475089.1|	78.299	576	1647	2.55e-85	333	Microtus ochrogaster genome assembly, chromosome: 25
+k141_1515	gi|3349474999|emb|OZ475115.1|	80.638	439	1647	1.53e-82	324	Microtus ochrogaster genome assembly, chromosome: 25
+k141_1666	gi|354507282|ref|XM_003515638.1|	99.668	301	1455	2.05e-150	549	PREDICTED: Cricetulus griseus vomeronasal type-2 receptor 116 (LOC100766492), mRNA
+k141_1666	gi|3053458478|ref|XM_076568018.1|	76.271	236	1455	6.85e-21	119	PREDICTED: Peromyscus maniculatus bairdii vomeronasal type-2 receptor 116-like (LOC143272530), transcript variant X2, mRNA
+k141_1666	gi|3053458476|ref|XM_076568014.1|	76.271	236	1455	6.85e-21	119	PREDICTED: Peromyscus maniculatus bairdii vomeronasal type-2 receptor 116-like (LOC143272530), transcript variant X1, mRNA
+k141_1666	gi|1622437823|ref|XM_028862197.1|	76.349	241	1455	3.18e-19	113	PREDICTED: Peromyscus leucopus vomeronasal type-2 receptor 116-like (LOC114687592), mRNA
+k141_1666	gi|3053458482|ref|XM_076568036.1|	75.630	238	1455	1.48e-17	108	PREDICTED: Peromyscus maniculatus bairdii vomeronasal type-2 receptor 116-like (LOC143272532), mRNA
+k141_195	gi|1737771496|gb|MN277089.1|	76.111	180	1132	1.15e-12	91.6	Homo sapiens IGL c649_light_IGKV1-12_IGKJ2 mRNA, partial cds
+k141_195	gi|1737770592|gb|MN276637.1|	76.111	180	1132	1.15e-12	91.6	Homo sapiens IGL c197_light_IGKV1-12_IGKJ2 mRNA, partial cds
+k141_1392	gi|2845967018|emb|OZ199635.1|	81.193	1106	1352	0.0	839	Cricetus cricetus genome assembly, chromosome: 10
+k141_1392	gi|2845967018|emb|OZ199635.1|	81.193	1106	1352	0.0	837	Cricetus cricetus genome assembly, chromosome: 10
+k141_1392	gi|2845967018|emb|OZ199635.1|	81.013	1106	1352	0.0	830	Cricetus cricetus genome assembly, chromosome: 10
+k141_1392	gi|2845967018|emb|OZ199635.1|	80.905	1105	1352	0.0	821	Cricetus cricetus genome assembly, chromosome: 10
+k141_1392	gi|2845967018|emb|OZ199635.1|	80.755	1112	1352	0.0	819	Cricetus cricetus genome assembly, chromosome: 10
+k141_1392	gi|2845967018|emb|OZ199635.1|	80.628	1115	1352	0.0	809	Cricetus cricetus genome assembly, chromosome: 10
+k141_1392	gi|2845967018|emb|OZ199635.1|	80.686	1108	1352	0.0	808	Cricetus cricetus genome assembly, chromosome: 10
+k141_1392	gi|2845967018|emb|OZ199635.1|	80.616	1104	1352	0.0	804	Cricetus cricetus genome assembly, chromosome: 10
+k141_1392	gi|2845967018|emb|OZ199635.1|	80.525	1104	1352	0.0	798	Cricetus cricetus genome assembly, chromosome: 10
+k141_1392	gi|2845967018|emb|OZ199635.1|	89.691	194	1352	1.00e-58	244	Cricetus cricetus genome assembly, chromosome: 10
+k141_1392	gi|2845967018|emb|OZ199635.1|	87.745	204	1352	6.04e-56	235	Cricetus cricetus genome assembly, chromosome: 10
+k141_1392	gi|2845967018|emb|OZ199635.1|	83.871	186	1352	1.03e-38	178	Cricetus cricetus genome assembly, chromosome: 10
+k141_350	gi|3171167722|gb|CP145838.1|	87.500	568	1007	4.83e-180	647	Myodes glareolus isolate 2345 chromosome 9
+k141_350	gi|3171167722|gb|CP145838.1|	80.876	251	1007	5.88e-40	182	Myodes glareolus isolate 2345 chromosome 9
+k141_350	gi|2663409645|emb|OZ004790.1|	85.596	604	1007	1.05e-171	619	Micromys minutus genome assembly, chromosome: 10
+k141_350	gi|1894914082|emb|LR877227.1|	79.184	956	1007	4.93e-165	597	Acomys russatus genome assembly, chromosome: 16
+k141_350	gi|2038294233|ref|XM_041635532.1|	84.779	565	1007	5.04e-150	547	PREDICTED: Microtus oregoni tripartite motif containing 47 (Trim47), mRNA
+k141_350	gi|2553410689|ref|NG_219431.1|	78.241	887	1007	6.56e-144	527	Mus musculus STARR-seq mESC enhancer starr_31193 (LOC131379499) on chromosome 11
+k141_1396	gi|3171167722|gb|CP145838.1|	87.839	995	1060	0.0	1131	Myodes glareolus isolate 2345 chromosome 9
+k141_1396	gi|1894914082|emb|LR877227.1|	88.766	721	1060	0.0	867	Acomys russatus genome assembly, chromosome: 16
+k141_1396	gi|21213204|emb|AL606498.17|	87.183	788	1060	0.0	859	Mouse DNA sequence from clone RP23-197C15 on chromosome 11, complete sequence
+k141_1396	gi|3018945022|emb|OZ280638.1|	82.380	647	1060	5.31e-150	547	Mustela erminea genome assembly, chromosome: 18
+k141_1396	gi|3018940973|emb|OZ280659.1|	82.380	647	1060	5.31e-150	547	Mustela erminea genome assembly, chromosome: 18
+k141_2056	gi|2476205097|emb|OX460481.1|	81.551	374	1016	3.40e-72	289	Peromyscus eremicus genome assembly, chromosome: 15
+k141_2056	gi|2476205097|emb|OX460481.1|	77.432	514	1016	2.05e-69	279	Peromyscus eremicus genome assembly, chromosome: 15
+k141_2056	gi|2476179231|emb|OX460409.1|	77.432	514	1016	2.05e-69	279	Peromyscus eremicus genome assembly, chromosome: 15
+k141_2056	gi|2476179231|emb|OX460409.1|	81.117	376	1016	2.05e-69	279	Peromyscus eremicus genome assembly, chromosome: 15
+k141_1793	gi|1644884032|gb|MK801288.1|	100.000	1306	1306	0.0	2412	Cloning vector RS474_ErbB-RASER1C-dCas9VP64, complete sequence
+k141_1793	gi|1377672177|gb|MG840314.1|	100.000	1306	1306	0.0	2412	Cloning vector pLenti-EF1a-dCas9-DNMT3B(E697A)-2A-bla, complete sequence
+k141_1793	gi|1377672175|gb|MG840313.1|	100.000	1306	1306	0.0	2412	Cloning vector pLenti-EF1a-dCas9-DNMT3B-2A-bla, complete sequence
+k141_1793	gi|1377672173|gb|MG840312.1|	100.000	1306	1306	0.0	2412	Cloning vector pLenti-EF1a-dCas9-DNMT3A(E752A)-2A-bla, complete sequence
+k141_1793	gi|1377672171|gb|MG840311.1|	100.000	1306	1306	0.0	2412	Cloning vector pLenti-EF1a-dCas9-DNMT3A-2A-bla, complete sequence
+k141_2057	gi|3171167722|gb|CP145838.1|	81.876	629	1033	6.83e-134	494	Myodes glareolus isolate 2345 chromosome 9
+k141_2057	gi|1894914082|emb|LR877227.1|	75.394	634	1033	2.11e-59	246	Acomys russatus genome assembly, chromosome: 16
+k141_90	gi|2476179808|emb|OX460411.1|	82.122	1857	1868	0.0	1524	Peromyscus eremicus genome assembly, chromosome: 17
+k141_90	gi|2476205825|emb|OX460483.1|	82.122	1857	1868	0.0	1522	Peromyscus eremicus genome assembly, chromosome: 17
+k141_90	gi|2499297401|emb|OX465468.1|	81.863	612	1868	1.26e-133	494	Chionomys nivalis genome assembly, chromosome: 20
+k141_90	gi|1894914088|emb|LR877233.1|	79.023	348	1868	3.92e-54	230	Acomys russatus genome assembly, chromosome: 22
+k141_1527	gi|1537970765|ref|XR_003479363.1|	100.000	79	1954	4.25e-29	147	PREDICTED: Cricetulus griseus small nucleolar RNA SNORD115 (LOC113832144), ncRNA
+k141_1527	gi|2599530535|ref|XR_009585680.1|	88.608	79	1954	4.34e-14	97.1	PREDICTED: Meriones unguiculatus small nucleolar RNA SNORD115 (LOC132647312), ncRNA
+k141_1681	gi|2845967018|emb|OZ199635.1|	81.886	403	1181	1.81e-85	333	Cricetus cricetus genome assembly, chromosome: 10
+k141_1681	gi|2476205825|emb|OX460483.1|	74.118	595	1181	5.33e-46	202	Peromyscus eremicus genome assembly, chromosome: 17
+k141_1681	gi|2476179808|emb|OX460411.1|	73.950	595	1181	2.48e-44	196	Peromyscus eremicus genome assembly, chromosome: 17
+k141_352	gi|2477395472|emb|OX460900.1|	79.757	741	1146	3.54e-132	488	Onychomys torridus genome assembly, chromosome: 19
+k141_352	gi|1894914061|emb|LR877206.1|	79.757	741	1146	3.54e-132	488	Onychomys torridus genome assembly, chromosome: 19
+k141_352	gi|2476178520|emb|OX460402.1|	78.125	736	1146	2.82e-113	425	Peromyscus eremicus genome assembly, chromosome: 8b
+k141_352	gi|2476174521|emb|OX460365.1|	78.172	733	1146	4.71e-111	418	Onychomys arenicola genome assembly, chromosome: 19
+k141_352	gi|2476197834|emb|OX460460.1|	78.035	733	1146	2.19e-109	412	Onychomys arenicola genome assembly, chromosome: 19
+k141_91	gi|3171167722|gb|CP145838.1|	82.874	835	1011	0.0	713	Myodes glareolus isolate 2345 chromosome 9
+k141_91	gi|1894914082|emb|LR877227.1|	79.937	947	1011	2.27e-173	625	Acomys russatus genome assembly, chromosome: 16
+k141_91	gi|17017768|emb|AL591404.4|	79.695	852	1011	1.40e-155	566	Mouse DNA sequence from clone RP23-394O9 on chromosome 11, complete sequence
+k141_91	gi|2663409645|emb|OZ004790.1|	85.028	354	1011	7.12e-89	344	Micromys minutus genome assembly, chromosome: 10
+k141_211	gi|3222224449|emb|OZ416249.1|	80.583	1030	1000	0.0	749	Myodes glareolus genome assembly, chromosome: 25
+k141_211	gi|3349474960|emb|OZ475078.1|	80.878	957	1000	0.0	708	Microtus ochrogaster genome assembly, chromosome: 14
+k141_211	gi|3349475003|emb|OZ475114.1|	79.569	974	1000	2.88e-177	638	Microtus ochrogaster genome assembly, chromosome: 24
+k141_211	gi|3349475039|emb|OZ475137.1|	80.527	873	1000	8.08e-173	623	Microtus pennsylvanicus genome assembly, chromosome: 19
+k141_211	gi|3171167705|gb|CP145821.1|	85.265	604	1000	4.86e-170	614	Myodes glareolus isolate 2345 chromosome 26
+k141_880	gi|2476187749|emb|OX460435.1|	75.000	396	1057	4.82e-36	169	Onychomys leucogaster genome assembly, chromosome: 18
+k141_880	gi|2476187749|emb|OX460435.1|	74.747	396	1057	2.24e-34	163	Onychomys leucogaster genome assembly, chromosome: 18
+k141_880	gi|2476187749|emb|OX460435.1|	74.580	417	1057	2.90e-33	159	Onychomys leucogaster genome assembly, chromosome: 18
+k141_880	gi|2476187749|emb|OX460435.1|	77.154	267	1057	2.26e-29	147	Onychomys leucogaster genome assembly, chromosome: 18
+k141_880	gi|2476187749|emb|OX460435.1|	77.037	270	1057	8.12e-29	145	Onychomys leucogaster genome assembly, chromosome: 18
+k141_880	gi|2476187749|emb|OX460435.1|	74.659	367	1057	2.92e-28	143	Onychomys leucogaster genome assembly, chromosome: 18
+k141_880	gi|2476187749|emb|OX460435.1|	76.580	269	1057	3.78e-27	139	Onychomys leucogaster genome assembly, chromosome: 18
+k141_880	gi|2476160058|emb|OX460388.1|	75.000	396	1057	4.82e-36	169	Onychomys leucogaster genome assembly, chromosome: 18
+k141_880	gi|2476160058|emb|OX460388.1|	74.747	396	1057	2.24e-34	163	Onychomys leucogaster genome assembly, chromosome: 18
+k141_880	gi|2476160058|emb|OX460388.1|	74.580	417	1057	1.04e-32	158	Onychomys leucogaster genome assembly, chromosome: 18
+k141_880	gi|2476160058|emb|OX460388.1|	77.154	267	1057	2.26e-29	147	Onychomys leucogaster genome assembly, chromosome: 18
+k141_880	gi|2476160058|emb|OX460388.1|	77.037	270	1057	8.12e-29	145	Onychomys leucogaster genome assembly, chromosome: 18
+k141_880	gi|2476160058|emb|OX460388.1|	74.659	367	1057	2.92e-28	143	Onychomys leucogaster genome assembly, chromosome: 18
+k141_880	gi|2476160058|emb|OX460388.1|	76.580	269	1057	3.78e-27	139	Onychomys leucogaster genome assembly, chromosome: 18
+k141_880	gi|2477395113|emb|OX460902.1|	74.483	435	1057	1.73e-35	167	Onychomys torridus genome assembly, chromosome: 21
+k141_880	gi|1894914063|emb|LR877208.1|	74.483	435	1057	1.73e-35	167	Onychomys torridus genome assembly, chromosome: 21
+k141_1801	gi|3222213064|emb|OZ416242.1|	82.037	1993	1946	0.0	1585	Myodes glareolus genome assembly, chromosome: 18
+k141_1801	gi|3171167712|gb|CP145828.1|	81.978	1992	1946	0.0	1576	Myodes glareolus isolate 2345 chromosome 19
+k141_1801	gi|3349474969|emb|OZ475083.1|	80.366	2022	1946	0.0	1402	Microtus ochrogaster genome assembly, chromosome: 19
+k141_1801	gi|3349474994|emb|OZ475109.1|	80.169	2017	1946	0.0	1376	Microtus ochrogaster genome assembly, chromosome: 19
+k141_1801	gi|2476205547|emb|OX460482.1|	82.947	991	1946	0.0	857	Peromyscus eremicus genome assembly, chromosome: 16_21
+k141_1801	gi|2476205547|emb|OX460482.1|	81.585	896	1946	0.0	686	Peromyscus eremicus genome assembly, chromosome: 16_21
+k141_357	gi|2476186496|emb|OX460429.1|	77.921	1241	1261	0.0	719	Onychomys leucogaster genome assembly, chromosome: 12
+k141_1688	gi|3222218292|emb|OZ416245.1|	79.357	1119	1147	0.0	734	Myodes glareolus genome assembly, chromosome: 21
+k141_1688	gi|3171167710|gb|CP145826.1|	79.267	1119	1147	0.0	728	Myodes glareolus isolate 2345 chromosome 21
+k141_487	gi|2476185969|emb|OX460428.1|	86.308	1227	1222	0.0	1295	Onychomys leucogaster genome assembly, chromosome: 11
+k141_487	gi|2476179231|emb|OX460409.1|	85.865	1231	1222	0.0	1269	Peromyscus eremicus genome assembly, chromosome: 15
+k141_487	gi|2476205097|emb|OX460481.1|	85.564	1233	1222	0.0	1249	Peromyscus eremicus genome assembly, chromosome: 15
+k141_487	gi|56236285|gb|AC132393.4|	83.826	1218	1222	0.0	1129	Mus musculus BAC clone RP23-386K20 from 1, complete sequence
+k141_487	gi|2663409634|emb|OZ004786.1|	84.114	1196	1222	0.0	1125	Micromys minutus genome assembly, chromosome: 6
+k141_742	gi|2955393402|emb|OZ251392.1|	84.615	104	2641	4.55e-15	100	Myotis emarginatus genome assembly, chromosome: 15
+k141_742	gi|2955233849|emb|OZ220662.2|	84.615	104	2641	4.55e-15	100	Myotis emarginatus genome assembly, chromosome: 15
+k141_742	gi|2670511120|emb|OY883188.1|	83.178	107	2641	2.12e-13	95.3	Pipistrellus nathusii genome assembly, chromosome: 11
+k141_742	gi|2476187990|emb|OX460436.1|	82.301	113	2641	2.74e-12	91.6	Onychomys leucogaster genome assembly, chromosome: 19
+k141_742	gi|2476202263|emb|OX460474.1|	83.673	98	2641	9.86e-12	89.8	Peromyscus eremicus genome assembly, chromosome: 8b
+k141_1019	gi|1885978917|emb|LR862393.1|	78.596	2892	4803	0.0	1733	Arvicola amphibius genome assembly, chromosome: 13
+k141_1019	gi|1885978917|emb|LR862393.1|	80.000	600	4803	2.03e-110	418	Arvicola amphibius genome assembly, chromosome: 13
+k141_1019	gi|1885978917|emb|LR862393.1|	89.947	189	4803	1.31e-57	243	Arvicola amphibius genome assembly, chromosome: 13
+k141_1019	gi|1885978917|emb|LR862393.1|	81.786	280	4803	7.94e-50	217	Arvicola amphibius genome assembly, chromosome: 13
+k141_1019	gi|3349474993|emb|OZ475103.1|	77.881	2916	4803	0.0	1611	Microtus ochrogaster genome assembly, chromosome: 13
+k141_1019	gi|3349474993|emb|OZ475103.1|	78.356	596	4803	1.25e-92	359	Microtus ochrogaster genome assembly, chromosome: 13
+k141_1019	gi|3349474993|emb|OZ475103.1|	83.684	380	4803	2.70e-89	348	Microtus ochrogaster genome assembly, chromosome: 13
+k141_1019	gi|3349474993|emb|OZ475103.1|	88.889	189	4803	2.83e-54	231	Microtus ochrogaster genome assembly, chromosome: 13
+k141_1019	gi|3349474959|emb|OZ475077.1|	77.850	2912	4803	0.0	1607	Microtus ochrogaster genome assembly, chromosome: 13
+k141_1019	gi|3349474959|emb|OZ475077.1|	78.356	596	4803	1.25e-92	359	Microtus ochrogaster genome assembly, chromosome: 13
+k141_1019	gi|3349474959|emb|OZ475077.1|	83.947	380	4803	5.80e-91	353	Microtus ochrogaster genome assembly, chromosome: 13
+k141_1019	gi|3349474959|emb|OZ475077.1|	88.889	189	4803	2.83e-54	231	Microtus ochrogaster genome assembly, chromosome: 13
+k141_1019	gi|3349475237|emb|OZ475155.1|	77.327	2911	4803	0.0	1511	Microtus pennsylvanicus genome assembly, chromosome: 15
+k141_1019	gi|3349475237|emb|OZ475155.1|	78.851	435	4803	1.67e-66	272	Microtus pennsylvanicus genome assembly, chromosome: 15
+k141_1019	gi|3349475237|emb|OZ475155.1|	88.889	189	4803	2.83e-54	231	Microtus pennsylvanicus genome assembly, chromosome: 15
+k141_1019	gi|3349475237|emb|OZ475155.1|	80.292	274	4803	3.72e-43	195	Microtus pennsylvanicus genome assembly, chromosome: 15
+k141_1019	gi|2499297385|emb|OX465460.1|	79.354	1642	4803	0.0	1086	Chionomys nivalis genome assembly, chromosome: 12
+k141_1019	gi|2499297385|emb|OX465460.1|	78.136	1116	4803	8.60e-174	628	Chionomys nivalis genome assembly, chromosome: 12
+k141_1019	gi|2499297385|emb|OX465460.1|	79.599	598	4803	2.04e-105	401	Chionomys nivalis genome assembly, chromosome: 12
+k141_2069	gi|3349474998|emb|OZ475108.1|	83.025	595	1318	2.41e-144	529	Microtus ochrogaster genome assembly, chromosome: 18
+k141_2069	gi|3349474966|emb|OZ475082.1|	83.025	595	1318	2.41e-144	529	Microtus ochrogaster genome assembly, chromosome: 18
+k141_745	gi|2476179231|emb|OX460409.1|	79.962	1048	1037	0.0	732	Peromyscus eremicus genome assembly, chromosome: 15
+k141_745	gi|2477387871|emb|OX460892.1|	78.394	1046	1037	5.01e-175	630	Onychomys torridus genome assembly, chromosome: 11
+k141_745	gi|1894914053|emb|LR877198.1|	78.394	1046	1037	5.01e-175	630	Onychomys torridus genome assembly, chromosome: 11
+k141_745	gi|2476195623|emb|OX460452.1|	78.032	1047	1037	1.82e-169	612	Onychomys arenicola genome assembly, chromosome: 11
+k141_745	gi|2476172955|emb|OX460357.1|	78.032	1047	1037	1.82e-169	612	Onychomys arenicola genome assembly, chromosome: 11
+k141_217	gi|3171167716|gb|CP145832.1|	80.227	1143	1167	0.0	815	Myodes glareolus isolate 2345 chromosome 15
+k141_217	gi|3222208241|emb|OZ416239.1|	79.790	1143	1167	0.0	787	Myodes glareolus genome assembly, chromosome: 15
+k141_217	gi|2063367192|emb|OU015758.1|	87.815	238	1167	8.50e-69	278	Acomys percivali genome assembly, chromosome: 17
+k141_217	gi|2063367192|emb|OU015758.1|	82.427	239	1167	5.26e-46	202	Acomys percivali genome assembly, chromosome: 17
+k141_217	gi|2063362442|emb|OU015390.1|	85.116	215	1167	5.23e-51	219	Acomys dimidiatus genome assembly, chromosome: 17
+k141_217	gi|2063362442|emb|OU015390.1|	79.927	274	1167	8.81e-44	195	Acomys dimidiatus genome assembly, chromosome: 17
+k141_217	gi|1894914096|emb|LR877241.1|	82.869	251	1167	5.23e-51	219	Acomys russatus genome assembly, chromosome: 30
+k141_1279	gi|2025770837|ref|XM_040754799.1|	89.899	1089	1385	0.0	1362	PREDICTED: Mesocricetus auratus SLIT-ROBO Rho GTPase activating protein 1 (Srgap1), transcript variant X3, mRNA
+k141_1279	gi|2025770837|ref|XM_040754799.1|	83.562	219	1385	2.28e-40	183	PREDICTED: Mesocricetus auratus SLIT-ROBO Rho GTPase activating protein 1 (Srgap1), transcript variant X3, mRNA
+k141_1279	gi|2025770835|ref|XM_040754798.1|	89.899	1089	1385	0.0	1362	PREDICTED: Mesocricetus auratus SLIT-ROBO Rho GTPase activating protein 1 (Srgap1), transcript variant X2, mRNA
+k141_1279	gi|2025770835|ref|XM_040754798.1|	83.562	219	1385	2.28e-40	183	PREDICTED: Mesocricetus auratus SLIT-ROBO Rho GTPase activating protein 1 (Srgap1), transcript variant X2, mRNA
+k141_1279	gi|2025770833|ref|XM_040754797.1|	89.899	1089	1385	0.0	1362	PREDICTED: Mesocricetus auratus SLIT-ROBO Rho GTPase activating protein 1 (Srgap1), transcript variant X1, mRNA
+k141_1279	gi|2025770833|ref|XM_040754797.1|	83.562	219	1385	2.28e-40	183	PREDICTED: Mesocricetus auratus SLIT-ROBO Rho GTPase activating protein 1 (Srgap1), transcript variant X1, mRNA
+k141_1279	gi|3171167706|gb|CP145822.1|	82.481	1330	1385	0.0	1116	Myodes glareolus isolate 2345 chromosome 25
+k141_1279	gi|3222225741|emb|OZ416250.1|	84.501	1013	1385	0.0	955	Myodes glareolus genome assembly, chromosome: 26
+k141_1279	gi|3222225741|emb|OZ416250.1|	87.363	182	1385	1.35e-47	207	Myodes glareolus genome assembly, chromosome: 26
+k141_746	gi|307186|gb|L19363.1|HUMMELB	99.216	255	1149	2.78e-123	459	Human (clone xip10) mRNA sequence
+k141_746	gi|3222197610|emb|OZ416236.1|	80.543	442	1149	8.25e-79	311	Myodes glareolus genome assembly, chromosome: 12
+k141_746	gi|3171167719|gb|CP145835.1|	80.227	440	1149	3.84e-77	305	Myodes glareolus isolate 2345 chromosome 12
+k141_746	gi|3349474959|emb|OZ475077.1|	79.863	437	1149	6.42e-75	298	Microtus ochrogaster genome assembly, chromosome: 13
+k141_746	gi|3349475237|emb|OZ475155.1|	79.405	437	1149	1.39e-71	287	Microtus pennsylvanicus genome assembly, chromosome: 15
+k141_1023	gi|2845967018|emb|OZ199635.1|	86.824	592	1285	0.0	654	Cricetus cricetus genome assembly, chromosome: 10
+k141_1023	gi|2845967018|emb|OZ199635.1|	85.106	611	1285	8.15e-169	610	Cricetus cricetus genome assembly, chromosome: 10
+k141_1023	gi|2845967018|emb|OZ199635.1|	88.285	239	1285	2.02e-70	283	Cricetus cricetus genome assembly, chromosome: 10
+k141_1695	gi|111815141|ref|NG_005612.1|	72.464	345	1254	9.90e-14	95.3	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_1695	gi|50300834|gb|AY591607.1|	72.464	345	1254	9.90e-14	95.3	Mus musculus clone IgK12-46 immunoglobulin kappa-like gene, partial sequence
+k141_1695	gi|67906209|gb|AC155333.5|	72.464	345	1254	9.90e-14	95.3	Mus musculus 6 BAC RP24-475M8 (Roswell Park Cancer Institute (C57BL/6J Male) Mouse BAC Library) complete sequence
+k141_2073	gi|2476203412|emb|OX460476.1|	84.089	1213	1213	0.0	1109	Peromyscus eremicus genome assembly, chromosome: 10
+k141_2073	gi|2476179013|emb|OX460404.1|	84.089	1213	1213	0.0	1109	Peromyscus eremicus genome assembly, chromosome: 10
+k141_2073	gi|2477387263|emb|OX460891.1|	82.096	1212	1213	0.0	959	Onychomys torridus genome assembly, chromosome: 10
+k141_2073	gi|3171167724|gb|CP145840.1|	81.708	1241	1213	0.0	955	Myodes glareolus isolate 2345 chromosome 7
+k141_2073	gi|1894914088|emb|LR877233.1|	77.101	1166	1213	2.76e-168	608	Acomys russatus genome assembly, chromosome: 22
+k141_496	gi|2476203412|emb|OX460476.1|	87.129	404	1027	1.15e-121	453	Peromyscus eremicus genome assembly, chromosome: 10
+k141_496	gi|2476179013|emb|OX460404.1|	87.129	404	1027	1.15e-121	453	Peromyscus eremicus genome assembly, chromosome: 10
+k141_496	gi|2476185020|emb|OX460427.1|	83.942	411	1027	1.98e-99	379	Onychomys leucogaster genome assembly, chromosome: 10
+k141_1812	gi|1377672177|gb|MG840314.1|	99.925	1331	1342	0.0	2453	Cloning vector pLenti-EF1a-dCas9-DNMT3B(E697A)-2A-bla, complete sequence
+k141_1812	gi|1377672175|gb|MG840313.1|	99.925	1331	1342	0.0	2453	Cloning vector pLenti-EF1a-dCas9-DNMT3B-2A-bla, complete sequence
+k141_1812	gi|1377672173|gb|MG840312.1|	99.925	1331	1342	0.0	2453	Cloning vector pLenti-EF1a-dCas9-DNMT3A(E752A)-2A-bla, complete sequence
+k141_1812	gi|1377672171|gb|MG840311.1|	99.925	1331	1342	0.0	2453	Cloning vector pLenti-EF1a-dCas9-DNMT3A-2A-bla, complete sequence
+k141_1812	gi|1377672169|gb|MG840310.1|	99.925	1331	1342	0.0	2453	Cloning vector pLenti-EF1a-dCas9-EGFP-2A-bla, complete sequence
+k141_1696	gi|33284912|emb|AL929452.9|	80.263	380	1296	7.38e-65	265	Mouse DNA sequence from clone RP23-345L15 on chromosome X, complete sequence
+k141_499	gi|2477391500|emb|OX460896.1|	76.900	1013	1067	5.39e-145	531	Onychomys torridus genome assembly, chromosome: 15
+k141_499	gi|2476187344|emb|OX460432.1|	76.900	1013	1067	5.39e-145	531	Onychomys leucogaster genome assembly, chromosome: 15
+k141_499	gi|2476159885|emb|OX460385.1|	76.900	1013	1067	5.39e-145	531	Onychomys leucogaster genome assembly, chromosome: 15
+k141_499	gi|1894914057|emb|LR877202.1|	76.900	1013	1067	5.39e-145	531	Onychomys torridus genome assembly, chromosome: 15
+k141_633	gi|1069562174|gb|KX576660.1|	99.970	3282	3291	0.0	6056	Cricetulus griseus mitochondrion, complete genome
+k141_633	gi|91176202|ref|NC_007936.1|	99.939	3282	3291	0.0	6050	Cricetulus griseus mitochondrion, complete genome
+k141_633	gi|186694636|gb|EU660217.1|	99.878	3282	3291	0.0	6039	Cricetulus griseus mitochondrion, complete genome
+k141_633	gi|2018124600|ref|NC_053822.1|	97.532	3282	3291	0.0	5613	Cricetulus barabensis mitochondrion, complete genome
+k141_633	gi|2055415120|ref|NC_056331.1|	91.081	3285	3291	0.0	4436	Cricetulus sokolovi mitochondrion, complete genome
+k141_1288	gi|1894914082|emb|LR877227.1|	80.944	593	1244	6.54e-120	448	Acomys russatus genome assembly, chromosome: 16
+k141_1032	gi|3171167722|gb|CP145838.1|	88.870	1186	1215	0.0	1411	Myodes glareolus isolate 2345 chromosome 9
+k141_1032	gi|1868359570|ref|XM_027427983.2|	99.740	770	1215	0.0	1410	PREDICTED: Cricetulus griseus family with sequence similarity 171 member A2 (Fam171a2), transcript variant X2, partial mRNA
+k141_1032	gi|1868059806|ref|XM_035457152.1|	99.740	770	1215	0.0	1410	PREDICTED: Cricetulus griseus family with sequence similarity 171 member A2 (Fam171a2), transcript variant X1, partial mRNA
+k141_1032	gi|2025753786|ref|XM_040749826.1|	96.753	770	1215	0.0	1282	PREDICTED: Mesocricetus auratus family with sequence similarity 171 member A2 (Fam171a2), transcript variant X2, mRNA
+k141_1032	gi|2025753784|ref|XM_040749825.1|	96.753	770	1215	0.0	1282	PREDICTED: Mesocricetus auratus family with sequence similarity 171 member A2 (Fam171a2), transcript variant X1, mRNA
+k141_1547	gi|1885978918|emb|LR862394.1|	80.112	1247	2012	0.0	876	Arvicola amphibius genome assembly, chromosome: 14
+k141_1547	gi|3171167714|gb|CP145830.1|	79.551	1159	2012	0.0	769	Myodes glareolus isolate 2345 chromosome 17
+k141_1547	gi|3171167714|gb|CP145830.1|	74.295	603	2012	3.31e-45	200	Myodes glareolus isolate 2345 chromosome 17
+k141_1547	gi|3222211798|emb|OZ416241.1|	79.432	1162	2012	0.0	763	Myodes glareolus genome assembly, chromosome: 17
+k141_1547	gi|3222211798|emb|OZ416241.1|	74.281	661	2012	3.29e-50	217	Myodes glareolus genome assembly, chromosome: 17
+k141_1547	gi|3349474995|emb|OZ475110.1|	80.320	1062	2012	0.0	761	Microtus ochrogaster genome assembly, chromosome: 20
+k141_1547	gi|3349474995|emb|OZ475110.1|	74.212	698	2012	1.18e-49	215	Microtus ochrogaster genome assembly, chromosome: 20
+k141_1547	gi|3349474995|emb|OZ475110.1|	87.742	155	2012	1.55e-38	178	Microtus ochrogaster genome assembly, chromosome: 20
+k141_1547	gi|3349474970|emb|OZ475084.1|	80.339	1063	2012	0.0	761	Microtus ochrogaster genome assembly, chromosome: 20
+k141_1547	gi|3349474970|emb|OZ475084.1|	74.069	698	2012	5.50e-48	209	Microtus ochrogaster genome assembly, chromosome: 20
+k141_1547	gi|3349474970|emb|OZ475084.1|	87.821	156	2012	4.31e-39	180	Microtus ochrogaster genome assembly, chromosome: 20
+k141_1175	gi|2476159872|emb|OX460382.1|	77.909	593	1128	4.84e-81	318	Onychomys leucogaster genome assembly, chromosome: 12
+k141_1175	gi|2476186496|emb|OX460429.1|	80.303	396	1128	8.21e-69	278	Onychomys leucogaster genome assembly, chromosome: 12
+k141_1175	gi|2476194649|emb|OX460453.1|	76.894	528	1128	6.44e-60	248	Onychomys arenicola genome assembly, chromosome: 12
+k141_1175	gi|2476173063|emb|OX460358.1|	76.705	528	1128	2.99e-58	243	Onychomys arenicola genome assembly, chromosome: 12
+k141_1175	gi|2476179121|emb|OX460406.1|	76.008	471	1128	8.50e-44	195	Peromyscus eremicus genome assembly, chromosome: 12
+k141_1290	gi|6274480|gb|AF193761.1|AF193761	100.000	1456	1465	0.0	2689	Cricetulus griseus expression augmenting sequence element DNA, complete sequence
+k141_1290	gi|2476205825|emb|OX460483.1|	82.424	1081	1465	0.0	883	Peromyscus eremicus genome assembly, chromosome: 17
+k141_1290	gi|2476205825|emb|OX460483.1|	80.534	262	1465	1.86e-41	187	Peromyscus eremicus genome assembly, chromosome: 17
+k141_1290	gi|2476179808|emb|OX460411.1|	82.331	1081	1465	0.0	878	Peromyscus eremicus genome assembly, chromosome: 17
+k141_1290	gi|2476160030|emb|OX460387.1|	81.139	1071	1465	0.0	787	Onychomys leucogaster genome assembly, chromosome: 17
+k141_1290	gi|2476160030|emb|OX460387.1|	82.609	322	1465	5.00e-67	272	Onychomys leucogaster genome assembly, chromosome: 17
+k141_1290	gi|2477392379|emb|OX460898.1|	80.877	1072	1465	0.0	771	Onychomys torridus genome assembly, chromosome: 17
+k141_1290	gi|2477392379|emb|OX460898.1|	81.155	329	1465	1.09e-58	244	Onychomys torridus genome assembly, chromosome: 17
+k141_378	gi|3171167722|gb|CP145838.1|	80.113	709	1229	3.81e-132	488	Myodes glareolus isolate 2345 chromosome 9
+k141_378	gi|3171167722|gb|CP145838.1|	83.694	509	1229	3.86e-122	455	Myodes glareolus isolate 2345 chromosome 9
+k141_378	gi|18873498|emb|AL591136.20|	78.339	614	1229	3.11e-93	359	Mouse DNA sequence from clone RP23-273P3 on chromosome 11, complete sequence
+k141_378	gi|1894914082|emb|LR877227.1|	83.249	394	1229	2.42e-89	346	Acomys russatus genome assembly, chromosome: 16
+k141_1703	gi|2476174521|emb|OX460365.1|	74.157	445	1250	1.24e-32	158	Onychomys arenicola genome assembly, chromosome: 19
+k141_1703	gi|2476187990|emb|OX460436.1|	78.723	235	1250	5.77e-31	152	Onychomys leucogaster genome assembly, chromosome: 19
+k141_1703	gi|2476160456|emb|OX460389.1|	78.298	235	1250	2.69e-29	147	Onychomys leucogaster genome assembly, chromosome: 19
+k141_1703	gi|2476197834|emb|OX460460.1|	73.589	443	1250	3.47e-28	143	Onychomys arenicola genome assembly, chromosome: 19
+k141_1703	gi|2476188046|emb|OX460437.1|	77.872	235	1250	1.25e-27	141	Onychomys leucogaster genome assembly, chromosome: 20
+k141_761	gi|3171167722|gb|CP145838.1|	80.077	783	1013	6.60e-144	527	Myodes glareolus isolate 2345 chromosome 9
+k141_761	gi|1894914082|emb|LR877227.1|	91.057	246	1013	2.00e-84	329	Acomys russatus genome assembly, chromosome: 16
+k141_761	gi|20068465|emb|AL591204.14|	91.964	224	1013	2.01e-79	313	Mouse DNA sequence from clone RP23-28C17 on chromosome 11, complete sequence
+k141_761	gi|1868044205|ref|XM_007633821.4|	100.000	160	1013	2.03e-74	296	PREDICTED: Cricetulus griseus dynein axonemal heavy chain 17 (Dnah17), transcript variant X2, mRNA
+k141_761	gi|1868044204|ref|XM_003498821.4|	100.000	160	1013	2.03e-74	296	PREDICTED: Cricetulus griseus dynein axonemal heavy chain 17 (Dnah17), transcript variant X1, mRNA
+k141_2082	gi|2813041290|emb|OZ186491.1|	79.167	672	3056	2.74e-117	440	Acomys minous genome assembly, chromosome: 17
+k141_2082	gi|111815141|ref|NG_005612.1|	77.461	772	3056	1.27e-115	435	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_2082	gi|111815141|ref|NG_005612.1|	77.366	782	3056	7.67e-113	425	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_2082	gi|111815141|ref|NG_005612.1|	78.274	672	3056	5.97e-109	412	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_2082	gi|111815141|ref|NG_005612.1|	78.267	658	3056	3.59e-106	403	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_2082	gi|111815141|ref|NG_005612.1|	77.994	668	3056	7.78e-103	392	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_2082	gi|111815141|ref|NG_005612.1|	77.761	670	3056	2.80e-102	390	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_2082	gi|111815141|ref|NG_005612.1|	77.744	665	3056	1.68e-99	381	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_2082	gi|111815141|ref|NG_005612.1|	77.612	670	3056	6.06e-99	379	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_2082	gi|111815141|ref|NG_005612.1|	77.813	631	3056	1.31e-95	368	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_2082	gi|111815141|ref|NG_005612.1|	77.232	672	3056	4.72e-95	366	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_2082	gi|111815141|ref|NG_005612.1|	76.820	673	3056	3.67e-91	353	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_2082	gi|111815141|ref|NG_005612.1|	76.969	673	3056	3.67e-91	353	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_2082	gi|111815141|ref|NG_005612.1|	76.706	674	3056	1.71e-89	348	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_2082	gi|111815141|ref|NG_005612.1|	76.842	665	3056	1.71e-89	348	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_2082	gi|111815141|ref|NG_005612.1|	76.716	670	3056	1.71e-89	348	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_2082	gi|111815141|ref|NG_005612.1|	76.741	675	3056	2.21e-88	344	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_2082	gi|111815141|ref|NG_005612.1|	76.374	673	3056	1.33e-85	335	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_2082	gi|111815141|ref|NG_005612.1|	72.045	440	3056	4.08e-16	104	Mus musculus immunoglobulin kappa chain complex (Igk) on chromosome 6
+k141_2082	gi|50300962|gb|AY591735.1|	77.503	769	3056	1.27e-115	435	Mus musculus clone IgKVk4-90 immunoglobulin kappa-like gene, partial sequence
+k141_2082	gi|32567912|gb|AC113030.5|	77.503	769	3056	1.27e-115	435	Mus musculus chromosome 6, clone RP23-211L5, complete sequence
+k141_2082	gi|32567912|gb|AC113030.5|	77.366	782	3056	7.67e-113	425	Mus musculus chromosome 6, clone RP23-211L5, complete sequence
+k141_2082	gi|50300961|gb|AY591734.1|	77.366	782	3056	7.67e-113	425	Mus musculus clone IgKVk4-86 immunoglobulin kappa-like gene, partial sequence
+k141_230	gi|3349474992|emb|OZ475102.1|	77.010	970	2701	1.82e-138	510	Microtus ochrogaster genome assembly, chromosome: 12
+k141_230	gi|3349474958|emb|OZ475076.1|	77.216	970	2701	1.82e-138	510	Microtus ochrogaster genome assembly, chromosome: 12
+k141_638	gi|2476196766|emb|OX460458.1|	75.457	656	1000	1.55e-75	300	Onychomys arenicola genome assembly, chromosome: 17
+k141_638	gi|2476174115|emb|OX460363.1|	75.342	657	1000	2.00e-74	296	Onychomys arenicola genome assembly, chromosome: 17
+k141_638	gi|2476187635|emb|OX460434.1|	74.887	661	1000	9.37e-68	274	Onychomys leucogaster genome assembly, chromosome: 17
+k141_638	gi|2476160030|emb|OX460387.1|	74.887	661	1000	9.37e-68	274	Onychomys leucogaster genome assembly, chromosome: 17
+k141_638	gi|2477392379|emb|OX460898.1|	74.394	660	1000	1.22e-61	254	Onychomys torridus genome assembly, chromosome: 17
+k141_762	gi|2476179121|emb|OX460406.1|	82.812	448	1030	1.55e-95	366	Peromyscus eremicus genome assembly, chromosome: 12
+k141_762	gi|2476204570|emb|OX460478.1|	82.589	448	1030	7.21e-94	361	Peromyscus eremicus genome assembly, chromosome: 12
+k141_505	gi|2476179060|emb|OX460405.1|	79.810	525	1122	4.74e-91	351	Peromyscus eremicus genome assembly, chromosome: 11
+k141_505	gi|2476204203|emb|OX460477.1|	79.429	525	1122	1.03e-87	340	Peromyscus eremicus genome assembly, chromosome: 11
+k141_505	gi|2476159885|emb|OX460385.1|	80.412	388	1122	6.31e-70	281	Onychomys leucogaster genome assembly, chromosome: 15
+k141_505	gi|2476196632|emb|OX460456.1|	80.155	388	1122	2.94e-68	276	Onychomys arenicola genome assembly, chromosome: 15
+k141_505	gi|2476173403|emb|OX460361.1|	80.155	388	1122	2.94e-68	276	Onychomys arenicola genome assembly, chromosome: 15
+k141_1438	gi|3171167708|gb|CP145824.1|	84.348	1297	1385	0.0	1218	Myodes glareolus isolate 2345 chromosome 23
+k141_1438	gi|3222216548|emb|OZ416244.1|	84.194	1297	1385	0.0	1206	Myodes glareolus genome assembly, chromosome: 20
+k141_1438	gi|3349475030|emb|OZ475134.1|	83.800	1321	1385	0.0	1201	Microtus pennsylvanicus genome assembly, chromosome: 16
+k141_1438	gi|3349475238|emb|OZ475156.1|	83.649	1321	1385	0.0	1190	Microtus pennsylvanicus genome assembly, chromosome: 16
+k141_1438	gi|2499297409|emb|OX465472.1|	82.635	1336	1385	0.0	1112	Chionomys nivalis genome assembly, chromosome: 24
+k141_1556	gi|2476205097|emb|OX460481.1|	85.761	1215	1204	0.0	1236	Peromyscus eremicus genome assembly, chromosome: 15
+k141_1556	gi|2476179231|emb|OX460409.1|	85.562	1219	1204	0.0	1223	Peromyscus eremicus genome assembly, chromosome: 15
+k141_1556	gi|2476195623|emb|OX460452.1|	84.955	1223	1204	0.0	1181	Onychomys arenicola genome assembly, chromosome: 11
+k141_1556	gi|2476172955|emb|OX460357.1|	84.943	1222	1204	0.0	1179	Onychomys arenicola genome assembly, chromosome: 11
+k141_1556	gi|2477387871|emb|OX460892.1|	84.906	1219	1204	0.0	1177	Onychomys torridus genome assembly, chromosome: 11
+k141_1960	gi|2477392797|emb|OX460899.1|	79.781	183	1475	3.21e-24	130	Onychomys torridus genome assembly, chromosome: 18
+k141_1960	gi|1894914060|emb|LR877205.1|	79.781	183	1475	3.21e-24	130	Onychomys torridus genome assembly, chromosome: 18
+k141_1960	gi|2476197180|emb|OX460459.1|	79.670	182	1475	1.15e-23	128	Onychomys arenicola genome assembly, chromosome: 18
+k141_1960	gi|2476187749|emb|OX460435.1|	79.670	182	1475	1.15e-23	128	Onychomys leucogaster genome assembly, chromosome: 18
+k141_1960	gi|3349474990|emb|OZ475101.1|	80.220	182	1475	1.15e-23	128	Microtus ochrogaster genome assembly, chromosome: 11
+k141_1960	gi|3349474990|emb|OZ475101.1|	76.804	194	1475	5.40e-17	106	Microtus ochrogaster genome assembly, chromosome: 11
+k141_1444	gi|2476180411|emb|OX460414.1|	81.862	838	1153	0.0	660	Peromyscus eremicus genome assembly, chromosome: 20
+k141_1444	gi|2476205891|emb|OX460486.1|	81.742	838	1153	0.0	654	Peromyscus eremicus genome assembly, chromosome: 20
+k141_1444	gi|2476187634|emb|OX460433.1|	79.872	780	1153	9.84e-138	507	Onychomys leucogaster genome assembly, chromosome: 16
+k141_1444	gi|3053518166|ref|XM_006974329.4|	82.143	588	1153	1.28e-131	486	PREDICTED: Peromyscus maniculatus bairdii anoctamin 6 (Ano6), transcript variant X2, mRNA
+k141_1444	gi|2476160000|emb|OX460386.1|	83.628	452	1153	1.03e-107	407	Onychomys leucogaster genome assembly, chromosome: 16
+k141_1444	gi|2476160000|emb|OX460386.1|	84.574	188	1153	1.88e-40	183	Onychomys leucogaster genome assembly, chromosome: 16
+k141_1838	gi|59797224|gb|AC131777.2|	76.110	473	1085	3.72e-57	239	Mus musculus BAC clone RP24-318O6 from chromosome 9, complete sequence
+k141_1838	gi|54792873|gb|AC133192.3|	76.110	473	1085	3.72e-57	239	Mus musculus BAC clone RP23-396C4 from 9, complete sequence
+k141_1308	gi|2318725150|ref|XM_051175042.1|	82.895	152	1597	9.67e-25	132	PREDICTED: Phodopus roborovskii acetylserotonin O-methyltransferase-like (LOC127214765), mRNA
+k141_1308	gi|2318666564|ref|XM_051178566.1|	82.353	153	1597	4.50e-23	126	PREDICTED: Phodopus roborovskii acetylserotonin O-methyltransferase-like (LOC127217575), mRNA
+k141_1308	gi|2025807644|ref|XM_040736819.1|	79.429	175	1597	7.53e-21	119	PREDICTED: Mesocricetus auratus acetylserotonin O-methyltransferase (Asmt), mRNA
+k141_1308	gi|1195491342|ref|XM_021189724.1|	79.545	176	1597	2.71e-20	117	PREDICTED: Mus pahari acetylserotonin O-methyltransferase (Asmt), mRNA
+k141_1308	gi|1195666193|ref|XM_021155021.1|	79.874	159	1597	4.53e-18	110	PREDICTED: Mus caroli acetylserotonin O-methyltransferase (Asmt), mRNA
+k141_2091	gi|1868105238|ref|XM_035449603.1|	99.784	464	1741	0.0	852	PREDICTED: Cricetulus griseus tRNA wybutosine-synthesizing protein 2 homolog (LOC113837486), mRNA
+k141_2091	gi|1868105238|ref|XM_035449603.1|	90.230	174	1741	1.70e-52	224	PREDICTED: Cricetulus griseus tRNA wybutosine-synthesizing protein 2 homolog (LOC113837486), mRNA
+k141_2091	gi|1868105238|ref|XM_035449603.1|	87.413	143	1741	1.74e-32	158	PREDICTED: Cricetulus griseus tRNA wybutosine-synthesizing protein 2 homolog (LOC113837486), mRNA
+k141_2091	gi|2845966708|emb|OZ199634.1|	82.777	749	1741	4.03e-163	592	Cricetus cricetus genome assembly, chromosome: 9
+k141_2091	gi|2845966708|emb|OZ199634.1|	91.642	335	1741	3.30e-124	462	Cricetus cricetus genome assembly, chromosome: 9
+k141_2091	gi|2845966708|emb|OZ199634.1|	88.780	205	1741	1.30e-58	244	Cricetus cricetus genome assembly, chromosome: 9
+k141_2091	gi|1949665838|ref|XM_038321690.1|	98.008	251	1741	2.00e-116	436	PREDICTED: Arvicola amphibius RNA binding motif protein 15B (Rbm15b), mRNA
+k141_2091	gi|3037399693|ref|XM_075964744.1|	97.925	241	1741	7.24e-111	418	PREDICTED: Microtus pennsylvanicus RNA binding motif protein 15B (Rbm15b), mRNA
+k141_2091	gi|2528540874|ref|XM_057768712.1|	97.925	241	1741	7.24e-111	418	PREDICTED: Chionomys nivalis RNA binding motif protein 15B (Rbm15b), mRNA
+k141_1309	gi|2476206466|emb|OX460488.1|	92.431	1374	1451	0.0	1930	Peromyscus eremicus genome assembly, chromosome: 23
+k141_1309	gi|2476180484|emb|OX460416.1|	92.191	1383	1451	0.0	1919	Peromyscus eremicus genome assembly, chromosome: 23
+k141_1309	gi|2476198681|emb|OX460463.1|	90.531	1394	1451	0.0	1807	Onychomys arenicola genome assembly, chromosome: 22
+k141_1309	gi|2477395201|emb|OX460903.1|	90.607	1384	1451	0.0	1805	Onychomys torridus genome assembly, chromosome: 22
+k141_1309	gi|1894914064|emb|LR877209.1|	90.607	1384	1451	0.0	1805	Onychomys torridus genome assembly, chromosome: 22
+k141_1567	gi|1894914086|emb|LR877231.1|	76.098	205	1239	3.52e-13	93.5	Acomys russatus genome assembly, chromosome: 20
+k141_1567	gi|1894914097|emb|LR877242.1|	77.246	167	1239	1.64e-11	87.9	Acomys russatus genome assembly, chromosome: 31
+k141_1967	gi|1537948697|ref|XM_003506892.4|	100.000	870	1592	0.0	1607	PREDICTED: Cricetulus griseus 5-hydroxytryptamine receptor 6 (Htr6), transcript variant X1, mRNA
+k141_1967	gi|2318721984|ref|XM_051173460.1|	94.095	1050	1592	0.0	1596	PREDICTED: Phodopus roborovskii 5-hydroxytryptamine receptor 6 (Htr6), mRNA
+k141_1967	gi|2572396227|ref|XM_059256227.1|	93.389	1074	1592	0.0	1587	PREDICTED: Peromyscus eremicus 5-hydroxytryptamine receptor 6 (Htr6), mRNA
+k141_1967	gi|2063332329|emb|OU015367.1|	85.176	1592	1592	0.0	1587	Acomys kempi genome assembly, chromosome: 13
+k141_1967	gi|2063366579|emb|OU015386.1|	84.969	1590	1592	0.0	1567	Acomys dimidiatus genome assembly, chromosome: 13
+k141_781	gi|2499297383|emb|OX465459.1|	82.411	705	1305	2.34e-159	579	Chionomys nivalis genome assembly, chromosome: 11
+k141_781	gi|2499297383|emb|OX465459.1|	82.519	532	1305	4.14e-117	438	Chionomys nivalis genome assembly, chromosome: 11
+k141_781	gi|3349475231|emb|OZ475153.1|	82.311	701	1305	3.91e-157	571	Microtus pennsylvanicus genome assembly, chromosome: 13
+k141_781	gi|3349475231|emb|OZ475153.1|	82.075	530	1305	3.22e-113	425	Microtus pennsylvanicus genome assembly, chromosome: 13
+k141_781	gi|3349475033|emb|OZ475131.1|	82.168	701	1305	1.82e-155	566	Microtus pennsylvanicus genome assembly, chromosome: 13
+k141_781	gi|3349475033|emb|OZ475131.1|	82.109	531	1305	8.95e-114	427	Microtus pennsylvanicus genome assembly, chromosome: 13
+k141_781	gi|3349474990|emb|OZ475101.1|	82.772	534	1305	6.87e-120	448	Microtus ochrogaster genome assembly, chromosome: 11
+k141_781	gi|3349474990|emb|OZ475101.1|	88.889	279	1305	1.55e-86	337	Microtus ochrogaster genome assembly, chromosome: 11
+k141_781	gi|3349474990|emb|OZ475101.1|	81.481	297	1305	7.53e-55	231	Microtus ochrogaster genome assembly, chromosome: 11
+k141_781	gi|3349474957|emb|OZ475075.1|	82.472	542	1305	8.89e-119	444	Microtus ochrogaster genome assembly, chromosome: 11
+k141_781	gi|3349474957|emb|OZ475075.1|	88.889	279	1305	1.55e-86	337	Microtus ochrogaster genome assembly, chromosome: 11
+k141_781	gi|3349474957|emb|OZ475075.1|	81.481	297	1305	7.53e-55	231	Microtus ochrogaster genome assembly, chromosome: 11
+k141_2104	gi|2476204203|emb|OX460477.1|	86.718	1039	1333	0.0	1125	Peromyscus eremicus genome assembly, chromosome: 11
+k141_2104	gi|2476204203|emb|OX460477.1|	78.261	276	1333	3.71e-28	143	Peromyscus eremicus genome assembly, chromosome: 11
+k141_2104	gi|2476179060|emb|OX460405.1|	86.718	1039	1333	0.0	1125	Peromyscus eremicus genome assembly, chromosome: 11
+k141_2104	gi|2476179060|emb|OX460405.1|	78.261	276	1333	3.71e-28	143	Peromyscus eremicus genome assembly, chromosome: 11
+k141_2104	gi|2477391500|emb|OX460896.1|	86.455	1041	1333	0.0	1109	Onychomys torridus genome assembly, chromosome: 15
+k141_2104	gi|2477391500|emb|OX460896.1|	89.623	106	1333	6.21e-26	135	Onychomys torridus genome assembly, chromosome: 15
+k141_2104	gi|1894914057|emb|LR877202.1|	86.455	1041	1333	0.0	1109	Onychomys torridus genome assembly, chromosome: 15
+k141_2104	gi|1894914057|emb|LR877202.1|	89.623	106	1333	6.21e-26	135	Onychomys torridus genome assembly, chromosome: 15
+k141_2104	gi|2476196632|emb|OX460456.1|	86.513	1038	1333	0.0	1105	Onychomys arenicola genome assembly, chromosome: 15
+k141_2106	gi|2477395113|emb|OX460902.1|	88.545	1519	1496	0.0	1790	Onychomys torridus genome assembly, chromosome: 21
+k141_2106	gi|1894914063|emb|LR877208.1|	88.545	1519	1496	0.0	1790	Onychomys torridus genome assembly, chromosome: 21
+k141_2106	gi|2476160515|emb|OX460391.1|	88.472	1518	1496	0.0	1781	Onychomys leucogaster genome assembly, chromosome: 21
+k141_2106	gi|2476174593|emb|OX460367.1|	88.282	1519	1496	0.0	1768	Onychomys arenicola genome assembly, chromosome: 21
+k141_2106	gi|2476188110|emb|OX460438.1|	88.208	1518	1496	0.0	1759	Onychomys leucogaster genome assembly, chromosome: 21

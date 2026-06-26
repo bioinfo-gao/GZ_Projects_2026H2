@@ -1,0 +1,2 @@
+DHFR mean depth: 24.1x (over 23780 bases)
+Flanking mean depth: 23.9x
