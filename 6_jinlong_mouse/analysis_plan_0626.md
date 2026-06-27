@@ -124,7 +124,20 @@ Generates `nf_core_samplesheet.csv` (columns: `sample`, `fastq_1`, `fastq_2`, `s
 ---
 
 ### Script 2 — `2_nextflow.sh`
-Launches nf-core/rnaseq 3.15.1 in a detached tmux session named `rnaseq`.
+
+**设计模式：self-relaunch + auto-resume**
+
+```
+bash 2_nextflow.sh
+  ├─ 不在 tmux → 创建 rnaseq session，把自身投入，主 shell exit 0
+  └─ 在 tmux 内 → run_nextflow()
+        成功 → exit 0
+        失败 → run_nextflow -resume
+                  成功 → exit 0
+                  失败 → 打印提示，exit 1（人工介入）
+```
+
+`run_nextflow()` 函数封装所有 nextflow 参数，`"$@"` 传入 `-resume`，命令只写一次。
 
 Key parameters:
 ```
@@ -134,7 +147,7 @@ Key parameters:
 ```
 Log: `scripts/nextflow_run.log`
 
-**Run:** `bash 2_nextflow.sh`  
+**Run:** `bash 2_nextflow.sh`（无需手动操作，失败自动 resume）  
 **Monitor:** `tmux attach -t rnaseq` or `tail -f scripts/nextflow_run.log`
 
 ---
