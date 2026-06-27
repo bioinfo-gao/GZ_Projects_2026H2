@@ -279,6 +279,7 @@ Expected runtime:
 | :--- | :---: | :---: |
 | Strandedness | reverse | Standard Illumina TruSeq PE library |
 | Aligner | star_salmon | Best practice for quantification accuracy |
+| `--extra_star_align_args` | `--twopassMode None --outFilterMultimapNmax 3` | 1-pass: eliminates redundant CPU pass (2.6× faster per sample); N=3: drops reads mapping to ≥4 loci (only 0.03% of reads exceed N=20 anyway), keeps true paralog pairs; restarted 2026-06-27 13:39 |
 | `--gencode` flag | yes | GENCODE M35 annotation uses GENCODE format |
 | DESeq2 reference level | G4 | Control group per client instruction |
 | LFC shrinkage | ashr | More accurate for small n, handles outliers |

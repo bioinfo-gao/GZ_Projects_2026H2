@@ -1,0 +1,342 @@
+STAR version=2.7.10a
+STAR compilation time,server,dir=2022-01-14T18:50:00-05:00 :/home/dobin/data/STAR/STARcode/STAR.master/source
+STAR git: On branch master ; commit ae26add7ea1724f3281ec8abedb71bcff6a4ae73 ; diff files: CHANGES.md README.md RELEASEnotes.md doc/STARmanual.pdf extras/doc-latex/STARmanual.tex extras/doc-latex/convertParDefToLatexTable.awk extras/doc-latex/parametersDefault.tex extras/docker/Dockerfile source/VERSION 
+##### Command Line:
+STAR --genomeDir star_index --readFilesIn input1/J_896_trimmed_1_val_1.fq.gz input2/J_896_trimmed_2_val_2.fq.gz --runThreadN 14 --outFileNamePrefix J_896. --sjdbGTFfile GRCm39.primary_assembly.genome.filtered.gtf --outSAMattrRGline ID:J_896 SM:J_896 --quantMode TranscriptomeSAM --twopassMode Basic --outSAMtype BAM Unsorted --readFilesCommand zcat --runRNGseed 0 --outFilterMultimapNmax 20 --alignSJDBoverhangMin 1 --outSAMattributes NH HI AS NM MD --quantTranscriptomeBan Singleend --outSAMstrandField intronMotif
+##### Initial USER parameters from Command Line:
+outFileNamePrefix                 J_896.
+###### All USER parameters from Command Line:
+genomeDir                     star_index     ~RE-DEFINED
+readFilesIn                   input1/J_896_trimmed_1_val_1.fq.gz   input2/J_896_trimmed_2_val_2.fq.gz        ~RE-DEFINED
+runThreadN                    14     ~RE-DEFINED
+outFileNamePrefix             J_896.     ~RE-DEFINED
+sjdbGTFfile                   GRCm39.primary_assembly.genome.filtered.gtf     ~RE-DEFINED
+outSAMattrRGline              ID:J_896   SM:J_896        ~RE-DEFINED
+quantMode                     TranscriptomeSAM        ~RE-DEFINED
+twopassMode                   Basic     ~RE-DEFINED
+outSAMtype                    BAM   Unsorted        ~RE-DEFINED
+readFilesCommand              zcat        ~RE-DEFINED
+runRNGseed                    0     ~RE-DEFINED
+outFilterMultimapNmax         20     ~RE-DEFINED
+alignSJDBoverhangMin          1     ~RE-DEFINED
+outSAMattributes              NH   HI   AS   NM   MD        ~RE-DEFINED
+quantTranscriptomeBan         Singleend     ~RE-DEFINED
+outSAMstrandField             intronMotif     ~RE-DEFINED
+##### Finished reading parameters from all sources
+
+##### Final user re-defined parameters-----------------:
+runThreadN                        14
+runRNGseed                        0
+genomeDir                         star_index
+readFilesIn                       input1/J_896_trimmed_1_val_1.fq.gz   input2/J_896_trimmed_2_val_2.fq.gz   
+readFilesCommand                  zcat   
+outFileNamePrefix                 J_896.
+outSAMtype                        BAM   Unsorted   
+outSAMstrandField                 intronMotif
+outSAMattributes                  NH   HI   AS   NM   MD   
+outSAMattrRGline                  ID:J_896   SM:J_896   
+outFilterMultimapNmax             20
+alignSJDBoverhangMin              1
+sjdbGTFfile                       GRCm39.primary_assembly.genome.filtered.gtf
+quantMode                         TranscriptomeSAM   
+quantTranscriptomeBan             Singleend
+twopassMode                       Basic
+
+-------------------------------
+##### Final effective command line:
+STAR   --runThreadN 14   --runRNGseed 0   --genomeDir star_index   --readFilesIn input1/J_896_trimmed_1_val_1.fq.gz   input2/J_896_trimmed_2_val_2.fq.gz      --readFilesCommand zcat      --outFileNamePrefix J_896.   --outSAMtype BAM   Unsorted      --outSAMstrandField intronMotif   --outSAMattributes NH   HI   AS   NM   MD      --outSAMattrRGline ID:J_896   SM:J_896      --outFilterMultimapNmax 20   --alignSJDBoverhangMin 1   --sjdbGTFfile GRCm39.primary_assembly.genome.filtered.gtf   --quantMode TranscriptomeSAM      --quantTranscriptomeBan Singleend   --twopassMode Basic
+----------------------------------------
+
+Number of fastq files for each mate = 1
+
+   Input read files for mate 1 :
+-rw-rw-r--    1 gao      gao      1825509120 Jun 26 22:19 input1/J_896_trimmed_1_val_1.fq.gz
+
+   readsCommandsFile:
+exec > "J_896._STARtmp/tmp.fifo.read1"
+echo FILE 0
+zcat      "input1/J_896_trimmed_1_val_1.fq.gz"
+
+
+   Input read files for mate 2 :
+-rw-rw-r--    1 gao      gao      1816433421 Jun 26 22:19 input2/J_896_trimmed_2_val_2.fq.gz
+
+   readsCommandsFile:
+exec > "J_896._STARtmp/tmp.fifo.read2"
+echo FILE 0
+zcat      "input2/J_896_trimmed_2_val_2.fq.gz"
+
+WARNING --outSAMattrRG defines a read group, therefore STAR will output RG attribute
+WARNING --outSAMstrandField=intronMotif, therefore STAR will output XS attribute
+ParametersSolo: --soloCellFilterType CellRanger2.2 filtering parameters:  3000 0.99 10
+Finished loading and checking parameters
+Reading genome generation parameters:
+### /usr/lib/rna-star/bin/STAR-avx2   --runMode genomeGenerate      --runThreadN 16   --genomeDir ./star_index   --genomeFastaFiles GRCm39.primary_assembly.genome.fa      --sjdbGTFfile gencode.vM35.annotation.gtf   --sjdbOverhang 149
+### GstrandBit=32
+versionGenome                 2.7.4a     ~RE-DEFINED
+genomeType                    Full     ~RE-DEFINED
+genomeFastaFiles              GRCm39.primary_assembly.genome.fa        ~RE-DEFINED
+genomeSAindexNbases           14     ~RE-DEFINED
+genomeChrBinNbits             18     ~RE-DEFINED
+genomeSAsparseD               1     ~RE-DEFINED
+genomeTransformType           None     ~RE-DEFINED
+genomeTransformVCF            -     ~RE-DEFINED
+sjdbOverhang                  149     ~RE-DEFINED
+sjdbFileChrStartEnd           -        ~RE-DEFINED
+sjdbGTFfile                   gencode.vM35.annotation.gtf     ~RE-DEFINED
+sjdbGTFchrPrefix              -     ~RE-DEFINED
+sjdbGTFfeatureExon            exon     ~RE-DEFINED
+sjdbGTFtagExonParentTranscripttranscript_id     ~RE-DEFINED
+sjdbGTFtagExonParentGene      gene_id     ~RE-DEFINED
+sjdbInsertSave                Basic     ~RE-DEFINED
+genomeFileSizes               2824905362   22612270233        ~RE-DEFINED
+Genome version is compatible with current STAR
+Number of real (reference) chromosomes= 61
+1	chr1	195154279	0
+2	chr2	181755017	195297280
+3	chr3	159745316	377225216
+4	chr4	156860686	537133056
+5	chr5	151758149	694157312
+6	chr6	149588044	845938688
+7	chr7	144995196	995622912
+8	chr8	130127694	1140850688
+9	chr9	124359700	1271136256
+10	chr10	130530862	1395654656
+11	chr11	121973369	1526202368
+12	chr12	120092757	1648361472
+13	chr13	120883175	1768685568
+14	chr14	125139656	1889796096
+15	chr15	104073951	2015100928
+16	chr16	98008968	2119434240
+17	chr17	95294699	2217476096
+18	chr18	90720763	2312896512
+19	chr19	61420004	2403860480
+20	chrX	169476592	2465464320
+21	chrY	91455967	2635071488
+22	chrM	16299	2726559744
+23	GL456210.1	169725	2726821888
+24	GL456211.1	241735	2727084032
+25	GL456212.1	153618	2727346176
+26	GL456219.1	175968	2727608320
+27	GL456221.1	206961	2727870464
+28	GL456233.2	559103	2728132608
+29	GL456239.1	40056	2728919040
+30	GL456354.1	195993	2729181184
+31	GL456359.1	22974	2729443328
+32	GL456360.1	31704	2729705472
+33	GL456366.1	47073	2729967616
+34	GL456367.1	42057	2730229760
+35	GL456368.1	20208	2730491904
+36	GL456370.1	26764	2730754048
+37	GL456372.1	28664	2731016192
+38	GL456378.1	31602	2731278336
+39	GL456379.1	72385	2731540480
+40	GL456381.1	25871	2731802624
+41	GL456382.1	23158	2732064768
+42	GL456383.1	38659	2732326912
+43	GL456385.1	35240	2732589056
+44	GL456387.1	24685	2732851200
+45	GL456389.1	28772	2733113344
+46	GL456390.1	24668	2733375488
+47	GL456392.1	23629	2733637632
+48	GL456394.1	24323	2733899776
+49	GL456396.1	21240	2734161920
+50	JH584295.1	1976	2734424064
+51	JH584296.1	199368	2734686208
+52	JH584297.1	205776	2734948352
+53	JH584298.1	184189	2735210496
+54	JH584299.1	953012	2735472640
+55	JH584300.1	182347	2736521216
+56	JH584301.1	259875	2736783360
+57	JH584302.1	155838	2737045504
+58	JH584303.1	158099	2737307648
+59	JH584304.1	114452	2737569792
+60	MU069434.1	8412	2737831936
+61	MU069435.1	31129	2738094080
+--sjdbOverhang = 149 taken from the generated genome
+Started loading the genome: Fri Jun 26 22:38:35 2026
+
+Genome: size given as a parameter = 2824905362
+SA: size given as a parameter = 22612270233
+SAindex: size given as a parameter = 1
+Read from SAindex: pGe.gSAindexNbases=14  nSAi=357913940
+nGenome=2824905362;  nSAbyte=22612270233
+GstrandBit=32   SA number of indices=5481762480
+Shared memory is not used for genomes. Allocated a private copy of the genome.
+Genome file size: 2824905362 bytes; state: good=1 eof=0 fail=0 bad=0
+Loading Genome ... done! state: good=1 eof=0 fail=0 bad=0; loaded 2824905362 bytes
+SA file size: 22612270233 bytes; state: good=1 eof=0 fail=0 bad=0
+Loading SA ... done! state: good=1 eof=0 fail=0 bad=0; loaded 22612270233 bytes
+Loading SAindex ... done: 1565873619 bytes
+Finished loading the genome: Fri Jun 26 22:39:15 2026
+
+Processing splice junctions database sjdbN=289462,   pGe.sjdbOverhang=149 
+alignIntronMax=alignMatesGapMax=0, the max intron size will be approximately determined by (2^winBinNbits)*winAnchorDistNbins=589824
+Jun 26 22:39:15   Loaded database junctions from the generated genome star_index//sjdbList.out.tab: 289462 total junctions
+
+Jun 26 22:39:15 ..... processing annotations GTF
+Processing pGe.sjdbGTFfile=GRCm39.primary_assembly.genome.filtered.gtf, found:
+		149138 transcripts
+		864145 exons (non-collapsed)
+		289489 collapsed junctions
+Total junctions: 578951
+Jun 26 22:39:24 ..... finished GTF processing
+
+WARNING: long repeat for junction # 82457 : chr5 112922393 112922883; left shift = 255; right shift = 69
+WARNING: long repeat for junction # 84858 : chr5 123328298 123329023; left shift = 255; right shift = 19
+WARNING: long repeat for junction # 94105 : chr6 48731569 48732130; left shift = 81; right shift = 255
+WARNING: long repeat for junction # 126330 : chr7 141361933 141364041; left shift = 255; right shift = 255
+WARNING: long repeat for junction # 205166 : chr13 36192501 36373186; left shift = 255; right shift = 29
+WARNING: long repeat for junction # 212873 : chr13 119631671 120070727; left shift = 36; right shift = 255
+WARNING: long repeat for junction # 229541 : chr15 75976552 75988902; left shift = 0; right shift = 255
+WARNING: long repeat for junction # 371923 : chr5 112922393 112922883; left shift = 255; right shift = 69
+WARNING: long repeat for junction # 374324 : chr5 123328298 123329023; left shift = 255; right shift = 19
+WARNING: long repeat for junction # 383571 : chr6 48731569 48732130; left shift = 81; right shift = 255
+WARNING: long repeat for junction # 415799 : chr7 141361933 141364041; left shift = 255; right shift = 255
+WARNING: long repeat for junction # 494646 : chr13 36192501 36373186; left shift = 255; right shift = 29
+WARNING: long repeat for junction # 502354 : chr13 119631671 120070727; left shift = 36; right shift = 255
+WARNING: long repeat for junction # 519023 : chr15 75976552 75988902; left shift = 0; right shift = 255
+Jun 26 22:39:24   Finished preparing junctions
+Jun 26 22:39:24 ..... inserting junctions into the genome indices
+Jun 26 22:39:26   Finished SA search: number of new junctions=0, old junctions=289462
+Jun 26 22:39:26   Finished sorting SA indicesL nInd=0
+Genome size with junctions=2824905362  2738356224   86549138
+GstrandBit1=32   GstrandBit=32
+Jun 26 22:40:38   Finished inserting junction indices
+Jun 26 22:40:41   Finished SAi
+Jun 26 22:40:41 ..... finished inserting junctions into genome
+Created thread # 1
+Created thread # 2
+Created thread # 3
+Created thread # 4
+Created thread # 5
+Starting to map file # 0
+mate 1:   input1/J_896_trimmed_1_val_1.fq.gz
+mate 2:   input2/J_896_trimmed_2_val_2.fq.gz
+Created thread # 6
+Created thread # 7
+Created thread # 8
+Created thread # 9
+Created thread # 10
+Created thread # 11
+Created thread # 12
+Created thread # 13
+Thread #12 end of input stream, nextChar=-1
+Completed: thread #12
+Completed: thread #9
+Completed: thread #8
+Completed: thread #5
+Completed: thread #1
+Completed: thread #11
+Completed: thread #7
+Completed: thread #6
+Completed: thread #2
+Completed: thread #3
+Completed: thread #13
+Completed: thread #0
+Joined thread # 1
+Joined thread # 2
+Joined thread # 3
+Completed: thread #4
+Joined thread # 4
+Joined thread # 5
+Joined thread # 6
+Joined thread # 7
+Joined thread # 8
+Joined thread # 9
+Completed: thread #10
+Joined thread # 10
+Joined thread # 11
+Joined thread # 12
+Joined thread # 13
+Jun 27 01:45:48   Loaded database junctions from the 1st pass file: J_896._STARpass1//SJ.out.tab: 769399 total junctions
+
+WARNING: long repeat for junction # 82457 : chr5 112922393 112922883; left shift = 255; right shift = 69
+WARNING: long repeat for junction # 84858 : chr5 123328298 123329023; left shift = 255; right shift = 19
+WARNING: long repeat for junction # 94105 : chr6 48731569 48732130; left shift = 81; right shift = 255
+WARNING: long repeat for junction # 126330 : chr7 141361933 141364041; left shift = 255; right shift = 255
+WARNING: long repeat for junction # 205166 : chr13 36192501 36373186; left shift = 255; right shift = 29
+WARNING: long repeat for junction # 212873 : chr13 119631671 120070727; left shift = 36; right shift = 255
+WARNING: long repeat for junction # 229541 : chr15 75976552 75988902; left shift = 0; right shift = 255
+WARNING: long repeat for junction # 371923 : chr5 112922393 112922883; left shift = 255; right shift = 69
+WARNING: long repeat for junction # 374324 : chr5 123328298 123329023; left shift = 255; right shift = 19
+WARNING: long repeat for junction # 383571 : chr6 48731569 48732130; left shift = 81; right shift = 255
+WARNING: long repeat for junction # 415799 : chr7 141361933 141364041; left shift = 255; right shift = 255
+WARNING: long repeat for junction # 494646 : chr13 36192501 36373186; left shift = 255; right shift = 29
+WARNING: long repeat for junction # 502354 : chr13 119631671 120070727; left shift = 36; right shift = 255
+WARNING: long repeat for junction # 519023 : chr15 75976552 75988902; left shift = 0; right shift = 255
+WARNING: long repeat for junction # 641457 : chr6 48731569 48732130; left shift = 81; right shift = 255
+Jun 27 01:45:49   Finished preparing junctions
+Jun 27 01:45:49 ..... inserting junctions into the genome indices
+Jun 27 01:46:02   Finished SA search: number of new junctions=41725, old junctions=289462
+Jun 27 01:46:08   Finished sorting SA indicesL nInd=24867284
+Genome size with junctions=2837381137  2738356224   99024913
+GstrandBit1=32   GstrandBit=32
+Jun 27 01:47:15   Finished inserting junction indices
+Jun 27 01:47:22   Finished SAi
+Jun 27 01:47:23 ..... finished inserting junctions into genome
+
+   Input read files for mate 1 :
+-rw-rw-r--    1 gao      gao      1825509120 Jun 26 22:19 input1/J_896_trimmed_1_val_1.fq.gz
+
+   readsCommandsFile:
+exec > "J_896._STARtmp/tmp.fifo.read1"
+echo FILE 0
+zcat      "input1/J_896_trimmed_1_val_1.fq.gz"
+
+
+   Input read files for mate 2 :
+-rw-rw-r--    1 gao      gao      1816433421 Jun 26 22:19 input2/J_896_trimmed_2_val_2.fq.gz
+
+   readsCommandsFile:
+exec > "J_896._STARtmp/tmp.fifo.read2"
+echo FILE 0
+zcat      "input2/J_896_trimmed_2_val_2.fq.gz"
+
+Loaded transcript database, nTr=149138
+Loaded exon database, nEx=864145
+Created thread # 1
+Created thread # 2
+Starting to map file # 0
+mate 1:   input1/J_896_trimmed_1_val_1.fq.gz
+mate 2:   input2/J_896_trimmed_2_val_2.fq.gz
+Created thread # 3
+Created thread # 4
+Created thread # 5
+Created thread # 6
+Created thread # 7
+Created thread # 8
+Created thread # 9
+Created thread # 10
+Created thread # 11
+Created thread # 12
+Created thread # 13
+Thread #2 end of input stream, nextChar=-1
+Completed: thread #2
+Completed: thread #1
+Completed: thread #9
+Completed: thread #7
+Completed: thread #13
+Completed: thread #6
+Completed: thread #11
+Completed: thread #3
+Completed: thread #12
+Completed: thread #4
+Completed: thread #8
+Completed: thread #0
+Joined thread # 1
+Joined thread # 2
+Joined thread # 3
+Joined thread # 4
+Completed: thread #5
+Joined thread # 5
+Joined thread # 6
+Joined thread # 7
+Joined thread # 8
+Joined thread # 9
+Completed: thread #10
+Joined thread # 10
+Joined thread # 11
+Joined thread # 12
+Joined thread # 13
+ALL DONE!

@@ -31,6 +31,7 @@ run_nextflow() {
         --fasta /Work_bio/references/Mus_musculus/GRCm39/mouse_gencode_M35/GRCm39.primary_assembly.genome.fa \
         --gtf /Work_bio/references/Mus_musculus/GRCm39/mouse_gencode_M35/gencode.vM35.annotation.gtf \
         --star_index '/Work_bio/references/Mus_musculus/GRCm39/mouse_gencode_M35/star_index' \
+        --extra_star_align_args '--twopassMode None --outFilterMultimapNmax 3' \
         --gencode \
         --aligner star_salmon \
         --max_cpus 28 \
