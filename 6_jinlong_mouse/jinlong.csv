@@ -1,0 +1,13 @@
+Customer Name,Group,Name in File,Species,Analysis Type,Strand Specific,machine Type,Sequencing Type,Analysis
+Jinlong,1,902,Mouse,Bulk RNA-Seq,Yes,Nova Seq X Plus,PE150,"Standard, compared group 1, 2, 3 with 4"
+Jinlong,1,912,Mouse,Bulk RNA-Seq,Yes,Nova Seq X Plus,PE150,
+Jinlong,1,896,Mouse,Bulk RNA-Seq,Yes,Nova Seq X Plus,PE150,
+Jinlong,2,910,Mouse,Bulk RNA-Seq,Yes,Nova Seq X Plus,PE150,
+Jinlong,2,909,Mouse,Bulk RNA-Seq,Yes,Nova Seq X Plus,PE150,
+Jinlong,2,905,Mouse,Bulk RNA-Seq,Yes,Nova Seq X Plus,PE150,
+Jinlong,3,904,Mouse,Bulk RNA-Seq,Yes,Nova Seq X Plus,PE150,
+Jinlong,3,897,Mouse,Bulk RNA-Seq,Yes,Nova Seq X Plus,PE150,
+Jinlong,3,899,Mouse,Bulk RNA-Seq,Yes,Nova Seq X Plus,PE150,
+Jinlong,4,A,Mouse,Bulk RNA-Seq,Yes,Nova Seq X Plus,PE150,
+Jinlong,4,B,Mouse,Bulk RNA-Seq,Yes,Nova Seq X Plus,PE150,
+Jinlong,4,C,Mouse,Bulk RNA-Seq,Yes,Nova Seq X Plus,PE150,

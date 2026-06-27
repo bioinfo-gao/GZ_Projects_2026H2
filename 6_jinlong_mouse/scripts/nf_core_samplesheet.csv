@@ -1,0 +1,13 @@
+sample,fastq_1,fastq_2,strandedness
+J_902,/home/gao/Dropbox/Jinlong/J_902/J_902_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz,/home/gao/Dropbox/Jinlong/J_902/J_902_CKDL260011462-1A_23JCTGLT3_L7_2.fq.gz,reverse
+J_912,/home/gao/Dropbox/Jinlong/J_912/J_912_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz,/home/gao/Dropbox/Jinlong/J_912/J_912_CKDL260011462-1A_23JCTGLT3_L7_2.fq.gz,reverse
+J_896,/home/gao/Dropbox/Jinlong/J_896/J_896_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz,/home/gao/Dropbox/Jinlong/J_896/J_896_CKDL260011462-1A_23JCTGLT3_L7_2.fq.gz,reverse
+J_910,/home/gao/Dropbox/Jinlong/J_910/J_910_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz,/home/gao/Dropbox/Jinlong/J_910/J_910_CKDL260011462-1A_23JCTGLT3_L7_2.fq.gz,reverse
+J_909,/home/gao/Dropbox/Jinlong/J_909/J_909_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz,/home/gao/Dropbox/Jinlong/J_909/J_909_CKDL260011462-1A_23JCTGLT3_L7_2.fq.gz,reverse
+J_905,/home/gao/Dropbox/Jinlong/J_905/J_905_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz,/home/gao/Dropbox/Jinlong/J_905/J_905_CKDL260011462-1A_23JCTGLT3_L7_2.fq.gz,reverse
+J_904,/home/gao/Dropbox/Jinlong/J_904/J_904_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz,/home/gao/Dropbox/Jinlong/J_904/J_904_CKDL260011462-1A_23JCTGLT3_L7_2.fq.gz,reverse
+J_897,/home/gao/Dropbox/Jinlong/J_897/J_897_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz,/home/gao/Dropbox/Jinlong/J_897/J_897_CKDL260011462-1A_23JCTGLT3_L7_2.fq.gz,reverse
+J_899,/home/gao/Dropbox/Jinlong/J_899/J_899_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz,/home/gao/Dropbox/Jinlong/J_899/J_899_CKDL260011462-1A_23JCTGLT3_L7_2.fq.gz,reverse
+A,/home/gao/Dropbox/Jinlong/A/A_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz,/home/gao/Dropbox/Jinlong/A/A_CKDL260011462-1A_23JCTGLT3_L7_2.fq.gz,reverse
+B,/home/gao/Dropbox/Jinlong/B/B_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz,/home/gao/Dropbox/Jinlong/B/B_CKDL260011462-1A_23JCTGLT3_L7_2.fq.gz,reverse
+C,/home/gao/Dropbox/Jinlong/C/C_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz,/home/gao/Dropbox/Jinlong/C/C_CKDL260011462-1A_23JCTGLT3_L7_2.fq.gz,reverse
