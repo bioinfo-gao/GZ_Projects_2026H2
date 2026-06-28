@@ -30,23 +30,23 @@ The decision criterion set at the outset: if quality is found to be severely com
 
 ## 3. Sample Information
 
-| Item | Detail |
-| :--- | :---: |
-| Samples | 9 mouse samples (mouse_28, 29, 32, 41, 42, 45, 46, 47, 48) |
-| Sequencing type | Paired-end, PE150 |
-| Raw data volume | ~32 million read pairs per sample |
+| Item              |                                                                          Detail                                                                          |
+| :---------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| Samples           |                                                9 mouse samples (mouse_28, 29, 32, 41, 42, 45, 46, 47, 48)                                                |
+| Sequencing type   |                                                                    Paired-end, PE150                                                                    |
+| Raw data volume   |                                                            ~32 million read pairs per sample                                                            |
 | QC analysis depth | Subsampled to 10 million read pairs per sample (sufficient for stable QC estimates; full-depth SortMeRNA runs were not memory-feasible — see Section 5) |
-| Reference genome | GRCm39 (GENCODE vM35 annotation) |
+| Reference genome  |                                                             GRCm39 (GENCODE vM35 annotation)                                                             |
 
 ---
 
 ## 4. Analysis Rationale and Decision Criteria
 
-| Question | Metric used | Healthy-library threshold | Rationale |
-| :--- | :---: | :---: | :---: |
-| Insert size / dimer content | % of read pairs discarded by Trim Galore at <20 bp after adapter trimming | < 5–10% | A high discard rate means most fragments are adapter ligated directly to adapter, with no real cDNA insert |
-| rRNA contamination | % of trimmed reads matching SortMeRNA reference databases, measured **before** genome alignment | < 5–10% | Pre-alignment measurement reflects the true rRNA content of the original sample, independent of whether reads go on to align successfully |
-| Unique mapping / gene detection | % of reads uniquely placed by STAR; number of genes with detectable counts | ≥ 60–65% unique mapping at 10M-pair depth | Reflects how much of the sequencing investment yields usable expression signal |
+| Question                        |                                             Metric used                                             |          Healthy-library threshold          |                                                                 Rationale                                                                 |
+| :------------------------------ | :--------------------------------------------------------------------------------------------------: | :-----------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: |
+| Insert size / dimer content     |              % of read pairs discarded by Trim Galore at <20 bp after adapter trimming              |                  < 5–10%                  |                A high discard rate means most fragments are adapter ligated directly to adapter, with no real cDNA insert                |
+| rRNA contamination              | % of trimmed reads matching SortMeRNA reference databases, measured**before** genome alignment |                  < 5–10%                  | Pre-alignment measurement reflects the true rRNA content of the original sample, independent of whether reads go on to align successfully |
+| Unique mapping / gene detection |              % of reads uniquely placed by STAR; number of genes with detectable counts              | ≥ 60–65% unique mapping at 10M-pair depth |                              Reflects how much of the sequencing investment yields usable expression signal                              |
 
 ---
 
@@ -65,49 +65,49 @@ The decision criterion set at the outset: if quality is found to be severely com
 
 ### 6.1 Adapter Dimer Content (Insert Size Proxy)
 
-| Sample | Read pairs discarded after trimming (%) | Median trimmed read length (bp) |
-| :--- | :---: | :---: |
-| mouse_28 | **69.7** | 82 |
-| mouse_29 | **72.0** | 147 |
-| mouse_32 | 26.1 | 42 |
-| mouse_41 | 37.4 | 52 |
-| mouse_42 | 22.4 | 42 |
-| mouse_45 | 23.4 | 42 |
-| mouse_46 | 29.1 | 147 |
-| mouse_47 | 42.3 | 42 |
-| mouse_48 | 22.9 | 42 |
+| Sample   | Read pairs discarded after trimming (%) | Median trimmed read length (bp) |
+| :------- | :-------------------------------------: | :-----------------------------: |
+| mouse_28 |             **69.7**             |               82               |
+| mouse_29 |             **72.0**             |               147               |
+| mouse_32 |                  26.1                  |               42               |
+| mouse_41 |                  37.4                  |               52               |
+| mouse_42 |                  22.4                  |               42               |
+| mouse_45 |                  23.4                  |               42               |
+| mouse_46 |                  29.1                  |               147               |
+| mouse_47 |                  42.3                  |               42               |
+| mouse_48 |                  22.9                  |               42               |
 
 mouse_28/29 are essentially non-functional libraries (~70% pure adapter dimer). The remaining seven samples show 22–42% dimer content — well above the healthy threshold, with most surviving inserts only ~42 bp.
 
 ### 6.2 rRNA Contamination
 
-| Sample | Total rRNA (%) | Main source | Eukaryotic 18S (%) | Eukaryotic 28S (%) | Bacterial 16S (%) |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| mouse_28 | 44.6 | Bacterial 16S | 4.1 | 7.9 | **30.4** |
-| mouse_29 | 45.1 | Bacterial 16S | 3.6 | 2.7 | **37.7** |
-| mouse_32 | 47.2 | Eukaryotic 28S | 7.8 | **31.6** | 3.4 |
-| mouse_41 | 37.9 | Eukaryotic 28S | 6.5 | **15.5** | 11.8 |
-| mouse_42 | 43.2 | Eukaryotic 28S | 8.7 | **26.7** | 2.8 |
-| mouse_45 | 40.4 | Eukaryotic 28S | 11.4 | **22.1** | 1.6 |
-| mouse_46 | 27.5 | Bacterial 16S | 10.5 | 0.7 | **15.6** |
-| mouse_47 | 44.8 | Eukaryotic 28S | 10.2 | **24.8** | 2.9 |
-| mouse_48 | 45.3 | Eukaryotic 28S | 10.4 | **28.0** | 1.9 |
+| Sample   | Total rRNA (%) |  Main source  | Eukaryotic 18S (%) | Eukaryotic 28S (%) | Bacterial 16S (%) |
+| :------- | :------------: | :------------: | :----------------: | :----------------: | :---------------: |
+| mouse_28 |      44.6      | Bacterial 16S |        4.1        |        7.9        |  **30.4**  |
+| mouse_29 |      45.1      | Bacterial 16S |        3.6        |        2.7        |  **37.7**  |
+| mouse_32 |      47.2      | Eukaryotic 28S |        7.8        |   **31.6**   |        3.4        |
+| mouse_41 |      37.9      | Eukaryotic 28S |        6.5        |   **15.5**   |       11.8       |
+| mouse_42 |      43.2      | Eukaryotic 28S |        8.7        |   **26.7**   |        2.8        |
+| mouse_45 |      40.4      | Eukaryotic 28S |        11.4        |   **22.1**   |        1.6        |
+| mouse_46 |      27.5      | Bacterial 16S |        10.5        |        0.7        |  **15.6**  |
+| mouse_47 |      44.8      | Eukaryotic 28S |        10.2        |   **24.8**   |        2.9        |
+| mouse_48 |      45.3      | Eukaryotic 28S |        10.4        |   **28.0**   |        1.9        |
 
 All 9 samples exceed the healthy <5–10% threshold by a wide margin. Two distinct profiles are present: a Eukaryotic-28S-dominant pattern (6 samples, the more typical mammalian incomplete-depletion signature) and a Bacterial-16S-dominant pattern (mouse_28/29/46). The bacterial-16S pattern is examined in detail in Section 7.
 
 ### 6.3 Unique Mapping and Gene Detection
 
-| Sample | Uniquely mapped reads (%) | Reads unmapped — too short (%) | Genes detected |
-| :--- | :---: | :---: | :---: |
-| mouse_28 | 19.6 | 66.0 | 10,312 |
-| mouse_29 | 12.2 | 79.6 | 6,157 |
-| mouse_32 | 28.7 | 51.5 | 19,000 |
-| mouse_41 | 22.6 | 59.5 | 16,502 |
-| mouse_42 | 26.6 | 54.6 | 20,817 |
-| mouse_45 | 24.9 | 54.8 | 20,270 |
-| mouse_46 | **2.2** | **96.2** | 1,042 |
-| mouse_47 | 26.0 | 53.9 | 18,590 |
-| mouse_48 | 27.7 | 52.3 | 19,826 |
+| Sample   | Uniquely mapped reads (%) | Reads unmapped — too short (%) | Genes detected |
+| :------- | :-----------------------: | :-----------------------------: | :------------: |
+| mouse_28 |           19.6           |              66.0              |     10,312     |
+| mouse_29 |           12.2           |              79.6              |     6,157     |
+| mouse_32 |           28.7           |              51.5              |     19,000     |
+| mouse_41 |           22.6           |              59.5              |     16,502     |
+| mouse_42 |           26.6           |              54.6              |     20,817     |
+| mouse_45 |           24.9           |              54.8              |     20,270     |
+| mouse_46 |       **2.2**       |         **96.2**         |     1,042     |
+| mouse_47 |           26.0           |              53.9              |     18,590     |
+| mouse_48 |           27.7           |              52.3              |     19,826     |
 
 Unique mapping is 2.2–28.7% against an expected ≥60–65% at this depth. In every sample, the predominant failure mode is "too short" — a direct downstream consequence of the dimer issue in Section 6.1: short surviving inserts cannot be reliably placed by STAR.
 
@@ -119,17 +119,17 @@ Unique mapping is 2.2–28.7% against an expected ≥60–65% at this depth. In 
 
 ### 7.1 rRNA% vs. GC% vs. Adapter Dimer%
 
-| Sample | rRNA% (§6.2) | Dimer % (§6.1) | Raw read %GC* |
-| :--- | :---: | :---: | :---: |
-| mouse_28 | 44.6 | 69.7 | 74.0 |
-| mouse_29 | 45.1 | 72.0 | 74.5 |
-| mouse_32 | 47.2 | 26.1 | 64.0 |
-| mouse_41 | 37.9 | 37.4 | 66.0 |
-| mouse_42 | 43.2 | 22.4 | 62.5 |
-| mouse_45 | 40.4 | 23.4 | 61.0 |
-| mouse_46 | 27.5 | 29.1 | 59.0 |
-| mouse_47 | 44.8 | 42.3 | 65.5 |
-| mouse_48 | 45.3 | 22.9 | 61.0 |
+| Sample   | rRNA% (§6.2) | Dimer % (§6.1) | Raw read %GC* |
+| :------- | :-----------: | :-------------: | :-----------: |
+| mouse_28 |     44.6     |      69.7      |     74.0     |
+| mouse_29 |     45.1     |      72.0      |     74.5     |
+| mouse_32 |     47.2     |      26.1      |     64.0     |
+| mouse_41 |     37.9     |      37.4      |     66.0     |
+| mouse_42 |     43.2     |      22.4      |     62.5     |
+| mouse_45 |     40.4     |      23.4      |     61.0     |
+| mouse_46 |     27.5     |      29.1      |     59.0     |
+| mouse_47 |     44.8     |      42.3      |     65.5     |
+| mouse_48 |     45.3     |      22.9      |     61.0     |
 
 *%GC from FastQC on raw reads (R1/R2 averaged), generated in the same pipeline run as the other QC metrics above.
 
@@ -139,14 +139,14 @@ Unique mapping is 2.2–28.7% against an expected ≥60–65% at this depth. In 
 
 ### 7.2 Bacterial Component of the rRNA Signal
 
-Three samples (mouse_28, mouse_29, mouse_46) show a "Bacterial 16S"-dominant rRNA profile (15.6–37.7%) rather than the eukaryotic-28S pattern seen in the other six. To check whether this reflects real bacterial content rather than a database artifact, a species-level spot-check (Kraken2, against a reference covering bacteria/archaea/viral/human) was run on the STAR-unmapped reads of two representative samples, mouse_29 and mouse_46.
+Three samples (mouse_28, mouse_29, mouse_46) show a "Bacterial 16S"-dominant rRNA profile (15.6–37.7%) rather than the eukaryotic-28S pattern seen in the other six. To check whether this reflects real bacterial content rather than a database artifact, a species-level spot-check (Kraken2, against a reference covering bacteria/archaea/viral/human) was run on the STAR-unmapped reads (after removal of rRNA reads) of two representative samples, mouse_29 and mouse_46.
 
-| Metric | mouse_29 | mouse_46 |
-| :--- | :---: | :---: |
-| Reads directly, confidently classified as Bacteria | 2.44% | 1.94% |
-| Reads Unclassified (no confident species match in this reference) | 85.12% | 86.33% |
+| Metric                                                            | mouse_29 | mouse_46 |
+| :---------------------------------------------------------------- | :------: | :------: |
+| Reads directly, confidently classified as Bacteria                |  2.44%  |  1.94%  |
+| Reads Unclassified (no confident species match in this reference) |  85.12%  |  86.33%  |
 
-The directly classified 1.9–2.4% should be read as a **floor, not a ceiling**, on the true bacterial fraction. Kraken2 only calls a species when a read carries enough exact, unique sequence matches; short, degraded, or divergent-strain bacterial reads routinely fail that bar and fall into "Unclassified" rather than being misclassified as something else. At the same time, this reference contains no mouse genome, so the 85–86% Unclassified pool is necessarily a **mixture of true mouse reads and uncalled bacterial reads** — not, as might be assumed, purely mouse.
+The directly classified 1.9–2.4% should be read as a **floor, not a ceiling**, on the true bacterial fraction — for two distinct reasons that need to be kept separate. **Most importantly: this Kraken2 database does not include the mouse genome at all.** As a result, a large share of the 85–86% "Unclassified" pool is very likely genuine mouse-derived sequence that simply had no matching reference to be classified against — this is not contamination of any kind, it is an expected artifact of running mouse-derived reads through a database that was never given a mouse reference to match them to. Second, and separately, Kraken2 only calls a species when a read carries enough exact, unique sequence matches; short, degraded, or divergent-strain bacterial reads can also fail that bar and fall into the same "Unclassified" bucket, rather than being misclassified as something else. The 85–86% Unclassified pool is therefore a mixture dominated by real, unmatched mouse reads, with a smaller, additional number of uncalled bacterial reads mixed in — both effects mean the true bacterial fraction is higher than the directly-classified 1.9–2.4%, but the bulk of "Unclassified" is mouse, not hidden bacteria.
 
 Allowing for Kraken2's typical recall on short, fragmented, divergent-strain bacterial sequence — commonly well under 50%, often in the 10–20% range for input of this quality — back-calculating from the observed 1.9–2.4% confidently-classified fraction gives an estimated **true bacterial fraction in the range of roughly 10–25%** for these samples. This is broadly consistent with, rather than contradicted by, the 15.6–37.7% figure already reported by the rRNA tool in Section 6.2.
 
@@ -156,19 +156,19 @@ Allowing for Kraken2's typical recall on short, fragmented, divergent-strain bac
 
 ## 8. Conclusions
 
-| Sample | rRNA (%) | Dimer-affected pairs (%) | Unique mapping (%) | Genes detected | Overall |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| mouse_28 | 44.6 | 69.7 | 19.6 | 10,312 | Fail |
-| mouse_29 | 45.1 | 72.0 | 12.2 | 6,157 | Fail |
-| mouse_32 | 47.2 | 26.1 | 28.7 | 19,000 | Fail |
-| mouse_41 | 37.9 | 37.4 | 22.6 | 16,502 | Fail |
-| mouse_42 | 43.2 | 22.4 | 26.6 | 20,817 | Fail |
-| mouse_45 | 40.4 | 23.4 | 24.9 | 20,270 | Fail |
-| mouse_46 | 27.5 | 29.1 | 2.2 | 1,042 | Fail — non-recoverable |
-| mouse_47 | 44.8 | 42.3 | 26.0 | 18,590 | Fail |
-| mouse_48 | 45.3 | 22.9 | 27.7 | 19,826 | Fail |
+| Sample   | rRNA (%) | Dimer-affected pairs (%) | Unique mapping (%) | Genes detected |         Overall         |
+| :------- | :------: | :----------------------: | :----------------: | :------------: | :---------------------: |
+| mouse_28 |   44.6   |           69.7           |        19.6        |     10,312     |          Fail          |
+| mouse_29 |   45.1   |           72.0           |        12.2        |     6,157     |          Fail          |
+| mouse_32 |   47.2   |           26.1           |        28.7        |     19,000     |          Fail          |
+| mouse_41 |   37.9   |           37.4           |        22.6        |     16,502     |          Fail          |
+| mouse_42 |   43.2   |           22.4           |        26.6        |     20,817     |          Fail          |
+| mouse_45 |   40.4   |           23.4           |        24.9        |     20,270     |          Fail          |
+| mouse_46 |   27.5   |           29.1           |        2.2        |     1,042     | Fail — non-recoverable |
+| mouse_47 |   44.8   |           42.3           |        26.0        |     18,590     |          Fail          |
+| mouse_48 |   45.3   |           22.9           |        27.7        |     19,826     |          Fail          |
 
-**Reference thresholds**: rRNA < 10% · Dimer pairs < 10% · Unique mapping ≥ 65%
+**Reference thresholds**: rRNA < 10% · Dimer pairs < 10% · Unique mapping ≥ 60%
 
 All nine libraries fail quality standards across all three metrics, with a systematic, batch-wide pattern indicating a library preparation issue rather than sample-specific degradation. Two independent root causes are present simultaneously:
 
