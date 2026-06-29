@@ -40,7 +40,9 @@ for (f in list(list(src=COUNT_FILE, dst="All_sample_gene_counts.tsv", req=TRUE),
 }
 
 # ================= 2.5 拷贝基因注释 + QC 文件 =================
-# 基因注释：自动选取 /home/gao/projects_2026H1/Genes/ 下日期最新的 mouse xlsx
+DATA_ANALYSIS_DIR <- "../Data_Analysis"
+
+# 基因注释：自动选取 Genes/ 下日期最新的 mouse xlsx，拷贝到 Data_Analysis 顶层
 annot_files <- sort(
   list.files("/home/gao/projects_2026H1/Genes",
              pattern = "^mouse_Gene_annotation_.*\\.xlsx$", full.names = TRUE),
@@ -48,23 +50,22 @@ annot_files <- sort(
 )
 if (length(annot_files) > 0) {
   ANNOT_SRC  <- annot_files[1]
-  ANNOT_DEST <- file.path(OUT_DIR, basename(ANNOT_SRC))
+  ANNOT_DEST <- file.path(DATA_ANALYSIS_DIR, basename(ANNOT_SRC))
   file.copy(ANNOT_SRC, ANNOT_DEST, overwrite = TRUE)
   cat("✅ 基因注释已拷贝:", basename(ANNOT_SRC), "\n")
 } else {
   cat("⚠️  未找到 mouse_Gene_annotation_*.xlsx，跳过\n")
 }
 
-# QC 文件夹：依次检查 nf-core 输出的常见路径
-QC_DEST_BASE <- "../Data_Analysis/QC"
+# QC 文件夹：multiqc / fastqc / pipeline_info → Data_Analysis/QC/
+QC_DEST_BASE <- file.path(DATA_ANALYSIS_DIR, "QC")
 dir.create(QC_DEST_BASE, showWarnings = FALSE, recursive = TRUE)
-QC_CANDIDATES <- c("../output_results/multiqc",
-                   "../output_results/fastqc",
-                   "../output_results/pipeline_info")
-for (qc_src in QC_CANDIDATES) {
+for (qc_src in c("../output_results/multiqc",
+                  "../output_results/fastqc",
+                  "../output_results/pipeline_info")) {
   if (dir.exists(qc_src)) {
     file.copy(qc_src, QC_DEST_BASE, recursive = TRUE, overwrite = TRUE)
-    cat("✅ QC 已拷贝:", qc_src, "->", QC_DEST_BASE, "\n")
+    cat("✅ QC 已拷贝:", basename(qc_src), "->", QC_DEST_BASE, "\n")
   }
 }
 
