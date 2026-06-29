@@ -274,6 +274,14 @@ saveRDS(res_list,    file.path(OUT_DIR, "res_list.rds"))
 saveRDS(vsd,         file.path(OUT_DIR, "vsd.rds"))
 saveRDS(meta,        file.path(OUT_DIR, "meta.rds"))
 saveRDS(counts_raw,  file.path(OUT_DIR, "counts_raw.rds"))
+saveRDS(list(
+  n_original    = nrow(counts_mat),
+  n_after_regex = sum(regex_filter),
+  n_final       = nrow(counts_mat_filtered),
+  n_samples     = n_samples,
+  low_count_min = 10,
+  low_count_min_samples = n_samples - 2
+), file.path(OUT_DIR, "filter_stats.rds"))
 cat("\n✅ RDS objects saved for enrichment analysis (script 5)\n")
 
 cat("\n🎉 All DE/PCA analyses complete. Results:", OUT_DIR, "\n")

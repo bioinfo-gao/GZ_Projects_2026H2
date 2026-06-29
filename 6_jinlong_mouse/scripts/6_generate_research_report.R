@@ -27,6 +27,8 @@ REPORT_FILE <- file.path(DATA_DIR, paste0("Bioinformatics_Analysis_Report_", REP
 res_list <- readRDS(file.path(DE_DIR, "res_list.rds"))
 meta     <- readRDS(file.path(DE_DIR, "meta.rds"))
 sig_col  <- "sig (padj<=0.05 & |log2FC|>=0.263)"
+fs_file  <- file.path(DE_DIR, "filter_stats.rds")
+fstats   <- if (file.exists(fs_file)) readRDS(fs_file) else NULL
 
 deg_summary <- lapply(res_list, function(df) {
   up   <- sum(df[[sig_col]] == "Up",   na.rm = TRUE)
