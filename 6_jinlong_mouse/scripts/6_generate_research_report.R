@@ -164,7 +164,7 @@ report <- c(
   },
   {
     lowcount_detail <- if (!is.null(fstats))
-      sprintf("| Low-expression filter | ≥%d counts in ≥%d of %d samples | %s → %s genes input to DESeq2 |",
+      sprintf("| Low-expression filter | ≥%d counts in ≥%d of %d samples | %s → %s robustly expressed genes input to DESeq2 |",
               fstats$low_count_min, fstats$low_count_min_samples, fstats$n_samples,
               format(fstats$n_after_regex, big.mark=","),
               format(fstats$n_final, big.mark=","))
