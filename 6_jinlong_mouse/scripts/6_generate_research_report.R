@@ -152,7 +152,26 @@ report <- c(
   "| Step | Decision | Rationale |",
   "| :--- | :---: | :---: |",
   "| Quantification | Salmon (via nf-core/rnaseq) | Bias-corrected transcript-level quantification |",
-  "| Gene filtering | Regex (ribo/noncoding/Gm[0-9]) + low-count (≥10 in n−2 samples) | Removes noise genes; retains biologically informative signal |",
+  {
+    regex_detail <- if (!is.null(fstats))
+      sprintf("| Regex gene filter | Remove ribo/noncoding/Gm[0-9] genes | %s → %s genes retained (removed %s noise genes) |",
+              format(fstats$n_original, big.mark=","),
+              format(fstats$n_after_regex, big.mark=","),
+              format(fstats$n_original - fstats$n_after_regex, big.mark=","))
+    else
+      "| Regex gene filter | Remove ribo/noncoding/Gm[0-9] genes | Removes ribosomal, non-coding, and predicted genes |"
+    regex_detail
+  },
+  {
+    lowcount_detail <- if (!is.null(fstats))
+      sprintf("| Low-expression filter | ≥%d counts in ≥%d of %d samples | %s → %s genes input to DESeq2 |",
+              fstats$low_count_min, fstats$low_count_min_samples, fstats$n_samples,
+              format(fstats$n_after_regex, big.mark=","),
+              format(fstats$n_final, big.mark=","))
+    else
+      "| Low-expression filter | ≥10 counts in n−2 samples | Removes unreliably detected genes; improves statistical power |"
+    lowcount_detail
+  },
   "| DE threshold | padj ≤ 0.05, |log2FC| ≥ 0.263 (= 1.2×) | Conservative fold-change avoids over-reporting small but significant changes |",
   "| LFC shrinkage | ashr | Appropriate for unbalanced designs and small sample sizes |",
   "",

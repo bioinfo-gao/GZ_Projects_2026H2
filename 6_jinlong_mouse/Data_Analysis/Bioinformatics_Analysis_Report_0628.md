@@ -66,7 +66,8 @@ Total samples: **12**  |  Comparisons: G1 vs G4, G2 vs G4, G3 vs G4
 | Step | Decision | Rationale |
 | :--- | :---: | :---: |
 | Quantification | Salmon (via nf-core/rnaseq) | Bias-corrected transcript-level quantification |
-| Gene filtering | Regex (ribo/noncoding/Gm[0-9]) + low-count (≥10 in n−2 samples) | Removes noise genes; retains biologically informative signal |
+| Regex gene filter | Remove ribo/noncoding/Gm[0-9] genes | 57,132 → 26,572 genes retained (removed 30,560 noise genes) |
+| Low-expression filter | ≥10 counts in ≥10 of 12 samples | 26,572 → 14,090 genes input to DESeq2 |
 | DE threshold | padj ≤ 0.05, |log2FC| ≥ 0.263 (= 1.2×) | Conservative fold-change avoids over-reporting small but significant changes |
 | LFC shrinkage | ashr | Appropriate for unbalanced designs and small sample sizes |
 
