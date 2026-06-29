@@ -18,7 +18,7 @@ library(ggrepel)
 # ================= 1. 路径设置 =================
 setwd("/home/gao/projects_2026H2/6_jinlong_mouse/scripts/")
 
-TODAY     <- format(Sys.Date(), "%Y%m%d")
+TODAY      <- format(Sys.Date(), "%Y%m%d")
 META_FILE  <- "../jinlong.csv"
 COUNT_FILE <- "../output_results/star_salmon/salmon.merged.gene_counts.tsv"
 TPM_FILE   <- "../output_results/star_salmon/salmon.merged.gene_tpm.tsv"
@@ -46,7 +46,8 @@ DATA_ANALYSIS_DIR <- DATA_DIR
 
 # 基因注释：自动选取 Genes/ 下日期最新的 mouse xlsx，拷贝到 Data_Analysis 顶层
 annot_files <- sort(
-  list.files("/home/gao/projects_2026H1/Genes",
+  # list.files("/home/gao/projects_2026H1/Genes",
+  list.files("/Work_bio/references/Genes",
              pattern = "^mouse_Gene_annotation_.*\\.xlsx$", full.names = TRUE),
   decreasing = TRUE
 )
