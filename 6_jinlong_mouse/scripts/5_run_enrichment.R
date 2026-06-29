@@ -22,8 +22,15 @@ library(patchwork)
 # ================= 1. 路径设置 =================
 setwd("/home/gao/projects_2026H2/6_jinlong_mouse/scripts/")
 
-DE_DIR   <- "../Data_Analysis/DE_PCA_Results"
-ENR_DIR  <- "../Data_Analysis/Enrichment"
+# 自动找最新的 Data_Analysis_YYYYMMDD 文件夹
+data_dirs <- sort(list.dirs("..", full.names = TRUE, recursive = FALSE), decreasing = TRUE)
+data_dirs <- data_dirs[grepl("/Data_Analysis_[0-9]{8}$", data_dirs)]
+if (length(data_dirs) == 0) stop("No Data_Analysis_YYYYMMDD folder found. Run 4_run_DE_PCA.R first.")
+DATA_DIR <- data_dirs[1]
+cat("Using:", DATA_DIR, "\n")
+
+DE_DIR   <- file.path(DATA_DIR, "DE_PCA_Results")
+ENR_DIR  <- file.path(DATA_DIR, "Enrichment")
 dir.create(ENR_DIR, showWarnings = FALSE, recursive = TRUE)
 
 # ================= 2. 加载 DE 结果 =================
@@ -305,7 +312,7 @@ for (comp_name in names(res_list)) {
     p_bar <- marker_de %>%
       filter(!is.na(log2FoldChange)) %>%
       arrange(Category, log2FoldChange) %>%
-      mutate(gene_name = factor(gene_name, levels = gene_name),
+      mutate(gene_name = factor(gene_name, levels = unique(gene_name)),
              Direction = ifelse(log2FoldChange > 0, "Up", "Down")) %>%
       ggplot(aes(x = gene_name, y = log2FoldChange, fill = Direction)) +
       geom_col() +
@@ -318,8 +325,11 @@ for (comp_name in names(res_list)) {
       labs(title = paste("Stem Cell Marker Genes:", comp_name),
            x = NULL, y = "log2 Fold Change")
 
-    ggsave(file.path(sc_dir, "StemCell_Markers_log2FC.pdf"), p_bar,
-           width = 14, height = 7, dpi = 300)
+    tryCatch(
+      ggsave(file.path(sc_dir, "StemCell_Markers_log2FC.pdf"), p_bar,
+             width = 14, height = 7, dpi = 300),
+      error = function(e) cat("  ⚠️  StemCell bar plot save failed:", e$message, "\n")
+    )
   } else {
     cat("  ℹ️  No significant stem cell markers detected\n")
   }

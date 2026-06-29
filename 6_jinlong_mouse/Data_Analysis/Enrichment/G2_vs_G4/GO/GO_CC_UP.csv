@@ -1,0 +1,2 @@
+ID,Description,GeneRatio,BgRatio,RichFactor,FoldEnrichment,zScore,pvalue,p.adjust,qvalue,geneID,Count
+GO:0009897,external side of plasma membrane,11/109,312/12834,0.035256410256410256,4.151199717713479,5.215126253657369,6.7741928921153e-5,0.015174192078338271,0.015174192078338271,Cd209b/Cxcl12/Cd209a/Ccr7/Cd163/Flt3/Mgl2/Cntfr/Tnfsf13/Cd209d/Crlf2,11

@@ -1,0 +1,5 @@
+category,subcategory,ID,Description,GeneRatio,BgRatio,RichFactor,FoldEnrichment,zScore,pvalue,p.adjust,qvalue,geneID,Count
+Cellular Processes,Cell motility,mmu04820,Cytoskeleton in muscle cells,11/71,211/5931,0.052132701421800945,4.354916227221147,5.461759924763918,3.4868432884203844e-5,0.0047421068722517225,0.004551248081727659,Ank2/Dmd/Daam1/Ttn/Sgcg/Vcan/Atp1b4/Lmod3/Sgcd/Itgb6/Itga1,11
+Human Diseases,Cardiovascular disease,mmu05410,Hypertrophic cardiomyopathy,6/71,84/5931,0.07142857142857142,5.966800804828973,5.046119742739651,4.6284637724391134e-4,0.023817351582340305,0.022858758484599055,Dmd/Ttn/Sgcg/Sgcd/Itgb6/Itga1,6
+Human Diseases,Cardiovascular disease,mmu05414,Dilated cardiomyopathy,6/71,86/5931,0.06976744186046512,5.828037995414347,4.964041003160658,5.253827554928008e-4,0.023817351582340305,0.022858758484599055,Dmd/Ttn/Sgcg/Sgcd/Itgb6/Itga1,6
+Human Diseases,Cardiovascular disease,mmu05412,Arrhythmogenic right ventricular cardiomyopathy,5/71,68/5931,0.07352941176470588,6.142294946147473,4.6941742318707265,0.0012384808186606503,0.04210834783446211,0.04041358460892648,Dmd/Sgcg/Sgcd/Itgb6/Itga1,5

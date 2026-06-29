@@ -18,11 +18,13 @@ library(ggrepel)
 # ================= 1. 路径设置 =================
 setwd("/home/gao/projects_2026H2/6_jinlong_mouse/scripts/")
 
+TODAY     <- format(Sys.Date(), "%Y%m%d")
 META_FILE  <- "../jinlong.csv"
 COUNT_FILE <- "../output_results/star_salmon/salmon.merged.gene_counts.tsv"
 TPM_FILE   <- "../output_results/star_salmon/salmon.merged.gene_tpm.tsv"
-OUT_DIR    <- "../Data_Analysis/DE_PCA_Results"
-READS_DIR  <- "../Data_Analysis/Reads"
+DATA_DIR   <- paste0("../Data_Analysis_", TODAY)
+OUT_DIR    <- file.path(DATA_DIR, "DE_PCA_Results")
+READS_DIR  <- file.path(DATA_DIR, "Reads")
 
 dir.create(OUT_DIR,   showWarnings = FALSE, recursive = TRUE)
 dir.create(READS_DIR, showWarnings = FALSE, recursive = TRUE)
@@ -40,7 +42,7 @@ for (f in list(list(src=COUNT_FILE, dst="All_sample_gene_counts.tsv", req=TRUE),
 }
 
 # ================= 2.5 拷贝基因注释 + QC 文件 =================
-DATA_ANALYSIS_DIR <- "../Data_Analysis"
+DATA_ANALYSIS_DIR <- DATA_DIR
 
 # 基因注释：自动选取 Genes/ 下日期最新的 mouse xlsx，拷贝到 Data_Analysis 顶层
 annot_files <- sort(
