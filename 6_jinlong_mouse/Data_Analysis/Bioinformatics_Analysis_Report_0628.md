@@ -17,11 +17,29 @@ and the control group (G4) using bulk RNA-seq. Specific aims:
 
 ## 2. Key Findings
 
-- **G1_vs_G4**: 1340 DEGs (857 up, 483 down; padj ≤ 0.05, |log2FC| ≥ 0.263)
-- **G2_vs_G4**: 279 DEGs (112 up, 167 down; padj ≤ 0.05, |log2FC| ≥ 0.263)
-- **G3_vs_G4**: 1146 DEGs (602 up, 544 down; padj ≤ 0.05, |log2FC| ≥ 0.263)
-- Top enriched GO biological process in G1_vs_G4: **oxidative phosphorylation** (padj = 8.79e-45)
-- Stem cell marker analysis identified **11 significantly altered stem-cell-associated genes** across all comparisons.
+This study includes **4 groups** (G1, G2, G3 = treatment; G4 = control) across **3 contrasts**.
+Key findings per comparison (GO / KEGG / GSEA / Stem cell markers):
+
+- **G1_vs_G4**: 1340 DEGs (857 up / 483 down)
+  - Top GO (BP): oxidative phosphorylation (padj=8.79e-45)
+  - Top KEGG: Oxidative phosphorylation (padj=1.77e-46)
+  - GSEA KEGG: Oxidative phosphorylation (padj=2.73e-09)
+  - GSEA Hallmark: HALLMARK OXIDATIVE PHOSPHORYLATION (padj=7.14e-10)
+  - Stem cell markers: 6 significant
+
+- **G2_vs_G4**: 279 DEGs (112 up / 167 down)
+  - Top GO (BP): circulatory system process (padj=0.00278)
+  - Top KEGG: Cytokine-cytokine receptor interaction (padj=0.00567)
+  - GSEA KEGG: Cytoskeleton in muscle cells (padj=3.71e-08)
+  - GSEA Hallmark: HALLMARK TNFA SIGNALING VIA NFKB (padj=8.27e-08)
+  - Stem cell markers: 2 significant
+
+- **G3_vs_G4**: 1146 DEGs (602 up / 544 down)
+  - Top GO (BP): oxidative phosphorylation (padj=1.47e-37)
+  - Top KEGG: Oxidative phosphorylation (padj=2.04e-41)
+  - GSEA KEGG: Oxidative phosphorylation (padj=2.75e-09)
+  - GSEA Hallmark: HALLMARK OXIDATIVE PHOSPHORYLATION (padj=1e-09)
+  - Stem cell markers: 3 significant
 
 ## 3. Sample Information
 
@@ -38,7 +56,6 @@ Total samples: **12**  |  Comparisons: G1 vs G4, G2 vs G4, G3 vs G4
 
 | Step | Decision | Rationale |
 | :--- | :---: | :---: |
-| Aligner | STAR (1-pass, --outFilterMultimapNmax 3) | Mouse genome has ~14% multi-mapped reads; 2-pass and N=20 would add ~7× CPU cost with minimal accuracy gain |
 | Quantification | Salmon (via nf-core/rnaseq) | Bias-corrected transcript-level quantification |
 | Gene filtering | Regex (ribo/noncoding/Gm[0-9]) + low-count (≥10 in n−2 samples) | Removes noise genes; retains biologically informative signal |
 | DE threshold | padj ≤ 0.05, |log2FC| ≥ 0.263 (= 1.2×) | Conservative fold-change avoids over-reporting small but significant changes |

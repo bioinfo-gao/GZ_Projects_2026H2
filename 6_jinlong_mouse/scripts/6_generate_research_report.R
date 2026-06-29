@@ -53,19 +53,39 @@ sc_summary <- if (file.exists(sc_summary_file)) read_csv(sc_summary_file, show_c
 # ================= 4. 生成报告 =================
 cat("Writing report:", REPORT_FILE, "\n")
 
-# -- Key Findings (computed) --
+# -- Key Findings: per-comparison GO / KEGG / GSEA / StemCell summary --
+read_top <- function(path, desc_col = "Description", padj_col = "p.adjust") {
+  tryCatch({
+    df <- read_csv(path, show_col_types = FALSE)
+    if (nrow(df) == 0) return(NA_character_)
+    paste0(df[[desc_col]][1], " (padj=", signif(df[[padj_col]][1], 3), ")")
+  }, error = function(e) NA_character_)
+}
+
 kf_lines <- c()
 for (comp_name in names(deg_summary)) {
-  s <- deg_summary[[comp_name]]
-  kf_lines <- c(kf_lines, paste0("- **", comp_name, "**: ", s$total,
-    " DEGs (", s$up, " up, ", s$down, " down; padj ≤ 0.05, |log2FC| ≥ 0.263)"))
-}
-sc_sig <- if (!is.null(sc_summary)) {
-  n <- nrow(sc_summary %>% filter(get(sig_col) != "NS"))
-  paste0("- Stem cell marker analysis identified **", n,
-         " significantly altered stem-cell-associated genes** across all comparisons.")
-} else {
-  "- Stem cell marker analysis results not available."
+  s   <- deg_summary[[comp_name]]
+  cdir <- file.path(ENR_DIR, comp_name)
+
+  top_go    <- read_top(file.path(cdir, "GO",   "GO_BP_ALL.csv"))
+  top_kegg  <- read_top(file.path(cdir, "KEGG", "KEGG_ALL.csv"), padj_col = "p.adjust")
+  top_gsea_kegg  <- read_top(file.path(cdir, "GSEA", "GSEA_KEGG.csv"),    padj_col = "p.adjust")
+  top_hallmark   <- read_top(file.path(cdir, "GSEA", "GSEA_Hallmark.csv"), padj_col = "p.adjust")
+  top_hallmark   <- if (!is.na(top_hallmark))
+    sub("^HALLMARK_", "", gsub("_", " ", sub(",.*", "", top_hallmark))) else NA_character_
+
+  sc_n <- if (!is.null(sc_summary))
+    nrow(sc_summary %>% filter(Comparison == comp_name, get(sig_col) != "NS")) else 0
+
+  kf_lines <- c(kf_lines,
+    paste0("- **", comp_name, "**: ", s$total, " DEGs (", s$up, " up / ", s$down, " down)"),
+    if (!is.na(top_go))        paste0("  - Top GO (BP): ", top_go),
+    if (!is.na(top_kegg))      paste0("  - Top KEGG: ",   top_kegg),
+    if (!is.na(top_gsea_kegg)) paste0("  - GSEA KEGG: ",  top_gsea_kegg),
+    if (!is.na(top_hallmark))  paste0("  - GSEA Hallmark: ", top_hallmark),
+    paste0("  - Stem cell markers: ", sc_n, " significant"),
+    ""
+  )
 }
 
 report <- c(
@@ -93,18 +113,10 @@ report <- c(
   # 2. Key Findings
   "## 2. Key Findings",
   "",
-  kf_lines,
-  {
-    top_go <- tryCatch({
-      f <- file.path(ENR_DIR, names(res_list)[1], "GO", "GO_BP_ALL.csv")
-      df <- read_csv(f, show_col_types = FALSE)
-      paste0("- Top enriched GO biological process in ", names(res_list)[1],
-             ": **", df$Description[1], "** (padj = ", signif(df$p.adjust[1], 3), ")")
-    }, error = function(e) character(0))
-    top_go
-  },
-  sc_sig,
+  "This study includes **4 groups** (G1, G2, G3 = treatment; G4 = control) across **3 contrasts**.",
+  "Key findings per comparison (GO / KEGG / GSEA / Stem cell markers):",
   "",
+  kf_lines,
 
   # 3. Sample Information
   "## 3. Sample Information",
@@ -125,7 +137,6 @@ report <- c(
   "",
   "| Step | Decision | Rationale |",
   "| :--- | :---: | :---: |",
-  "| Aligner | STAR (1-pass, --outFilterMultimapNmax 3) | Mouse genome has ~14% multi-mapped reads; 2-pass and N=20 would add ~7× CPU cost with minimal accuracy gain |",
   "| Quantification | Salmon (via nf-core/rnaseq) | Bias-corrected transcript-level quantification |",
   "| Gene filtering | Regex (ribo/noncoding/Gm[0-9]) + low-count (≥10 in n−2 samples) | Removes noise genes; retains biologically informative signal |",
   "| DE threshold | padj ≤ 0.05, |log2FC| ≥ 0.263 (= 1.2×) | Conservative fold-change avoids over-reporting small but significant changes |",
