@@ -78,7 +78,7 @@ for (comp_name in names(deg_summary)) {
     nrow(sc_summary %>% filter(Comparison == comp_name, get(sig_col) != "NS")) else 0
 
   kf_lines <- c(kf_lines,
-    paste0("- **", comp_name, "**: ", s$total, " DEGs (", s$up, " up / ", s$down, " down)"),
+    paste0("- **", comp_name, "**:"),
     if (!is.na(top_go))        paste0("  - Top GO (BP): ", top_go),
     if (!is.na(top_kegg))      paste0("  - Top KEGG: ",   top_kegg),
     if (!is.na(top_gsea_kegg)) paste0("  - GSEA KEGG: ",  top_gsea_kegg),
@@ -113,8 +113,20 @@ report <- c(
   # 2. Key Findings
   "## 2. Key Findings",
   "",
-  "This study includes **4 groups** (G1, G2, G3 = treatment; G4 = control) across **3 contrasts**.",
-  "Key findings per comparison (GO / KEGG / GSEA / Stem cell markers):",
+  "This study comprises **4 groups** (G1, G2, G3 = treatment; G4 = control) across **3 contrasts**.",
+  "",
+  "**Differentially expressed genes** (criteria: padj ≤ 0.05 AND |log2FC| ≥ 0.263; log2(1.2) = 0.263, equivalent to ≥1.2-fold change):",
+  "",
+  "| Contrast | Total DEGs | Upregulated (log2FC ≥ 0.263) | Downregulated (log2FC ≤ −0.263) |",
+  "| :--- | :---: | :---: | :---: |",
+  {
+    sapply(names(deg_summary), function(cn) {
+      s <- deg_summary[[cn]]
+      paste0("| ", cn, " | **", s$total, "** | ", s$up, " | ", s$down, " |")
+    })
+  },
+  "",
+  "**Top pathway findings per comparison:**",
   "",
   kf_lines,
 

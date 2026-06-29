@@ -17,24 +17,33 @@ and the control group (G4) using bulk RNA-seq. Specific aims:
 
 ## 2. Key Findings
 
-This study includes **4 groups** (G1, G2, G3 = treatment; G4 = control) across **3 contrasts**.
-Key findings per comparison (GO / KEGG / GSEA / Stem cell markers):
+This study comprises **4 groups** (G1, G2, G3 = treatment; G4 = control) across **3 contrasts**.
 
-- **G1_vs_G4**: 1340 DEGs (857 up / 483 down)
+**Differentially expressed genes** (criteria: padj ≤ 0.05 AND |log2FC| ≥ 0.263; log2(1.2) = 0.263, equivalent to ≥1.2-fold change):
+
+| Contrast | Total DEGs | Upregulated (log2FC ≥ 0.263) | Downregulated (log2FC ≤ −0.263) |
+| :--- | :---: | :---: | :---: |
+| G1_vs_G4 | **1340** | 857 | 483 |
+| G2_vs_G4 | **279** | 112 | 167 |
+| G3_vs_G4 | **1146** | 602 | 544 |
+
+**Top pathway findings per comparison:**
+
+- **G1_vs_G4**:
   - Top GO (BP): oxidative phosphorylation (padj=8.79e-45)
   - Top KEGG: Oxidative phosphorylation (padj=1.77e-46)
   - GSEA KEGG: Oxidative phosphorylation (padj=2.73e-09)
   - GSEA Hallmark: HALLMARK OXIDATIVE PHOSPHORYLATION (padj=7.14e-10)
   - Stem cell markers: 6 significant
 
-- **G2_vs_G4**: 279 DEGs (112 up / 167 down)
+- **G2_vs_G4**:
   - Top GO (BP): circulatory system process (padj=0.00278)
   - Top KEGG: Cytokine-cytokine receptor interaction (padj=0.00567)
   - GSEA KEGG: Cytoskeleton in muscle cells (padj=3.71e-08)
   - GSEA Hallmark: HALLMARK TNFA SIGNALING VIA NFKB (padj=8.27e-08)
   - Stem cell markers: 2 significant
 
-- **G3_vs_G4**: 1146 DEGs (602 up / 544 down)
+- **G3_vs_G4**:
   - Top GO (BP): oxidative phosphorylation (padj=1.47e-37)
   - Top KEGG: Oxidative phosphorylation (padj=2.04e-41)
   - GSEA KEGG: Oxidative phosphorylation (padj=2.75e-09)
