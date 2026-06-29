@@ -61,8 +61,9 @@ if (length(annot_files) > 0) {
 QC_DEST_BASE <- file.path(DATA_ANALYSIS_DIR, "QC")
 dir.create(QC_DEST_BASE, showWarnings = FALSE, recursive = TRUE)
 for (qc_src in c("../output_results/multiqc",
-                  "../output_results/fastqc",
-                  "../output_results/pipeline_info")) {
+                  # "../output_results/fastqc",
+                  # "../output_results/pipeline_info"
+                )) {
   if (dir.exists(qc_src)) {
     file.copy(qc_src, QC_DEST_BASE, recursive = TRUE, overwrite = TRUE)
     cat("✅ QC 已拷贝:", basename(qc_src), "->", QC_DEST_BASE, "\n")
