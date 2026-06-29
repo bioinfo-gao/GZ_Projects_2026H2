@@ -21,7 +21,7 @@ DE_DIR  <- file.path(DATA_DIR, "DE_PCA_Results")
 ENR_DIR <- file.path(DATA_DIR, "Enrichment")
 
 REPORT_DATE <- format(Sys.Date(), "%m%d")   # MMDD, no year
-REPORT_FILE <- file.path(DATA_DIR, paste0("JinlongMouse_", REPORT_DATE, ".md"))
+REPORT_FILE <- file.path(DATA_DIR, paste0("Bioinformatics_Analysis_Report_", REPORT_DATE, ".md"))
 
 # ================= 2. 加载 DE 结果 =================
 res_list <- readRDS(file.path(DE_DIR, "res_list.rds"))
