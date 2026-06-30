@@ -1,0 +1,483 @@
+Jing Shi
+3:55 PM (1 hour ago)
+to me
+
+Data location:
+
+https://www.dropbox.com/scl/fo/zog0etehvhlxto8b57uxv/ANiXWgTbedGl6rO4v43FRWo?rlkey=vl7sln9btv3itup063vio7ax4&st=iidt37wk&dl=0
+
+I7:
+TAAGGCGA
+
+I5:
+CTCTCTAT
+
+Template 1 (UMI = NNNAGTCGA):
+AATGATACGGCGACCACCGAGATCTCTCTCTATACACTCTTTCCCTACACGACGCTCTTCCGATCTNNNAGTCGACCTATTTTCAATTTAACGTCGnnnnnnnnnnnnnnnnnnnnGTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGCTTTTTTGCCTACCTGGAGCCTGAGAGTTGTTCAATAAAATAAAAATGTTTCGTTTTTTTGCTTTCGCCAGTATTTATTATTTTTCATCAATATGTATTCAATTTGGTATGTATTTAGTAATTGTAATATATAGACAATGGTTTTCCGTTGACGTACATACATCTGACGTGTGTTTATTTAGACATAATAGTTATGTTTTCACATCTTTTTAATGTTCGCTTAATGCGTATGCGGTACcCAGCATGCAATTCTATATTCTAAAAACACAAAAGATCGGAAGAGCACACGTCTGAACTCCAGTCACTAAGGCGAATCTCGTATGCCGTCTTCTGCTTG
+
+Template 2 (UMI = NNNNTCAGCT):
+AATGATACGGCGACCACCGAGATCTCTCTCTATACACTCTTTCCCTACACGACGCTCTTCCGATCTNNNNTCAGCTCCTATTTTCAATTTAACGTCGnnnnnnnnnnnnnnnnnnnnGTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGCTTTTTTGCCTACCTGGAGCCTGAGAGTTGTTCAATAAAATAAAAATGTTTCGTTTTTTTGCTTTCGCCAGTATTTATTATTTTTCATCAATATGTATTCAATTTGGTATGTATTTAGTAATTGTAATATATAGACAATGGTTTTCCGTTGACGTACATACATCTGACGTGTGTTTATTTAGACATAATAGTTATGTTTTCACATCTTTTTAATGTTCGCTTAATGCGTATGCGGTACcCAGCATGCAATTCTATATTCTAAAAACACAAAAGATCGGAAGAGCACACGTCTGAACTCCAGTCACTAAGGCGAATCTCGTATGCCGTCTTCTGCTTG
+
+Template 3 (UMI = NNNNNCGATAC):
+AATGATACGGCGACCACCGAGATCTCTCTCTATACACTCTTTCCCTACACGACGCTCTTCCGATCTNNNNNCGATACCCTATTTTCAATTTAACGTCGnnnnnnnnnnnnnnnnnnnnGTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGCTTTTTTGCCTACCTGGAGCCTGAGAGTTGTTCAATAAAATAAAAATGTTTCGTTTTTTTGCTTTCGCCAGTATTTATTATTTTTCATCAATATGTATTCAATTTGGTATGTATTTAGTAATTGTAATATATAGACAATGGTTTTCCGTTGACGTACATACATCTGACGTGTGTTTATTTAGACATAATAGTTATGTTTTCACATCTTTTTAATGTTCGCTTAATGCGTATGCGGTACcCAGCATGCAATTCTATATTCTAAAAACACAAAAGATCGGAAGAGCACACGTCTGAACTCCAGTCACTAAGGCGAATCTCGTATGCCGTCTTCTGCTTG
+
+
+From: Jing Shi <j.shi@athenomics.com>
+Date: Monday, June 29, 2026 at 3:34 PM
+To: Benner, Leif <leif_benner@hms.harvard.edu>, Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+
+Dear Leif:
+
+Would you mind providing your UMI in addition to the i7 and i5 index too? I can see if our bioinformatician may find anything relevant in the undemultiplex data.
+
+Regards,
+
+Jing Shi
+
+Operations Manager
+
+Athenomics
+
+
+From: Jing Shi <j.shi@athenomics.com>
+Sent: Monday, June 29, 2026 1:42 PM
+To: Benner, Leif <leif_benner@hms.harvard.edu>; Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+ 
+Dear Leif:
+
+Sure. It is a bit hard for us to figure out what has happened but we definitely will try another run.
+
+Regards,
+
+Jing Shi
+
+Operations Manager
+
+Athenomics
+
+
+From: Benner, Leif <leif_benner@hms.harvard.edu>
+Sent: Monday, June 29, 2026 1:40 PM
+To: Jing Shi <j.shi@athenomics.com>; Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+ 
+Sorry not return, I meant to run another sequencing?
+
+From: Jing Shi <j.shi@athenomics.com>
+Date: Monday, June 29, 2026 at 1:39 PM
+To: Benner, Leif <leif_benner@hms.harvard.edu>, Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+
+Dear Leif:
+
+Sure, we will try to return your sample within this week.
+
+Regards,
+
+Jing Shi
+
+Operations Manager
+
+Athenomics
+
+
+From: Benner, Leif <leif_benner@hms.harvard.edu>
+Sent: Monday, June 29, 2026 1:22 PM
+To: Jing Shi <j.shi@athenomics.com>; Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+ 
+Hi Jing,
+
+I was only able to find 1.42 million more reads in the undemultiplexed samples. So this run currently gave me a total of 3.09 million reads.
+
+Are you able to rerun my samples?
+
+Thanks, Leif
+
+From: Jing Shi <j.shi@athenomics.com>
+Date: Thursday, June 25, 2026 at 4:58 PM
+To: Benner, Leif <leif_benner@hms.harvard.edu>, Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+
+Dear Lief:
+
+This is all the un demultiplex data on the lane so it contains the data irrelevant to your sample.
+
+Regards,
+
+Jing
+
+获取Outlook for Android
+
+发件人: Benner, Leif <leif_benner@hms.harvard.edu>
+发送时间: 星期四, 六月 25, 2026 4:40:38 下午
+收件人: Jing Shi <j.shi@athenomics.com>; Jianjun Sun <jianjun@athenomics.com>
+主题: Re: Sequencing for Xiaomei Sun
+
+Thanks Jing! 
+
+Is this all the data from the run or just the data that could not be demultiplexed?
+
+Regardless, give me a day or two to go through it.
+
+Best, Leif
+
+From: Jing Shi <j.shi@athenomics.com>
+Date: Thursday, June 25, 2026 at 4:07 PM
+To: Benner, Leif <leif_benner@hms.harvard.edu>, Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+
+Dear Leif:
+
+The undemultiplex data can be found at here, let us know if you may find anything useful at here:
+Undetermined
+.
+
+Unfortunately, the globus share feature requires the premium version so we cannot access.
+
+Regards,
+
+Jing Shi
+
+Operations Manager
+
+Athenomics
+
+
+From: Benner, Leif <leif_benner@hms.harvard.edu>
+Sent: Thursday, June 25, 2026 3:32 PM
+To: Jing Shi <j.shi@athenomics.com>; Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+ 
+If your qc suggests that they are fine then I won’t worry about it. Please let me know when the undemultiplex is uploaded. Also, is it possible for you to share a Globus endpoint link so I can directly transfer the data to our computer cluster?
+
+Thanks, Leif 
+
+From: Jing Shi <j.shi@athenomics.com>
+Date: Thursday, June 25, 2026 at 9:50 AM
+To: Benner, Leif <leif_benner@hms.harvard.edu>, Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+
+Dear Leif:
+
+We are sorry that we can not open the file with DNA extension. Would you mind explaining a bit more of "correct" too? Our QC test suggest it has a concentration similar to your measurement and a major band at the expected size with limited smear.
+
+The undemultiplex data is still in uploading but you may take a look at the demultiplexed data first:
+OVO
+ 
+
+Regards,
+
+Jing Shi
+
+Operations Manager
+
+Athenomics
+
+
+From: Benner, Leif <leif_benner@hms.harvard.edu>
+Sent: Thursday, June 25, 2026 9:39 AM
+To: Jing Shi <j.shi@athenomics.com>; Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+ 
+Hi Jing,
+
+Just for a sanity check for myself, would you mind double checking that my sequencing product is correct for sequencing? I attached an example.
+
+Thanks, Leif
+
+From: Jing Shi <j.shi@athenomics.com>
+Date: Wednesday, June 24, 2026 at 7:51 PM
+To: Benner, Leif <leif_benner@hms.harvard.edu>, Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+
+Dear Leif:
+
+We did not observe any issue with your library during the QC. There are only ~2M reads demultiplexed using i7 only.
+
+It is a bit hard to define the root cause now, based on your digging result from undemultiplex data we might know more.
+
+Regards,
+
+Jing Shi
+
+Operations Manager
+
+Athenomics
+
+
+From: Benner, Leif <leif_benner@hms.harvard.edu>
+Sent: Wednesday, June 24, 2026 7:45 PM
+To: Jing Shi <j.shi@athenomics.com>; Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+ 
+Hi Jing,
+
+Thanks for letting me know. Im happy to try and demultiplex from the raw data. Do you know roughly how many reads for my samples when you demultiplexed? When I get the data I can take a look at it more closely. 
+
+Also, were my libraries fine and I just didn’t get enough sequencing depth or were there something wrong with my libraries that resulted in less than expected reads?
+
+Thanks for the help and explanation, all the best, Leif
+
+From: Jing Shi <j.shi@athenomics.com>
+Date: Wednesday, June 24, 2026 at 7:39 PM
+To: Benner, Leif <leif_benner@hms.harvard.edu>, Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+
+Dear Leif:
+
+We are sorry for the delay. Your sample sequencing has been done and we are uploading the data now. However, the demultiplex yield is much less than expect. Probably you have to try the undemultiplex data too to see if there is any additional data there and please let us know if there is no additional data found in the undemultiplex data. We hope to provide the download link to you tomorrow or Friday based on the uploading speed.
+
+Regards,
+
+Jing Shi
+
+Operations Manager
+
+Athenomics
+
+
+From: Benner, Leif <leif_benner@hms.harvard.edu>
+Sent: Wednesday, June 24, 2026 2:15 PM
+To: Jing Shi <j.shi@athenomics.com>; Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+ 
+Hi Jing,
+
+Just wanted to check in on the status of my samples/sequencing.
+
+Look forward to hearing from you, best, Leif
+
+From: Jing Shi <j.shi@athenomics.com>
+Date: Monday, June 8, 2026 at 2:25 PM
+To: Benner, Leif <leif_benner@hms.harvard.edu>, Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+
+Dear Lief:
+
+Thank you! We will process your sample ASAP and keep you posted.
+
+Regards,
+
+Jing Shi
+
+Operations Manager
+
+Athenomics
+
+
+From: Benner, Leif <leif_benner@hms.harvard.edu>
+Sent: Monday, June 8, 2026 2:01 PM
+To: Jing Shi <j.shi@athenomics.com>; Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+ 
+Hi Jing,
+
+Attached is my sample registration form. Please note that I have different i7 (N701) and i5 (N502) indexes than what Ram and Xiaomei have been using. I don’t think this will be a problem. I also attached my theoretical full length sequencing product for your reference. The sample was shipped today and should arrive tomorrow. The Fedex tracking number is below. 
+
+Thanks again for your help, best, Leif
+
+Fedex tracking #872779412020
+
+
+From: Jing Shi <j.shi@athenomics.com>
+Date: Monday, June 8, 2026 at 9:51 AM
+To: Benner, Leif <leif_benner@hms.harvard.edu>, Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+
+Hi Leif:
+
+Please see the sample registration form attached. We are sorry for not sending it to you earlier as both Ram and Xiaomei did not like to fill it🙂.
+
+Regards,
+
+Jing Shi
+
+Operations Manager
+
+Athenomics
+
+
+From: Benner, Leif <leif_benner@hms.harvard.edu>
+Sent: Monday, June 8, 2026 8:10 AM
+To: Jing Shi <j.shi@athenomics.com>; Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+ 
+Hi Jing,
+
+I made an account on your website but im not seeing a sample registration form, would you help guide me to where I can find this sheet and fill it out?
+
+Thanks, Leif
+
+From: Jing Shi <j.shi@athenomics.com>
+Date: Saturday, June 6, 2026 at 8:51 AM
+To: Benner, Leif <leif_benner@hms.harvard.edu>, Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+
+Dear Leif:
+
+Would you mind shipping >200ng in at least 10µL and let us know the tracking number?
+
+Thank you!
+
+Regards,
+
+Jing Shi
+
+Operations Manager
+
+Athenomics
+
+
+From: Benner, Leif <leif_benner@hms.harvard.edu>
+Sent: Saturday, June 6, 2026 8:48 AM
+To: Jing Shi <j.shi@athenomics.com>; Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+ 
+Great, thank you so much, this is perfect.
+
+I’ll plan to ship my sample on monday. How much volume and concentration do you need?
+
+Best, Leif
+
+From: Jing Shi <j.shi@athenomics.com>
+Date: Saturday, June 6, 2026 at 8:45 AM
+To: Benner, Leif <leif_benner@hms.harvard.edu>, Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+
+Dear Leif:
+
+Thank you and of course. Please see the updated quote attached.
+
+Regards,
+
+Jing Shi
+
+Operations Manager
+
+Athenomics
+
+
+From: Benner, Leif <leif_benner@hms.harvard.edu>
+Sent: Saturday, June 6, 2026 7:19 AM
+To: Jing Shi <j.shi@athenomics.com>; Viswanatha, Raghuvir <ram@genetics.med.harvard.edu>; Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+ 
+Hi Jing,
+
+Thanks so much for sending and I can absolutely ship the DNA to you. 
+
+For the quote, my experiment is slightly smaller in scale than Ram’s and Xiaomei’s and I really only need 75 million reads. Would this work for you and would this change the price of the quote? Let me know what you think.
+
+Thanks again, Leif
+
+From: Jing Shi <j.shi@athenomics.com>
+Date: Friday, June 5, 2026 at 5:10 PM
+To: Viswanatha, Raghuvir <ram@genetics.med.harvard.edu>, Jianjun Sun <jianjun@athenomics.com>
+Cc: Benner, Leif <leif_benner@hms.harvard.edu>
+Subject: Re: Sequencing for Xiaomei Sun
+
+Dear Ram and Lief:
+
+Thank you so much! Please see the quote attached.
+
+We are very sorry that we may not be available to pick up the sample early next week. The earliest time slot we can do are likely Thursday or Friday.
+
+Would you mind mailing your sample to us in case you need the result urgently?
+
+Here is our address:
+
+Jing Shi
+1 Grant St Ste 230
+Framingham, MA, 01702
+
+Regards,
+
+Jing Shi
+
+Operations Manager
+
+Athenomics
+
+
+From: Viswanatha, Raghuvir <ram@genetics.med.harvard.edu>
+Sent: Friday, June 5, 2026 3:50 PM
+To: Sun, Xiaomei <xiaomei_sun@hms.harvard.edu>; Jing Shi <j.shi@athenomics.com>; Jianjun Sun <jianjun@athenomics.com>
+Cc: Benner, Leif <leif_benner@hms.harvard.edu>
+Subject: Re: Sequencing for Xiaomei Sun
+ 
+Hi Jing,
+
+I’m also introducing Leif, a postdoc in our lab. Can you please help him to place a very similar kind of order? Everything in his order is the same as my order and Xiaomei’s order, including the sequence of i7 and i5.
+
+Thanks!
+Ram
+
+From: Sun, Xiaomei <xiaomei_sun@hms.harvard.edu>
+Date: Monday, May 18, 2026 at 1:40 PM
+To: Jing Shi <j.shi@athenomics.com>; Viswanatha, Raghuvir <ram@genetics.med.harvard.edu>; Jianjun Sun <jianjun@athenomics.com>
+Subject: Re: Sequencing for Xiaomei Sun
+
+Hi Jing,
+
+I pooled all my samples together, so I will send one pooled sample with approximately 233 million reads requested. I will ship it soon.
+
+Thank you.
+
+Best,
+Xiaomei
+
+
+
+Get Outlook for Mac
+From: Jing Shi <j.shi@athenomics.com>
+Date: Monday, May 18, 2026 at 12:02 PM
+To: Viswanatha, Raghuvir <ram@genetics.med.harvard.edu>; Jianjun Sun <jianjun@athenomics.com>
+Cc: Sun, Xiaomei <xiaomei_sun@hms.harvard.edu>
+Subject: Re: Sequencing for Xiaomei Sun
+
+Hi Ram and Xiaomei:
+
+That becomes much easier. How may samples you plan to send?
+
+We are sorry that we have difficulty to pick up the samples in these few weeks. Would you mind mailing the samples to our address:
+
+Jing Shi
+Athenomics
+1 Grant St, Ste 230
+Framingham, MA, 01702
+
+Regards,
+
+Jing Shi
+Operations Manager
+Athenomics
+
+
+From: Viswanatha, Raghuvir <ram@genetics.med.harvard.edu>
+Sent: Monday, May 18, 2026 10:32 AM
+To: Jing Shi <j.shi@athenomics.com>; Jianjun Sun <jianjun@athenomics.com>
+Cc: Sun, Xiaomei <xiaomei_sun@hms.harvard.edu>
+Subject: Sequencing for Xiaomei Sun
+ 
+Dear Jianjun and Jing,
+
+Xiaomei (cc’d) wants to submit a sample which will be exactly the same (even the i7 and i5 barcodes are the same) as the two recent samples that I sent. She calculated that she would like approximately 233 million reads, which should cost ~$350.
+
+Can you please help her fill out the forms?
+
+Thank you!
+
+Ram
+
+
+
+Raghuvir Viswanatha, PhD
+Perrimon Lab
+Veritas Science Center
+Department of Genetics/HHMI
+Harvard Medical School
+ram@genetics.med.harvard.edu
+339-364-0464
