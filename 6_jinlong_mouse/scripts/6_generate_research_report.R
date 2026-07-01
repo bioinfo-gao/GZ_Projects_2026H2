@@ -131,6 +131,8 @@ report <- c(
   "- Perform GO and KEGG pathway enrichment to determine biological processes affected.",
   "- Run Gene Set Enrichment Analysis (GSEA) for pathway-level signal detection.",
   "- Assess whether stem cell marker genes are significantly altered.",
+  "- Characterise cell differentiation and growth pathway activity across treatment groups.",
+  "- Evaluate the Notch signalling pathway (receptors, ligands, effectors, and target genes).",
   "",
 
   # 2. Key Findings
@@ -261,6 +263,54 @@ report <- c(
   },
   "",
 
+  "### 6.4 Cell Differentiation & Growth Markers",
+  "",
+  if (!is.null(diff_summary) && nrow(diff_summary) > 0) {
+    sig_diff <- diff_summary %>% filter(get(sig_col) != "NS") %>%
+      select(gene_name, Category, log2FoldChange, padj, Comparison) %>%
+      arrange(padj)
+    if (nrow(sig_diff) > 0) {
+      c(
+        paste0("Significant cell differentiation & growth markers detected: **", nrow(sig_diff), "**"),
+        "",
+        "| Gene | Category | log2FC | padj | Comparison |",
+        "| :--- | :---: | :---: | :---: | :---: |",
+        apply(sig_diff, 1, function(r) paste0("| ", r["gene_name"], " | ", r["Category"],
+          " | ", round(as.numeric(r["log2FoldChange"]), 3),
+          " | ", signif(as.numeric(r["padj"]), 3), " | ", r["Comparison"], " |"))
+      )
+    } else {
+      "No significant cell differentiation & growth markers detected."
+    }
+  } else {
+    "Cell differentiation & growth analysis not yet run."
+  },
+  "",
+
+  "### 6.5 Notch Pathway Genes",
+  "",
+  if (!is.null(notch_summary) && nrow(notch_summary) > 0) {
+    sig_notch_r <- notch_summary %>% filter(get(sig_col) != "NS") %>%
+      select(gene_name, Category, log2FoldChange, padj, Comparison) %>%
+      arrange(padj)
+    if (nrow(sig_notch_r) > 0) {
+      c(
+        paste0("Significant Notch pathway genes detected: **", nrow(sig_notch_r), "**"),
+        "",
+        "| Gene | Category | log2FC | padj | Comparison |",
+        "| :--- | :---: | :---: | :---: | :---: |",
+        apply(sig_notch_r, 1, function(r) paste0("| ", r["gene_name"], " | ", r["Category"],
+          " | ", round(as.numeric(r["log2FoldChange"]), 3),
+          " | ", signif(as.numeric(r["padj"]), 3), " | ", r["Comparison"], " |"))
+      )
+    } else {
+      "No significant Notch pathway genes detected."
+    }
+  } else {
+    "Notch pathway analysis not yet run."
+  },
+  "",
+
   # 7. Conclusions
   "## 7. Conclusions",
   "",
@@ -297,6 +347,10 @@ report <- c(
   paste0("| `Enrichment/*/KEGG/` | KEGG ORA results with dot plots |"),
   paste0("| `Enrichment/*/GSEA/` | GSEA results (KEGG + Hallmark) with ridge/dot plots |"),
   paste0("| `Enrichment/*/StemCell/` | Stem cell marker DE results and bar plots |"),
+  paste0("| `Enrichment/*/CellDiff/` | Cell differentiation & growth marker DE results, bar plots, and MSigDB ORA |"),
+  paste0("| `Enrichment/*/Notch/` | Notch pathway gene DE results, bar plots, KEGG, and MSigDB ORA |"),
+  paste0("| `Enrichment/CellDiff_AllComparisons_Summary.csv` | Cross-comparison cell diff/growth marker summary |"),
+  paste0("| `Enrichment/Notch_AllComparisons_Summary.csv` | Cross-comparison Notch pathway gene summary |"),
   paste0("| `QC/multiqc/` | MultiQC report (sequencing QC, alignment stats) |"),
   "",
   "---",
