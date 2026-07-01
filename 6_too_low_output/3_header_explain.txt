@@ -1,0 +1,39 @@
+第一条reads的header： @LH00972:131:23JCTGLT3:7:1101:4669:1045 1:N:0:TAAGGCGA
+Model 10:02 PM
+ThinkingThoughts
+Expand to view model thoughts
+
+chevron_right
+通过你提供的这个 Header，我们可以读出非常重要的技术细节。这个 Header 证实了为什么你只拿到了这一部分数据。
+1. Header 详细拆解
+@LH00972:131:23JCTGLT3:7:1101:4669:1045 1:N:0:TAAGGCGA
+@LH00972: 测序仪的唯一编号（LH 通常代表 NovaSeq 6000 或更高型号）。
+131: 运行编号（Run ID）。
+23JCTGLT3: Flowcell（流动槽）的 ID。
+7: Lane（泳道）编号。这说明你的样本是在第 7 泳道跑的。
+1101: Tile（磁块）编号。
+4669:1045: 该 Read 在芯片上的 X/Y 坐标。
+1: 代表这是 Read 1。
+N: 代表该 Read 没有被过滤（Pass Filter）（如果是 Y 则会被丢弃）。
+0: 控制位（通常为 0）。
+TAAGGCGA: 这是核心！ 测序仪识别到的 i7 Index。它准确匹配了 N701。
+2. 发现的重大问题：i5 Index 去哪了？
+这是一个非常关键的发现：
+在你的 Header 里，Index 部分只显示了 TAAGGCGA（i7），而没有看到 i5 Index (CTCTCTAT)。
+通常情况下，如果是双端 Index（Dual Index）拆分，Header 应该是：
+... 1:N:0:TAAGGCGA+CTCTCTAT
+这意味着什么？
+单端拆分（Single Indexing）： 测序公司在下机时，只用了 i7 (N701) 来区分样本，完全忽略了 i5 (N502)。
+数据丢失的可能原因：
+如果 Leif 的样本在第 7 Lane 是唯一的 TAAGGCGA，那么没问题。
+但如果这个 Lane 里还有别人的样本也用了 TAAGGCGA 这一段 i7，但用了不同的 i5，那么因为公司只按 i7 拆分，所有人的数据都会被混在一起塞给你！
+反之： 如果测序公司强行要求 i7 和 i5 必须同时完全匹配，但测序时 i5 那一端质量很差，那么大量的数据就会因为 i5 对不上而被扔进 Undetermined。
+3. 给你的分析结论：
+Index 确认： 确实是 N701 (TAAGGCGA)。
+拆分策略： 测序中心目前只用了单端 i7 进行 Demultiplexing（或者至少在 FASTQ 命名里只体现了 i7）。
+验证方法：
+如果你去搜一下 Undetermined 文件里的 Header，如果里面出现了大量的 TAAGGCGA+CTCTCTAT 或者 TAAGGCGA+其他，你就能瞬间明白数据为什么会少。
+4. 接下来的行动建议：
+你可以非常有底气地告诉 Leif 和测序公司：
+"我检查了 FASTQ 的 Header，发现目前下机数据仅根据 i7 Index (TAAGGCGA) 进行了拆分。考虑到我们样本设计的特殊性（Internal Barcoding），请确认在 Lane 7 中是否存在 Index 冲突。同时，建议测序公司提供 'Undetermined' 文件夹中所有匹配 TAAGGCGA 序列的 reads，因为那是找回丢失数据的关键。"
+总结： 测序仪已经识别出了你的样本（i7 没错），但目前的产出量极低。既然你已经确认了 Read 1 内部的 3N/4N/5N 结构完全正确，数据一定还在测序仪的原始文件里，只是没被成功“分”出来。
