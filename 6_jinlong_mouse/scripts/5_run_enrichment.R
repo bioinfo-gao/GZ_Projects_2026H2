@@ -10,9 +10,9 @@
 #
 # 前置条件: 先运行 4_run_DE_PCA.R 生成 res_list.rds / meta.rds / counts_raw.rds
 
-library(clusterProfiler)
+library(clusterProfiler) # clusterProfiler
 library(enrichplot)
-library(org.Mm.eg.db)
+library(org.Mm.eg.db) 
 library(msigdbr)
 library(ggplot2)
 library(dplyr)
@@ -37,6 +37,9 @@ dir.create(ENR_DIR, showWarnings = FALSE, recursive = TRUE)
 res_list   <- readRDS(file.path(DE_DIR, "res_list.rds"))
 meta       <- readRDS(file.path(DE_DIR, "meta.rds"))
 counts_raw <- readRDS(file.path(DE_DIR, "counts_raw.rds"))
+summary(res_list   )
+summary(meta       )
+summary(counts_raw )
 
 sig_col <- "sig (padj<=0.05 & |log2FC|>=0.263)"
 
@@ -108,6 +111,13 @@ for (comp_name in names(res_list)) {
 
   cat("  DEGs — Up:", length(entrez_up), " Down:", length(entrez_down),
       " Total sig:", length(entrez_all), "\n")
+
+  
+  
+  # ---- 4Preliminary. methods ----------------------------------------
+  ?enrichGO #clusterProfiler}
+  ?enrichKEGG #clusterProfiler}
+  ?gseGO #clusterProfiler}
 
   # ---- 4a. GO 富集 ----------------------------------------
   cat("\n--- GO Enrichment ---\n")
