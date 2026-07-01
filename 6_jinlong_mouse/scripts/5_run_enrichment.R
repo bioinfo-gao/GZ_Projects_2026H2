@@ -361,6 +361,191 @@ for (comp_name in names(res_list)) {
     }
   }, error = function(e) cat("  ⚠️  MSigDB stem cell ORA error:", e$message, "\n"))
 
+  # ---- 4e. 细胞分化与生长通路分析 -------------------------
+  cat("\n--- Cell Differentiation & Growth Analysis ---\n")
+  diff_dir <- file.path(comp_dir, "CellDiff")
+  dir.create(diff_dir, showWarnings = FALSE, recursive = TRUE)
+
+  diff_markers <- list(
+    Proliferation      = c("Mki67","Pcna","Top2a","Ccnd1","Ccnd2","Ccne1","Cdk4","Cdk6","Cdk2","Myc","E2f1","Mcm2"),
+    Growth_Factors     = c("Igf1","Igf1r","Egfr","Fgfr1","Fgfr2","Met","Pdgfra","Pdgfrb","Vegfa","Tgfb1","Tgfb2","Tgfb3"),
+    Differentiation_TF = c("Myod1","Myog","Runx1","Runx2","Sox9","Pparg","Cebpa","Gata1","Gata2","Klf4","Klf5","Atoh1"),
+    Wnt_Signaling      = c("Ctnnb1","Wnt5a","Wnt3a","Wnt7a","Fzd1","Fzd4","Axin2","Apc","Lef1","Tcf7","Wnt2b"),
+    EMT_Markers        = c("Vim","Cdh1","Cdh2","Fn1","Twist1","Snai1","Snai2","Zeb1","Zeb2","Col1a1","Col3a1")
+  )
+
+  all_diff_markers <- unique(unlist(diff_markers))
+  diff_marker_de <- df %>%
+    filter(gene_name %in% all_diff_markers) %>%
+    select(gene_id, gene_name, log2FoldChange, padj, .data[[sig_col]]) %>%
+    arrange(padj)
+
+  diff_category <- data.frame(
+    gene_name = unlist(diff_markers),
+    Category  = rep(names(diff_markers), sapply(diff_markers, length)),
+    stringsAsFactors = FALSE
+  )
+  diff_marker_de <- left_join(diff_marker_de, diff_category, by = "gene_name")
+  write_csv(diff_marker_de, file.path(diff_dir, "CellDiff_Markers_DE_Results.csv"))
+  cat("  ✅ Cell diff/growth markers found:", nrow(diff_marker_de), "/", length(all_diff_markers), "\n")
+
+  sig_diff <- diff_marker_de %>% filter(.data[[sig_col]] != "NS")
+  if (nrow(sig_diff) > 0) {
+    cat("  ✅ Significant cell diff/growth markers:", nrow(sig_diff), "\n")
+    p_diff_bar <- diff_marker_de %>%
+      filter(!is.na(log2FoldChange)) %>%
+      arrange(Category, log2FoldChange) %>%
+      mutate(gene_name = factor(gene_name, levels = unique(gene_name)),
+             Direction = ifelse(log2FoldChange > 0, "Up", "Down")) %>%
+      ggplot(aes(x = gene_name, y = log2FoldChange, fill = Direction)) +
+      geom_col() +
+      geom_hline(yintercept = c(-0.263, 0.263), linetype = "dashed", color = "grey50") +
+      facet_wrap(~Category, scales = "free_x", nrow = 2) +
+      scale_fill_manual(values = c("Up" = "#E41A1C", "Down" = "#377EB8")) +
+      theme_bw(base_size = 9) +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 7),
+            strip.text  = element_text(size = 8)) +
+      labs(title = paste("Cell Differentiation & Growth Markers:", comp_name),
+           x = NULL, y = "log2 Fold Change")
+    tryCatch(
+      ggsave(file.path(diff_dir, "CellDiff_Markers_log2FC.pdf"), p_diff_bar,
+             width = 16, height = 7, dpi = 300),
+      error = function(e) cat("  ⚠️  CellDiff bar plot save failed:", e$message, "\n")
+    )
+  } else {
+    cat("  ℹ️  No significant cell diff/growth markers detected\n")
+  }
+
+  # MSigDB GO:BP ORA — 分化/增殖相关 gene sets
+  tryCatch({
+    msig_diff <- msigdbr(species = "Mus musculus", category = "C5", subcategory = "GO:BP") %>%
+      filter(grepl("DIFFERENTIATION|PROLIFERATION|CELL_GROWTH|CELL_CYCLE|DEVELOPMENT", gs_name)) %>%
+      select(gs_name, entrez_gene) %>%
+      rename(term = gs_name, gene = entrez_gene)
+
+    if (nrow(msig_diff) > 0 && length(entrez_all) >= 5) {
+      enr_diff <- enricher(gene      = as.character(entrez_all),
+                           universe  = as.character(entrez_bg),
+                           TERM2GENE = msig_diff %>% mutate(gene = as.character(gene)),
+                           pAdjustMethod = "BH",
+                           pvalueCutoff  = 0.05,
+                           qvalueCutoff  = 0.2)
+      if (!is.null(enr_diff) && nrow(as.data.frame(enr_diff)) > 0) {
+        df_diff <- as.data.frame(enr_diff)
+        write_csv(df_diff, file.path(diff_dir, "MSigDB_CellDiff_ORA.csv"))
+        p_diff_dot <- dotplot(enr_diff, showCategory = min(20, nrow(df_diff)),
+                              title = paste("Cell Diff & Growth (MSigDB GO:BP):", comp_name)) +
+          theme(axis.text.y = element_text(size = 7))
+        ggsave(file.path(diff_dir, "MSigDB_CellDiff_dotplot.pdf"), p_diff_dot,
+               width = 12, height = max(5, min(20, nrow(df_diff)) * 0.35 + 3), dpi = 300)
+        cat("  ✅ MSigDB CellDiff ORA:", nrow(df_diff), "gene sets\n")
+      } else {
+        cat("  ℹ️  No significant CellDiff gene sets (MSigDB)\n")
+      }
+    }
+  }, error = function(e) cat("  ⚠️  MSigDB CellDiff ORA error:", e$message, "\n"))
+
+  # ---- 4f. Notch 通路分析 -----------------------------------
+  cat("\n--- Notch Pathway Analysis ---\n")
+  notch_dir <- file.path(comp_dir, "Notch")
+  dir.create(notch_dir, showWarnings = FALSE, recursive = TRUE)
+
+  notch_markers <- list(
+    Receptors      = c("Notch1","Notch2","Notch3","Notch4"),
+    Ligands        = c("Dll1","Dll3","Dll4","Jag1","Jag2"),
+    Core_Complex   = c("Rbpj","Maml1","Maml2","Maml3","Ep300","Hdac1","Hdac2"),
+    Target_Genes   = c("Hes1","Hes5","Hes6","Hey1","Hey2","Heyl","Nrarp","Myc","Ccnd1","Cdkn1a"),
+    Neg_Regulators = c("Numb","Numbl","Fbxw7","Mfng","Lfng","Rfng","Deltex1","Itch")
+  )
+
+  all_notch <- unique(unlist(notch_markers))
+  notch_de <- df %>%
+    filter(gene_name %in% all_notch) %>%
+    select(gene_id, gene_name, log2FoldChange, padj, .data[[sig_col]]) %>%
+    arrange(padj)
+
+  notch_category <- data.frame(
+    gene_name = unlist(notch_markers),
+    Category  = rep(names(notch_markers), sapply(notch_markers, length)),
+    stringsAsFactors = FALSE
+  )
+  notch_de <- left_join(notch_de, notch_category, by = "gene_name")
+  write_csv(notch_de, file.path(notch_dir, "Notch_Pathway_DE_Results.csv"))
+  cat("  ✅ Notch pathway genes found:", nrow(notch_de), "/", length(all_notch), "\n")
+
+  sig_notch <- notch_de %>% filter(.data[[sig_col]] != "NS")
+  if (nrow(sig_notch) > 0) {
+    cat("  ✅ Significant Notch pathway genes:", nrow(sig_notch), "\n")
+    print(sig_notch %>% select(gene_name, Category, log2FoldChange, padj, .data[[sig_col]]))
+
+    p_notch_bar <- notch_de %>%
+      filter(!is.na(log2FoldChange)) %>%
+      arrange(Category, log2FoldChange) %>%
+      mutate(gene_name = factor(gene_name, levels = unique(gene_name)),
+             Direction = ifelse(log2FoldChange > 0, "Up", "Down")) %>%
+      ggplot(aes(x = gene_name, y = log2FoldChange, fill = Direction)) +
+      geom_col() +
+      geom_hline(yintercept = c(-0.263, 0.263), linetype = "dashed", color = "grey50") +
+      facet_wrap(~Category, scales = "free_x", nrow = 2) +
+      scale_fill_manual(values = c("Up" = "#E41A1C", "Down" = "#377EB8")) +
+      theme_bw(base_size = 9) +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 7),
+            strip.text  = element_text(size = 8)) +
+      labs(title = paste("Notch Pathway Genes:", comp_name),
+           x = NULL, y = "log2 Fold Change")
+    tryCatch(
+      ggsave(file.path(notch_dir, "Notch_Pathway_log2FC.pdf"), p_notch_bar,
+             width = 14, height = 7, dpi = 300),
+      error = function(e) cat("  ⚠️  Notch bar plot save failed:", e$message, "\n")
+    )
+  } else {
+    cat("  ℹ️  No significant Notch pathway genes detected\n")
+  }
+
+  # 从已计算的 KEGG ALL 结果中提取 Notch 通路（mmu04330）
+  kegg_all_csv <- file.path(kegg_dir, "KEGG_ALL.csv")
+  if (file.exists(kegg_all_csv)) {
+    kegg_all_df <- read_csv(kegg_all_csv, show_col_types = FALSE)
+    notch_kegg_row <- kegg_all_df %>%
+      filter(ID == "mmu04330" | grepl("Notch", Description, ignore.case = TRUE))
+    if (nrow(notch_kegg_row) > 0) {
+      write_csv(notch_kegg_row, file.path(notch_dir, "KEGG_Notch_from_ORA.csv"))
+      cat("  ✅ Notch in KEGG ORA (mmu04330):", notch_kegg_row$Description[1],
+          "padj =", signif(notch_kegg_row$p.adjust[1], 3), "\n")
+    } else {
+      cat("  ℹ️  Notch pathway (mmu04330) not significant in KEGG ORA\n")
+    }
+  }
+
+  # MSigDB Notch gene sets ORA（跨 collections 搜索 NOTCH）
+  tryCatch({
+    msig_notch <- msigdbr(species = "Mus musculus") %>%
+      filter(grepl("NOTCH", gs_name)) %>%
+      select(gs_name, entrez_gene) %>%
+      rename(term = gs_name, gene = entrez_gene)
+
+    if (nrow(msig_notch) > 0 && length(entrez_all) >= 5) {
+      enr_notch <- enricher(gene      = as.character(entrez_all),
+                            universe  = as.character(entrez_bg),
+                            TERM2GENE = msig_notch %>% mutate(gene = as.character(gene)),
+                            pAdjustMethod = "BH",
+                            pvalueCutoff  = 0.05,
+                            qvalueCutoff  = 0.2)
+      if (!is.null(enr_notch) && nrow(as.data.frame(enr_notch)) > 0) {
+        df_nm <- as.data.frame(enr_notch)
+        write_csv(df_nm, file.path(notch_dir, "MSigDB_Notch_ORA.csv"))
+        p_nm <- dotplot(enr_notch, showCategory = min(15, nrow(df_nm)),
+                        title = paste("Notch Signaling (MSigDB):", comp_name)) +
+          theme(axis.text.y = element_text(size = 7))
+        ggsave(file.path(notch_dir, "MSigDB_Notch_dotplot.pdf"), p_nm,
+               width = 10, height = max(5, min(15, nrow(df_nm)) * 0.35 + 3), dpi = 300)
+        cat("  ✅ MSigDB Notch ORA:", nrow(df_nm), "gene sets\n")
+      } else {
+        cat("  ℹ️  No significant Notch gene sets (MSigDB)\n")
+      }
+    }
+  }, error = function(e) cat("  ⚠️  MSigDB Notch ORA error:", e$message, "\n"))
+
   cat("✅ Completed enrichment for:", comp_name, "\n")
 }
 
@@ -383,6 +568,36 @@ if (length(summary_list) > 0) {
   summary_all <- bind_rows(summary_list)
   write_csv(summary_all, file.path(ENR_DIR, "StemCell_AllComparisons_Summary.csv"))
   cat("✅ Cross-comparison stem cell summary saved\n")
+}
+
+# 跨对比汇总：细胞分化与生长
+diff_summary_list <- list()
+for (comp_name in names(res_list)) {
+  diff_csv <- file.path(ENR_DIR, comp_name, "CellDiff", "CellDiff_Markers_DE_Results.csv")
+  if (file.exists(diff_csv)) {
+    diff_summary_list[[comp_name]] <- read_csv(diff_csv, show_col_types = FALSE) %>%
+      mutate(Comparison = comp_name)
+  }
+}
+if (length(diff_summary_list) > 0) {
+  diff_summary_all <- bind_rows(diff_summary_list)
+  write_csv(diff_summary_all, file.path(ENR_DIR, "CellDiff_AllComparisons_Summary.csv"))
+  cat("✅ Cross-comparison CellDiff summary saved\n")
+}
+
+# 跨对比汇总：Notch 通路
+notch_summary_list <- list()
+for (comp_name in names(res_list)) {
+  notch_csv <- file.path(ENR_DIR, comp_name, "Notch", "Notch_Pathway_DE_Results.csv")
+  if (file.exists(notch_csv)) {
+    notch_summary_list[[comp_name]] <- read_csv(notch_csv, show_col_types = FALSE) %>%
+      mutate(Comparison = comp_name)
+  }
+}
+if (length(notch_summary_list) > 0) {
+  notch_summary_all <- bind_rows(notch_summary_list)
+  write_csv(notch_summary_all, file.path(ENR_DIR, "Notch_AllComparisons_Summary.csv"))
+  cat("✅ Cross-comparison Notch summary saved\n")
 }
 
 cat("\n🎉 All enrichment analyses complete. Results:", ENR_DIR, "\n")
