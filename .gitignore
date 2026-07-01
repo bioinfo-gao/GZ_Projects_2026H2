@@ -7,6 +7,14 @@
 /Work_bio//references/
 /home/gao/projects_2026H1/Utilities/Code/*
 testfile
+*.pyc
+*.pyo
+*.pyd
+*.Summary.csv
+*.summary.csv
+*.Results.csv
+*.results.csv
+
 
 # ==========================================
 # 2. Nextflow & nf-core 运行过程文件 (核心排除)
