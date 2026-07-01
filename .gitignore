@@ -10,10 +10,10 @@ testfile
 *.pyc
 *.pyo
 *.pyd
-*.Summary.csv
-*.summary.csv
-*.Results.csv
-*.results.csv
+*Summary.csv
+*summary.csv
+*Results.csv
+*results.csv
 
 
 # ==========================================
