@@ -17,8 +17,9 @@ if (length(data_dirs) == 0) stop("No Data_Analysis_YYYYMMDD folder found. Run 4_
 DATA_DIR <- data_dirs[1]
 cat("Using:", DATA_DIR, "\n")
 
-DE_DIR  <- file.path(DATA_DIR, "DE_PCA_Results")
-ENR_DIR <- file.path(DATA_DIR, "Enrichment")
+DE_DIR      <- file.path(DATA_DIR, "DE_PCA_Results")
+ENR_STD_DIR <- file.path(DATA_DIR, "Enrichment_Standard")
+ENR_CUS_DIR <- file.path(DATA_DIR, "Enrichment_Custom_Designed_Pathways")
 
 REPORT_DATE <- format(Sys.Date(), "%m%d")   # MMDD, no year
 REPORT_FILE <- file.path(DATA_DIR, paste0("Bioinformatics_Analysis_Report_", REPORT_DATE, ".md"))
@@ -37,10 +38,11 @@ deg_summary <- lapply(res_list, function(df) {
 })
 
 # ================= 3. 读取 enrichment 汇总 =================
+# Standard: GO/KEGG/GSEA counts per comparison
 enr_summary <- list()
 for (comp_name in names(res_list)) {
-  comp_dir <- file.path(ENR_DIR, comp_name)
-  go_file  <- file.path(comp_dir, "GO", "GO_BP_ALL.csv")
+  comp_dir  <- file.path(ENR_STD_DIR, comp_name)
+  go_file   <- file.path(comp_dir, "GO",   "GO_BP_ALL.csv")
   kegg_file <- file.path(comp_dir, "KEGG", "KEGG_ALL.csv")
   enr_summary[[comp_name]] <- list(
     go_terms   = if (file.exists(go_file))   nrow(read_csv(go_file,   show_col_types = FALSE)) else 0,
@@ -48,17 +50,15 @@ for (comp_name in names(res_list)) {
   )
 }
 
-# StemCell summary
-sc_summary_file <- file.path(ENR_DIR, "StemCell_AllComparisons_Summary.csv")
-sc_summary <- if (file.exists(sc_summary_file)) read_csv(sc_summary_file, show_col_types = FALSE) else NULL
+# Custom: cross-comparison summary CSVs
+sc_summary_file   <- file.path(ENR_CUS_DIR, "StemCell_AllComparisons_Summary.csv")
+sc_summary        <- if (file.exists(sc_summary_file))   read_csv(sc_summary_file,   show_col_types = FALSE) else NULL
 
-# CellDiff summary
-diff_summary_file <- file.path(ENR_DIR, "CellDiff_AllComparisons_Summary.csv")
-diff_summary <- if (file.exists(diff_summary_file)) read_csv(diff_summary_file, show_col_types = FALSE) else NULL
+diff_summary_file <- file.path(ENR_CUS_DIR, "CellDiff_AllComparisons_Summary.csv")
+diff_summary      <- if (file.exists(diff_summary_file)) read_csv(diff_summary_file, show_col_types = FALSE) else NULL
 
-# Notch summary
-notch_summary_file <- file.path(ENR_DIR, "Notch_AllComparisons_Summary.csv")
-notch_summary <- if (file.exists(notch_summary_file)) read_csv(notch_summary_file, show_col_types = FALSE) else NULL
+notch_summary_file <- file.path(ENR_CUS_DIR, "Notch_AllComparisons_Summary.csv")
+notch_summary      <- if (file.exists(notch_summary_file)) read_csv(notch_summary_file, show_col_types = FALSE) else NULL
 
 # ================= 4. 生成报告 =================
 cat("Writing report:", REPORT_FILE, "\n")
@@ -75,12 +75,13 @@ read_top <- function(path, desc_col = "Description", padj_col = "p.adjust") {
 kf_lines <- c()
 for (comp_name in names(deg_summary)) {
   s   <- deg_summary[[comp_name]]
-  cdir <- file.path(ENR_DIR, comp_name)
+  std_dir <- file.path(ENR_STD_DIR, comp_name)
+  cus_dir <- file.path(ENR_CUS_DIR, comp_name)
 
-  top_go    <- read_top(file.path(cdir, "GO",   "GO_BP_ALL.csv"))
-  top_kegg  <- read_top(file.path(cdir, "KEGG", "KEGG_ALL.csv"), padj_col = "p.adjust")
-  top_gsea_kegg  <- read_top(file.path(cdir, "GSEA", "GSEA_KEGG.csv"),    padj_col = "p.adjust")
-  top_hallmark   <- read_top(file.path(cdir, "GSEA", "GSEA_Hallmark.csv"), padj_col = "p.adjust")
+  top_go         <- read_top(file.path(std_dir, "GO",   "GO_BP_ALL.csv"))
+  top_kegg       <- read_top(file.path(std_dir, "KEGG", "KEGG_ALL.csv"), padj_col = "p.adjust")
+  top_gsea_kegg  <- read_top(file.path(std_dir, "GSEA", "GSEA_KEGG.csv"),     padj_col = "p.adjust")
+  top_hallmark   <- read_top(file.path(std_dir, "GSEA", "GSEA_Hallmark.csv"), padj_col = "p.adjust")
   top_hallmark   <- if (!is.na(top_hallmark))
     sub("^HALLMARK_", "", gsub("_", " ", sub(",.*", "", top_hallmark))) else NA_character_
 
@@ -93,8 +94,8 @@ for (comp_name in names(deg_summary)) {
   notch_n <- if (!is.null(notch_summary))
     nrow(notch_summary %>% filter(Comparison == comp_name, get(sig_col) != "NS")) else "—"
 
-  top_diff_msig <- read_top(file.path(cdir, "CellDiff", "MSigDB_CellDiff_ORA.csv"))
-  top_notch_msig <- read_top(file.path(cdir, "Notch",   "MSigDB_Notch_ORA.csv"))
+  top_diff_msig  <- read_top(file.path(cus_dir, "CellDiff", "MSigDB_CellDiff_ORA.csv"))
+  top_notch_msig <- read_top(file.path(cus_dir, "Notch",    "MSigDB_Notch_ORA.csv"))
 
   kf_lines <- c(kf_lines,
     paste0("- **", comp_name, "**:"),
@@ -343,14 +344,14 @@ report <- c(
   paste0("| `Reads/All_sample_gene_counts.tsv` | Raw count matrix |"),
   paste0("| `Reads/All_sample_gene_tpm.tsv` | TPM matrix |"),
   paste0("| `mouse_Gene_annotation_*.xlsx` | Full mouse gene annotation with GO/KEGG/UniProt (GENCODE M35) |"),
-  paste0("| `Enrichment/*/GO/` | GO ORA results (BP/MF/CC, Up/Down/ALL) with dot plots |"),
-  paste0("| `Enrichment/*/KEGG/` | KEGG ORA results with dot plots |"),
-  paste0("| `Enrichment/*/GSEA/` | GSEA results (KEGG + Hallmark) with ridge/dot plots |"),
-  paste0("| `Enrichment/*/StemCell/` | Stem cell marker DE results and bar plots |"),
-  paste0("| `Enrichment/*/CellDiff/` | Cell differentiation & growth marker DE results, bar plots, and MSigDB ORA |"),
-  paste0("| `Enrichment/*/Notch/` | Notch pathway gene DE results, bar plots, KEGG, and MSigDB ORA |"),
-  paste0("| `Enrichment/CellDiff_AllComparisons_Summary.csv` | Cross-comparison cell diff/growth marker summary |"),
-  paste0("| `Enrichment/Notch_AllComparisons_Summary.csv` | Cross-comparison Notch pathway gene summary |"),
+  paste0("| `Enrichment_Standard/*/GO/` | GO ORA results (BP/MF/CC, Up/Down/ALL) with dot plots |"),
+  paste0("| `Enrichment_Standard/*/KEGG/` | KEGG ORA results with dot plots |"),
+  paste0("| `Enrichment_Standard/*/GSEA/` | GSEA results (KEGG + Hallmark) with ridge/dot plots |"),
+  paste0("| `Enrichment_Custom_Designed_Pathways/*/StemCell/` | Stem cell marker DE results and bar plots |"),
+  paste0("| `Enrichment_Custom_Designed_Pathways/*/CellDiff/` | Cell differentiation & growth marker DE results, bar plots, and MSigDB ORA |"),
+  paste0("| `Enrichment_Custom_Designed_Pathways/*/Notch/` | Notch pathway gene DE results, bar plots, KEGG, and MSigDB ORA |"),
+  paste0("| `Enrichment_Custom_Designed_Pathways/CellDiff_AllComparisons_Summary.csv` | Cross-comparison cell diff/growth marker summary |"),
+  paste0("| `Enrichment_Custom_Designed_Pathways/Notch_AllComparisons_Summary.csv` | Cross-comparison Notch pathway gene summary |"),
   paste0("| `QC/multiqc/` | MultiQC report (sequencing QC, alignment stats) |"),
   "",
   "---",

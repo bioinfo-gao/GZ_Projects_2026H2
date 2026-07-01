@@ -1,0 +1,2 @@
+category,subcategory,ID,Description,GeneRatio,BgRatio,RichFactor,FoldEnrichment,zScore,pvalue,p.adjust,qvalue,geneID,Count
+Environmental Information Processing,Signaling molecules and interaction,mmu04060,Cytokine-cytokine receptor interaction,14/131,173/5932,0.08092485549132948,3.664475135683714,5.344528056353164,2.377889915225162e-5,0.005659377998235886,0.005406570754617211,Cxcl12/Ccl22/Ltb/Ccr7/Ccl8/Il17rc/Il1b/Bmpr1a/Tnfrsf19/Cntfr/Tnfsf13/Ccl5/Cxcr2/Crlf2,14
