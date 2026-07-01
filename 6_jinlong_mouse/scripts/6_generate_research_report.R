@@ -52,6 +52,14 @@ for (comp_name in names(res_list)) {
 sc_summary_file <- file.path(ENR_DIR, "StemCell_AllComparisons_Summary.csv")
 sc_summary <- if (file.exists(sc_summary_file)) read_csv(sc_summary_file, show_col_types = FALSE) else NULL
 
+# CellDiff summary
+diff_summary_file <- file.path(ENR_DIR, "CellDiff_AllComparisons_Summary.csv")
+diff_summary <- if (file.exists(diff_summary_file)) read_csv(diff_summary_file, show_col_types = FALSE) else NULL
+
+# Notch summary
+notch_summary_file <- file.path(ENR_DIR, "Notch_AllComparisons_Summary.csv")
+notch_summary <- if (file.exists(notch_summary_file)) read_csv(notch_summary_file, show_col_types = FALSE) else NULL
+
 # ================= 4. 生成报告 =================
 cat("Writing report:", REPORT_FILE, "\n")
 
@@ -79,13 +87,26 @@ for (comp_name in names(deg_summary)) {
   sc_n <- if (!is.null(sc_summary))
     nrow(sc_summary %>% filter(Comparison == comp_name, get(sig_col) != "NS")) else 0
 
+  diff_n <- if (!is.null(diff_summary))
+    nrow(diff_summary %>% filter(Comparison == comp_name, get(sig_col) != "NS")) else "—"
+
+  notch_n <- if (!is.null(notch_summary))
+    nrow(notch_summary %>% filter(Comparison == comp_name, get(sig_col) != "NS")) else "—"
+
+  top_diff_msig <- read_top(file.path(cdir, "CellDiff", "MSigDB_CellDiff_ORA.csv"))
+  top_notch_msig <- read_top(file.path(cdir, "Notch",   "MSigDB_Notch_ORA.csv"))
+
   kf_lines <- c(kf_lines,
     paste0("- **", comp_name, "**:"),
-    if (!is.na(top_go))        paste0("  - Top GO (BP): ", top_go),
-    if (!is.na(top_kegg))      paste0("  - Top KEGG: ",   top_kegg),
-    if (!is.na(top_gsea_kegg)) paste0("  - GSEA KEGG: ",  top_gsea_kegg),
-    if (!is.na(top_hallmark))  paste0("  - GSEA Hallmark: ", top_hallmark),
+    if (!is.na(top_go))          paste0("  - Top GO (BP): ", top_go),
+    if (!is.na(top_kegg))        paste0("  - Top KEGG: ",   top_kegg),
+    if (!is.na(top_gsea_kegg))   paste0("  - GSEA KEGG: ",  top_gsea_kegg),
+    if (!is.na(top_hallmark))    paste0("  - GSEA Hallmark: ", top_hallmark),
     paste0("  - Stem cell markers: ", sc_n, " significant"),
+    paste0("  - Cell differentiation & growth markers: ", diff_n, " significant",
+           if (!is.na(top_diff_msig)) paste0("; top MSigDB term: ", top_diff_msig) else ""),
+    paste0("  - Notch pathway genes: ", notch_n, " significant",
+           if (!is.na(top_notch_msig)) paste0("; top MSigDB term: ", top_notch_msig) else ""),
     ""
   )
 }
