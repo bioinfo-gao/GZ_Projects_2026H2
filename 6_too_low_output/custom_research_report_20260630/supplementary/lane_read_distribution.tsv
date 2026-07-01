@@ -1,0 +1,18 @@
+sample	r1_file_bytes	estimated_reads_M	notes
+C14_41	21483643768	565.1	Normal output
+Undetermined	86312321585	2270.2	10+10 bp UDI reads; unrelated libraries; not OVO
+C14_45	10406035968	273.7	Normal output
+C13_16	5497542367	144.6	Normal output
+A	3318237601	87.3	Normal output
+J_899	3256428406	85.7	Normal output
+J_897	2973939190	78.2	Normal output
+C	2836273274	74.6	Normal output
+B	2835640226	74.6	Normal output
+J_904	2751902757	72.4	Normal output
+J_912	2605686219	68.5	Normal output
+J_909	2574390542	67.7	Normal output
+J_902	2508583066	66.0	Normal output
+J_905	2397295892	63.1	Normal output
+J_910	2363815618	62.2	Normal output
+J_896	2235309419	58.8	Normal output
+OVO	63334911	1.7	45x below ordered depth of 75M; ROOT CAUSE: pool under-representation
