@@ -1,0 +1,64 @@
+根本原因分析
+结论：OVO reads没有"藏"在Undetermined里。Undetermined的161 GB来源于完全不同的库（10+10 bp UDI barcodes），与OVO的8 bp Nextera indexes毫无关系。
+
+三条证据链互相印证：
+
+1. Barcode不匹配 — Undetermined中的主要barcodes全是10+10 bp格式（如ACCACACGAT+CAACCACGGT），而Leif的是8 bp（TAAGGCGA+CTCTCTAT）。2M条headers中只有1942个（0.097%）含有TAAGGCGA，这属于随机测序错误，不是OVO reads。
+
+2. 单index demultiplex已完整捕获OVO — OVO FASTQ header格式 1:N:0:TAAGGCGA（只有I7，无I5）证实测序公司用I7-only模式做了demultiplex，且已将所有匹配reads归入OVO文件。
+
+3. Lane内各样品read数量的极端不均衡 — 这条lane所有样品读数估算：
+
+样品	:---:	:---:
+Undetermined	~2,270M	含他人未注册样品
+C14_41	~565M	正常
+C14_45	~274M	正常
+C13_16	~145M	正常
+A, B, C	~63–87M each	正常
+J_896–J_912	~58–87M each	正常
+OVO	~1.7M	极度偏低
+其他所有样品均获得了正常数量的reads，说明测序本身没有问题。问题完全在OVO的加样量。
+
+核心根因：OVO在建库混合（pooling）时浓度严重偏低，导致其在pool中的摩尔比仅为预期值的约1/45。
+
+具体机制最可能是以下之一：
+
+Qubit/bioanalyzer测量到的是ng/µL（质量浓度），但换算为nM（摩尔浓度）时没有考虑insert size，导致pool中OVO分子数严重低估
+建库产物中adapter dimer或过短片段占主导，导致Qubit读数虚高但真正insert的分子数极少
+手工移液误差（如1:100 dilution做了1:10000）
+QC看起来"正常"是因为： 测序公司的QC只检测了总浓度和产物大小，不能检测pool内各样品之间的比例。
+
+研究方案（三阶段）
+Phase 1 — 现有数据挖掘（无需re-run，可立即执行）
+
+目标：评估1.3M genuine reads能否支撑部分分析。
+
+用fastp对OVO reads做QC（质量分布、adapter比例、UMI结构）
+提取guide barcode（UMI后的20 bp）并统计guide覆盖度
+评估library diversity：是否出现PCR扩增bias？是否所有guide都被覆盖？
+若guide library较小（<1000条guides），1.3M reads可能仍有分析价值
+Phase 2 — 根因确认（与客户确认）
+
+需要向Leif提问：
+
+原始建库浓度是多少？用什么方法定量（Qubit? qPCR?）
+Pool中各样品是如何计算摩尔比的？
+建库使用的guide library规模（总guides数）？
+是否做过bioanalyzer确认insert size distribution？
+Phase 3 — 重测序方案
+
+在re-run之前必须：
+
+对OVO库做qPCR重新定量（Qubit不够精准用于pooling，qPCR更可靠）
+用bioanalyzer确认主要片段在预期大小（~250-400 bp），排除adapter dimer主导
+计算正确的摩尔比后重新pooling：OVO需占pool摩尔数的约1.82%（= 75M/4110M总reads × 100）
+Re-run时建议先做小规模测序验证pooling比例正确（如在validation run上先测少量reads）
+给客户的下一步沟通建议
+沟通重点：测序本身没有任何技术问题，lane其他所有样品均正常产出数据。问题出在OVO建库后的pooling步骤。重测序前必须重新定量，否则会得到同样的结果。
+
+需要Leif提供：
+
+建库方法（PCR cycles数，起始template量）
+定量结果和pooling计算表
+Guide library大小
+是否现在开始执行Phase 1的QC分析和guide barcode提取？
