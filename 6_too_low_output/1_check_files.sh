@@ -65,5 +65,8 @@ zcat /home/gao/Dropbox/Quote_06062601_output/OVO/OVO_CKDL260011462-1A_23JCTGLT3_
 
 
 
-zcat /home/gao/Dropbox/Quote_06062601_output/Undetermined/Undetermined_Undetermined_23JCTGLT3_L7_1.fq.gz | head -n 40 | sed -n '2~4p'
+zcat /home/gao/Dropbox/Quote_06062601_output/Undetermined/Undetermined_Undetermined_23JCTGLT3_L7_1.fq.gz | head -n 4
+zcat /home/gao/Dropbox/Quote_06062601_output/Undetermined/Undetermined_Undetermined_23JCTGLT3_L7_1.fq.gz | head -n 120 | sed -n '2~4p'
+
+
 zcat /home/gao/Dropbox/Quote_06062601_output/Undetermined/Undetermined_Undetermined_23JCTGLT3_L7_2.fq.gz | head -n 40 | sed -n '2~4p'

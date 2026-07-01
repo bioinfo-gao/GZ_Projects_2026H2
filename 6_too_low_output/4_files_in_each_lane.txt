@@ -1,0 +1,53 @@
+1_check_files.sh
+这些样品名和reads 数目 是从哪里得到的？ ： 3. Lane内各样品read数量的极端不均衡 — 这条lane所有样品读数估算：
+
+样品	:---:	:---:
+Undetermined	~2,270M	含他人未注册样品
+C14_41	~565M	正常
+C14_45	~274M	正常
+C13_16	~145M	正常
+A, B, C	~63–87M each	正常
+J_896–J_912	~58–87M each	正常
+OVO	~1.7M	极度偏低
+来源是 checkSize.xls 文件，我来展示原始内容：
+
+样品名：从 checkSize.xls 中的文件路径提取（如 ./01.RawData/C14_41/C14_41_...fq.gz）
+读数估算：用 OVO 作为校准基准（已知文件大小 + 已知read数），推算其他样品
+原始数据如下：
+
+Bash Show raw checkSize.xls R1 entries
+IN
+grep "\.fq\.gz" /home/gao/Dropbox/Quote_06062601_output/checkSize.xls | grep "_1\.fq\.gz" | awk '{print $1, $2}' | sort -k2 -t'/' -k1 -nr
+
+OUT
+86312321585 ./01.RawData/Undetermined/Undetermined_Undetermined_23JCTGLT3_L7_1.fq.gz
+21483643768 ./01.RawData/C14_41/C14_41_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz
+10406035968 ./01.RawData/C14_45/C14_45_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz
+5497542367 ./01.RawData/C13_16/C13_16_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz
+3318237601 ./01.RawData/A/A_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz
+3256428406 ./01.RawData/J_899/J_899_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz
+2973939190 ./01.RawData/J_897/J_897_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz
+2836273274 ./01.RawData/C/C_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz
+2835640226 ./01.RawData/B/B_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz
+2751902757 ./01.RawData/J_904/J_904_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz
+2605686219 ./01.RawData/J_912/J_912_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz
+2574390542 ./01.RawData/J_909/J_909_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz
+2508583066 ./01.RawData/J_902/J_902_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz
+2397295892 ./01.RawData/J_905/J_905_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz
+2363815618 ./01.RawData/J_910/J_910_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz
+2235309419 ./01.RawData/J_896/J_896_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz
+63334911 ./01.RawData/OVO/OVO_CKDL260011462-1A_23JCTGLT3_L7_1.fq.gz
+来源完全透明：
+
+样品名 — 直接来自 checkSize.xls 的文件路径，如 ./01.RawData/C14_41/C14_41_... 中提取 C14_41
+
+文件大小（字节数） — checkSize.xls 第一列，测序公司提供的原始文件大小清单
+
+reads数估算方法 — 以 OVO 作为校准基准：
+
+OVO R1 实测：63,334,911 bytes = 1,665,879 reads（用 wc -l ÷ 4 直接计数）
+换算系数：63,334,911 ÷ 1,665,879 = 38.02 bytes/read
+其他样品：各自的字节数 ÷ 38.02 = 估算reads数
+这个估算有一个前提假设：同一条lane上同一台机器测出的150 bp reads，gzip压缩率相近。对于同类型library这个假设是合理的，但sgRNA library（含大量重复scaffold序列）压缩率会比普通mRNA library更高，因此其他样品的实际reads数可能比估算值略多。估算值是合理的数量级参考，不是精确统计。
+
+报告中的表格若需更严谨，可在方法章节加一句说明这是基于文件大小的估算值。需要我更新报告措辞吗？
