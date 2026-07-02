@@ -181,6 +181,7 @@ Thumbs.db
 *LICENSE*
 *license*
 *.geojson
+*_db*
 
 # ==========================================
 # 9. js and css
