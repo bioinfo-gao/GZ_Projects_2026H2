@@ -11,3 +11,6 @@ claude --continue
 claude --resume
 
 # 点击选择会话即可继续会话。
+
+and there is a resume from summary option to save token
+# claude cli and cluade Extension do NOT share summary , please see the attached 1A_resume_from_summary.png
