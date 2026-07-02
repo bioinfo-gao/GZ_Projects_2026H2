@@ -1,0 +1,11 @@
+#mpa_vJan21_TOY_CHOCOPhlAnSGB_202103
+clade_name	2611_metaphlan4.metaphlan	2613_metaphlan4.metaphlan	2612_metaphlan4.metaphlan
+UNCLASSIFIED	100.0	0.0	0.0
+k__Bacteria	0.0	100.0	100.0
+k__Bacteria|p__Firmicutes	0.0	100.0	100.0
+k__Bacteria|p__Firmicutes|c__Clostridia	0.0	100.0	100.0
+k__Bacteria|p__Firmicutes|c__Clostridia|o__Clostridiales	0.0	100.0	100.0
+k__Bacteria|p__Firmicutes|c__Clostridia|o__Clostridiales|f__Lachnospiraceae	0.0	100.0	100.0
+k__Bacteria|p__Firmicutes|c__Clostridia|o__Clostridiales|f__Lachnospiraceae|g__Lachnospiraceae_unclassified	0.0	100.0	100.0
+k__Bacteria|p__Firmicutes|c__Clostridia|o__Clostridiales|f__Lachnospiraceae|g__Lachnospiraceae_unclassified|s__Eubacterium_rectale	0.0	100.0	100.0
+k__Bacteria|p__Firmicutes|c__Clostridia|o__Clostridiales|f__Lachnospiraceae|g__Lachnospiraceae_unclassified|s__Eubacterium_rectale|t__SGB4933_group	0.0	100.0	100.0

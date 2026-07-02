@@ -1,0 +1,6 @@
+#mpa_v30_CHOCOPhlAn_201901
+#/usr/local/bin/metaphlan --nproc 6 --input_type fastq 2612.merged.fastq.gz --mpa3 --bowtie2out 2612_metaphlan3.metaphlan.bowtie2out.txt -s 2612_metaphlan3.metaphlan.sam --bowtie2db metaphlan_database/metaphlan_database --index mpa_v30_CHOCOPhlAn_201901 --biom 2612_metaphlan3.metaphlan.biom --output_file 2612_metaphlan3.metaphlan_profile.txt
+#877939 reads processed
+#SampleID	Metaphlan_Analysis
+#clade_name	NCBI_tax_id	relative_abundance	additional_species
+UNCLASSIFIED	-1	100.0	

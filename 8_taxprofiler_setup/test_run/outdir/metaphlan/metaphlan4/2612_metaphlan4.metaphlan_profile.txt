@@ -1,0 +1,13 @@
+#mpa_vJan21_TOY_CHOCOPhlAnSGB_202103
+#/usr/local/bin/metaphlan --nproc 6 --input_type fastq 2612.merged.fastq.gz --bowtie2out 2612_metaphlan4.metaphlan.bowtie2out.txt -s 2612_metaphlan4.metaphlan.sam --bowtie2db metaphlan4_database --index mpa_vJan21_TOY_CHOCOPhlAnSGB_202103 --biom 2612_metaphlan4.metaphlan.biom --output_file 2612_metaphlan4.metaphlan_profile.txt
+#877939 reads processed
+#SampleID	Metaphlan_Analysis
+#clade_name	NCBI_tax_id	relative_abundance	additional_species
+k__Bacteria	2	100.0	
+k__Bacteria|p__Firmicutes	2|1239	100.0	
+k__Bacteria|p__Firmicutes|c__Clostridia	2|1239|186801	100.0	
+k__Bacteria|p__Firmicutes|c__Clostridia|o__Clostridiales	2|1239|186801|186802	100.0	
+k__Bacteria|p__Firmicutes|c__Clostridia|o__Clostridiales|f__Lachnospiraceae	2|1239|186801|186802|186803	100.0	
+k__Bacteria|p__Firmicutes|c__Clostridia|o__Clostridiales|f__Lachnospiraceae|g__Lachnospiraceae_unclassified	2|1239|186801|186802|186803|	100.0	
+k__Bacteria|p__Firmicutes|c__Clostridia|o__Clostridiales|f__Lachnospiraceae|g__Lachnospiraceae_unclassified|s__Eubacterium_rectale	2|1239|186801|186802|186803||39491	100.0	
+k__Bacteria|p__Firmicutes|c__Clostridia|o__Clostridiales|f__Lachnospiraceae|g__Lachnospiraceae_unclassified|s__Eubacterium_rectale|t__SGB4933_group	2|1239|186801|186802|186803||39491|	100.0	

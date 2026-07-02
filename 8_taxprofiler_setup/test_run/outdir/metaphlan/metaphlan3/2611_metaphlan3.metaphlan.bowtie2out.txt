@@ -1,0 +1,2 @@
+#nreads	787877
+#avg_read_length	151.0

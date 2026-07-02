@@ -1,0 +1,3 @@
+#mpa_v30_CHOCOPhlAn_201901
+clade_name	2611_metaphlan3.metaphlan	2613_metaphlan3.metaphlan	2612_metaphlan3.metaphlan
+UNCLASSIFIED	100.0	100.0	100.0

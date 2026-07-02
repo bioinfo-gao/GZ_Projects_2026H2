@@ -11,49 +11,48 @@
 # 1. 资源规划（双样本并行方案）
 # 物理核心分配：每个样本 16 核，共占用 32 个物理核心。剩下的 32 个逻辑线程留给系统 I/O 和后台进程。
 # 内存分配：每个样本分配 50GB。
-# 。
+
 # 你的物理内存 125GB，还剩 25GB 绝对安全空间，外加 64GB 的 SSD Swap。内存爆炸的概率几乎为零。
 
 # 2. 编写 custom.config (配置文件)
 # 在你的工作目录下创建 custom.config 文件，把这段代码粘进去。这能强制 Nextflow 遵守你的“稳健”规则：
 
-# process {
-#     // 设置所有步骤的默认资源
-#     cpus   = 16
-#     memory = 50.GB
+process {
+    // 设置所有步骤的默认资源
+    cpus   = 16
+    memory = 50.GB
 
-#     // 针对特别吃内存的比对步骤
-#     withName: 'BWAMEM2_MEM' {
-#         cpus = 16
-#         memory = 60.GB
-#     }
-# }
+    // 针对特别吃内存的比对步骤
+    withName: 'BWAMEM2_MEM' {
+        cpus = 16
+        memory = 60.GB
+    }
+}
 
-# executor {
-#     name = 'local'
-#     // 核心：强制同时只跑 2 个样本
-#     queueSize = 2 
-# }
+executor {
+    name = 'local'
+    // 核心：强制同时只跑 2 个样本
+    queueSize = 2 
+}
 
 # 3. 最终运行命令
 # 在终端进入你的 SSD 挂载目录，使用以下命令启动：
-# code
-# Bash
-# nextflow run nf-core/sarek \
-#     -profile singularity \
-#     --input ./samplesheet.csv \
-#     --outdir ./results \
-#     -w ./work \
-#     --genome GATK.GRCh38 \
-#     --aligner bwa-mem2 \
-#     --skip_tools baserecalibrator \
-#     -c custom.config \
-#     --max_memory 120.GB \
-#     --max_cpus 64
+
+nextflow run nf-core/sarek \
+    -profile singularity \
+    --input ./samplesheet.csv \
+    --outdir ./results \
+    -w ./work \
+    --genome GATK.GRCh38 \
+    --aligner bwa-mem2 \
+    --skip_tools baserecalibrator \
+    -c custom.config \
+    --max_memory 120.GB \
+    --max_cpus 64
 
 # 参数说明：
-# --aligner bwa-mem2: 比 BWA 快，虽然吃内存，但你给 50-60G 足够了。
-# --skip_tools baserecalibrator: 这是保证时间的关键。去掉这个几乎不影响结果质量的步骤，能节省 20% 时间。
+--aligner bwa-mem2: 比 BWA 快，虽然吃内存，但你给 50-60G 足够了。
+--skip_tools baserecalibrator: 这是保证时间的关键。去掉这个几乎不影响结果质量的步骤，能节省 20% 时间。# <<<<=====================
 
 # 4. 时间线预估 (Timeline)
 # 单批次（2个样）：约 9 - 11 小时。
@@ -84,3 +83,15 @@ iostat -x 2：看硬盘 %util，只要不是一直 100% 就不卡。
 
 # 总结：
 # 这个方案牺牲了一点点时间（从 48h 延至 60h），但换取了极高的成功率。在你的硬件配置下，这是最符合“资源宽松、不紧张”要求的专业级规划。跑起来吧！
+
+
+4. 加速方案：如果时间不够怎么办？
+如果运行到一半发现速度太慢，可以通过以下三个“加速开关”来保底：
+使用 bwa-mem2： 必须用这个，比 bwa 快极多。
+跳过 BQSR (碱基质量校正)：
+在现代测序仪（如 NovaSeq 6000/X Plus）的数据上，BQSR 对结果的提升已经非常微小了。
+设置 --skip_tools baserecalibrator。
+效果： 每个样本节省 2 小时，12 个样本总共节省 24 小时机时。
+使用 DeepVariant 代替 GATK HaplotypeCaller：
+如果有 GPU 加速，DeepVariant 可以在 1 小时内跑完一个样。
+如果没有 GPU，GATK 开启并行区间（Intervals）是唯一的出路。

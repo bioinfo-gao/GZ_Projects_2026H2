@@ -1,0 +1,48 @@
+ [      0.0]   The file 2613_ERR5766181.merged.fastq.gz.enve-tmp.42 was created
+ [      0.0]  Reading 2613_ERR5766181.merged.fastq.gz.enve-tmp.42
+ [      0.0]   Picking 10000 random sequences
+ [      0.0]   Counting kmers
+ [      0.0]  Read file with 434620 sequences
+ [      0.0]  Average read length is 103.151314bp
+ [      0.0]  Sub-sampling library
+ [      0.0]     Sampling at 0.000000%
+ [      0.0]     Sampling at 0.000379%
+ [      0.0]     Sampling at 0.000541%
+ [      0.0]     Sampling at 0.000773%
+ [      0.0]     Sampling at 0.001104%
+ [      0.0]     Sampling at 0.001578%
+ [      0.0]     Sampling at 0.002254%
+ [      0.0]     Sampling at 0.003220%
+ [      0.0]     Sampling at 0.004600%
+ [      0.0]     Sampling at 0.006571%
+ [      0.1]     Sampling at 0.009387%
+ [      0.1]     Sampling at 0.013411%
+ [      0.1]     Sampling at 0.019158%
+ [      0.1]     Sampling at 0.027369%
+ [      0.1]     Sampling at 0.039098%
+ [      0.1]     Sampling at 0.055855%
+ [      0.1]     Sampling at 0.079792%
+ [      0.1]     Sampling at 0.113989%
+ [      0.1]     Sampling at 0.162841%
+ [      0.1]     Sampling at 0.232631%
+ [      0.1]     Sampling at 0.332329%
+ [      0.1]     Sampling at 0.474756%
+ [      0.1]     Sampling at 0.678223%
+ [      0.1]     Sampling at 0.968890%
+ [      0.1]     Sampling at 1.384129%
+ [      0.1]     Sampling at 1.977327%
+ [      0.1]     Sampling at 2.824752%
+ [      0.1]     Sampling at 4.035361%
+ [      0.1]     Sampling at 5.764801%
+ [      0.1]     Sampling at 8.235430%
+ [      0.1]     Sampling at 11.764900%
+ [      0.1]     Sampling at 16.807000%
+ [      0.1]     Sampling at 24.010000%
+ [      0.1]     Sampling at 34.300000%
+ [      0.1]     Sampling at 49.000000%
+ [      0.1]     Sampling at 70.000000%
+ [      0.1]     Sampling at 100.000000%
+ [      0.2]  Evaluating consistency
+ [      0.2]  The coverage of this dataset is very high, and the precise value might be slighly off
+ [      0.2]  Not to be worried, this simply means that your dataset is too good to need heuristic estimates!
+ [      0.2]  Everything seems correct
