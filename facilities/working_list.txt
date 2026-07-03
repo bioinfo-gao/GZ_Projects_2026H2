@@ -371,8 +371,8 @@ Delivered a comprehensive research report for strain and detailing the structure
 2. rRNA, Dimer, and Unimapping Analysis of Human/Mouse Samples (3.5 Hours)
 Provided an enhanced customized version of the statistical analysis.
 Conducted extensive reading and communication regarding experimental design, workflow, and troubleshooting of failed runs (identifying potential contamination and high rRNA/dimer ratios).
-Disscuss the analysis strategy for ultra-low input human samples, incorporating UMI (Unique Molecular Identifiers) integration to improve quantification accuracy.
-Custom meetings to discuss for all kinds of techinical characteristics and the reason of failure and impovement plan.
+Discuss the analysis strategy for ultra-low input human samples, incorporating UMI (Unique Molecular Identifiers) integration to improve quantification accuracy.
+Custom meetings to discuss all kinds of technical characteristics and the reason for failure and improvement plan.
 
 3. Pathway Enrichment Analysis Setup: Standard & Customized (3.5 Hours)
 Completed installation and configuration of essential genomic databases.
@@ -393,14 +393,14 @@ Explored data recovery by analyzing Undetermined reads from the flow cell.
 Concluded that the issue was specific to the sgRNA library preparation, as all other samples in the same multiplexed run yielded normal read volumes.
 
 6. Project Communication & Internal Coordination/Meeting  (2.5 Hours)
-Coordinated internally to align with client failure report and expectations.
+Coordinated internally to align with client failure reports and expectations.
 Presented an internal report on rRNA project failures, outlining root causes and mitigation plans.
 Negotiated service fees for customized pathway analysis and dedicated technical tutorials.
 Participated in a technical meeting with Zuo Song and Jin Shi to accelerate the WGS pipeline.
 
 7. Pipeline Optimization & Server Maintenance (1.5 Hour)
 Optimized the bioinformatics pipeline by removing redundant QC steps to improve throughput.
-Design the best parrael for the pipeline.
+Design the best parallel for the pipeline.
 Increased swap space on the server to handle memory-intensive genomic tasks.
 
 Total Hours Worked: 20 Hours
