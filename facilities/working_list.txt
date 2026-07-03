@@ -380,8 +380,11 @@ Performed top-level GO, KEGG, and GSEA (Gene Set Enrichment Analysis).
 Established a customized pathway analysis framework (currently a semi-automated version for bespoke requirements).
 
 4. Jinglong RNA-seq Project & Meeting (4 Hours)
-Completed standard RNA-seq processing and three tiers of customized pathway enrichment analysis (including two iterative updates).
-Conducted a technical tutorial for the client on result interpretation, focusing on gene/pathway search strategies and the biological significance of various plots.
+Completed standard RNA-seq processing and Top layer of GO KEGG GSEA analysis
+Three tiers of customized pathway enrichment analysis
+(including two iterative updates).
+Meeting Conducted a technical tutorial for the client on result interpretation, focusing on gene/pathway search strategies and the biological significance of various plots.
+
 
 5. Debugging of Low-Yield sgRNA-seq Project (4 Hours)
 Reviewed all project communications, experimental goals, and sequencing parameters.
