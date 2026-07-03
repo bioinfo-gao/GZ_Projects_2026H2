@@ -400,6 +400,7 @@ Participated in a technical meeting with Zuo Song and Jin Shi to accelerate the 
 
 7. Pipeline Optimization & Server Maintenance (1.5 Hour)
 Optimized the bioinformatics pipeline by removing redundant QC steps to improve throughput.
+Design the best parrael for the pipeline.
 Increased swap space on the server to handle memory-intensive genomic tasks.
 
 Total Hours Worked: 20 Hours
