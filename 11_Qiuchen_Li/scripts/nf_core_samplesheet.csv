@@ -1,0 +1,10 @@
+sample,fastq_1,fastq_2,strandedness
+Mix_1,/Work_bio/dropbox/Dropbox_Data/Qiuchen/23KCYFLT4_6_0469165295_Mix_1_S73_L006_R1_001.fastq.gz,/Work_bio/dropbox/Dropbox_Data/Qiuchen/23KCYFLT4_6_0469165295_Mix_1_S73_L006_R2_001.fastq.gz,reverse
+Mix_2,/Work_bio/dropbox/Dropbox_Data/Qiuchen/23KCYFLT4_6_0469165295_Mix_2_S74_L006_R1_001.fastq.gz,/Work_bio/dropbox/Dropbox_Data/Qiuchen/23KCYFLT4_6_0469165295_Mix_2_S74_L006_R2_001.fastq.gz,reverse
+Mix_3,/Work_bio/dropbox/Dropbox_Data/Qiuchen/23KCYFLT4_6_0469165295_Mix_3_S75_L006_R1_001.fastq.gz,/Work_bio/dropbox/Dropbox_Data/Qiuchen/23KCYFLT4_6_0469165295_Mix_3_S75_L006_R2_001.fastq.gz,reverse
+NT_1,/Work_bio/dropbox/Dropbox_Data/Qiuchen/23KCYFLT4_6_0469165295_NT_1_S76_L006_R1_001.fastq.gz,/Work_bio/dropbox/Dropbox_Data/Qiuchen/23KCYFLT4_6_0469165295_NT_1_S76_L006_R2_001.fastq.gz,reverse
+NT_2,/Work_bio/dropbox/Dropbox_Data/Qiuchen/23KCYFLT4_6_0469165295_NT_2_S77_L006_R1_001.fastq.gz,/Work_bio/dropbox/Dropbox_Data/Qiuchen/23KCYFLT4_6_0469165295_NT_2_S77_L006_R2_001.fastq.gz,reverse
+NT_3,/Work_bio/dropbox/Dropbox_Data/Qiuchen/23KCYFLT4_6_0469165295_NT_3_S78_L006_R1_001.fastq.gz,/Work_bio/dropbox/Dropbox_Data/Qiuchen/23KCYFLT4_6_0469165295_NT_3_S78_L006_R2_001.fastq.gz,reverse
+A5BKO_1,/Work_bio/dropbox/Dropbox_Data/Qiuchen/23KCYFLT4_7_0469165304_A5BKO_1_S80_L007_R1_001.fastq.gz,/Work_bio/dropbox/Dropbox_Data/Qiuchen/23KCYFLT4_7_0469165304_A5BKO_1_S80_L007_R2_001.fastq.gz,reverse
+A5BKO_2,/Work_bio/dropbox/Dropbox_Data/Qiuchen/23KCYFLT4_7_0469165304_A5BKO_2_S81_L007_R1_001.fastq.gz,/Work_bio/dropbox/Dropbox_Data/Qiuchen/23KCYFLT4_7_0469165304_A5BKO_2_S81_L007_R2_001.fastq.gz,reverse
+A5BKO_3,/Work_bio/dropbox/Dropbox_Data/Qiuchen/23KCYFLT4_7_0469165304_A5BKO_3_S82_L007_R1_001.fastq.gz,/Work_bio/dropbox/Dropbox_Data/Qiuchen/23KCYFLT4_7_0469165304_A5BKO_3_S82_L007_R2_001.fastq.gz,reverse
