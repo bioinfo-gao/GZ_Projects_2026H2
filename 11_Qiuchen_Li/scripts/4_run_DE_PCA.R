@@ -25,9 +25,12 @@ TPM_FILE   <- "../output_results/star_salmon/salmon.merged.gene_tpm.tsv"
 DATA_DIR   <- paste0("../Data_Analysis_", TODAY)
 OUT_DIR    <- file.path(DATA_DIR, "DE_PCA_Results")
 READS_DIR  <- file.path(DATA_DIR, "Reads")
+# 内部 R 对象 (脚本 5/6 之间传递用)，不放进客户交付目录
+RDS_DIR    <- "rds_cache"
 
 dir.create(OUT_DIR,   showWarnings = FALSE, recursive = TRUE)
 dir.create(READS_DIR, showWarnings = FALSE, recursive = TRUE)
+dir.create(RDS_DIR,   showWarnings = FALSE, recursive = TRUE)
 
 # ================= 2. 拷贝原始计数文件 =================
 for (f in list(list(src=COUNT_FILE, dst="All_sample_gene_counts.tsv", req=TRUE),
@@ -256,10 +259,10 @@ for (comp_name in names(res_list)) {
 }
 
 # ================= 10. 保存 DEG 汇总 + res_list (供 script 5 使用) =================
-saveRDS(res_list,    file.path(OUT_DIR, "res_list.rds"))
-saveRDS(vsd,         file.path(OUT_DIR, "vsd.rds"))
-saveRDS(meta,        file.path(OUT_DIR, "meta.rds"))
-saveRDS(counts_raw,  file.path(OUT_DIR, "counts_raw.rds"))
+saveRDS(res_list,    file.path(RDS_DIR, "res_list.rds"))
+saveRDS(vsd,         file.path(RDS_DIR, "vsd.rds"))
+saveRDS(meta,        file.path(RDS_DIR, "meta.rds"))
+saveRDS(counts_raw,  file.path(RDS_DIR, "counts_raw.rds"))
 saveRDS(list(
   n_original    = nrow(counts_mat),
   n_after_regex = sum(regex_filter),
@@ -267,7 +270,7 @@ saveRDS(list(
   n_samples     = n_samples,
   low_count_min = 10,
   low_count_min_samples = n_samples - 2
-), file.path(OUT_DIR, "filter_stats.rds"))
+), file.path(RDS_DIR, "filter_stats.rds"))
 cat("\nRDS objects saved for enrichment analysis (script 5)\n")
 
 cat("\nAll DE/PCA analyses complete. Results:", OUT_DIR, "\n")

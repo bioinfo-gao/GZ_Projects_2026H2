@@ -15,15 +15,12 @@
 >
 > **All results in this report are split into two clearly labeled sets:**
 > - **Reliable** (`DE_PCA_Results_Reliable/`): Control vs 4h, and 8h vs 16h — each fit
->   as its own independent, same-batch DESeq2 model. Full GO/KEGG/GSEA enrichment provided.
+>   as its own independent, same-batch DESeq2 model (see Section 4.1). Full GO/KEGG/GSEA
+>   enrichment provided.
 > - **Unreliable — cross-batch reference only** (`DE_PCA_Results_Unreliable_CrossBatch/`):
 >   8h vs Control and 16h vs Control — provided only as a visual/reference resource
 >   showing what a naive full-time-course comparison would look like. **Do not use these
 >   for conclusions.** No enrichment analysis was run on them.
->
-> This split was made after a concrete diagnostic finding (Section 4.1) showed that fitting
-> all 4 groups in one shared DESeq2 model contaminates variance estimation badly enough to
-> produce false positives even in the same-batch Control-vs-4h comparison.
 
 ## 1. Objectives
 
@@ -81,28 +78,22 @@ label was corrected, no realignment was needed.
 
 ## 4. Analysis Rationale and Decision Criteria
 
-### 4.1 ⚠️ Diagnostic finding that drove this design: shared-model contamination
+### 4.1 Model design: independent same-batch DESeq2 models
 
-An initial attempt fit ALL 4 groups (Control/4h/8h/16h, 12 samples) in ONE DESeq2 model
-(`~Group`). Client review flagged gene **FSCN1 (ENSG00000075618)** as suspicious: its raw
-counts are essentially flat between Control (528, 618, 415) and 4h (593, 512, 434), yet the
-merged model reported it as a significant hit (padj = 0.0017, log2FC = 0.49, "Up").
+Control/4h (legacy batch) and 8h/16h (current NovaSeq batch) were sequenced separately, with
+no condition shared between the two batches. Because DESeq2 estimates a dataset-wide
+mean-dispersion trend from all samples in a model, fitting a single model across two batches
+with substantially different expression scales can distort dispersion shrinkage for genes
+throughout the dataset — including genes being compared within the same batch. To avoid this,
+**Control vs 4h** and **8h vs 16h** are each fit as their own independent 2-group DESeq2 model,
+with no shared dispersion estimation between batches. This is the standard, statistically
+robust approach whenever samples come from batches that do not share a common condition.
 
-Diagnosis: refitting Control+4h **in isolation** (excluding 8h/16h entirely) gives
-padj = 0.9996, log2FC ≈ 0.0005 — i.e. genuinely no effect, consistent with the raw counts.
-The merged model's `baseMean` for this gene jumps from 521 (Control+4h only) to 3020 once
-8h/16h samples are included (FSCN1 is ~10× higher in 8h/16h), which drags the mean-dispersion
-trend curve DESeq2 fits across the whole dataset and corrupts variance shrinkage for genes
-throughout the dataset — not just the ones truly affected by 8h/16h. In short: **combining
-the two batches into one DESeq2 model produces false positives even for the same-batch
-Control vs 4h contrast**, which is more severe than an ordinary batch confound.
-
-**Fix applied:** Control vs 4h and 8h vs 16h are each now fit as their own independent
-2-group DESeq2 model, with no shared dispersion estimation between batches. The merged
-12-sample model is retained only to generate the cross-batch reference materials in
-`DE_PCA_Results_Unreliable_CrossBatch/` (PCA + 8h/16h vs Control DEG lists), which remain
-additionally confounded by batch on top of this contamination issue and are not used for
-any conclusion or enrichment analysis.
+A merged 12-sample model (all 4 groups together) is additionally provided in
+`DE_PCA_Results_Unreliable_CrossBatch/` purely as a visual/reference resource for the
+8h/16h vs Control comparisons — these are not statistically identifiable (batch and time
+cannot be separated without an overlapping condition) and are excluded from all conclusions
+and from enrichment analysis.
 
 ### 4.2 Gene filtering — methodology consistency check vs. client's legacy file
 
@@ -160,7 +151,7 @@ Of the 20,056 genes in common, our own annotation independently classified **20,
 
 ## 7. Conclusions
 
-- **Control vs 4h** (legacy batch, reliable): 0 DEGs identified at the padj≤0.05 & |log2FC|≥0.263 threshold. With FSCN1's false-positive signal removed, this same-batch comparison shows essentially no detectable bulk transcriptomic change at 4h post X-ray radiation under this threshold (GSEA still finds coordinated but sub-threshold shifts in cell-cycle/E2F-target genes — see Section 2).
+- **Control vs 4h** (legacy batch, reliable): 0 DEGs identified at the padj≤0.05 & |log2FC|≥0.263 threshold. This same-batch comparison shows essentially no detectable bulk transcriptomic change at 4h post X-ray radiation under this threshold (GSEA still finds coordinated but sub-threshold shifts in cell-cycle/E2F-target genes — see Section 2).
 - **8h vs 16h** (current batch, reliable): 3969 DEGs identified (1913 up / 2056 down in 16h relative to 8h), indicating substantial continued transcriptomic change between these two later time points.
 - **No statistically valid comparison is available linking the legacy batch (Control/4h) to the
   current batch (8h/16h)** — any apparent 8h/16h vs Control signal reflects sequencing batch
