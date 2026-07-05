@@ -1,0 +1,2 @@
+ID,Description,GeneRatio,BgRatio,RichFactor,FoldEnrichment,zScore,pvalue,p.adjust,qvalue,geneID,Count
+GO:0019730,antimicrobial humoral response,5/78,40/9236,0.125,14.801282051282051,8.072636132824513,1.970800405426975e-5,0.03841089990177174,0.036615397006090636,FAU/SLC11A1/FAM3A/EVPL/PPP2R3C,5

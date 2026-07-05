@@ -7,7 +7,7 @@
 #   2. KEGG pathway analysis
 #   3. GSEA (GO BP + KEGG + MSigDB Hallmark)
 #
-# 前置条件: 先运行 4_run_DE_PCA.R 生成 res_list.rds / meta.rds / counts_raw.rds
+# 前置条件: 先运行 4_run_DE_PCA.R 生成 res_list.rds / meta.rds
 # 无需 StemCell 分析（客户确认：普通细胞类型对比研究）
 
 library(clusterProfiler)
@@ -35,7 +35,6 @@ dir.create(ENR_DIR, showWarnings = FALSE, recursive = TRUE)
 # ================= 2. 加载 DE 结果 =================
 res_list   <- readRDS(file.path(DE_DIR, "res_list.rds"))
 meta       <- readRDS(file.path(DE_DIR, "meta.rds"))
-counts_raw <- readRDS(file.path(DE_DIR, "counts_raw.rds"))
 
 sig_col <- "sig (padj<=0.05 & |log2FC|>=0.263)"
 cat("DE results loaded. Comparisons:", paste(names(res_list), collapse = ", "), "\n")
