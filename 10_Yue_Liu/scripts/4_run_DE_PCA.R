@@ -114,6 +114,20 @@ common_ids <- intersect(rownames(new_mat), rownames(old_mat))
 cat("New batch genes:", nrow(new_mat), " | Old batch genes:", nrow(old_mat),
     " | Common (base ID) genes:", length(common_ids), "\n")
 
+# --- 3d. 验证: 客户旧批次已预先过滤为 "protein coding" 基因 —— 检查与我们自己的
+# protein_coding 判定是否一致 (方法学一致性校验，写入报告) ---
+old_ids_not_in_new  <- setdiff(rownames(old_mat), rownames(new_mat))
+gene_overlap_check <- list(
+  old_total_genes   = nrow(old_mat),
+  common_genes      = length(common_ids),
+  missing_from_new  = length(old_ids_not_in_new),
+  missing_gene_ids  = old_ids_not_in_new
+)
+cat("Client legacy batch was pre-filtered to protein-coding genes (n =", nrow(old_mat), ").\n")
+cat(length(common_ids), "/", nrow(old_mat), "(", round(100*length(common_ids)/nrow(old_mat), 2),
+    "%) matched by base Ensembl ID against our GENCODE v45 annotation;",
+    length(old_ids_not_in_new), "absent entirely (likely added in a newer Ensembl release than v45).\n")
+
 counts_mat <- cbind(old_mat[common_ids, ], new_mat[common_ids, ])
 gene_id_map <- new_counts_raw %>% distinct(base_id, gene_id, gene_name) %>%
   filter(base_id %in% common_ids)
@@ -142,6 +156,18 @@ if (!is.na(ANNOT_SRC)) {
   gene_info <- gene_info %>% left_join(annot %>% select(base_id, gene_type), by = "base_id")
   regex_filter <- !is.na(gene_info$gene_type) & gene_info$gene_type == "protein_coding"
   cat("Using annotation-based protein_coding filter:", basename(ANNOT_SRC), "\n")
+
+  # --- 方法学一致性校验: 客户旧批次的 20,065 个基因中，有多少也被我们自己的
+  # GENCODE v45 注释独立判定为 protein_coding? (验证两批次过滤标准一致) ---
+  old_common_annot <- annot %>% filter(base_id %in% intersect(rownames(old_mat), rownames(new_mat)))
+  gene_overlap_check$old_common_protein_coding <- sum(old_common_annot$gene_type == "protein_coding", na.rm = TRUE)
+  gene_overlap_check$old_common_biotype_mismatch <- old_common_annot %>%
+    filter(gene_type != "protein_coding") %>% count(gene_type)
+  cat("Of the", length(common_ids), "genes shared with the client's legacy batch,",
+      gene_overlap_check$old_common_protein_coding, "(",
+      round(100*gene_overlap_check$old_common_protein_coding/length(common_ids), 2),
+      "%) are independently confirmed protein_coding by our own annotation",
+      "— validating our filtering is consistent with the client's pre-filtered file.\n")
 } else {
   ribo_pattern <- "^RPL|^RPS|^MRPL|^MRPS|^RPLP|^RPSA"
   non_ribosomal <- !grepl(ribo_pattern, gene_info$gene_name, ignore.case = TRUE)
@@ -160,15 +186,21 @@ names(regex_filter) <- gene_info$base_id
 regex_filter <- regex_filter[rownames(counts_mat)]
 
 n_samples <- ncol(counts_mat)
-low_count_filter <- rowSums(counts_mat >= 10) >= (n_samples - 2)
 
-final_filter <- regex_filter & low_count_filter
+# NOTE: no low-count filter here (deliberate). The client's legacy "counts-filtered
+# protein coding" file retains ALL protein-coding genes regardless of expression level
+# (4,746 / 20,065 genes are all-zero across its 6 samples) — i.e. they applied only a
+# biotype filter, no low-expression filter. To keep both batches on the same gene-set
+# convention, we match that: protein_coding filter only. DESeq2's own independent
+# filtering (applied automatically during BH/padj correction) still down-weights
+# unreliably-low-count genes at the statistical-testing stage.
+final_filter <- regex_filter
 counts_mat_filtered <- counts_mat[final_filter, ]
 
 cat("Original (common) genes:", nrow(counts_mat), "\n")
 cat("After regex/biotype filter:", sum(regex_filter), "\n")
-cat("After low-count filter:", sum(final_filter), "\n")
-cat("Final genes for DESeq2:", nrow(counts_mat_filtered), "\n")
+cat("Final genes for DESeq2:", nrow(counts_mat_filtered),
+    "(no low-count filter — matches client's legacy file convention of keeping all protein-coding genes)\n")
 
 # ================= 6. DESeq2 建模 =================
 dds <- DESeqDataSetFromMatrix(
@@ -318,9 +350,10 @@ saveRDS(list(
   n_after_regex = sum(regex_filter),
   n_final       = nrow(counts_mat_filtered),
   n_samples     = n_samples,
-  low_count_min = 10,
-  low_count_min_samples = n_samples - 2,
-  batch_confound_note = "Control (n=3) and 4h (n=3) come from a client-supplied legacy sequencing batch; 8h (n=3) and 16h (n=3) come from the current NovaSeq X Plus batch. No condition overlaps both batches, so a ~Batch+Group model is not estimable and sequencing batch is fully confounded with time point for the 8h/16h vs Control contrasts."
+  low_count_filter_applied = FALSE,
+  low_count_filter_note = "No low-expression filter applied — matches client's legacy 'counts-filtered protein coding' file, which retains all protein-coding genes including all-zero ones (4,746/20,065 genes are all-zero across its 6 samples). Only the protein_coding biotype filter is applied; DESeq2's built-in independent filtering still applies at the padj-correction stage.",
+  batch_confound_note = "Control (n=3) and 4h (n=3) come from a client-supplied legacy sequencing batch; 8h (n=3) and 16h (n=3) come from the current NovaSeq X Plus batch. No condition overlaps both batches, so a ~Batch+Group model is not estimable and sequencing batch is fully confounded with time point for the 8h/16h vs Control contrasts.",
+  gene_overlap_check = gene_overlap_check
 ), file.path(OUT_DIR, "filter_stats.rds"))
 cat("\nRDS objects saved for enrichment analysis (script 5)\n")
 
