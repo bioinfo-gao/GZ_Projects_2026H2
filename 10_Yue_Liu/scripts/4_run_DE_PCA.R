@@ -2,8 +2,30 @@
 # 运行环境: /Work_bio/gao/configs/.conda/envs/DE_R45/bin/Rscript
 # 运行方法: cd /home/gao/projects_2026H2/10_Yue_Liu/scripts && Rscript 4_run_DE_PCA.R
 #
-# 分析设计: 16 vs A (A = 对照组)
-# log2FC > 0 = 在 16 组上调; log2FC < 0 = 在对照组 (A) 上调
+# ================================================================
+# REDO 2026-07-04: Integrated time-course analysis
+# ================================================================
+# Client correction: "A" group in Sample_Sheet_Yue_Liu.xlsx was mislabeled.
+# It is actually MOLM13 cells 8h post X-ray radiation (renamed "8h").
+# "16" group = 16h post radiation (renamed "16h"). Both from the current
+# NovaSeq X Plus batch, quantified with Salmon (this project's nf-core run).
+#
+# Client also provided OLD_Count/counts-filtered protein coding original file.xlsx:
+# a pre-quantified count matrix from a SEPARATE, EARLIER sequencing batch,
+# containing Control-1/2/3 (untreated baseline) and X-Ray-1/2/3 (4h post
+# X-ray radiation). Quantification method for this legacy file is not
+# independently verified (client-supplied; not this pipeline's Salmon output).
+#
+# IMPORTANT CAVEAT (confirmed with user, see analysis_plan): the legacy batch
+# (Control, 4h) and the current batch (8h, 16h) share NO overlapping condition,
+# so sequencing batch and time point are fully confounded — a ~batch+Group
+# DESeq2 design is not estimable (Control only exists in the old batch). Per
+# user's explicit decision, Control is used as the common reference for all
+# three contrasts (4h/8h/16h vs Control) to produce a unified time-course view,
+# but the 8h vs Control and 16h vs Control results cannot statistically
+# distinguish true radiation effect from batch effect. This is disclosed
+# prominently in the client report (Section 4 + Limitations).
+# ================================================================
 
 library(DESeq2)
 library(ashr)
@@ -18,28 +40,23 @@ library(ggrepel)
 # ================= 1. 路径设置 =================
 setwd("/home/gao/projects_2026H2/10_Yue_Liu/scripts/")
 
-TODAY      <- format(Sys.Date(), "%Y%m%d")
-META_FILE  <- "../Sample_Sheet_Yue_Liu.xlsx"
-COUNT_FILE <- "../output_results/star_salmon/salmon.merged.gene_counts.tsv"
-TPM_FILE   <- "../output_results/star_salmon/salmon.merged.gene_tpm.tsv"
-DATA_DIR   <- paste0("../Data_Analysis_", TODAY)
-OUT_DIR    <- file.path(DATA_DIR, "DE_PCA_Results")
-READS_DIR  <- file.path(DATA_DIR, "Reads")
+TODAY          <- format(Sys.Date(), "%Y%m%d")
+META_FILE      <- "../Sample_Sheet_Yue_Liu.xlsx"
+NEW_COUNT_FILE <- "../output_results/star_salmon/salmon.merged.gene_counts.tsv"
+NEW_TPM_FILE   <- "../output_results/star_salmon/salmon.merged.gene_tpm.tsv"
+OLD_COUNT_FILE <- "../OLD_Count/counts-filtered protein coding original file.xlsx"
+DATA_DIR       <- paste0("../Data_Analysis_", TODAY)
+OUT_DIR        <- file.path(DATA_DIR, "DE_PCA_Results")
+READS_DIR      <- file.path(DATA_DIR, "Reads")
 
 dir.create(OUT_DIR,   showWarnings = FALSE, recursive = TRUE)
 dir.create(READS_DIR, showWarnings = FALSE, recursive = TRUE)
 
 # ================= 2. 拷贝原始计数文件 =================
-for (f in list(list(src=COUNT_FILE, dst="All_sample_gene_counts.tsv", req=TRUE),
-               list(src=TPM_FILE,   dst="All_sample_gene_tpm.tsv",    req=FALSE))) {
-  if (file.exists(f$src)) {
-    file.copy(f$src, file.path(READS_DIR, f$dst), overwrite=TRUE)
-    cat("Copied:", f$dst, "\n")
-  } else {
-    if (f$req) stop("Required file missing: ", f$src)
-    cat("Optional file missing, skipped:", f$src, "\n")
-  }
-}
+file.copy(NEW_COUNT_FILE, file.path(READS_DIR, "New_batch_8h_16h_gene_counts.tsv"), overwrite = TRUE)
+file.copy(NEW_TPM_FILE,   file.path(READS_DIR, "New_batch_8h_16h_gene_tpm.tsv"),    overwrite = TRUE)
+file.copy(OLD_COUNT_FILE, file.path(READS_DIR, "Old_batch_Control_4h_gene_counts.xlsx"), overwrite = TRUE)
+cat("Copied raw count files (both batches) to Reads/\n")
 
 # ================= 2.5 拷贝基因注释 + QC 文件 =================
 DATA_ANALYSIS_DIR <- DATA_DIR
@@ -63,39 +80,66 @@ QC_DEST_BASE <- file.path(DATA_ANALYSIS_DIR, "QC")
 dir.create(QC_DEST_BASE, showWarnings = FALSE, recursive = TRUE)
 if (dir.exists("../output_results/multiqc")) {
   file.copy("../output_results/multiqc", QC_DEST_BASE, recursive = TRUE, overwrite = TRUE)
-  cat("QC copied: multiqc ->", QC_DEST_BASE, "\n")
+  cat("QC copied: multiqc ->", QC_DEST_BASE, "(covers new batch 8h/16h only; no QC available for legacy batch)\n")
 }
 
-# ================= 3. 元数据 =================
-meta_raw <- read_excel(META_FILE)
-meta_raw <- meta_raw[!is.na(meta_raw$Group), ]
-meta_raw$rep <- ave(seq_len(nrow(meta_raw)), meta_raw$Group, FUN = seq_along)
+# ================= 3. 加载并合并两个批次的计数矩阵 =================
 
-meta <- meta_raw %>%
-  transmute(
-    sample_id = paste0(Group, "_", rep),
-    Group     = factor(as.character(Group), levels = c("A", "16"))  # A = 对照组
-  )
+# --- 3a. 新批次 (8h/16h, Salmon) ---
+new_counts_raw <- read_tsv(NEW_COUNT_FILE, col_types = cols())
+new_counts_raw$base_id <- sub("\\..*$", "", new_counts_raw$gene_id)
 
-cat("Metadata loaded:", nrow(meta), "samples\n")
+# nf-core samplesheet 仍沿用原始 A_1/A_2/A_3 命名 (无需重新比对)；此处映射到修正后的 8h 标签
+rename_map <- c(A_1="8h_1", A_2="8h_2", A_3="8h_3",
+                `16_1`="16h_1", `16_2`="16h_2", `16_3`="16h_3")
+new_sample_cols <- names(rename_map)
+stopifnot(all(new_sample_cols %in% colnames(new_counts_raw)))
+new_mat <- as.matrix(new_counts_raw[, new_sample_cols])
+colnames(new_mat) <- rename_map[colnames(new_mat)]
+rownames(new_mat) <- new_counts_raw$base_id
+new_mat <- round(new_mat)
+
+# --- 3b. 旧批次 (Control/4h, 客户提供的计数矩阵) ---
+old_counts_raw <- read_excel(OLD_COUNT_FILE)
+old_counts_raw$base_id <- sub("\\..*$", "", old_counts_raw$Geneid)
+old_sample_cols <- c("Control-1", "Control-2", "Control-3", "X-Ray-1", "X-Ray-2", "X-Ray-3")
+stopifnot(all(old_sample_cols %in% colnames(old_counts_raw)))
+old_mat <- as.matrix(old_counts_raw[, old_sample_cols])
+colnames(old_mat) <- c("Control_1", "Control_2", "Control_3", "4h_1", "4h_2", "4h_3")
+rownames(old_mat) <- old_counts_raw$base_id
+old_mat <- round(old_mat)
+
+# --- 3c. 按 base Ensembl ID 取交集合并 (99.96% 基因在两批次间可对应，详见分析计划) ---
+common_ids <- intersect(rownames(new_mat), rownames(old_mat))
+cat("New batch genes:", nrow(new_mat), " | Old batch genes:", nrow(old_mat),
+    " | Common (base ID) genes:", length(common_ids), "\n")
+
+counts_mat <- cbind(old_mat[common_ids, ], new_mat[common_ids, ])
+gene_id_map <- new_counts_raw %>% distinct(base_id, gene_id, gene_name) %>%
+  filter(base_id %in% common_ids)
+
+# ================= 4. 元数据: Control(参照) / 4h / 8h / 16h, 并记录 Batch (仅作说明/可视化用) =================
+meta <- data.frame(
+  sample_id = colnames(counts_mat),
+  Group = factor(
+    sub("_[0-9]$", "", colnames(counts_mat)),
+    levels = c("Control", "4h", "8h", "16h")
+  ),
+  Batch = ifelse(colnames(counts_mat) %in% c("Control_1","Control_2","Control_3","4h_1","4h_2","4h_3"),
+                  "Old_batch_legacy", "New_batch_NovaSeq"),
+  stringsAsFactors = FALSE
+)
+rownames(meta) <- meta$sample_id
+cat("Metadata loaded:", nrow(meta), "samples (integrated Control/4h/8h/16h time course)\n")
 print(meta)
 
-# ================= 4. 表达矩阵预处理 =================
-counts_raw <- read_tsv(COUNT_FILE, col_types = cols())
-
-valid_samples <- colnames(counts_raw)[3:ncol(counts_raw)]
-meta <- meta[meta$sample_id %in% valid_samples, ]
-counts_mat <- as.matrix(counts_raw[, meta$sample_id])
-rownames(counts_mat) <- counts_raw$gene_id
-counts_mat <- round(counts_mat)
-
 # ================= 5. 基因过滤 (Human: 优先用 annotation xlsx biotype 列) =================
-gene_info <- counts_raw[, c("gene_id", "gene_name")]
+gene_info <- gene_id_map %>% rename(gene_id_full = gene_id)
 
 if (!is.na(ANNOT_SRC)) {
-  annot <- read_excel(ANNOT_SRC) %>% select(gene_id, gene_type)
-  # counts_raw gene_id 带版本号 (ENSG...XX)，annotation 也带版本号，直接 join
-  gene_info <- gene_info %>% left_join(annot, by = "gene_id")
+  annot <- read_excel(ANNOT_SRC) %>% select(gene_id, gene_type) %>%
+    mutate(base_id = sub("\\..*$", "", gene_id))
+  gene_info <- gene_info %>% left_join(annot %>% select(base_id, gene_type), by = "base_id")
   regex_filter <- !is.na(gene_info$gene_type) & gene_info$gene_type == "protein_coding"
   cat("Using annotation-based protein_coding filter:", basename(ANNOT_SRC), "\n")
 } else {
@@ -112,6 +156,8 @@ if (!is.na(ANNOT_SRC)) {
   regex_filter <- non_ribosomal & protein_coding_like
   cat("Using regex fallback filter (no annotation xlsx found)\n")
 }
+names(regex_filter) <- gene_info$base_id
+regex_filter <- regex_filter[rownames(counts_mat)]
 
 n_samples <- ncol(counts_mat)
 low_count_filter <- rowSums(counts_mat >= 10) >= (n_samples - 2)
@@ -119,7 +165,7 @@ low_count_filter <- rowSums(counts_mat >= 10) >= (n_samples - 2)
 final_filter <- regex_filter & low_count_filter
 counts_mat_filtered <- counts_mat[final_filter, ]
 
-cat("Original genes:", nrow(counts_mat), "\n")
+cat("Original (common) genes:", nrow(counts_mat), "\n")
 cat("After regex/biotype filter:", sum(regex_filter), "\n")
 cat("After low-count filter:", sum(final_filter), "\n")
 cat("Final genes for DESeq2:", nrow(counts_mat_filtered), "\n")
@@ -133,30 +179,37 @@ dds <- DESeqDataSetFromMatrix(
 dds <- DESeq(dds)
 vsd <- vst(dds, blind = FALSE)
 
-# ================= 7. PCA =================
-pca_data   <- plotPCA(vsd, intgroup = "Group", returnData = TRUE)
+# ================= 7. PCA (按 Group 着色，并叠加 Batch 形状以可视化批次效应) =================
+pca_data   <- plotPCA(vsd, intgroup = c("Group", "Batch"), returnData = TRUE)
 percentVar <- round(100 * attr(pca_data, "percentVar"))
 
-p_pca <- ggplot(pca_data, aes(PC1, PC2, color = Group, label = name)) +
-  geom_point(size = 2.5, alpha = 0.9) +
+p_pca <- ggplot(pca_data, aes(PC1, PC2, color = Group, shape = Batch, label = name)) +
+  geom_point(size = 3, alpha = 0.9) +
   geom_text_repel(size = 3, box.padding = 0.3, point.padding = 0.3, max.overlaps = 20) +
   xlab(paste0("PC1: ", percentVar[1], "% variance")) +
   ylab(paste0("PC2: ", percentVar[2], "% variance")) +
+  labs(title = "PCA — Control/4h from legacy batch, 8h/16h from current NovaSeq batch") +
   theme_bw(base_size = 12) +
   scale_color_brewer(palette = "Set1") +
   theme(legend.position = "bottom",
-        legend.text     = element_text(size = 10),
+        plot.title      = element_text(size = 9, hjust = 0.5),
+        legend.text     = element_text(size = 9),
         axis.text       = element_text(size = 10),
         axis.title      = element_text(size = 11))
 
-ggsave(file.path(OUT_DIR, "PCA.pdf"), p_pca, width = 8, height = 6, dpi = 300)
-cat("PCA saved\n")
+ggsave(file.path(OUT_DIR, "PCA.pdf"), p_pca, width = 8, height = 6.5, dpi = 300)
+cat("PCA saved (batch-vs-group visualization)\n")
 
-# ================= 8. 差异表达分析: 16 vs A =================
+# ================= 8. 差异表达分析: 4h/8h/16h vs Control =================
 sig_col  <- "sig (padj<=0.05 & |log2FC|>=0.263)"
-contrasts <- list(c("Group", "16", "A"))
+contrasts <- list(
+  c("Group", "4h",  "Control"),
+  c("Group", "8h",  "Control"),
+  c("Group", "16h", "Control")
+)
 
 res_list <- list()
+gene_name_lookup <- setNames(gene_info$gene_name, gene_info$base_id)
 
 for (comp in contrasts) {
   grp_trt  <- comp[2]
@@ -167,17 +220,20 @@ for (comp in contrasts) {
   res <- lfcShrink(dds, contrast = comp, type = "ashr")
 
   res_df <- as.data.frame(res)
-  res_df$gene_id <- rownames(res_df)
+  res_df$base_id <- rownames(res_df)
+  res_df$gene_name <- gene_name_lookup[res_df$base_id]
 
   samples_trt  <- meta$sample_id[meta$Group == grp_trt]
   samples_ctrl <- meta$sample_id[meta$Group == grp_ctrl]
-  raw_sub <- counts_raw[, c("gene_id", "gene_name", samples_trt, samples_ctrl), drop=FALSE]
+  raw_sub <- as.data.frame(counts_mat[, c(samples_trt, samples_ctrl)])
+  raw_sub$base_id <- rownames(raw_sub)
 
-  res_df <- left_join(res_df, raw_sub, by = "gene_id")
+  res_df <- left_join(res_df, raw_sub, by = "base_id")
 
-  final_cols <- c("gene_id", "gene_name", samples_trt, samples_ctrl,
+  final_cols <- c("base_id", "gene_name", samples_trt, samples_ctrl,
                   "baseMean", "log2FoldChange", "lfcSE", "pvalue", "padj")
   res_df <- res_df[, final_cols] %>% arrange(padj)
+  colnames(res_df)[colnames(res_df) == "base_id"] <- "gene_id"
 
   res_df[[sig_col]] <- case_when(
     res_df$padj <= 0.05 & res_df$log2FoldChange >=  0.263 ~ "Up",
@@ -256,14 +312,15 @@ for (comp_name in names(res_list)) {
 saveRDS(res_list,    file.path(OUT_DIR, "res_list.rds"))
 saveRDS(vsd,         file.path(OUT_DIR, "vsd.rds"))
 saveRDS(meta,        file.path(OUT_DIR, "meta.rds"))
-saveRDS(counts_raw,  file.path(OUT_DIR, "counts_raw.rds"))
+saveRDS(gene_info,   file.path(OUT_DIR, "gene_info.rds"))
 saveRDS(list(
   n_original    = nrow(counts_mat),
   n_after_regex = sum(regex_filter),
   n_final       = nrow(counts_mat_filtered),
   n_samples     = n_samples,
   low_count_min = 10,
-  low_count_min_samples = n_samples - 2
+  low_count_min_samples = n_samples - 2,
+  batch_confound_note = "Control (n=3) and 4h (n=3) come from a client-supplied legacy sequencing batch; 8h (n=3) and 16h (n=3) come from the current NovaSeq X Plus batch. No condition overlaps both batches, so a ~Batch+Group model is not estimable and sequencing batch is fully confounded with time point for the 8h/16h vs Control contrasts."
 ), file.path(OUT_DIR, "filter_stats.rds"))
 cat("\nRDS objects saved for enrichment analysis (script 5)\n")
 
