@@ -11,9 +11,7 @@
 
 Bulk RNA-seq experiment on cDC1 (conventional dendritic cell type 1) cells, 4 groups
 (Control, TNFa, Tumor, Tumor_TNF), NovaSeq X Plus PE150, stranded library.
-Goal: differential expression + GO/KEGG pathway enrichment + GSEA
-(no stem cell marker analysis — dendritic cell immunology study, no stem-cell context;
-consistent with "No" answers given for the other 3 projects in this batch).
+Goal: differential expression + pathway enrichment analysis (GO/KEGG ORA + GSEA).
 
 ---
 
@@ -110,7 +108,6 @@ $RSCRIPT scripts/6_generate_research_report.R
 ## 6. Key Parameters & Rationale
 
 - **Control group:** Control (untreated cDC1) — confirmed by client note "control vs other groups"
-- **StemCell marker analysis:** Not requested — no stem-cell context (dendritic cell immunology study)
 - **STAR mouse optimization:** `--twopassMode None --outFilterMultimapNmax 3` — 7.6× speedup vs
   default 2-pass on mouse genome (see `/home/gao/.claude/references/mouse_rnaseq_star_optimization.md`);
   negligible impact on protein-coding DE

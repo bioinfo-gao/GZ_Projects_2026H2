@@ -1,6 +1,6 @@
 # Qiuchen Li Human RNA-seq Analysis Plan
 
-**Date:** 2026-07-04
+**Date:** 2026-07-05
 **Project:** 11_Qiuchen_Li
 **Species:** Homo sapiens (GRCh38 / GENCODE v45)
 **Analyst:** Zhen Gao
@@ -10,8 +10,7 @@
 ## 1. Project Overview
 
 Bulk RNA-seq experiment with 3 groups (Mix, NT, A5BKO), NovaSeq X Plus PE150, stranded library.
-Goal: differential expression (all 3 pairwise contrasts) + GO/KEGG pathway enrichment + GSEA
-(no stem cell marker analysis — confirmed with user).
+Goal: differential expression (all 3 pairwise contrasts) + pathway enrichment analysis (GO/KEGG ORA + GSEA).
 
 ---
 
@@ -53,7 +52,7 @@ FASTQ data: `/Work_bio/dropbox/Dropbox_Data/Qiuchen/`
 ```
 /home/gao/projects_2026H2/11_Qiuchen_Li/
 ├── Sample_Sheet_Qiuchen_Li.xlsx
-├── analysis_plan_0704.md               ← this document
+├── analysis_plan_0705.md               ← this document
 ├── scripts/
 │   ├── 1_produce_nf-core_Samplesheet.py
 │   ├── 2_nextflow.sh
@@ -90,7 +89,7 @@ bash scripts/2_nextflow.sh
 # 3. DE + PCA (3 pairwise contrasts)
 $RSCRIPT scripts/4_run_DE_PCA.R > scripts/de_pca.log 2>&1
 
-# 4. Enrichment (GO/KEGG/GSEA)
+# 4. Pathway enrichment analysis (GO/KEGG ORA + GSEA)
 $RSCRIPT scripts/5_run_enrichment.R > scripts/enrichment.log 2>&1
 
 # 5. Client report
@@ -102,7 +101,6 @@ $RSCRIPT scripts/6_generate_research_report.R
 ## 6. Key Parameters & Rationale
 
 - **Comparison design:** All 3 pairwise contrasts (Mix vs NT, A5BKO vs NT, A5BKO vs Mix) — confirmed with user; no single reference group.
-- **StemCell marker analysis:** Not requested (confirmed with user).
 - **Gene filter:** GENCODE `gene_type == protein_coding` via `human_Gene_annotation` xlsx (falls back to regex if xlsx unavailable).
 - **Low-expression filter:** ≥10 counts in ≥(n−2) samples.
 - **Significance threshold:** padj ≤ 0.05 & |log2FC| ≥ 0.263 (log2(1.2), ≥1.2-fold).

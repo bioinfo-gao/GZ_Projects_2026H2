@@ -10,7 +10,7 @@
 ## 1. Project Overview
 
 Bulk RNA-seq experiment with 2 groups (1 treatment, 1 control), NovaSeq X Plus PE150, stranded library.
-Goal: differential expression + GO/KEGG pathway enrichment + GSEA (no stem cell marker analysis — confirmed with user, standard cell-type comparison).
+Goal: differential expression + pathway enrichment analysis (GO/KEGG ORA + GSEA).
 
 ---
 
@@ -97,7 +97,6 @@ $RSCRIPT scripts/6_generate_research_report.R
 ## 6. Key Parameters & Rationale
 
 - **Control group:** A (confirmed with user)
-- **StemCell marker analysis:** Not requested (confirmed with user — standard comparison, no stem-cell context)
 - **Gene filter:** GENCODE `gene_type == protein_coding` via `human_Gene_annotation` xlsx (falls back to regex if xlsx unavailable)
 - **Low-expression filter:** ≥10 counts in ≥(n−2) samples
 - **Significance threshold:** padj ≤ 0.05 & |log2FC| ≥ 0.263 (log2(1.2), ≥1.2-fold)
