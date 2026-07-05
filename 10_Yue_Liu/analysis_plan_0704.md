@@ -120,3 +120,55 @@ $RSCRIPT scripts/6_generate_research_report.R
 
 - Only 3 replicates per group — adequate for DESeq2 but limits detection of small-effect DEGs.
 - Single contrast (16 vs A); no multi-way design.
+
+---
+
+## 9. REDO (2026-07-04, same day): Integrated Control/4h/8h/16h time course
+
+**Trigger:** client corrected the sample sheet — the "A" group (Y_A_1/2/3) is actually MOLM13 cells
+8h post X-ray radiation, not an unrelated group "A". Client also supplied
+`OLD_Count/counts-filtered protein coding original file.xlsx`, a legacy count matrix from a
+**separate, earlier sequencing batch** containing Control-1/2/3 and X-Ray-1/2/3 (4h post X-ray).
+The two datasets were integrated into one Control→4h→8h→16h time course.
+
+**Sample relabeling:** `Sample_Sheet_Yue_Liu.xlsx` updated — Group "A" → "8h", Group "16" → "16h".
+Raw FASTQ files keep their original on-disk names (A_1/A_2/A_3, 16_1/16_2/16_3); only the
+Group/documentation label changed. No realignment was necessary since the underlying sequencing
+data is unchanged — this is purely a corrected label at the metadata layer.
+
+**Key design decision (confirmed with user via AskUserQuestion):** Control and 4h come from the
+legacy batch; 8h and 16h come from the current NovaSeq batch. No condition overlaps both
+batches, so batch and time point are fully confounded for the 8h/16h vs Control contrasts —
+a `~Batch+Group` design is not estimable. User explicitly chose: **integrate, use legacy Control
+as the common reference for all 3 contrasts, but prominently flag the limitation** in the report
+(see report Section 4.1). The within-batch 4h vs Control contrast remains statistically clean.
+
+**Gene filtering — changed from the original run:**
+- Merge: base Ensembl ID (version stripped) intersection of legacy batch (20,065 client
+  pre-filtered protein-coding genes) and new batch (63,187 total GENCODE v45 genes) → 20,056
+  common genes.
+- Validation performed (per user request) confirming methodology consistency: of the 20,056
+  common genes, 20,047 (99.96%) are independently classified `protein_coding` by our own
+  `human_Gene_annotation` reference — validating that our biotype filter matches the client's
+  pre-filtering convention. 9 genes differ in biotype call (annotation-version reclassification,
+  expected); a different 9 genes are absent from GENCODE v45 entirely (newer Ensembl IDs,
+  ENSG00000293xxx range).
+- **Low-count filter removed** (per user instruction): the client's legacy file retains all
+  protein-coding genes regardless of expression, including 4,746/20,065 all-zero genes. To match
+  that convention, the ≥10-counts-in-(n−2)-samples filter used in the original run was dropped.
+  Only the protein_coding biotype filter is applied. Final gene count: 20,047 (up from 11,934 in
+  the original single-batch run). DESeq2's built-in independent filtering still applies at the
+  padj-correction stage.
+
+**Updated file locations (same `scripts/` and `Data_Analysis_20260704/` folders, files regenerated in place):**
+- `4_run_DE_PCA.R` — rewritten to merge both batches, build Control/4h/8h/16h metadata (with a
+  `Batch` column for PCA visualization/documentation only, not used in the design formula),
+  and run all 3 vs-Control contrasts.
+- `5_run_enrichment.R` — unchanged logic (iterates `res_list` generically); rerun against new results.
+- `6_generate_research_report.R` — rewritten: new Objectives/Sample Info reflecting the 4-group
+  time course, new Section 4.1 (batch confound limitation, prominent), new Section 4.2 (gene
+  filtering validation numbers), Results/Conclusions annotated per-contrast with batch status.
+
+**Result:** 4h_vs_Control = 249 DEGs (same-batch, reliable); 8h_vs_Control = 11,980 DEGs;
+16h_vs_Control = 12,054 DEGs (cross-batch, flagged as exploratory — the ~48× jump in DEG count
+from 4h to 8h is itself evidence the batch effect dominates these two contrasts).
