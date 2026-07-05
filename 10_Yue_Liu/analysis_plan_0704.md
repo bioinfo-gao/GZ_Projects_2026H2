@@ -172,3 +172,50 @@ as the common reference for all 3 contrasts, but prominently flag the limitation
 **Result:** 4h_vs_Control = 249 DEGs (same-batch, reliable); 8h_vs_Control = 11,980 DEGs;
 16h_vs_Control = 12,054 DEGs (cross-batch, flagged as exploratory — the ~48× jump in DEG count
 from 4h to 8h is itself evidence the batch effect dominates these two contrasts).
+
+---
+
+## 10. REDO #3 (2026-07-04, same day): fixed a shared-model contamination bug caught by client review
+
+**Trigger:** client rejected the analysis, citing gene **FSCN1 (ENSG00000075618)** — raw counts in
+the legacy count matrix are essentially flat between Control (528, 618, 415) and 4h/X-Ray
+(593, 512, 434), yet the Redo #2 merged 4-group model reported it padj=0.0017 ("Up").
+
+**Root-cause diagnosis** (see `/tmp/.../scratchpad/diagnose_fscn1.R` for the isolated-vs-full
+model comparison): refitting Control+4h in isolation gives padj=0.9996, log2FC≈0.0005 — no
+effect, matching the raw counts. The merged model's `baseMean` for FSCN1 jumps from 521
+(Control+4h only) to 3020 once 8h/16h are added (FSCN1 is ~10× higher in 8h/16h), which pulls
+DESeq2's dataset-wide mean-dispersion trend curve and corrupts variance shrinkage even for genes
+with a genuinely flat same-batch profile. **This is a more severe problem than the batch/time**
+**confound flagged in Redo #2** — it means the previously "trusted" 4h vs Control contrast from
+the merged model was itself contaminated, not just the 8h/16h vs Control contrasts.
+
+**Fix (confirmed with user via AskUserQuestion):** abandon the single 4-group merged model.
+Rebuilt `4_run_DE_PCA.R` to run three separate DESeq2 fits with no shared dispersion estimation:
+- **Model A (Reliable)** — legacy batch only (6 samples): Control vs 4h
+- **Model B (Reliable)** — new batch only (6 samples): 8h vs 16h (this is the same statistical
+  design as the very first, pre-integration Yue Liu analysis, just relabeled)
+- **Model C (Unreliable, reference only)** — all 12 samples merged: produces the 4-timepoint
+  PCA and the 8h/16h vs Control DEG lists purely as a visual/reference resource. Per user's
+  explicit instruction, these are placed in a separate `DE_PCA_Results_Unreliable_CrossBatch/`
+  folder, get no enrichment analysis, and are excluded from all conclusions.
+
+**Directory structure changed:**
+```
+Data_Analysis_20260704/
+├── DE_PCA_Results_Reliable/          ← Control vs 4h, 8h vs 16h (independent models)
+├── DE_PCA_Results_Unreliable_CrossBatch/  ← 8h/16h vs Control + all-4-group PCA (reference only)
+├── Enrichment/{4h_vs_Control,16h_vs_8h}/  ← only reliable contrasts get GO/KEGG/GSEA
+├── Reads/, QC/, human_Gene_annotation_*.xlsx  ← unchanged
+└── Bioinformatics_Analysis_Report_0704.md    ← opens with a blockquote warning, before Objectives
+```
+
+**Result after fix:** Control vs 4h = 0 significant DEGs (FSCN1 false positive resolved; no other
+gene reaches significance at padj≤0.05 & |log2FC|≥0.263 in this small, low-effect same-batch
+comparison — GSEA still detects sub-threshold coordinated shifts, e.g. cell cycle/E2F targets).
+8h vs 16h = 3,969 DEGs (statistically clean, same-batch). The two cross-batch contrasts are
+unchanged from Redo #2 (11,980 / 12,054 DEGs) and remain confined to the Unreliable folder.
+
+**Previous (flawed) Redo #2 output was archived to**
+`/home/gao/projects_2026H2/10_Yue_Liu/BAC/Data_Analysis_20260704_WRONG_shared_4group_model/`
+by the user before this fix.
