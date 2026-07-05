@@ -1,0 +1,2 @@
+ID,Description,setSize,enrichmentScore,NES,pvalue,p.adjust,qvalue,rank,leading_edge,core_enrichment
+hsa04512,ECM-receptor interaction,69,0.7180168646215577,1.956775680028571,1.0887460499821366e-4,0.03581974504441229,0.03529829298889454,773,"tags=17%, list=6%, signal=17%",COL4A2/COL4A1/CD44/ITGB1/LAMC1/THBS2/LAMA5/COL1A2/COL4A5/CD47/LAMA1/ITGA6

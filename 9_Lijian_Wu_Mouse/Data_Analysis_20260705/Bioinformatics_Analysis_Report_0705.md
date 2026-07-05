@@ -1,0 +1,127 @@
+# Mouse Bulk RNA-seq Analysis Report — Lijian Wu Project
+
+**Report Date:** July 05, 2026
+**Prepared by:** Zhen Gao, PhD, Principal Bioinformatics Scientist, Athenomics
+**Analysis Platform:** Linux HPC server
+**Data folder:** `Data_Analysis_20260705`
+
+## 1. Objectives
+
+Characterise transcriptomic differences in cDC1 (conventional dendritic cell type 1) cells
+across three treatment conditions (**TNFa**, **Tumor**, **Tumor_TNF**) relative to the
+untreated control (**Control**) using bulk RNA-seq. Specific aims:
+
+- Identify differentially expressed genes (DEGs) for each treatment vs. control contrast.
+- Perform GO and KEGG pathway enrichment to determine biological processes affected.
+- Run Gene Set Enrichment Analysis (GSEA) for pathway-level signal detection.
+
+## 2. Key Findings
+
+This study comprises **4 groups** (TNFa, Tumor, Tumor_TNF = treatment; Control = untreated) across **3 contrasts**.
+
+**Differentially expressed genes** (criteria: padj ≤ 0.05 AND |log2FC| ≥ 0.263; log2(1.2) = 0.263, equivalent to ≥1.2-fold change):
+
+| Contrast | Total DEGs | Upregulated (log2FC ≥ 0.263) | Downregulated (log2FC ≤ −0.263) |
+| :--- | :---: | :---: | :---: |
+| TNFa_vs_Control | **6847** | 3078 | 3769 |
+| Tumor_vs_Control | **8483** | 4222 | 4261 |
+| Tumor_TNF_vs_Control | **8757** | 4427 | 4330 |
+
+**Top pathway findings per comparison:**
+
+- **TNFa_vs_Control**:
+  - Top GO (BP): immune effector process (padj=8.16e-06)
+  - Top KEGG: Cell adhesion molecule (CAM) interaction (padj=9.82e-05)
+  - GSEA KEGG: TNF signaling pathway (padj=0.000151)
+  - GSEA Hallmark: HALLMARK E2F TARGETS (padj=5e-09)
+
+- **Tumor_vs_Control**:
+  - Top GO (BP): response to bacterium (padj=0.000188)
+  - Top KEGG: Cell adhesion molecule (CAM) interaction (padj=0.000211)
+  - GSEA KEGG: Spliceosome (padj=4.09e-08)
+  - GSEA Hallmark: HALLMARK E2F TARGETS (padj=5e-09)
+
+- **Tumor_TNF_vs_Control**:
+  - Top GO (BP): response to bacterium (padj=0.00369)
+  - Top KEGG: Hematopoietic cell lineage (padj=0.000512)
+  - GSEA KEGG: Spliceosome (padj=3.1e-08)
+  - GSEA Hallmark: HALLMARK E2F TARGETS (padj=2.5e-09)
+
+## 3. Sample Information
+
+| Group | Samples | Role |
+| :--- | :---: | :---: |
+| Control | cDC1_un_1, cDC1_un_2, cDC1_un_3 | Control (untreated) |
+| TNFa | cDC1_TNFa_1, cDC1_TNFa_2, cDC1_TNFa_3 | Treatment 1 |
+| Tumor | cDC1_Tumor_1, cDC1_Tumor_2, cDC1_Tumor_3 | Treatment 2 |
+| Tumor_TNF | cDC1_Tumor_TNFa_1, cDC1_Tumor_TNFa_2, cDC1_Tumor_TNFa_3 | Treatment 3 |
+
+Total samples: **12**  |  Comparisons: TNFa vs Control, Tumor vs Control, Tumor_TNF vs Control
+
+## 4. Analysis Rationale and Decision Criteria
+
+| Step | Decision | Rationale |
+| :--- | :---: | :---: |
+| Quantification | Salmon (via nf-core/rnaseq) | Bias-corrected transcript-level quantification |
+| STAR alignment | 1-pass, --outFilterMultimapNmax 3 | 7.6× speedup vs default 2-pass on mouse genome; negligible impact on protein-coding DE (Salmon EM handles 2–3 candidate multi-map positions correctly) |
+| Regex gene filter | Remove ribosomal/non-coding/Gm[0-9] genes | 57,132 → 26,572 genes retained (removed 30,560 noise genes) |
+| Low-expression filter | ≥10 counts in ≥10 of 12 samples | 26,572 → 11,484 robustly expressed genes input to DESeq2 |
+| DE threshold | padj ≤ 0.05, \|log2FC\| ≥ 0.263 (= 1.2×) | Conservative fold-change avoids over-reporting small but significant changes |
+| LFC shrinkage | ashr | Appropriate for unbalanced designs and small sample sizes |
+
+## 5. Methods
+
+| Tool | Version | Parameters |
+| :--- | :---: | :---: |
+| nf-core/rnaseq | 3.15.1 | --aligner star_salmon |
+| STAR | 2.7.x | --twopassMode None --outFilterMultimapNmax 3 |
+| Salmon | — | default |
+| DESeq2 | R package | design = ~Group, lfcShrink type = ashr |
+| clusterProfiler | R package | GO ORA (BP/MF/CC), KEGG ORA, GSEA |
+| org.Mm.eg.db | R package | Mouse gene ID mapping |
+| msigdbr | R package | Hallmark gene sets (MM) |
+| Reference genome | GRCm39 / GENCODE M35 | — |
+
+## 6. Results
+
+### 6.1 Differential Expression
+
+| Contrast | Total DEGs | Upregulated | Downregulated |
+| :--- | :---: | :---: | :---: |
+| TNFa_vs_Control | 6847 | 3078 | 3769 |
+| Tumor_vs_Control | 8483 | 4222 | 4261 |
+| Tumor_TNF_vs_Control | 8757 | 4427 | 4330 |
+
+### 6.2 Pathway Enrichment (GO BP + KEGG, ALL direction)
+
+| Contrast | GO BP terms | KEGG pathways |
+| :--- | :---: | :---: |
+| TNFa_vs_Control | 370 | 10 |
+| Tumor_vs_Control | 142 | 13 |
+| Tumor_TNF_vs_Control | 46 | 4 |
+
+## 7. Conclusions
+
+- **TNFa_vs_Control**: 6847 DEGs identified. Predominantly downregulated (3769 down vs 3078 up), suggesting suppression of gene expression relative to untreated control.
+- **Tumor_vs_Control**: 8483 DEGs identified. Predominantly downregulated (4261 down vs 4222 up), suggesting suppression of gene expression relative to untreated control.
+- **Tumor_TNF_vs_Control**: 8757 DEGs identified. Predominantly upregulated (4427 up vs 4330 down), suggesting activation of transcriptional programs relative to untreated control.
+- Pathway enrichment and GSEA results are available in the `Enrichment/` directory for detailed biological interpretation.
+
+## 8. Deliverable Files
+
+| File / Folder | Contents |
+| :--- | :---: |
+| `DE_PCA_Results/DEG_*.csv` | Full DEG tables (all genes, with log2FC, padj, raw counts) |
+| `DE_PCA_Results/PCA.pdf` | PCA plot |
+| `DE_PCA_Results/Volcano_*.png` | Volcano plots per contrast |
+| `DE_PCA_Results/Heatmap_top50_*.pdf` | Heatmaps of top 50 DEGs per contrast |
+| `Reads/All_sample_gene_counts.tsv` | Raw count matrix |
+| `Reads/All_sample_gene_tpm.tsv` | TPM matrix |
+| `mouse_Gene_annotation_*.xlsx` | Full mouse gene annotation with GO/KEGG/UniProt (GENCODE M35) |
+| `Enrichment/*/GO/` | GO ORA results (BP/MF/CC, Up/Down/ALL) with dot plots |
+| `Enrichment/*/KEGG/` | KEGG ORA results with dot plots |
+| `Enrichment/*/GSEA/` | GSEA results (GO BP + KEGG + Hallmark) with ridge/dot plots |
+| `QC/multiqc/` | MultiQC report (sequencing QC, alignment stats) |
+
+---
+*Zhen Gao, PhD, Principal Bioinformatics Scientist, Athenomics*
