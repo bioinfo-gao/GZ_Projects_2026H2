@@ -9,6 +9,10 @@
 #
 # 前置条件: 先运行 4_run_DE_PCA.R 生成 res_list.rds / meta.rds
 # 无需 StemCell 分析（客户确认：普通细胞类型对比研究）
+#
+# 注意 (2026-07-04 修正): 仅对 RELIABLE (同批次) 对比跑富集分析
+# (4h_vs_Control, 16h_vs_8h)。跨批次 UNRELIABLE 结果 (8h/16h vs Control)
+# 已被证实包含大量假阳性，不再产出富集分析，避免二次误导。
 
 library(clusterProfiler)
 library(enrichplot)
@@ -28,13 +32,12 @@ if (length(data_dirs) == 0) stop("No Data_Analysis_YYYYMMDD folder found. Run 4_
 DATA_DIR <- data_dirs[1]
 cat("Using:", DATA_DIR, "\n")
 
-DE_DIR  <- file.path(DATA_DIR, "DE_PCA_Results")
+DE_DIR  <- file.path(DATA_DIR, "DE_PCA_Results_Reliable")
 ENR_DIR <- file.path(DATA_DIR, "Enrichment")
 dir.create(ENR_DIR, showWarnings = FALSE, recursive = TRUE)
 
 # ================= 2. 加载 DE 结果 =================
 res_list   <- readRDS(file.path(DE_DIR, "res_list.rds"))
-meta       <- readRDS(file.path(DE_DIR, "meta.rds"))
 
 sig_col <- "sig (padj<=0.05 & |log2FC|>=0.263)"
 cat("DE results loaded. Comparisons:", paste(names(res_list), collapse = ", "), "\n")
