@@ -32,7 +32,7 @@ if (length(data_dirs) == 0) stop("No Data_Analysis_YYYYMMDD folder found. Run 4_
 DATA_DIR <- data_dirs[1]
 cat("Using:", DATA_DIR, "\n")
 
-DE_DIR  <- file.path(DATA_DIR, "DE_PCA_Results_Reliable")
+DE_DIR  <- "rds_cache"  # internal handoff objects (not the client-facing DE_PCA_Results_Reliable/ folder)
 ENR_DIR <- file.path(DATA_DIR, "Enrichment")
 dir.create(ENR_DIR, showWarnings = FALSE, recursive = TRUE)
 

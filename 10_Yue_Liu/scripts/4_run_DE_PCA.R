@@ -53,10 +53,16 @@ DATA_DIR       <- paste0("../Data_Analysis_", TODAY)
 REL_DIR        <- file.path(DATA_DIR, "DE_PCA_Results_Reliable")
 UNREL_DIR      <- file.path(DATA_DIR, "DE_PCA_Results_Unreliable_CrossBatch")
 READS_DIR      <- file.path(DATA_DIR, "Reads")
+# Internal-only R objects (handoff to scripts 5/6) — NEVER inside Data_Analysis_*/
+# (that folder is the client deliverable and gets shared/zipped as-is).
+RDS_REL_DIR    <- "rds_cache"
+RDS_UNREL_DIR  <- "rds_cache_unreliable"
 
-dir.create(REL_DIR,   showWarnings = FALSE, recursive = TRUE)
-dir.create(UNREL_DIR, showWarnings = FALSE, recursive = TRUE)
-dir.create(READS_DIR, showWarnings = FALSE, recursive = TRUE)
+dir.create(REL_DIR,       showWarnings = FALSE, recursive = TRUE)
+dir.create(UNREL_DIR,     showWarnings = FALSE, recursive = TRUE)
+dir.create(READS_DIR,     showWarnings = FALSE, recursive = TRUE)
+dir.create(RDS_REL_DIR,   showWarnings = FALSE, recursive = TRUE)
+dir.create(RDS_UNREL_DIR, showWarnings = FALSE, recursive = TRUE)
 
 # ================= 2. 拷贝原始计数文件 =================
 file.copy(NEW_COUNT_FILE, file.path(READS_DIR, "New_batch_8h_16h_gene_counts.tsv"), overwrite = TRUE)
@@ -353,16 +359,16 @@ for (grp_trt in c("8h", "16h")) {
   cat(comp_name, "(UNRELIABLE, cross-batch) significant DEGs:", sum(res_df[[sig_col]] != "NS"), "\n")
 }
 
-# ================= 8. 保存 RDS =================
-saveRDS(res_list_reliable, file.path(REL_DIR, "res_list.rds"))
-saveRDS(meta_A, file.path(REL_DIR, "meta_A.rds"))
-saveRDS(meta_B, file.path(REL_DIR, "meta_B.rds"))
-saveRDS(out_A$vsd, file.path(REL_DIR, "vsd_A.rds"))
-saveRDS(out_B$vsd, file.path(REL_DIR, "vsd_B.rds"))
-saveRDS(gene_info, file.path(REL_DIR, "gene_info.rds"))
+# ================= 8. 保存 RDS (内部对象，不放进客户交付目录) =================
+saveRDS(res_list_reliable, file.path(RDS_REL_DIR, "res_list.rds"))
+saveRDS(meta_A, file.path(RDS_REL_DIR, "meta_A.rds"))
+saveRDS(meta_B, file.path(RDS_REL_DIR, "meta_B.rds"))
+saveRDS(out_A$vsd, file.path(RDS_REL_DIR, "vsd_A.rds"))
+saveRDS(out_B$vsd, file.path(RDS_REL_DIR, "vsd_B.rds"))
+saveRDS(gene_info, file.path(RDS_REL_DIR, "gene_info.rds"))
 
-saveRDS(res_list_unreliable, file.path(UNREL_DIR, "res_list.rds"))
-saveRDS(meta_full, file.path(UNREL_DIR, "meta.rds"))
+saveRDS(res_list_unreliable, file.path(RDS_UNREL_DIR, "res_list.rds"))
+saveRDS(meta_full, file.path(RDS_UNREL_DIR, "meta.rds"))
 
 saveRDS(list(
   n_original    = nrow(counts_mat),
@@ -373,7 +379,7 @@ saveRDS(list(
   batch_confound_note = "Control (n=3) and 4h (n=3) come from a client-supplied legacy sequencing batch; 8h (n=3) and 16h (n=3) come from the current NovaSeq X Plus batch. No condition overlaps both batches.",
   contamination_finding = "A merged 4-group (~Group, 12-sample) DESeq2 model was found to CONTAMINATE the dispersion/mean-trend estimation badly enough that even the same-batch 4h vs Control contrast produced a false positive (FSCN1/ENSG00000075618: padj=0.0017 in the merged model vs padj=0.9996 when Control+4h are modeled in isolation). Fix: Control-vs-4h and 8h-vs-16h are now each fit in their own independent 2-group DESeq2 model (no shared dispersion estimation). The merged 12-sample model is retained ONLY to produce the cross-batch reference PCA/DEG lists in DE_PCA_Results_Unreliable_CrossBatch/, which are explicitly flagged as not usable for conclusions.",
   gene_overlap_check = gene_overlap_check
-), file.path(REL_DIR, "filter_stats.rds"))
+), file.path(RDS_REL_DIR, "filter_stats.rds"))
 
 cat("\nAll DE/PCA analyses complete.\n")
 cat("RELIABLE (same-batch) results:", REL_DIR, "\n")
