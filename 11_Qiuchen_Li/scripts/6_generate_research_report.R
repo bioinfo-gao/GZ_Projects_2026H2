@@ -266,6 +266,12 @@ report <- c(
     lines
   },
   "- Pathway enrichment and GSEA results are available in the `Enrichment/` directory for detailed biological interpretation.",
+  "- **Sample A5BKO_2 is highly likely mislabeled or affected by an experimental handling error**",
+  "  upstream of sequencing (e.g. sample swap, tube mix-up, or contamination during processing):",
+  "  its transcriptome is essentially indistinguishable from the NT group and unrelated to its own",
+  "  A5BKO replicates (Section 6.1). We recommend the client cross-check this sample's collection,",
+  "  labeling, and processing records before relying on any other data associated with it (e.g. if",
+  "  it was part of a larger batch, other samples processed alongside it may warrant a similar check).",
   "",
 
   "## 8. Deliverable Files",
