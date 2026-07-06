@@ -84,7 +84,15 @@ Total samples: **12**  |  Comparisons: TNFa vs Control, Tumor vs Control, Tumor_
 
 ## 6. Results
 
-### 6.1 Differential Expression
+### 6.1 PCA Overview
+
+PC1 explains **70%** of total variance, PC2 explains **28%**.
+
+Average within-group distance (PC1–PC2 space): **1.67**; average between-group distance: **47.34** (separation ratio **28.33x**).
+
+Replicates cluster tightly within each group, and the four treatment groups are clearly separated from one another — indicating good replicate reproducibility and a strong, consistent transcriptomic effect of treatment.
+
+### 6.2 Differential Expression
 
 | Contrast | Total DEGs | Upregulated | Downregulated |
 | :--- | :---: | :---: | :---: |
@@ -92,7 +100,7 @@ Total samples: **12**  |  Comparisons: TNFa vs Control, Tumor vs Control, Tumor_
 | Tumor_vs_Control | 8483 | 4222 | 4261 |
 | Tumor_TNF_vs_Control | 8757 | 4427 | 4330 |
 
-### 6.2 Pathway Enrichment (GO BP + KEGG, ALL direction)
+### 6.3 Pathway Enrichment (GO BP + KEGG, ALL direction)
 
 | Contrast | GO BP terms | KEGG pathways |
 | :--- | :---: | :---: |
@@ -100,7 +108,7 @@ Total samples: **12**  |  Comparisons: TNFa vs Control, Tumor vs Control, Tumor_
 | Tumor_vs_Control | 142 | 13 |
 | Tumor_TNF_vs_Control | 46 | 4 |
 
-### 6.3 Immune and TNF-pathway relevant genes among the top 50 DEGs
+### 6.4 Immune and TNF-pathway relevant genes among the top 50 DEGs
 
 Given the project's core focus — the transcriptomic response of dendritic cells (cDC1) to
 TNF-α — each contrast's top 50 significant DEGs (the same gene sets shown in

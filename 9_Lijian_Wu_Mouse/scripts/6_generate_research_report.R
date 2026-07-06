@@ -28,6 +28,8 @@ meta     <- readRDS(file.path(DE_DIR, "meta.rds"))
 sig_col  <- "sig (padj<=0.05 & |log2FC|>=0.263)"
 fs_file  <- file.path(DE_DIR, "filter_stats.rds")
 fstats   <- if (file.exists(fs_file)) readRDS(fs_file) else NULL
+pca_file <- file.path(DE_DIR, "pca_summary.rds")
+pca      <- if (file.exists(pca_file)) readRDS(pca_file) else NULL
 
 deg_summary <- lapply(res_list, function(df) {
   up   <- sum(df[[sig_col]] == "Up",   na.rm = TRUE)
@@ -176,7 +178,26 @@ report <- c(
 
   "## 6. Results",
   "",
-  "### 6.1 Differential Expression",
+  "### 6.1 PCA Overview",
+  "",
+  {
+    if (!is.null(pca)) c(
+      sprintf("PC1 explains **%d%%** of total variance, PC2 explains **%d%%**.",
+              pca$percentVar[1], pca$percentVar[2]),
+      "",
+      sprintf("Average within-group distance (PC1–PC2 space): **%.2f**; average between-group distance: **%.2f** (separation ratio **%.2fx**).",
+              pca$within_dist, pca$between_dist, pca$separation_ratio),
+      "",
+      if (pca$separation_ratio > 2)
+        "Replicates cluster tightly within each group, and the four treatment groups are clearly separated from one another — indicating good replicate reproducibility and a strong, consistent transcriptomic effect of treatment."
+      else if (pca$separation_ratio > 1)
+        "Groups show a moderate degree of separation, with some overlap between conditions — treatment effects are detectable but not the dominant source of variance in the dataset."
+      else
+        "Groups show substantial overlap in PCA space, with within-group variability comparable to or exceeding between-group differences — treatment effects on the overall transcriptome are subtle relative to sample-to-sample variability. This does not preclude detecting DEGs at the individual-gene level (see Section 6.2), but the overall sample separation is not strong."
+    ) else "PCA summary data not available."
+  },
+  "",
+  "### 6.2 Differential Expression",
   "",
   "| Contrast | Total DEGs | Upregulated | Downregulated |",
   "| :--- | :---: | :---: | :---: |",
@@ -187,7 +208,7 @@ report <- c(
     })
   },
   "",
-  "### 6.2 Pathway Enrichment (GO BP + KEGG, ALL direction)",
+  "### 6.3 Pathway Enrichment (GO BP + KEGG, ALL direction)",
   "",
   "| Contrast | GO BP terms | KEGG pathways |",
   "| :--- | :---: | :---: |",
@@ -199,7 +220,7 @@ report <- c(
   },
   "",
 
-  "### 6.3 Immune and TNF-pathway relevant genes among the top 50 DEGs",
+  "### 6.4 Immune and TNF-pathway relevant genes among the top 50 DEGs",
   "",
   "Given the project's core focus — the transcriptomic response of dendritic cells (cDC1) to",
   "TNF-α — each contrast's top 50 significant DEGs (the same gene sets shown in",
