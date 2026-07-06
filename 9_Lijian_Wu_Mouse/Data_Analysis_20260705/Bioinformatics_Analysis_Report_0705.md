@@ -100,6 +100,71 @@ Total samples: **12**  |  Comparisons: TNFa vs Control, Tumor vs Control, Tumor_
 | Tumor_vs_Control | 142 | 13 |
 | Tumor_TNF_vs_Control | 46 | 4 |
 
+### 6.3 Immune and TNF-pathway relevant genes among the top 50 DEGs
+
+Given the project's core focus — the transcriptomic response of dendritic cells (cDC1) to
+TNF-α — each contrast's top 50 significant DEGs (the same gene sets shown in
+`Heatmap_top50_*.pdf`) were manually reviewed for known immune-function or TNF/NF-κB pathway
+relevance.
+
+**TNFa vs Control** (isolated TNF-α stimulus):
+
+| Gene | Function / pathway |
+| :--- | :---: |
+| Bcl3 | NF-κB pathway component — canonical downstream effector of TNF-α signalling |
+| Tank | TRAF-associated NF-κB activator — direct component of the TNF-receptor signalling complex |
+| Socs3 | Negative-feedback regulator of cytokine signalling; classic TNF/inflammation-induced gene |
+| Ccl5 (RANTES) | Chemokine; recruits T cells, NK cells, monocytes — classic inflammatory/TNF-induced marker |
+| Isg15, Gbp4, Samd9l | Interferon-stimulated genes — innate immune/antiviral response |
+| Stat4 | Immune signalling transcription factor (Th1 / IFN-γ pathway) |
+| H2-Q7, H2-Q6 | Mouse MHC class I genes — antigen presentation, inducible by IFN/TNF |
+| Il4i1 | Dendritic-cell immunoregulatory enzyme |
+| Serpinb9 | Inhibits granzyme B — immune self-protection/regulation |
+| Pvr (CD155) | Immune checkpoint ligand (TIGIT/DNAM-1) — dendritic cell–T cell interaction |
+| Vsig10 | Immunoglobulin-superfamily receptor |
+
+**Tumor vs Control** (tumour-material exposure):
+
+| Gene | Function / pathway |
+| :--- | :---: |
+| Csf1r | Key differentiation/survival receptor for myeloid and dendritic cells |
+| Spn (CD43) | Classic leukocyte surface marker — adhesion/activation |
+| Cd63 | Late endosome/lysosome marker — antigen uptake and processing |
+| Ctsl (Cathepsin L) | Lysosomal protease required for MHC class II antigen processing |
+| Ifitm3, Tgtp2, Oas1a | Interferon-stimulated antiviral/innate-immunity genes |
+| Itgb3 | Integrin — immune cell adhesion and phagocytosis |
+| Ptk2b (Pyk2) | Integrin-signalling kinase in immune cells |
+
+**Tumor_TNF vs Control** (combined tumour + TNF-α):
+
+| Gene | Function / pathway |
+| :--- | :---: |
+| Ccr2 | Chemokine receptor — monocyte/macrophage recruitment |
+| Cxcr3 | Chemokine receptor — T cell/NK cell, Th1 response |
+| Grap2, Sh2b3, Lat2 | Immune-receptor signalling adaptor proteins (T/NK/mast/B cells) |
+| Milr1 | Mast cell inhibitory immunoglobulin-like receptor |
+| Entpd1 (CD39) | Immunoregulatory ectonucleotidase — Treg-associated marker |
+| P2ry6 | Purinergic receptor — regulates phagocytosis |
+| Ptger3 | Prostaglandin receptor — inflammatory signalling |
+| Oasl1, Ifi203, Xaf1 | Interferon-stimulated antiviral/innate-immunity genes |
+| Id1 | Immune cell differentiation regulator |
+| Arhgap9 | Haematopoietic Rho-GTPase-activating protein — immune cell migration |
+| Pvr (CD155) | Immune checkpoint ligand (as above) |
+
+**Cross-contrast observations:**
+
+- **Bcl3 and Tank** appearing among the top DEGs for TNFa vs Control are direct components of the
+  NF-κB/TRAF signalling cascade — a strong internal positive control confirming the TNF-α
+  stimulus engaged its expected canonical pathway.
+- **Pvr (CD155)**, an immune checkpoint ligand, is among the top DEGs in both TNFa vs Control and
+  Tumor_TNF vs Control, suggesting consistent TNF-α-driven upregulation regardless of co-exposure
+  to tumour material — a candidate worth independent validation.
+- **Chemokine receptors Ccr2 and Cxcr3** appear only in the combined Tumor_TNF contrast, not in
+  TNFa alone — suggesting the combination of tumour exposure and TNF-α specifically activates an
+  immune cell-recruitment programme that neither stimulus induces on its own.
+- **Cd63 and Ctsl**, both linked to antigen uptake/processing, appear only in the Tumor contrast —
+  consistent with dendritic cells actively processing tumour-derived material.
+
 ## 7. Conclusions
 
 - **TNFa_vs_Control**: 6847 DEGs identified. Predominantly downregulated (3769 down vs 3078 up), suggesting suppression of gene expression relative to untreated control.
