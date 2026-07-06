@@ -191,6 +191,16 @@ run_one_contrast <- function(count_subset, meta_sub, grp_trt, grp_ctrl, out_dir,
     theme(legend.position = "bottom", plot.title = element_text(size = 9, hjust = 0.5))
   ggsave(file.path(out_dir, paste0("PCA_", comp_name, ".pdf")), p_pca, width = 8, height = 6.5, dpi = 300)
 
+  # 组内 vs 组间平均欧氏距离 (量化分离程度，供报告解读用)
+  dist_mat   <- as.matrix(dist(pca_data[, c("PC1","PC2")]))
+  same_group <- outer(pca_data$Group, pca_data$Group, "==")
+  diag(same_group) <- FALSE
+  within_dist  <- mean(dist_mat[same_group])
+  between_dist <- mean(dist_mat[!same_group])
+  saveRDS(list(percentVar = percentVar, within_dist = within_dist,
+               between_dist = between_dist, separation_ratio = between_dist / within_dist),
+          file.path(RDS_REL_DIR, paste0("pca_summary_", comp_name, ".rds")))
+
   # DE
   sig_col <- "sig (padj<=0.05 & |log2FC|>=0.263)"
   res <- lfcShrink(dds, contrast = c("Group", grp_trt, grp_ctrl), type = "ashr")
@@ -303,6 +313,16 @@ p_pca_full <- ggplot(pca_data, aes(PC1, PC2, color = Group, shape = Batch, label
   theme_bw(base_size = 12) + scale_color_brewer(palette = "Set1") +
   theme(legend.position = "bottom", plot.title = element_text(size = 9, hjust = 0.5, color = "firebrick"))
 ggsave(file.path(UNREL_DIR, "PCA_all_4_groups.pdf"), p_pca_full, width = 8, height = 6.5, dpi = 300)
+
+# 组内 vs 组间平均欧氏距离 (注意: 这里的"组间分离"和批次完全混淆，解读时必须说明，不能当作真实生物学分离)
+dist_mat_full   <- as.matrix(dist(pca_data[, c("PC1","PC2")]))
+same_group_full <- outer(pca_data$Group, pca_data$Group, "==")
+diag(same_group_full) <- FALSE
+within_dist_full  <- mean(dist_mat_full[same_group_full])
+between_dist_full <- mean(dist_mat_full[!same_group_full])
+saveRDS(list(percentVar = percentVar, within_dist = within_dist_full,
+             between_dist = between_dist_full, separation_ratio = between_dist_full / within_dist_full),
+        file.path(RDS_UNREL_DIR, "pca_summary_all_4_groups.rds"))
 
 sig_col <- "sig (padj<=0.05 & |log2FC|>=0.263)"
 res_list_unreliable <- list()
