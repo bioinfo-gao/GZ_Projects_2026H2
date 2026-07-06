@@ -4,6 +4,25 @@
 #
 # 分析设计: 3 组两两对比 (client requested all 3 pairwise contrasts, no single control)
 #   Mix vs NT, A5BKO vs NT, A5BKO vs Mix
+#
+# ================================================================
+# REDO 2026-07-05: exclude A5BKO_2 (likely sample mislabeling)
+# ================================================================
+# PCA showed A5BKO_2 clustering with the 3 NT replicates (PC1=4.94, PC2=-3.72),
+# essentially indistinguishable from NT_1/2/3 (PC1=4.94-5.01, PC2=-3.40 to -3.61),
+# and far from its own A5BKO_1/3 replicates (PC1=10.6-10.7, PC2=5.47-5.48). This is
+# not run-of-the-mill replicate noise; it is the signature of a mislabeled/swapped
+# sample. Excluded from this analysis (A5BKO now n=2: A5BKO_1, A5BKO_3).
+#
+# Also fixed a heatmap annotation bug in this same redo: the previous ann_df
+# construction used logical-subset filtering (`meta$Group[meta$sample_id %in% smp_comp]`),
+# which preserves meta's OWN row order rather than smp_comp's order. For 2 of the
+# 3 contrasts (A5BKO_vs_NT, A5BKO_vs_Mix) this produced a completely reversed
+# Group annotation (A5BKO samples labeled NT/Mix and vice versa) in the delivered
+# heatmap PDFs. Fixed by using match() to force correct alignment, plus a hard
+# stopifnot() assertion so any future regression fails loudly instead of shipping
+# silently wrong figures. See /home/gao/.claude/commands/rnaseq.md checklist item 15.
+# ================================================================
 
 library(DESeq2)
 library(ashr)
@@ -80,7 +99,13 @@ meta <- meta_raw %>%
     Group     = factor(as.character(Group), levels = c("NT", "Mix", "A5BKO"))  # NT = 参照水平 (无单一对照，见下方两两对比)
   )
 
-cat("Metadata loaded:", nrow(meta), "samples\n")
+# 剔除 A5BKO_2 (PCA 证实与 NT 样本几乎重合，判断为样品错标，非普通重复噪音 —— 见脚本顶部注释)
+EXCLUDED_SAMPLES <- c("A5BKO_2")
+meta <- meta[!meta$sample_id %in% EXCLUDED_SAMPLES, ]
+cat("Excluded sample(s):", paste(EXCLUDED_SAMPLES, collapse=", "),
+    "(likely mislabeled — PCA coordinates matched NT group, not A5BKO)\n")
+
+cat("Metadata loaded:", nrow(meta), "samples (after exclusion)\n")
 print(meta)
 
 # ================= 4. 表达矩阵预处理 =================
@@ -257,8 +282,15 @@ for (comp_name in names(res_list)) {
   }
   rownames(mat) <- gene_labels
 
-  ann_df <- data.frame(Group = as.character(meta$Group[meta$sample_id %in% smp_comp]),
+  # match() 强制按 smp_comp 的顺序对齐 Group 标签 (不能用逻辑子集筛选，那样会保留 meta
+  # 自身的行顺序而不是 smp_comp 的顺序，两者不一致时会导致 Group 标注和样品名完全对应错误)
+  ann_df <- data.frame(Group = as.character(meta$Group[match(smp_comp, meta$sample_id)]),
                        row.names = smp_comp)
+
+  # 强制校验: Group 标注必须与 meta 中每个 sample_id 的真实 Group 完全一致，
+  # 否则立即报错终止 —— 绝不能让标注错误的热图静默生成后被交付
+  expected_group <- setNames(as.character(meta$Group), meta$sample_id)[smp_comp]
+  stopifnot("Heatmap annotation Group mismatch!" = all(as.character(ann_df$Group) == unname(expected_group)))
 
   pheatmap(mat, annotation_col=ann_df,
            filename=file.path(OUT_DIR, paste0("Heatmap_top50_", comp_name, ".pdf")),
