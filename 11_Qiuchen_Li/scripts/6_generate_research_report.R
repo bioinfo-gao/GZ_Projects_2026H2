@@ -28,6 +28,8 @@ meta     <- readRDS(file.path(DE_DIR, "meta.rds"))
 sig_col  <- "sig (padj<=0.05 & |log2FC|>=0.263)"
 fs_file  <- file.path(DE_DIR, "filter_stats.rds")
 fstats   <- if (file.exists(fs_file)) readRDS(fs_file) else NULL
+pca_file <- file.path(DE_DIR, "pca_summary.rds")
+pca      <- if (file.exists(pca_file)) readRDS(pca_file) else NULL
 
 deg_summary <- lapply(res_list, function(df) {
   up   <- sum(df[[sig_col]] == "Up",   na.rm = TRUE)
@@ -139,12 +141,10 @@ report <- c(
   "scores higher than Mix for their respective MYC signatures. That ordering (**A5BKO > NT > Mix**)",
   "is exactly what would be expected if the same underlying biological axis (MYC-driven proliferation/",
   "translation activity) is the dominant driver of transcriptomic variation across all three groups,",
-  "rather than three unrelated, coincidental hits. This is consistent with the very large DEG counts",
-  "seen for Mix_vs_NT and A5BKO_vs_Mix (Section 2) alongside the far smaller A5BKO_vs_NT DEG count —",
-  "groups closer together on this MYC axis (A5BKO and NT) show fewer DEGs, while groups further apart",
-  "(Mix vs either) show many more. We'd recommend treating MYC pathway activity as a candidate primary",
-  "axis of biological variation in this experiment, worth confirming with a marker-gene qPCR panel or",
-  "by correlating a MYC target module score against the client's expected experimental design.",
+  "rather than three unrelated, coincidental hits. We'd recommend treating MYC pathway activity as a",
+  "candidate primary axis of biological variation in this experiment, worth confirming with a",
+  "marker-gene qPCR panel or by correlating a MYC target module score against the client's expected",
+  "experimental design.",
   "",
 
   "## 3. Sample Information",
@@ -153,10 +153,16 @@ report <- c(
   "| :--- | :---: | :---: |",
   paste0("| Mix | Mix_1, Mix_2, Mix_3 | Experimental group |"),
   paste0("| NT | NT_1, NT_2, NT_3 | Experimental group |"),
-  paste0("| A5BKO | A5BKO_1, A5BKO_2, A5BKO_3 | Experimental group |"),
+  paste0("| A5BKO | A5BKO_1, A5BKO_3 | Experimental group (n=2, see note below) |"),
   "",
-  paste0("Total samples: **", nrow(meta), "**  |  ",
+  paste0("Total samples analysed: **", nrow(meta), "**  |  ",
          "Comparisons: Mix vs NT, A5BKO vs NT, A5BKO vs Mix"),
+  "",
+  "**Sample exclusion:** sample **A5BKO_2** was excluded from this analysis. PCA placed it",
+  "essentially on top of the three NT replicates (far from its own A5BKO_1/A5BKO_3 replicates,",
+  "which cluster tightly together) — a pattern consistent with sample mislabeling rather than",
+  "ordinary biological/technical replicate variation. The A5BKO group therefore has n=2 in this",
+  "analysis; all A5BKO-related contrasts below reflect A5BKO_1 and A5BKO_3 only.",
   "",
 
   "## 4. Analysis Rationale and Decision Criteria",
@@ -203,7 +209,26 @@ report <- c(
 
   "## 6. Results",
   "",
-  "### 6.1 Differential Expression",
+  "### 6.1 PCA Overview",
+  "",
+  {
+    if (!is.null(pca)) c(
+      sprintf("PC1 explains **%d%%** of total variance, PC2 explains **%d%%**.",
+              pca$percentVar[1], pca$percentVar[2]),
+      "",
+      sprintf("Average within-group distance (PC1–PC2 space): **%.2f**; average between-group distance: **%.2f** (separation ratio **%.2fx**).",
+              pca$within_dist, pca$between_dist, pca$separation_ratio),
+      "",
+      if (pca$separation_ratio > 2)
+        "Replicates cluster tightly within each group, and the three groups are clearly separated from one another — indicating good replicate reproducibility and a strong, consistent transcriptomic effect between groups (this is with the mislabeled A5BKO_2 sample already excluded — see Section 3)."
+      else if (pca$separation_ratio > 1)
+        "Groups show a moderate degree of separation, with some overlap between conditions — group differences are detectable but not the dominant source of variance in the dataset."
+      else
+        "Groups show substantial overlap in PCA space, with within-group variability comparable to or exceeding between-group differences."
+    ) else "PCA summary data not available."
+  },
+  "",
+  "### 6.2 Differential Expression",
   "",
   "| Contrast | Total DEGs | Upregulated | Downregulated |",
   "| :--- | :---: | :---: | :---: |",
@@ -214,7 +239,7 @@ report <- c(
     })
   },
   "",
-  "### 6.2 Pathway Enrichment (GO BP + KEGG, ALL direction)",
+  "### 6.3 Pathway Enrichment (GO BP + KEGG, ALL direction)",
   "",
   "| Contrast | GO BP terms | KEGG pathways |",
   "| :--- | :---: | :---: |",

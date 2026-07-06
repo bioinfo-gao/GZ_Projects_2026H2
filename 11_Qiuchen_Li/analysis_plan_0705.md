@@ -1,6 +1,6 @@
 # Qiuchen Li Human RNA-seq Analysis Plan
 
-**Date:** 2026-07-05
+**Date:** 2026-07-06
 **Project:** 11_Qiuchen_Li
 **Species:** Homo sapiens (GRCh38 / GENCODE v45)
 **Analyst:** Zhen Gao
@@ -52,7 +52,7 @@ FASTQ data: `/Work_bio/dropbox/Dropbox_Data/Qiuchen/`
 ```
 /home/gao/projects_2026H2/11_Qiuchen_Li/
 ├── Sample_Sheet_Qiuchen_Li.xlsx
-├── analysis_plan_0705.md               ← this document
+├── analysis_plan_0706.md               ← this document
 ├── scripts/
 │   ├── 1_produce_nf-core_Samplesheet.py
 │   ├── 2_nextflow.sh
