@@ -143,6 +143,12 @@ Replicates cluster tightly within each group, and the three groups are clearly s
 - **A5BKO_vs_NT**: 3413 DEGs identified. Predominantly downregulated (1732 down vs 1681 up).
 - **A5BKO_vs_Mix**: 6937 DEGs identified. Predominantly downregulated (3488 down vs 3449 up).
 - Pathway enrichment and GSEA results are available in the `Enrichment/` directory for detailed biological interpretation.
+- **Sample A5BKO_2 is highly likely mislabeled or affected by an experimental handling error**
+  upstream of sequencing (e.g. sample swap, tube mix-up, or contamination during processing):
+  its transcriptome is essentially indistinguishable from the NT group and unrelated to its own
+  A5BKO replicates (Section 6.1). We recommend the client cross-check this sample's collection,
+  labeling, and processing records before relying on any other data associated with it (e.g. if
+  it was part of a larger batch, other samples processed alongside it may warrant a similar check).
 
 ## 8. Deliverable Files
 
