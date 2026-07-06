@@ -148,6 +148,17 @@ p_pca <- ggplot(pca_data, aes(PC1, PC2, color = Group, label = name)) +
 ggsave(file.path(OUT_DIR, "PCA.pdf"), p_pca, width = 8, height = 6, dpi = 300)
 cat("PCA saved\n")
 
+# 组内 vs 组间平均欧氏距离 (量化分离程度，供报告解读用，避免只放图不加文字说明)
+dist_mat   <- as.matrix(dist(pca_data[, c("PC1","PC2")]))
+same_group <- outer(pca_data$Group, pca_data$Group, "==")
+diag(same_group) <- FALSE
+within_dist  <- mean(dist_mat[same_group])
+between_dist <- mean(dist_mat[!same_group])
+saveRDS(list(percentVar = percentVar, within_dist = within_dist,
+             between_dist = between_dist, separation_ratio = between_dist / within_dist),
+        file.path(RDS_DIR, "pca_summary.rds"))
+cat("PCA summary saved: separation ratio =", round(between_dist / within_dist, 2), "\n")
+
 # ================= 8. 差异表达分析: TNFa/Tumor/Tumor_TNF vs Control =================
 sig_col  <- "sig (padj<=0.05 & |log2FC|>=0.263)"
 contrasts <- list(
