@@ -23,7 +23,7 @@ CRAM=$(ls "$PROJ"/output_results/preprocessing/markduplicates/"$SAMPLE"/*.cram 2
 # 1) 基线：全基因组常染色体(chr1..chr19)中位深度（唯一比对）
 echo ">> mosdepth 全基因组深度（MAPQ>=$MAPQ）..."
 cd "$OUTDIR"
-RUN mosdepth -t 6 -n --fast-mode -Q $MAPQ --reference "$HYBRID" "$SAMPLE" "$CRAM"
+RUN mosdepth -t 6 -n --fast-mode -Q $MAPQ -f "$HYBRID" "$SAMPLE" "$CRAM"
 # summary 里每条 contig 一行；取 chr1..chr19 加权平均作基线
 BASELINE=$(awk '$1 ~ /^chr([1-9]|1[0-9])$/ {bp+=$2*$4; L+=$2} END{if(L>0) printf "%.4f", bp/L; else print "NA"}' "${SAMPLE}.mosdepth.summary.txt")
 echo "  常染色体基线平均深度: $BASELINE x"
