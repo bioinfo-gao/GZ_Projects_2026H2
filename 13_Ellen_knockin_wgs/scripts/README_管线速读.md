@@ -54,8 +54,8 @@ Ellen fastq ──► [1] samplesheet.csv ──► [2] sarek 比对/QC/去重/S
 | **1** | `1_produce_samplesheet.py` | `/home/gao/Dropbox/Ellen/*.fastq.gz` | 解析文件名(下划线前缀=品系)，生成 sarek 样本表 | `samplesheet_full.csv` + `samplesheet_trial_RAGH.csv` |
 | **2** | `2_run_sarek.sh` | samplesheet + 混合参考 | **核心**：nf-core/sarek 3.8.1 跑 比对(bwa-mem2)/QC/去重/SV(Manta,TIDDIT)。自动进 tmux、失败自动 `-resume`。跳过 BQSR、跳过人类注释 | `output_results/`（CRAM、Manta VCF、mosdepth） |
 | **3** | `3_work_monitor.sh` | sarek 日志 | 状态快照；`watch` 模式前 3 分钟每 30s 查报错(早期失败检测) | 终端输出 |
-| **4** | `4_integration_analysis.sh` | CRAM + 混合参考 | 抓落在构建体 contig 上的读段，看其**配偶(discordant)**和**软剪切(split)**落回小鼠何处 → 5kb 窗口聚类成**候选整合位点**；另从 Manta VCF 提 TG_ 相关 BND | `analysis/integration/<样本>/*.tsv` |
-| **5** | `5_copy_number.sh` | CRAM + 混合参考 | mosdepth 算基线(常染色体中位深度)，samtools coverage 算每个构建体深度 → **拷贝数=构建体深度/基线**(MAPQ≥20 防交叉比对虚高) | `analysis/copy_number/<样本>/copy_number.tsv` |
+| **5** | `5_copy_number.sh` | CRAM + 混合参考 + `construct_regions.tsv` | **先跑**。mosdepth 算基线(常染色体中位深度)；**只在构建体的人源特异区**算深度 → **拷贝数=人源区深度/基线**(MAPQ≥20；遮蔽同源臂，否则严重低估) | `analysis/copy_number/<样本>/copy_number.tsv` |
+| **4** | `4_integration_analysis.sh` | CRAM + `construct_regions.tsv` + 脚本5的基线 | **后跑**。两路:①**on-target 桥接**(不加MAPQ,构建体配偶落自身内源靶点=佐证定点整合)②**off-target 筛查**(MAPQ≥20唯一读段落非预期位点=脱靶);含"构建体是否存在"门控 + 高深度artifact黑名单。**Manta 已弃用** | `analysis/integration/<样本>/integration_summary.tsv` |
 | **6** | `6_annotate_breakpoints.R` | Step4 候选位点 + GENCODE vM35 GTF | 每个断点注释落在**哪个小鼠基因**(外显子/内含子/基因间)，判断 on-target(Rag2/Htt) vs 脱靶 | `analysis/annotation/<样本>/*_annotated.tsv` |
 | **7** | `7_generate_report.R` | Step4/5/6 各输出 | 汇总成**英文客户报告**(CLAUDE.md 结构)。结果表自动填，叙述部分待客户目标+全样本后定稿 | `custom_research_report_YYYYMMDD/Ellen_KnockIn_WGS_MMDD.md` |
 
@@ -81,9 +81,9 @@ Ellen fastq ──► [1] samplesheet.csv ──► [2] sarek 比对/QC/去重/S
 bash scripts/0_build_hybrid_ref.sh            # 建合并参考
 bash scripts/2_run_sarek.sh                   # tmux 后台跑 RAGH_153（默认 trial 表）
 bash scripts/3_work_monitor.sh watch          # 前3分钟盯早期失败
-# 比对完成后（下游分析）：
-bash scripts/4_integration_analysis.sh RAGH_153
+# 比对完成后（下游分析，注意 5 先于 4：4 复用 5 的 mosdepth 基线）：
 bash scripts/5_copy_number.sh RAGH_153
+bash scripts/4_integration_analysis.sh RAGH_153
 /Work_bio/gao/configs/.conda/envs/DE_R45/bin/Rscript scripts/6_annotate_breakpoints.R RAGH_153
 ```
 

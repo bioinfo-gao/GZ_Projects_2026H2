@@ -1,0 +1,7 @@
+# 各构建体的关键区间坐标（供脚本4/5 遮蔽同源臂、只在人源特异区计算）
+# 坐标均为构建体 contig 内的 1-based 坐标；endogenous_locus 是小鼠基因组坐标（打靶靶点/内源直系同源位点）
+# 来源：SnapGene .dna feature 解析 + minimap2 同源臂比对 GRCm39（见 docs/复盘与思考_0706.md §1.5）
+# CD1A 序列到位后追加一行。
+contig	human_start	human_end	arm5_start	arm5_end	arm3_start	arm3_end	endogenous_locus	homology_caveat
+TG_RAGH	19692	24759	13650	19692	24841	27213	chr2:101455063-101462874	none_mouse_lacks_group1_CD1_and_these_cytokines
+TG_MTTH	37000	215000	28902	36990	215129	222842	chr5:34919084-35069878	human_HTT_~85pct_identical_to_mouse_Htt_MAPQ20_and_divergent_exons_only

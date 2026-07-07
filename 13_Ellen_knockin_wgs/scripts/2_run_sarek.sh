@@ -11,7 +11,8 @@
 #     - 指向合并 hybrid 参考（--fasta）
 #     - --aligner bwa-mem2
 #     - --skip_tools baserecalibrator（无 known-sites + NovaSeq 收益极小）
-#     - --tools manta,tiddit（BND 断点 = 整合结合部；模式A 可另加 germline caller）
+#     - --tools tiddit（Manta 已弃用：试跑证明它对同源臂+定点替换的整合结合部零检出、
+#       且 7.5h/样病态慢——见 docs/试跑经验与教训_0707.md §三①；整合主力是脚本4A 嵌合读段法）
 #     - 跳过 snpEff/VEP 人类注释（断点自行注释到 GENCODE vM35）
 # ============================================================================
 set -euo pipefail
@@ -56,7 +57,7 @@ run_sarek() {
         --genome null \
         --aligner bwa-mem2 \
         --skip_tools baserecalibrator \
-        --tools manta,tiddit \
+        --tools tiddit \
         --wes false \
         "$@"
 }
