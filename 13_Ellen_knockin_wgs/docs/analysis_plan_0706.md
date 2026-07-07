@@ -1,7 +1,7 @@
 # Ellen 人源基因敲入小鼠 WGS — 分析方案 (Analysis Plan)
 
 - **Project**: 13_Ellen_knockin_wgs
-- **Plan Date**: 2026-07-05
+- **Plan Date**: 2026-07-06 (rev — 构建体解码 + sarek-on-hybrid 引擎决策)
 - **Prepared by**: Zhen Gao, PhD, Principal Bioinformatics Scientist, Athenomics
 - **Data**: `/home/gao/Dropbox/Ellen/` — 6 samples, WGS PE150, NovaSeq X Plus
 - **参考方法来源**: `4_wgs_human_immu/` (nf-core/sarek 已装好并测试通过) 提供比对/QC/资源管理的基础做法；本项目的整合位点/拷贝数/SV 分析为在其之上的定制流程。
