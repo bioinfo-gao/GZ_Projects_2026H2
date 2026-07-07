@@ -129,13 +129,12 @@
 
 ---
 
-## 7. 待客户确认清单（样本表已答一大半，剩余）
+## 7. 待客户确认清单（Study A 已基本答全；Study B 未答）
 
-1. **数据 fastq 路径**（12 样本身份见 §1 表）。
-2. Study A：三个 tumor 各源自 B1TP 还是 B2TP 谱系？**Brca1/Brca2/Pten sgRNA 精确序列/切点坐标**；RO primary cell 的组织来源。
-3. Study B：背景品系；**Cre 是否诱导过**（决定 Lats1/2 是否真删、L1L2 能否当相对基线）；**iHPV(E6/E7) 构建体 + Lats1/2 loxP 打靶序列**；观察到的"不寻常"具体表型。
-4. 是否愿补 **1 只野生型同窝** 作 Study B 绝对正常（非必需；Study A 已有 RO_origin）。
-5. 交付重心确认（编辑验证 / 肿瘤 CNV+突变 / 品系异常定位）。
+- ✅ **Study A 已澄清**（客户 2026-07-07 补充）：亲本 Trp53⁺/⁻;Cas9、电穿孔 sgRNA、B1TP=Brca1+Pten / B2TP=Brca2+Pten、4/5/6 为肿瘤消化细胞株。tumor 谱系可由数据反推。仅 sgRNA 精确坐标是 nice-to-have（无也能按基因扫 indel）。
+- ⏳ **Study B 仍待客户答**：背景品系；**Cre 是否诱导过**（决定 Lats1/2 是否真删；也可由 WGS 自查 floxed 外显子覆盖）；**iHPV(E6/E7) 构建体 + Lats1/2 loxP 打靶序列**（仅卡 B3 整合/等位验证）；"不寻常"具体表型。
+- **数据 fastq 路径**（操作性硬需求）。
+- 是否愿补 1 只野生型同窝作 Study B 绝对正常（非必需）。
 
 ---
 
