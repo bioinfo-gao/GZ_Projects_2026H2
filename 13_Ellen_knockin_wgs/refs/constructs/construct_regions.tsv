@@ -1,7 +1,9 @@
 # 各构建体的关键区间坐标（供脚本4/5 遮蔽同源臂、只在人源特异区计算）
 # 坐标均为构建体 contig 内的 1-based 坐标；endogenous_locus 是小鼠基因组坐标（打靶靶点/内源直系同源位点）
-# 来源：SnapGene .dna feature 解析 + minimap2 同源臂比对 GRCm39（见 docs/复盘与思考_0706.md §1.5）
-# CD1A 序列到位后追加一行。
+# 来源（2026-07-08 更新）：客户提供 WT 等位基因序列 + KI(targeted allele) 序列，用 minimap2 (asm5)
+# 做 WT-vs-KI 全局比对，取比对断裂处为精确臂/插入边界（比单纯读 SnapGene feature 标签更准）。
+# 见 docs/analysis_plan_0708.md §1.5。CD1A 行为本次新增（此前只有 RAGH/MTTH）。
 contig	human_start	human_end	arm5_start	arm5_end	arm3_start	arm3_end	endogenous_locus	homology_caveat
-TG_RAGH	19692	24759	13650	19692	24841	27213	chr2:101455063-101462874	none_mouse_lacks_group1_CD1_and_these_cytokines
-TG_MTTH	37000	215000	28902	36990	215129	222842	chr5:34919084-35069878	human_HTT_~85pct_identical_to_mouse_Htt_MAPQ20_and_divergent_exons_only
+TG_RAGH	19695	24841	0	19695	24841	38566	chr2:101455063-101462874	human_cytokine_cassette_no_mouse_ortholog_clean
+TG_MTTH	36824	215126	28083	36824	215126	238154	chr5:34919084-35069878	human_HTT_~85pct_identical_to_mouse_Htt_MAPQ20_and_divergent_exons_only
+TG_CD1A	29972	157447	0	29972	157447	185655	chr3:86893858-86906748	insert_is_FULL_human_CD1_cluster(CD1D+A+C+B+E)_replacing_mouse_Cd1d1+Cd1d2;CD1D_subregion_may_cross-map_mouse_Cd1d_MAPQ20;CD1A/B/C/E_no_mouse_ortholog_clean;⚠Neo_cassette(NeoR/KanR+loxP+FRT)_INTACT_in_this_KI_file_unlike_RAGH/MTTH_"Neo_Deleted"—actual_mouse_allele_status_TBD_check_WGS_reads
