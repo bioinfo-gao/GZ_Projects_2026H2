@@ -1,0 +1,7 @@
+patient,sample,status,lane,fastq_1,fastq_2
+RO,RO_origin,0,L006,/home/gao/Dropbox/JinPeng/23KCYFLT4_6_0469165295_3852R0origin_S65_L006_R1_001.fastq.gz,/home/gao/Dropbox/JinPeng/23KCYFLT4_6_0469165295_3852R0origin_S65_L006_R2_001.fastq.gz
+RO,RO_B1TP,1,L006,/home/gao/Dropbox/JinPeng/23KCYFLT4_6_0469165295_3852R0B1TP_S63_L006_R1_001.fastq.gz,/home/gao/Dropbox/JinPeng/23KCYFLT4_6_0469165295_3852R0B1TP_S63_L006_R2_001.fastq.gz
+RO,RO_B2TP,1,L006,/home/gao/Dropbox/JinPeng/23KCYFLT4_6_0469165295_3852R0B2TP_S64_L006_R1_001.fastq.gz,/home/gao/Dropbox/JinPeng/23KCYFLT4_6_0469165295_3852R0B2TP_S64_L006_R2_001.fastq.gz
+RO,RO_tumor1,1,L006,/home/gao/Dropbox/JinPeng/23KCYFLT4_6_0469165295_3868_S66_L006_R1_001.fastq.gz,/home/gao/Dropbox/JinPeng/23KCYFLT4_6_0469165295_3868_S66_L006_R2_001.fastq.gz
+RO,RO_tumor2,1,L006,/home/gao/Dropbox/JinPeng/23KCYFLT4_6_0469165295_7352_S67_L006_R1_001.fastq.gz,/home/gao/Dropbox/JinPeng/23KCYFLT4_6_0469165295_7352_S67_L006_R2_001.fastq.gz
+RO,RO_tumor3,1,L006,/home/gao/Dropbox/JinPeng/23KCYFLT4_6_0469165295_8599_S70_L006_R1_001.fastq.gz,/home/gao/Dropbox/JinPeng/23KCYFLT4_6_0469165295_8599_S70_L006_R2_001.fastq.gz
