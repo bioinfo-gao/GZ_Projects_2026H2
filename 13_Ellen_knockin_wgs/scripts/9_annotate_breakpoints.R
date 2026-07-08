@@ -1,16 +1,16 @@
 #!/usr/bin/env Rscript
 # ============================================================================
-# Step 6 — 整合断点注释到小鼠基因（GENCODE vM35）
+# Step 9（对应方案 Step 5）— 整合断点注释到小鼠基因（GENCODE vM35）
 #   读取 Step 4 的候选整合位点 TSV，用 GRCm39 基因模型注释每个断点落在
 #   哪个小鼠基因（外显子/内含子/基因间），判断是否破坏内源基因。
 #
-#   运行: /Work_bio/gao/configs/.conda/envs/DE_R45/bin/Rscript 6_annotate_breakpoints.R RAGH_153
+#   运行: /Work_bio/gao/configs/.conda/envs/DE_R45/bin/Rscript 9_annotate_breakpoints.R RAGH_153
 #   依赖: GenomicRanges, rtracklayer（DE_R45 环境）
 # ============================================================================
 suppressMessages({ library(GenomicRanges); library(rtracklayer) })
 
 args   <- commandArgs(trailingOnly = TRUE)
-SAMPLE <- if (length(args) >= 1) args[1] else stop("用法: Rscript 6_annotate_breakpoints.R <sample>")
+SAMPLE <- if (length(args) >= 1) args[1] else stop("用法: Rscript 9_annotate_breakpoints.R <sample>")
 PROJ   <- "/home/gao/projects_2026H2/13_Ellen_knockin_wgs"
 GTF    <- "/Work_bio/references/Mus_musculus/GRCm39/mouse_gencode_M35/gencode.vM35.annotation.gtf"
 INDIR  <- file.path(PROJ, "analysis/integration", SAMPLE)
@@ -59,5 +59,5 @@ message("写入: ", outfile)
 print(res)
 
 # 定点打靶预期位点提示
-cat("\n预期靶位点（定点打靶）：RAGH→Rag2(chr2:101.45Mb) | MTTH→Htt(chr5:34.9Mb)\n")
+cat("\n预期靶位点（定点打靶）：RAGH→Rag2(chr2:101.45Mb) | MTTH→Htt(chr5:34.9Mb) | CD1A→Cd1d1+Cd1d2(chr3:86.9Mb)\n")
 cat("落在预期基因上的位点=on-target 验证；落在别处的高支持位点=脱靶随机整合，需重点核查。\n")
