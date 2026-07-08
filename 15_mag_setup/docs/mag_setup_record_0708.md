@@ -6,8 +6,8 @@ This folder is the validated worked example the `/tax-resemb-mag` skill referenc
 It records how nf-core/mag **5.4.2** (the current release) was set up in the
 `mag_biobakery` conda env and validated with the built-in test profile.
 
-> Supersedes the earlier `15_mag_setup/` (mag 2.5.1, legacy template) — that version
-> was too old; 5.4.2 is the modern-template pipeline and needs none of 2.5.1's hacks.
+> This replaces an earlier throwaway attempt on mag 2.5.1 (legacy template), which was
+> too old; 5.4.2 is the modern-template pipeline and needs none of 2.5.1's hacks.
 
 ---
 
@@ -68,7 +68,7 @@ needs the full **GTDB r226 (~102GB)** — download once to a shared references d
 ## 4. Files in this folder
 
 ```
-16_mag_setup/
+15_mag_setup/
 ├── scripts/
 │   ├── local_resources.config   ← singularity cache + process.resourceLimits (24c/96G)
 │   └── run_mag_test.sh          ← the validated test launcher (tmux + absolute nextflow path)

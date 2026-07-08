@@ -218,6 +218,6 @@ Thumbs.db
 14_geneedit_lats12_wgs/logs/
 14_geneedit_lats12_wgs/refs/hybrid/
 
-# 16_mag_setup: nf-core/mag 5.4.2 test-profile validation scratch (keep out of VCS)
-16_mag_setup/test_run/results/
-16_mag_setup/test_run/*.log
+# 15_mag_setup: nf-core/mag 5.4.2 test-profile validation scratch (keep out of VCS)
+15_mag_setup/test_run/results/
+15_mag_setup/test_run/*.log

@@ -3,7 +3,7 @@
 # Self-relaunch into tmux; on first failure, auto-retry with -resume.
 set -uo pipefail
 
-PROJ=/home/gao/projects_2026H2/16_mag_setup
+PROJ=/home/gao/projects_2026H2/15_mag_setup
 # Use mag_biobakery's OWN nextflow (26.04.4). PATH ordering otherwise shadows it with
 # regular_bioinfo's 25.10.4 -- and mag 5.4.2 requires Nextflow >= 25.04.2, so pin explicitly.
 NEXTFLOW=/Work_bio/gao/configs/.conda/envs/mag_biobakery/bin/nextflow
