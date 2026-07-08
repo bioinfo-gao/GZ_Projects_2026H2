@@ -3,6 +3,8 @@
 分析设计见 `../docs/analysis_plan_0707.md`；样本权威源 `../docs/sample_info.tsv`。
 **这些脚本供审阅，确认无误后再逐步执行。** 不要盲跑。
 
+> **执行决策（2026-07-08，用户同意 A）**：主体 sarek（A2/B2）先跑 **plain GRCm39**（比对/体细胞/germline/CNV/SV 与 hybrid 完全一致）。**Cas9/iHPV 整合位点（A5/B3）作为后续专项**——等 0b 把 SpCas9+iHPV 构建体序列核准后，对相关样本（A 全部 / L1L2H 3 只）单独建小 hybrid 重比对或用 host-subtraction。故 0b/0c 暂缓，不阻塞主体。
+
 ## 结构与执行顺序
 ```
 0_common/   共享设置（先跑）

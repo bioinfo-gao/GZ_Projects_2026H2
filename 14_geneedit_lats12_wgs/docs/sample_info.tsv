@@ -1,13 +1,13 @@
-sample_id	fastq_prefix	study	sample_type	patient	status	genotype_background	age_months	edit_or_construct
-RO_origin	3852R0origin_S65	A	Cell	RO	0	Trp53+/-;Cas9	NA	none(parental_normal)
-RO_B1TP	3852R0B1TP_S63	A	Cell	RO	1	Trp53+/-;Cas9	NA	sgRNA_Brca1+Pten_KO
-RO_B2TP	3852R0B2TP_S64	A	Cell	RO	1	Trp53+/-;Cas9	NA	sgRNA_Brca2+Pten_KO
-RO_tumor1	3868_S66	A	Cell	RO	1	Trp53+/-;Cas9	NA	tumor(lineage_TBD)
-RO_tumor2	7352_S67	A	Cell	RO	1	Trp53+/-;Cas9	NA	tumor(lineage_TBD)
-RO_tumor3	8599_S70	A	Cell	RO	1	Trp53+/-;Cas9	NA	tumor(lineage_TBD)
-L1L2_3M	A2371_S72	B	Tissue	L1L2_3M	0	C57BL/6;Lats1/2-flox	3	loxP_only(no_Cre)
-L1L2H_3M	A2353_S71	B	Tissue	L1L2H_3M	0	C57BL/6;Lats1/2-flox;iHPV	3	loxP+iHPV_LSL(inactive)
-L1L2_12M	8464_S68	B	Tissue	L1L2_12M	0	C57BL/6;Lats1/2-flox	12	loxP_only(no_Cre)
-L1L2H_12M	8465_S69	B	Tissue	L1L2H_12M	0	C57BL/6;Lats1/2-flox;iHPV	12	loxP+iHPV_LSL(inactive)
-L1L2_18M	3685_S61	B	Tissue	L1L2_18M	0	C57BL/6;Lats1/2-flox	18	loxP_only(no_Cre)
-L1L2H_18M	3689_S62	B	Tissue	L1L2H_18M	0	C57BL/6;Lats1/2-flox;iHPV	18	loxP+iHPV_LSL(inactive)
+sample_id	Sample_Name	Sample_Type	fastq_prefix	study	patient	status	genotype_background	age_months	edit_or_construct
+RO_origin	3852_RO_origin	Cell	3852R0origin_S65	A	RO	0	Trp53+/-;Cas9	NA	none(parental_normal)
+RO_B1TP	3852_RO_B1TP	Cell	3852R0B1TP_S63	A	RO	1	Trp53+/-;Cas9	NA	sgRNA_Brca1+Pten_KO
+RO_B2TP	3852_RO_B2TP	Cell	3852R0B2TP_S64	A	RO	1	Trp53+/-;Cas9	NA	sgRNA_Brca2+Pten_KO
+RO_tumor1	3868-1st_RO_tumor	Cell	3868_S66	A	RO	1	Trp53+/-;Cas9	NA	tumor(lineage_TBD)
+RO_tumor2	7352-2nd_RO_tumor	Cell	7352_S67	A	RO	1	Trp53+/-;Cas9	NA	tumor(lineage_TBD)
+RO_tumor3	8599-3rd_RO_tumor	Cell	8599_S70	A	RO	1	Trp53+/-;Cas9	NA	tumor(lineage_TBD)
+L1L2_3M	A2371_L1L2_3M	Tissue	A2371_S72	B	L1L2_3M	0	C57BL/6;Lats1/2-flox	3	loxP_only(no_Cre)
+L1L2H_3M	A2353_L1L2H_3M	Tissue	A2353_S71	B	L1L2H_3M	0	C57BL/6;Lats1/2-flox;iHPV	3	loxP+iHPV_LSL(inactive)
+L1L2_12M	8464_L1L2_12M	Tissue	8464_S68	B	L1L2_12M	0	C57BL/6;Lats1/2-flox	12	loxP_only(no_Cre)
+L1L2H_12M	8465_L1L2H_12M	Tissue	8465_S69	B	L1L2H_12M	0	C57BL/6;Lats1/2-flox;iHPV	12	loxP+iHPV_LSL(inactive)
+L1L2_18M	3685_L1L2_18M	Tissue	3685_S61	B	L1L2_18M	0	C57BL/6;Lats1/2-flox	18	loxP_only(no_Cre)
+L1L2H_18M	3689_L1L2H_18M	Tissue	3689_S62	B	L1L2H_18M	0	C57BL/6;Lats1/2-flox;iHPV	18	loxP+iHPV_LSL(inactive)
