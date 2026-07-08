@@ -18,8 +18,13 @@
 **Study B — 后 6 个样本：Lats1/2 flox 小鼠组织**
 两个品系：**Lats1/2 flox/flox（L1L2）** 和 **Lats1/2 flox/flox-iHPV（L1L2H）**。在这两个品系里发现一些**不寻常的东西**，想知道其基因组相比正常小鼠**有无异常**、是否某些基因异常导致了该现象。
 
-**样本表（客户附图 `docs/client_materials/` + 数据 `/home/gao/Dropbox/JinPeng/` 核实，2026-07-07）：**
-客户 = **Jinpeng Ruan**；12 样 PE150 NovaSeq X Plus WGS，共 463 GB。
+**客户与单位（MGH 实验室页面核实 2026-07-08）：**
+- **Jinpeng Ruan**（金鹏），Research Assistant / 厦门大学在读博士。官方拼写 "Jinpeng"（非 Jingpeng）。
+- **Wang Lab**，PI **Cheng Wang, PhD** · Obstetrics & Gynecology · **Vincent Center for Reproductive Biology** · **Massachusetts General Hospital (MGH)**。
+- 页面：https://www.massgeneral.org/obgyn/vcrb/research/wang-lab
+- 实验室方向：**高级别浆液性卵巢癌 (HGSOC)** 与 **多囊卵巢综合征 (PCOS)**。→ HGSOC 起源于输卵管上皮、由 TP53+BRCA1/2 缺失(HRD)驱动，与本项目 Study A(Trp53;Brca1/2;Pten)、Study B(输卵管异常) 高度吻合——**整个项目是卵巢癌 HGSOC 模型**。
+
+**样本表（客户附图 `docs/client_materials/` + 数据 `/home/gao/Dropbox/JinPeng/` 核实）：** 12 样 PE150 NovaSeq X Plus WGS，共 463 GB。
 
 | # | 生物学标签 | fastq 前缀 (S#) | Type | 组 | 说明 |
 | :---: | :--- | :---: | :---: | :---: | :--- |
@@ -33,10 +38,11 @@
 | 8 | L1L2H · 3M | A2353 (S71) | Tissue | B | +iHPV |
 | 9 | L1L2 · 12M | 8464 (S68) | Tissue | B | |
 | 10 | L1L2H · 12M | 8465 (S69) | Tissue | B | +iHPV |
-| 11 | **L1L2 · 18M** | **3685 (S61)** | Tissue | B | **⚠ 附图误标为 "3852"，核实实为 3685**（见下） |
+| 11 | L1L2 · 18M | 3685 (S61) | Tissue | B | |
 | 12 | L1L2H · 18M | 3689 (S62) | Tissue | B | +iHPV |
 
-> **⚠ 标签修正（交付前自查发现）**：客户附图把 18M 的 L1L2 样本写作 `3852_L1L2_18M`，但数据里**无 3852 组织样本**（3852 前缀全是 Study A 的 RO 细胞系），孤立的 `3685_S61` 在图里无对应。判定该 18M L1L2 样本实为 **3685**，两条独立证据：① `3685`&`3689` 天然成对对应 18M（正如 `8464/8465`=12M、`A2371/A2353`=3M，每年龄一对）；② 生物学上 3852 是 Trp53⁺/⁻;Cas9 的 RO 模型，不可能同时是 Lats1/2 flox 组织。**已按 3685 处理，建议向 Jinpeng 口头确认一句。**（注：数据文件夹里的 `Sample_Sheet_for_interal_use.xlsx` 客户已声明完全错误，不采用；分组以客户附图 + 实际 fastq 文件名为准。）
+> **数据来源**：分组以客户附图（`docs/client_materials/5c617d…png`）+ 实际 fastq 文件名为准；两者一致，附图信息正确、无需修正。数据文件夹内的 `Sample_Sheet_for_interal_use.xlsx`（实验员填写）客户已声明完全错误，不采用。
+> （更正记录：本方案 0707 早前一版曾误称附图把 18M L1L2 标为 "3852" 并"修正"为 3685——那是**我方转录笔误**（把附图的 `3685` 看成 `3852`），附图本身一直是正确的 `3685`。已撤销该"修正"说法。请你对照附图再确认一下 18M 两行的 `3685`/`3689` 与 L1L2/L1L2H 的对应，因为我已暴露过看错数字。）
 
 - **Study A = Trp53/Brca/Pten CRISPR 成瘤模型（客户 2026-07-07 补充确认）**：
   - **亲本 `RO_origin`**：来自 **Trp53⁺/⁻ ; Cas9** 转基因小鼠的原代细胞（自带一个 Trp53 缺失等位 + 组成型表达 Cas9），**未体外编辑**。

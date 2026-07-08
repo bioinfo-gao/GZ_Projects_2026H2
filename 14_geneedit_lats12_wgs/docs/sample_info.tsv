@@ -1,0 +1,13 @@
+sample_id	fastq_prefix	study	sample_type	patient	status	genotype_background	age_months	edit_or_construct
+RO_origin	3852R0origin_S65	A	Cell	RO	0	Trp53+/-;Cas9	NA	none(parental_normal)
+RO_B1TP	3852R0B1TP_S63	A	Cell	RO	1	Trp53+/-;Cas9	NA	sgRNA_Brca1+Pten_KO
+RO_B2TP	3852R0B2TP_S64	A	Cell	RO	1	Trp53+/-;Cas9	NA	sgRNA_Brca2+Pten_KO
+RO_tumor1	3868_S66	A	Cell	RO	1	Trp53+/-;Cas9	NA	tumor(lineage_TBD)
+RO_tumor2	7352_S67	A	Cell	RO	1	Trp53+/-;Cas9	NA	tumor(lineage_TBD)
+RO_tumor3	8599_S70	A	Cell	RO	1	Trp53+/-;Cas9	NA	tumor(lineage_TBD)
+L1L2_3M	A2371_S72	B	Tissue	L1L2_3M	0	C57BL/6;Lats1/2-flox	3	loxP_only(no_Cre)
+L1L2H_3M	A2353_S71	B	Tissue	L1L2H_3M	0	C57BL/6;Lats1/2-flox;iHPV	3	loxP+iHPV_LSL(inactive)
+L1L2_12M	8464_S68	B	Tissue	L1L2_12M	0	C57BL/6;Lats1/2-flox	12	loxP_only(no_Cre)
+L1L2H_12M	8465_S69	B	Tissue	L1L2H_12M	0	C57BL/6;Lats1/2-flox;iHPV	12	loxP+iHPV_LSL(inactive)
+L1L2_18M	3685_S61	B	Tissue	L1L2_18M	0	C57BL/6;Lats1/2-flox	18	loxP_only(no_Cre)
+L1L2H_18M	3689_S62	B	Tissue	L1L2H_18M	0	C57BL/6;Lats1/2-flox;iHPV	18	loxP+iHPV_LSL(inactive)
