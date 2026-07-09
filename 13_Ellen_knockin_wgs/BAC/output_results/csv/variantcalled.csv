@@ -1,0 +1,3 @@
+patient,sample,variantcaller,vcf
+RAGH_153,RAGH_153,manta,/home/gao/projects_2026H2/13_Ellen_knockin_wgs/output_results/variant_calling/manta/RAGH_153/RAGH_153.manta.diploid_sv.vcf.gz
+RAGH_153,RAGH_153,tiddit,/home/gao/projects_2026H2/13_Ellen_knockin_wgs/output_results/variant_calling/tiddit/RAGH_153/RAGH_153.tiddit.vcf.gz

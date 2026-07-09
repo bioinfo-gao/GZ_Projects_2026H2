@@ -1,0 +1,7 @@
+FILTER	N_VARIANTS	N_Ts	N_Tv	Ts/Tv
+PASS	6866	0	0	-nan
+BelowExpectedLinks	1060	0	0	-nan
+SplitsVSDiscs	466	0	0	-nan
+UnexpectedCoverage	411	0	0	-nan
+FewLinks	368	0	0	-nan
+RegionalQ	192	0	0	-nan

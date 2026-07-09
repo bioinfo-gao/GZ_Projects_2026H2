@@ -11,6 +11,7 @@
    并发席位，严重高估导致本可并发的任务被挤到串行。
 
 **处理**：
+
 ```bash
 # 1) 精调配置：BWAMEM2_MEM 内存 50GB→24GB（贴近实测），queueSize 2→3
 #    （3×16=48线程，仍在 CLAUDE.md 56线程上限内）
@@ -24,6 +25,14 @@ nextflow run nf-core/sarek ... -resume
 **效果验证**：缓存命中38/72子任务（比中断前的34还多，关机瞬间又完成几个，零工作丢失）；
 重启后确认3个bwa-mem2真实并发运行，各~18.8GB。提交：`3274090`。
 
+**严谨的提速评估**（用两次运行各自的 execution trace 真实提交时间戳算出，非对话中的即时
+印象）：修复前 4.72个/小时 → 修复后 5.38个/小时，**实际仅提速1.14倍**，远小于"并发1-2个→3个"
+给人的直觉预期，怀疑真正瓶颈是磁盘I/O/内存带宽而非queueSize本身。详见
+`../../14_geneedit_lats12_wgs/logs/key_operations_log.md`（项目14自己的运行记录，含完整
+计算过程）。重启操作的具体命令已补记为脚本
+`../../14_geneedit_lats12_wgs/scripts/study_A/A2b_restart_with_resume.sh`（原先只是临时
+Bash命令，未第一时间存成可复查脚本）。
+
 ## 决定：趁项目14收尾、系统利用率低，并跑项目13
 
 项目14 Study A 比对阶段（最吃线程的部分）已跑完，进入去重(MarkDuplicates,单线程为主)+TIDDIT的
@@ -34,6 +43,7 @@ nextflow run nf-core/sarek ... -resume
 会超限。
 
 **处理**：
+
 1. 建混合参考（GRCm39+RAGH+MTTH+CD1A，64 contigs）——CPU/内存需求低，与项目14无冲突，直接执行。
 2. **新建降配专用配置** `scripts/local_resources_concurrent_with_proj14.config`：
    - 24线程/80GB上限（原满配版48线程/108GB保留不动，供项目14结束后切回）
@@ -59,4 +69,5 @@ nextflow run nf-core/sarek ... -resume
 - 两个项目的 tmux 会话：项目14=`p14_sarek_A`，项目13=`ellen_sarek`。
 
 ---
+
 *Zhen Gao, PhD, Principal Bioinformatics Scientist, Athenomics*
