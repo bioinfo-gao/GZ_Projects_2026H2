@@ -88,7 +88,7 @@ multiqc_data/
 # ==========================================
 2026_Item6_UIC_02122603/output_nf_fast/
 */Final_Filtered_Results/
-*/output_results/
+**/output_results/
 */output/
 */conda_envs/
 conda_envs/
