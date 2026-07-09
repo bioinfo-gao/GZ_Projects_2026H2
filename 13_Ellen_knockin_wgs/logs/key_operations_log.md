@@ -3,8 +3,10 @@
 > 📌 **本文件横跨两个项目**：内容同时涉及项目13（13_Ellen_knockin_wgs）和项目14
 > （14_geneedit_lats12_wgs）的资源共享决策。**权威原件在本路径**
 > （`13_Ellen_knockin_wgs/logs/key_operations_log.md`，git 跟踪）；
-> `14_geneedit_lats12_wgs/logs/key_operations_log.md` 是指向本文件的**软链接**
-> （symlink，非独立副本），修改请在本文件（权威原件）进行——软链接会自动同步。
+> `14_geneedit_lats12_wgs/logs/sLk_of_key_operations_log_in_project13.md` 是指向本文件的
+> **软链接**（symlink，非独立副本；文件名前缀 `sLk_of_..._in_project13` 就是"这是软链接、
+> 原件在项目13"的自解释命名，IDE文件浏览器看不出symlink箭头时也能一眼认出），修改请在
+> 本文件（权威原件）进行——软链接会自动同步。
 
 ## 背景：发现项目14 Study A 提速空间
 
