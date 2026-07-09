@@ -221,3 +221,6 @@ Thumbs.db
 # 15_mag_setup: nf-core/mag 5.4.2 test-profile validation scratch (keep out of VCS)
 15_mag_setup/test_run/results/
 15_mag_setup/test_run/*.log
+
+# sFTP client credentials (never commit)
+client_credentials.env
