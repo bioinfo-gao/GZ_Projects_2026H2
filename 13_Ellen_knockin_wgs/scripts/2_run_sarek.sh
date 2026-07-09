@@ -5,7 +5,9 @@
 #
 #   用法:
 #     bash 2_run_sarek.sh                         # 默认试跑 RAGH（samplesheet_trial_RAGH.csv）
-#     bash 2_run_sarek.sh samplesheet_full.csv    # 明天 CD1A 到位后跑全部 6 样
+#     bash 2_run_sarek.sh samplesheet_full.csv    # 全部 6 样
+#     SAREK_CONFIG=scripts/local_resources_concurrent_with_proj14.config bash 2_run_sarek.sh samplesheet_full.csv
+#       ↑ 与项目14并跑时用这份降配配置（见该文件注释）；项目14结束后改回不传/默认的独立满配版。
 #
 #   引擎决策见 docs/analysis_plan_0706.md：
 #     - 指向合并 hybrid 参考（--fasta）
@@ -23,17 +25,21 @@ SHEET="${1:-$PROJ/scripts/samplesheet_trial_RAGH.csv}"
 HYBRID="$PROJ/refs/hybrid/GRCm39_plus_constructs.fa"
 NF="/home/gao/.conda/envs/regular_bioinfo/bin/nextflow"
 SESSION="ellen_sarek"
+CONFIG="${SAREK_CONFIG:-$PROJ/scripts/local_resources.config}"
 
 [ -f "$HYBRID" ]     || { echo "ERROR: hybrid 参考不存在，先跑 0_build_hybrid_ref.sh"; exit 1; }
 [ -f "$HYBRID.fai" ] || { echo "ERROR: 缺 .fai，重跑 0_build_hybrid_ref.sh"; exit 1; }
 [ -f "$SHEET" ]      || { echo "ERROR: samplesheet 不存在: $SHEET（先跑 1_produce_samplesheet.py）"; exit 1; }
 
 # 不在 tmux → 建 session 把自身投入，主 shell 退出
+# 注意：SAREK_CONFIG 环境变量必须显式写进 tmux 命令字符串内部——tmux new-session
+# 不会自动继承外层 shell 的环境变量（CLAUDE.md 记录过的坑，proj4 已踩过一次）。
 if [ -z "${TMUX:-}" ]; then
     mkdir -p "$PROJ/logs"   # 必须在 tmux/tee 启动前建好，否则 tee 启动即失败、无日志
     tmux kill-session -t "$SESSION" 2>/dev/null || true
-    tmux new-session -d -s "$SESSION" "bash '$SCRIPT' '$SHEET' 2>&1 | tee '$PROJ/logs/sarek_run.log'"
+    tmux new-session -d -s "$SESSION" "SAREK_CONFIG='$CONFIG' bash '$SCRIPT' '$SHEET' 2>&1 | tee '$PROJ/logs/sarek_run.log'"
     echo "已在 tmux '$SESSION' 后台启动。samplesheet: $SHEET"
+    echo "使用配置: $CONFIG"
     echo "看日志: tail -f $PROJ/logs/sarek_run.log   或  tmux capture-pane -t $SESSION -p"
     exit 0
 fi
@@ -47,7 +53,7 @@ run_sarek() {
     "$NF" run nf-core/sarek \
         -r 3.8.1 \
         -profile singularity \
-        -c "$PROJ/scripts/local_resources.config" \
+        -c "$CONFIG" \
         --input "$SHEET" \
         --outdir "$PROJ/output_results" \
         -work-dir "$PROJ/work" \
