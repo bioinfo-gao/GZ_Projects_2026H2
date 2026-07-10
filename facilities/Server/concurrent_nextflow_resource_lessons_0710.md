@@ -12,7 +12,7 @@
 | 项 | 值 |
 | :--- | :---: |
 | 服务器 | AMD Threadripper 2990WX，32 物理核 / 64 线程，125 GiB RAM |
-| Swap | 2 GB 系统 swapfile（prio -2）+ **64 GB SSD swapfile**（`/mnt/ex_8T_SSD`，prio 10），`swappiness=10` |
+| Swap | 2 GB 系统 swapfile `/swapfile`（在 **OS NVMe 系统盘** Samsung 970 EVO 1TB 上，即 `/`，prio -2 后用）+ **64 GB SSD swapfile**（`/mnt/ex_8T_SSD`，在 **7.3T SATA 数据盘** Desk SSD 上，prio 10 先用），`swappiness=10`。两块 swap 均在 SSD、无一落在机械盘；优先级刻意"先用大容量 SATA SSD、把 NVMe 带宽留给 OS" |
 | 策略上限 | **稳态 ≤ 28 物理核 / 56 线程**；繁忙期可短时冲 **30 核 / 60 线程**(不可长期维持,须快回落),永留 ≥2核/4线程给 OS/SSH/交互 |
 | 作业 A（proj14） | `p14_sarek_A`，2026-07-08 21:38 启动；Study A 体细胞 WGS（GRCm39，6 样本，Mutect2 + TIDDIT） |
 | 作业 B（proj13） | `ellen_sarek`，2026-07-09 10:29 启动；6 样本敲入 WGS（混合参考，bwa-mem2 + TIDDIT） |
