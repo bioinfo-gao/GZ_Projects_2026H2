@@ -13,7 +13,7 @@
 | :--- | :---: |
 | 服务器 | AMD Threadripper 2990WX，32 物理核 / 64 线程，125 GiB RAM |
 | Swap | 2 GB 系统 swapfile（prio -2）+ **64 GB SSD swapfile**（`/mnt/ex_8T_SSD`，prio 10），`swappiness=10` |
-| 策略上限 | 全机 ≤ **28 物理核 / 56 线程**（保留给 OS/SSH/交互） |
+| 策略上限 | **稳态 ≤ 28 物理核 / 56 线程**；繁忙期可短时冲 **30 核 / 60 线程**(不可长期维持,须快回落),永留 ≥2核/4线程给 OS/SSH/交互 |
 | 作业 A（proj14） | `p14_sarek_A`，2026-07-08 21:38 启动；Study A 体细胞 WGS（GRCm39，6 样本，Mutect2 + TIDDIT） |
 | 作业 B（proj13） | `ellen_sarek`，2026-07-09 10:29 启动；6 样本敲入 WGS（混合参考，bwa-mem2 + TIDDIT） |
 | 重叠窗口 | 两作业自 07-09 10:29 起同时运行；本文监控覆盖其中 07-09 21:15 → 07-10 11:51 约 14.5 h |
