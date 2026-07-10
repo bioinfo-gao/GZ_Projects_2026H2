@@ -37,6 +37,9 @@
 - 成因研判：两作业**同时撞上内存重阶段**——proj13 的比对/去重（bwa-mem2 ~19 GB RSS + samtools sort 缓冲）叠加 proj14 的 Mutect2（多个 JVM）。
 - **即便峰值，125 GiB 里仍剩 32 GiB available，离 OOM 很远**；SSD swap 作为缓冲吸收了这波瞬时压力。
 
+**每步实测耗时 + CPU核/峰值RSS 的量化表**见 `13_Ellen_knockin_wgs/scripts/sarek_wgs_perstep_timing_and_resources.md`
+（本节只讲整机内存曲线与错峰逻辑，逐步数字不在此重复）。
+
 **两作业的资源画像不同，正是能共存的原因：**
 - **proj13 = 比对阶段**（bwa-mem2）：CPU + 内存双重，单进程 RSS ~19 GB，重。全程 14.5 h 都卡在 BWA-MEM2（72 分块只推进了 ~40 个），因为和 proj14 抢 CPU + 人源区（HTT / CD1 基因簇）本身难比对。
 - **proj14 = 变异调用阶段**（Mutect2）：许多小 CPU 任务（90 区块 × 肿瘤-正常对），单任务轻，但总量大、耗时长（>15 h 都在变异调用）。
