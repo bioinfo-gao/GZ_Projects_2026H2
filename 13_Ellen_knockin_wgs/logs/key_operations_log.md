@@ -112,6 +112,19 @@ nextflow run nf-core/sarek ... -resume
 
 详细每步资源画像见 `../scripts/sarek_wgs_perstep_timing_and_resources.md`。
 
+## 进展快照(2026-07-11 12:00)
+
+两条 tmux(`p14_sarek_A`/`ellen_sarek`)均 UP,`.nextflow.log` 2 分钟内刷新,健康。
+
+| 项目 | 状态 | 剩余 | ETA |
+| :--- | :---: | :---: | :---: |
+| **14** somatic(`--tools mutect2,tiddit`) | Mutect2 **72/90(80%)**,去重/SV/深度全完成 | 18 Mutect2 + 合并/污染估计/FilterMutectCalls/MultiQC | **~14h → 07-12 凌晨** |
+| **13** germline(`--tools tiddit` 仅结构变异,无 SNV 调用) | 去重6/6、mosdepth6/6、samtools5/6、**TIDDIT 4/6** | 2 TIDDIT + SVDB合并/stats/MultiQC | **~3–5h → 07-11 下午–傍晚** |
+
+- **关键澄清**:P13 只跑 TIDDIT(检测敲入整合位点的结构变异),不做 germline SNV 调用——故其剩余量远小于 07-10 的过度估计,会**先于 P14 完成**。
+- P14 Mutect2 近端速率回升到 **1.9 个/h**(07-10 为 1.5,P13 CPU 压力退去后加快);受 `queueSize=3` 限,提不了更高。
+- P13 收尾后会生成本轮真正的 6 样本 MultiQC(07-10 归档掉的是旧的)。
+
 ## 输出目录清理(2026-07-10)
 
 `output_results/` 里混有 07-06/07 一次旧运行(以 RAGH_153 单样本为主)的残留(旧 `multiqc_report.html`、
