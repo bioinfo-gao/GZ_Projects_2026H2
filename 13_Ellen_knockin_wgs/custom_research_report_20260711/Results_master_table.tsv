@@ -1,0 +1,7 @@
+sample	line	construct	insert_breadth_pct	on_target_bridging	copy_number_ratio	copy_number_call	sequence_integrity	credible_offtarget	zygosity	neo_cassette
+CD1A_B125	CD1A	human_CD1_cluster	98.2	48	0.98	~2_copies(hom-like)	intact	none	not_determinable(insert-ortholog_crossmap)	deleted
+RAGH_153	RAGH	human_cytokine_cassette	99.6	24	0.61	single_copy	intact	none	heterozygous	NA(neo_deleted_by_design)
+RAGH_273	RAGH	human_cytokine_cassette	99.7	33	0.56	single_copy	intact	none	heterozygous	NA
+MTTH_284	MTTH	human_HTT	99.8	45	1.60	MULTI_COPY/concatemer(follow-up)	intact	none	not_determinable(insert-ortholog_crossmap)	NA
+MTTH_412	MTTH	human_HTT	98.8	44	0.71	single_copy	intact	none	not_determinable(insert-ortholog_crossmap)	NA
+MTTH_524	MTTH	human_HTT	96.8	79	0.45	single_copy	intact	none	not_determinable(insert-ortholog_crossmap)	NA

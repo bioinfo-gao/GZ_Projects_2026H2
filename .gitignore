@@ -225,3 +225,5 @@ Thumbs.db
 
 # sFTP client credentials (never commit)
 client_credentials.env
+13_Ellen_knockin_wgs/custom_research_report_20260711/qc/
+13_Ellen_knockin_wgs/analysis/**/*.mosdepth.global.dist.txt

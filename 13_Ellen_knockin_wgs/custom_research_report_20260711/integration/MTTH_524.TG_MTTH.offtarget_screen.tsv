@@ -1,0 +1,10 @@
+chrom	start	end	support_reads	site_depth	class
+chr11	22923177	22923177	6	2	novel_offtarget?
+chr7	90091184	90091184	5	36	novel_offtarget?
+chr10	121599139	121599139	4	23	novel_offtarget?
+chr17	35251861	35251861	4	25	novel_offtarget?
+chr6	128806035	128806035	4	1	novel_offtarget?
+chr8	94826123	94826125	4	5	novel_offtarget?
+chr11	102171995	102171995	3	2	novel_offtarget?
+chr14	46050272	46050272	3	19	novel_offtarget?
+chr8	19753390	19753390	3	76	novel_offtarget?

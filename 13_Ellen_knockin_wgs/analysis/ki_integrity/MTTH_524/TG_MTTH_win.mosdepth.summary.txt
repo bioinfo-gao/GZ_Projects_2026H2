@@ -1,0 +1,5 @@
+chrom	length	bases	mean	min	max
+TG_MTTH	254010	779121	3.07	0	25
+TG_MTTH_region	178302	778963	4.37	0	25
+total	254010	779121	3.07	0	25
+total_region	178302	778963	4.37	0	25

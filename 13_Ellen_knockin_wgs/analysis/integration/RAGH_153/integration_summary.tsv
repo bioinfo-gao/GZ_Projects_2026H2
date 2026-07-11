@@ -1,3 +1,4 @@
 construct	present	copy_ratio	on_target_bridging_reads	n_offtarget_sites	off_target_loci	verdict
-TG_MTTH	no	0.020	0	0	NA	absent(negative_control)
-TG_RAGH	yes	0.604	24	0	none	present_ontarget_no_offtarget
+TG_CD1A	no	0.015	0	0	NA	absent(negative_control)
+TG_MTTH	no	0.011	0	0	NA	absent(negative_control)
+TG_RAGH	yes	0.606	24	0	none	present_ontarget_no_offtarget

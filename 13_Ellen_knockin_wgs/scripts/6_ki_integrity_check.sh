@@ -49,6 +49,6 @@ for TG in $(grep '^>TG_' "$HYBRID" | tr -d '>' | awk '{print $1}'); do
 
     N_FLAG=$(($(wc -l < "$OUT") - 1))
     echo "  异常窗口数: $N_FLAG（阈值：<${LOW_FRAC}x 或 >${HIGH_FRAC}x 中位深度）"
-    [ "$N_FLAG" -gt 0 ] && column -t "$OUT" | head -20
+    [ "$N_FLAG" -gt 0 ] && { head -20 "$OUT" | column -t; }   # head先于column,避免 SIGPIPE 在 pipefail 下中断脚本
 done
 echo "DONE 6 → $OUTDIR （异常区段用 IGV 或脚本4的 split-read 逻辑局部核查）"

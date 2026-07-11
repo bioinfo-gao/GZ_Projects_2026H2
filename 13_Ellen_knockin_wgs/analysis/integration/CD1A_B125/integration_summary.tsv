@@ -1,0 +1,4 @@
+construct	present	copy_ratio	on_target_bridging_reads	n_offtarget_sites	off_target_loci	verdict
+TG_CD1A	yes	0.984	48	21	chr7:90091184(14r);chr14:46050272(6r);chrX:144298032(6r);chr10:121599139(5r);chr11:22923177(5r);chr16:10650514(5r);chr1:57262701(4r);chr11:76855804(4r);chr1:113382960(4r);chr13:109732584(4r);chr15:39910855(4r);chr2:76773457(4r);chr4:80899932(4r);chr5:74335986(4r);chr6:128806035(4r);chr7:48205031(4r);chrX:95901726(4r);chr1:140711342(3r);chr18:71556414(3r);chr2:130302643(3r);chr7:63558923(3r);	OFFTARGET_FOUND_investigate
+TG_MTTH	no	0.007	0	0	NA	absent(negative_control)
+TG_RAGH	no	0.000	0	0	NA	absent(negative_control)

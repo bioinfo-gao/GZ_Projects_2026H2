@@ -1,0 +1,9 @@
+chrom	start	end	depth	flag
+TG_CD1A	38472	38972	8.64	LOW(possible_deletion)
+TG_CD1A	142472	142972	8.20	LOW(possible_deletion)
+TG_CD1A	154472	154972	6.74	LOW(possible_deletion)
+TG_CD1A	154972	155472	0.00	LOW(possible_deletion)
+TG_CD1A	155472	155972	0.69	LOW(possible_deletion)
+TG_CD1A	155972	156472	0.00	LOW(possible_deletion)
+TG_CD1A	156472	156972	0.00	LOW(possible_deletion)
+TG_CD1A	156972	157447	0.80	LOW(possible_deletion)

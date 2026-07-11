@@ -1,0 +1,5 @@
+chrom	length	bases	mean	min	max
+TG_RAGH	38566	33332	0.86	0	17
+TG_RAGH_region	5146	32344	6.29	0	17
+total	38566	33332	0.86	0	17
+total_region	5146	32344	6.29	0	17

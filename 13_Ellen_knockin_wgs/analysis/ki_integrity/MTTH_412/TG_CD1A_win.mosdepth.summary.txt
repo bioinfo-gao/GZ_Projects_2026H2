@@ -1,0 +1,5 @@
+chrom	length	bases	mean	min	max
+TG_CD1A	185655	57872	0.31	0	16
+TG_CD1A_region	127475	57703	0.45	0	16
+total	185655	57872	0.31	0	16
+total_region	127475	57703	0.45	0	16

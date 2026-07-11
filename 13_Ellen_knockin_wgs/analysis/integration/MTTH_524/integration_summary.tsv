@@ -1,0 +1,4 @@
+construct	present	copy_ratio	on_target_bridging_reads	n_offtarget_sites	off_target_loci	verdict
+TG_CD1A	no	0.016	0	0	NA	absent(negative_control)
+TG_MTTH	yes	0.451	79	9	chr11:22923177(6r);chr7:90091184(5r);chr10:121599139(4r);chr17:35251861(4r);chr6:128806035(4r);chr8:94826123(4r);chr11:102171995(3r);chr14:46050272(3r);chr8:19753390(3r);	OFFTARGET_FOUND_investigate
+TG_RAGH	no	0.000	0	0	NA	absent(negative_control)

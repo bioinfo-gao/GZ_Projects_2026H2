@@ -1,0 +1,4 @@
+construct	human_region	human_meandepth	human_breadth_pct	wholecontig_meandepth	wholecontig_breadth_pct	baseline	copy_number_ratio	interpretation
+TG_CD1A	TG_CD1A:29972-157447	0.293224	10.5369	0.201336	7.23492	18.1173	0.02	absent(neg_control)
+TG_MTTH	TG_MTTH:36824-215126	8.16693	96.8475	5.73401	68.0265	18.1173	0.45	~het_single_copy
+TG_RAGH	TG_RAGH:19695-24841	0	0	0	0	18.1173	0.00	absent(neg_control)
