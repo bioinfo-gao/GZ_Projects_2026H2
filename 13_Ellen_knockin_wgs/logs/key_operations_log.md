@@ -112,6 +112,14 @@ nextflow run nf-core/sarek ... -resume
 
 详细每步资源画像见 `../scripts/sarek_wgs_perstep_timing_and_resources.md`。
 
+## 输出目录清理(2026-07-10)
+
+`output_results/` 里混有 07-06/07 一次旧运行(以 RAGH_153 单样本为主)的残留(旧 `multiqc_report.html`、
+旧 RAGH_153 的 markdup/stats/mosdepth/CRAM、manta/tiddit 变异结果、汇总 CSV,共 192 文件 9.6G),违反
+"标准输出目录只放本轮 canonical 结果"。已按 mtime<本轮启动(07-09 10:29)判定并整体搬到
+`OLD/superseded_run_0706_output/`(含 `README_archive.md` 说明),`OLD/` 已加入 `.gitignore`。
+当前 6 样本正式运行未受影响(管线读 work-dir,搬完两 tmux 仍 UP、日志正常),跑到相应阶段会重新生成 RAGH_153 各输出。
+
 ## 后续跟踪要点
 
 - **项目14跑完（Study A + B）后，项目13务必切回 `local_resources.config` 满配版**，
