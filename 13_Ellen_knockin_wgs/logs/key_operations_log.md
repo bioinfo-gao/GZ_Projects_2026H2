@@ -8,6 +8,27 @@
 > 原件在项目13"的自解释命名，IDE文件浏览器看不出symlink箭头时也能一眼认出），修改请在
 > 本文件（权威原件）进行——软链接会自动同步。
 
+## work_A / work_B 内容与清理决策(2026-07-12,待用户授权删 work_A)
+
+Study A 于 07-12 04:54 成功完成(Succeeded 247);Study B 07-11 启动、07-12 已升满机配置续跑。
+删除 A 的 work-dir 前,实地核查两个 nextflow work-dir 的真实内容:
+
+**work_A(1.5T,193 个 task-hash 目录)= 已完成 Study A 的纯中间产物,可删:**
+- 占空间大头是 **TIDDIT 的软剪切中间 FASTA**:`clips_RO_RO_<sample>.fa`,每个 **35–65GB**,6 样各有(部分任务多份),合计占了大半个 T。这是 TIDDIT 为定位断点把软剪切读段导出再比对的临时文件,**不是交付物**。
+- 其余为各 task 的分区间 BAM/VCF、staged 输入等 nextflow 中间件。
+- **最终交付都在 `output_A/`(已核实为真实独立文件,非软链接进 work_A、硬链接数=1)**:6 去重 CRAM、5 Mutect2 VCF、16 TIDDIT VCF、MultiQC 齐全。下游分析 A3/A4/A5 读 output_A、不读 work_A。
+- A 已成功完成、无需再 -resume;唯一引用 work_A 的是启动脚本 A2/A2b(只是 work-dir 参数,非数据依赖)。
+
+**work_B(459G 且在增长)= Study B 的活工作目录,绝不能动:**
+- 内含 staged 的 bwa-mem2 索引(`*.bwt.2bit.64` 8.3G、`*.0123` 5.1G)+ 正在处理的分区间 BAM(`L1L2_*.000X.bam` 各 4.1G)。B 正实时读写它。
+
+**删 work_A 的好处(如实,含边界):**
+1. **释放磁盘 1.5T**:`/mnt/ex_8T_SSD` 从 86% 已用/剩 1.0T → 剩 ~2.5T。这是真实且相关的收益(work_B 写在同一块盘)。
+2. **给 Study B 安心裕量**:B 剩余阶段(6 去重 CRAM ~180G + GVCF/VCF + TIDDIT clips + joint)还需数百 G。当前 1.0T 大概率够,但删后杜绝"跑到一半磁盘满"的风险。**如实说:是裕量/降风险,非当下急需。**
+3. **减轻的是【磁盘】压力,不是【内存】**:删盘是纯磁盘操作,不改变当前 MarkDup 阶段的内存约束(avail~65G);删除本身 I/O 可忽略(删时 sda %util≈1%,不拖累 B)。
+
+> ⏸ 状态:等用户看完本记录后授权,再后台执行 `rm -rf work_A`(不可逆、上次被安全策略拦过,需明确授权)。
+
 ## 背景：发现项目14 Study A 提速空间
 
 项目14（Jinpeng Ruan）Study A sarek somatic 跑了约10小时，比对(BWAMEM2_MEM)只完成34/72子任务。
