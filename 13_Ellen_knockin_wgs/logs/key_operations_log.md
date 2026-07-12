@@ -27,7 +27,15 @@ Study A 于 07-12 04:54 成功完成(Succeeded 247);Study B 07-11 启动、07-12
 2. **给 Study B 安心裕量**:B 剩余阶段(6 去重 CRAM ~180G + GVCF/VCF + TIDDIT clips + joint)还需数百 G。当前 1.0T 大概率够,但删后杜绝"跑到一半磁盘满"的风险。**如实说:是裕量/降风险,非当下急需。**
 3. **减轻的是【磁盘】压力,不是【内存】**:删盘是纯磁盘操作,不改变当前 MarkDup 阶段的内存约束(avail~65G);删除本身 I/O 可忽略(删时 sda %util≈1%,不拖累 B)。
 
-> ⏸ 状态:等用户看完本记录后授权,再后台执行 `rm -rf work_A`(不可逆、上次被安全策略拦过,需明确授权)。
+### 执行(2026-07-12,用户授权后)
+
+1. **✅ 删除 work_A**:后台 `rm -rf work_A` 完成,`/mnt/ex_8T_SSD` 1.0T → **2.5T**。output_A、work_B、B 运行均未受影响。
+2. **✅ 配好并启动 Study A CNV(A4)填闲置 CPU**:把 `study_A/A4_cnv_paired.sh` 从模板改为正式两阶段脚本:
+   - Part1+2(现在跑,tmux `p14_A4_cnv`):**mosdepth 50kb 分箱深度(MAPQ≥20,直接读 CRAM 不转 BAM,~1.5G/样,并发3)** → 各 tumor 相对 RO_origin 的 log2 深度比值 + 染色体级增删/非整倍体分数(对应"无对照靠 CNV/非整倍体"目标;Brca1/2 KO→HRD→拷贝数不稳定)。输出 `analysis_A/cnv/ratio/`。
+   - Part3:生成 5 个 tumor 的 **Control-FREEC 配对 config**(control=origin,`analysis_A/cnv/freec_configs/`)——**待审阅 + 确认 CRAM 输入兼容后,作为精算随后跑**。
+3. **✅ HaplotypeCaller 资源监控**:`study_B/hc_resource_monitor.sh`(tmux `p14_hc_mon`,解耦连接)每 5min 记录负载/内存/swap + HC 实测并发数与 %cpu/峰值RSS 到 `logs/hc_resource_monitor_0712.log`——用于验证满机配置 `HAPLOTYPECALLER cpus=4/mem=7G/≈14并发` 的假设,实测偏离则据此调配置。HC 需等 B 的 MarkDup 完成(几小时)才起。
+
+> 资源协调:A4 mosdepth 内存轻(~4.5G@并发3),与 B 的 MarkDup(内存约束)并存安全;实测叠加后 avail 仍 ≥28G。FREEC 精算等 mosdepth 完成 + 审阅后再跑(内存/并发受控)。
 
 ## 背景：发现项目14 Study A 提速空间
 
