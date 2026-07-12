@@ -13,6 +13,8 @@ SHEET="$PROJ/scripts/0_common/B_germline.csv"
 REF="/Work_bio/references/Mus_musculus/GRCm39/mouse_gencode_M35/GRCm39.primary_assembly.genome.fa"
 NF="/home/gao/.conda/envs/regular_bioinfo/bin/nextflow"
 SESSION="p14_sarek_B"
+# 资源配置可用 SAREK_CONFIG 覆盖(过渡期用 studyB_overlap,独占整机后换 full_machine);默认满机版
+SAREK_CONFIG="${SAREK_CONFIG:-$PROJ/scripts/0_common/local_resources_full_machine.config}"
 
 [ -f "$SHEET" ] || { echo "ERROR: 缺 $SHEET（先跑 1_make_samplesheets.py）"; exit 1; }
 [ -f "$REF" ]   || { echo "ERROR: 缺 GRCm39 参考"; exit 1; }
@@ -20,8 +22,8 @@ SESSION="p14_sarek_B"
 if [ -z "${TMUX:-}" ]; then
     mkdir -p "$PROJ/logs"
     tmux kill-session -t "$SESSION" 2>/dev/null || true
-    tmux new-session -d -s "$SESSION" "bash '$SCRIPT' 2>&1 | tee '$PROJ/logs/sarek_B.log'"
-    echo "已在 tmux '$SESSION' 启动。日志: $PROJ/logs/sarek_B.log"; exit 0
+    tmux new-session -d -s "$SESSION" "SAREK_CONFIG='$SAREK_CONFIG' bash '$SCRIPT' 2>&1 | tee '$PROJ/logs/sarek_B.log'"
+    echo "已在 tmux '$SESSION' 启动(config: $SAREK_CONFIG)。日志: $PROJ/logs/sarek_B.log"; exit 0
 fi
 
 mkdir -p "$PROJ/logs" "$PROJ/output_B" "$PROJ/work_B"
@@ -29,7 +31,7 @@ export NXF_OPTS='-Xms512m -Xmx2g'
 export NXF_SINGULARITY_CACHEDIR='/Work_bio/gao/configs/.singularity'
 run() {
     "$NF" run nf-core/sarek -r 3.8.1 -profile singularity \
-        -c "$PROJ/scripts/0_common/local_resources.config" \
+        -c "$SAREK_CONFIG" \
         --input "$SHEET" --outdir "$PROJ/output_B" -work-dir "$PROJ/work_B" \
         --fasta "$REF" --fasta_fai "$REF.fai" --igenomes_ignore --genome null \
         --aligner bwa-mem2 --skip_tools baserecalibrator \
