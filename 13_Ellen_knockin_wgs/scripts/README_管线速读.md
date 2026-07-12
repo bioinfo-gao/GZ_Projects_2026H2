@@ -8,11 +8,11 @@
 
 客户 Ellen（genetargeting.com）送来 **6 个人源化小鼠的 WGS**，要确认**人源基因是否正确定点敲入、替换野生型等位、拷贝数、KI 序列完整性**（客户 2026-07-08 邮件原话确认的三条目标）。三个打靶品系，**全部已解码，且客户补发了全部 3 系的 WT（野生型等位）序列**：
 
-| 品系 | 样本 | 敲入内容 | 小鼠靶位点 |
-| :--- | :--- | :--- | :--- |
-| **RAGH** | RAGH_153/273 | 人源细胞因子串(G-CSF/M-CSF/IL-6/IL-1β/IL-7/IL-15) | Rag2 (chr2) |
-| **MTTH** | MTTH_284/412/524 | 人源 **HTT** 全基因(~170kb) | Htt (chr5) |
-| **CD1A** | CD1A_B125 | **整个人类 CD1 基因簇**(CD1D+CD1A+CD1C+CD1B+CD1E, ~127kb)——不只 CD1D！ | Cd1d1+Cd1d2 (chr3) |
+| 品系           | 样本             | 敲入内容                                                                       | 小鼠靶位点         |
+| :------------- | :--------------- | :----------------------------------------------------------------------------- | :----------------- |
+| **RAGH** | RAGH_153/273     | 人源细胞因子串(G-CSF/M-CSF/IL-6/IL-1β/IL-7/IL-15)                             | Rag2 (chr2)        |
+| **MTTH** | MTTH_284/412/524 | 人源**HTT** 全基因(~170kb)                                               | Htt (chr5)         |
+| **CD1A** | CD1A_B125        | **整个人类 CD1 基因簇**(CD1D+CD1A+CD1C+CD1B+CD1E, ~127kb)——不只 CD1D！ | Cd1d1+Cd1d2 (chr3) |
 
 **关键点**：这是**定点同源重组敲入**（构建体带小鼠同源臂），不是随机转基因——整合位点已知，重点是"验证有没有正确整进去 + 查脱靶 + 数拷贝 + 合子型 + KI 完整性"。CD1A 的 Neo 盒状态待核（不像 RAGH/MTTH 已标注删除）。
 
@@ -47,19 +47,19 @@ Ellen fastq ──► [1] samplesheet.csv ──► [2] sarek 比对/QC/去重/S
 
 ## 3. 十一个脚本逐个看（输入 → 做什么 → 输出）
 
-| # | 文件 | 输入 | 做什么 | 输出 |
-| :--- | :--- | :--- | :--- | :--- |
-| **0** | `0_build_hybrid_ref.sh` | GRCm39 + `refs/constructs/TG_*.fa`(自动 glob，含 CD1A) | 拼接**合并混合参考**+faidx/dict | `refs/hybrid/GRCm39_plus_constructs.fa` |
-| **1** | `1_produce_samplesheet.py` | `/home/gao/Dropbox/Ellen/*.fastq.gz` | 生成 sarek samplesheet | `samplesheet_full.csv`(6样) + `samplesheet_trial_RAGH.csv`(1样) |
-| **2** | `2_run_sarek.sh` | samplesheet + 混合参考 | sarek 3.8.1：比对/QC/去重/SV(TIDDIT，Manta已弃用) | `output_results/`（CRAM、mosdepth） |
-| **3** | `3_work_monitor.sh` | sarek 日志 | 状态快照 + 早期失败检测 | 终端输出 |
-| **5** | `5_copy_number.sh` | CRAM+混合参考+`construct_regions.tsv` | **先跑**。人源特异区深度/基线=拷贝数(MAPQ≥20,遮蔽同源臂) | `analysis/copy_number/<样本>/copy_number.tsv` |
-| **4** | `4_integration_analysis.sh` | CRAM+regions.tsv+脚本5基线 | **后跑**。on-target桥接 + off-target筛查(MAPQ≥20) + artifact黑名单 | `analysis/integration/<样本>/integration_summary.tsv` |
-| **6** | `6_ki_integrity_check.sh` | CRAM+regions.tsv | 人源区滑动窗口深度扫描，找内部缺失(LOW)/重复重排(HIGH) | `analysis/ki_integrity/<样本>/*.integrity_flags.tsv` |
-| **7** | `7_zygosity_analysis.sh` | CRAM+regions.tsv 的同源臂坐标 | **现场**把同源臂比对回GRCm39定位"被切除的小鼠区段"，查其深度判纯合/杂合 | `analysis/zygosity/<样本>/zygosity_summary.tsv` |
-| **8** | `8_cd1a_neo_status.sh` | CRAM + `CD1A KI.dna`(现场解析) | **CD1A专项**：Neo盒坐标现场解析，查覆盖深度判断是否已删除 | `analysis/cd1a_neo_status/<样本>/verdict.txt` |
-| **9** | `9_annotate_breakpoints.R` | 脚本4候选位点 + GENCODE vM35 | 断点注释落在哪个小鼠基因 | `analysis/annotation/<样本>/*_annotated.tsv` |
-| **10** | `10_generate_report.R` | 脚本4/5/6/7/8/9 各输出 | 汇总英文客户报告 | `custom_research_report_YYYYMMDD/*.md` |
+| #            | 文件                          | 输入                                                    | 做什么                                                                        | 输出                                                                |
+| :----------- | :---------------------------- | :------------------------------------------------------ | :---------------------------------------------------------------------------- | :------------------------------------------------------------------ |
+| **0**  | `0_build_hybrid_ref.sh`     | GRCm39 +`refs/constructs/TG_*.fa`(自动 glob，含 CD1A) | 拼接**合并混合参考**+faidx/dict                                         | `refs/hybrid/GRCm39_plus_constructs.fa`                           |
+| **1**  | `1_produce_samplesheet.py`  | `/home/gao/Dropbox/Ellen/*.fastq.gz`                  | 生成 sarek samplesheet                                                        | `samplesheet_full.csv`(6样) + `samplesheet_trial_RAGH.csv`(1样) |
+| **2**  | `2_run_sarek.sh`            | samplesheet + 混合参考                                  | sarek 3.8.1：比对/QC/去重/SV(TIDDIT，Manta已弃用)                             | `output_results/`（CRAM、mosdepth）                               |
+| **3**  | `3_work_monitor.sh`         | sarek 日志                                              | 状态快照 + 早期失败检测                                                       | 终端输出                                                            |
+| **5**  | `5_copy_number.sh`          | CRAM+混合参考+`construct_regions.tsv`                 | **先跑**。人源特异区深度/基线=拷贝数(MAPQ≥20,遮蔽同源臂)               | `analysis/copy_number/<样本>/copy_number.tsv`                     |
+| **4**  | `4_integration_analysis.sh` | CRAM+regions.tsv+脚本5基线                              | **后跑**。on-target桥接 + off-target筛查(MAPQ≥20) + artifact黑名单     | `analysis/integration/<样本>/integration_summary.tsv`             |
+| **6**  | `6_ki_integrity_check.sh`   | CRAM+regions.tsv                                        | 人源区滑动窗口深度扫描，找内部缺失(LOW)/重复重排(HIGH)                        | `analysis/ki_integrity/<样本>/*.integrity_flags.tsv`              |
+| **7**  | `7_zygosity_analysis.sh`    | CRAM+regions.tsv 的同源臂坐标                           | **现场**把同源臂比对回GRCm39定位"被切除的小鼠区段"，查其深度判纯合/杂合 | `analysis/zygosity/<样本>/zygosity_summary.tsv`                   |
+| **8**  | `8_cd1a_neo_status.sh`      | CRAM +`CD1A KI.dna`(现场解析)                         | **CD1A专项**：Neo盒坐标现场解析，查覆盖深度判断是否已删除               | `analysis/cd1a_neo_status/<样本>/verdict.txt`                     |
+| **9**  | `9_annotate_breakpoints.R`  | 脚本4候选位点 + GENCODE vM35                            | 断点注释落在哪个小鼠基因                                                      | `analysis/annotation/<样本>/*_annotated.tsv`                      |
+| **10** | `10_generate_report.R`      | 脚本4/5/6/7/8/9 各输出                                  | 汇总英文客户报告                                                              | `custom_research_report_YYYYMMDD/*.md`                            |
 
 > **辅助文件** `local_resources.config`：sarek 资源上限(48线程/108GB, queueSize=2)，被脚本2引用。
 > **脚本5必须先于脚本4/6/7跑**（它们复用脚本5的 mosdepth 基线 summary）。
@@ -69,6 +69,7 @@ Ellen fastq ──► [1] samplesheet.csv ──► [2] sarek 比对/QC/去重/S
 ## 4. 三个"现场重算"设计（重要：不要改成硬编码坐标）
 
 脚本 6/7/8 都遵循同一原则：**需要的坐标现场从源文件重新计算，不写死记忆里/历史上的数字**——这是 2026-07-08 的一条教训（曾把附图数字看错、也曾担心记混历史坐标）：
+
 - 脚本7 的"被切除小鼠区段"：现取同源臂序列→现场 minimap2 比对 GRCm39。
 - 脚本8 的 Neo 坐标：现场用 Biopython 重新解析 `CD1A KI.dna`。
 - 好处：即使 construct_regions.tsv 或构建体文件以后有更新，这两步自动跟着对，不会静默用旧坐标。
@@ -88,6 +89,7 @@ Ellen fastq ──► [1] samplesheet.csv ──► [2] sarek 比对/QC/去重/S
 **已完成（历史）**：RAGH_153 试跑，验证管线可用。
 
 **全量 6 样跑（★ 排期中，见下）：**
+
 ```bash
 bash scripts/0_build_hybrid_ref.sh                  # 建含 3 真实构建体的最终参考
 bash scripts/2_run_sarek.sh scripts/samplesheet_full.csv   # 6 样一次性
