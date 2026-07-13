@@ -1,7 +1,9 @@
 # 项目 14 — 基因编辑肿瘤细胞 + Lats1/2 Hippo 小鼠 WGS 分析方案
 
 - **Project**: 14_geneedit_lats12_wgs
-- **Plan Date**: 2026-07-07（rev 2026-07-12 — §1 样本表补入每样本 R1/R2 实测文件大小）
+- **Plan Date（创建）**: 2026-07-07　·　文件名固定为创建日，永不更名（研究时间线追踪）
+- **文档更新记录**:
+  - 2026-07-12 — §1 样本表补入每样本 R1/R2 实测文件大小 + 数据集总量（462 GiB / 463 G）
 - **Prepared by**: Zhen Gao, PhD, Principal Bioinformatics Scientist, Athenomics
 - **样本**: 12 个 WGS 样本，两组各 6 个（详见 §1）
 - **数据来源**: 待客户/Jing 提供 fastq 路径
