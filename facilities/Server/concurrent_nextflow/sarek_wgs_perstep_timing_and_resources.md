@@ -1,5 +1,8 @@
 # sarek WGS 每步耗时 + 资源画像 — 实测参考
 
+> **本文件是唯一权威副本(canonical)。** 以下路径通过软链接指向本文件,请勿在软链接处编辑,所有修改都在本文件进行:
+> - `13_Ellen_knockin_wgs/logs/sLk_of_sarek_wgs_perstep_timing_and_resources_in_facilities_Server.md`
+
 适用范围:nf-core/sarek 常规 WGS(germline / somatic 均适用),用于估算总耗时、排程并跑、
 判断哪些步骤会互相争抢资源。
 记录时间:2026-07-10(**本版用项目13/14 两条真实运行的 `execution_trace` 实测值替换了 0709 版的"借用值"**)。

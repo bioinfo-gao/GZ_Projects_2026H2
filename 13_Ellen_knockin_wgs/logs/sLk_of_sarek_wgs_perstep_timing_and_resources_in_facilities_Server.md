@@ -1,0 +1,1 @@
+/home/gao/projects_2026H2/facilities/Server/concurrent_nextflow/sarek_wgs_perstep_timing_and_resources.md
