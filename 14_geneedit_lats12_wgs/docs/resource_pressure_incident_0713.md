@@ -1,5 +1,11 @@
 # 资源压力事件记录 — Study B germline sarek（2026-07-13 load 峰值 152）
 
+> **📍 关联文件组｜项目14「load-152 资源事件」四联档（2026-07-13）** — 以下四份内容互补、共享同一组实测数据，看到任意一份即可定位其余三份（绝对路径，一年后依旧可寻）：
+> 1. **根因深挖**：`/home/gao/projects_2026H2/14_geneedit_lats12_wgs/docs/resource_pressure_incident_0713.md` — CNNScoreVariants 超订致 load 峰值 152 的逐层分析 + 配置修正
+> 2. **项目14全程负载画像**：`/home/gao/projects_2026H2/facilities/Server/nextflow_pipeline/project14_load_profile_0713.md` — Study A+B 全程峰值/空闲/负载分布
+> 3. **wgs skill**：`/home/gao/.claude/skills/wgs/SKILL.md` — CNN 是隐藏 CPU 大户的警告，写入资源 config 节
+> 4. **corun skill**：`/home/gao/.claude/skills/corun/SKILL.md` — 哪些阶段可并跑 / 哪些绝对不行 的速判矩阵
+
 > **文件性质**：资源压力实测原始材料（非分析计划）。创建日 = 2026-07-13，文件名不改。
 > **用途**：作为本服务器 sarek germline / 变异过滤阶段**未来资源分配的原始依据**。
 > 数据全部取自实测（`hc_resource_monitor_0712.log` + `execution_trace_2026-07-12_14-27-42.txt`），非估计。

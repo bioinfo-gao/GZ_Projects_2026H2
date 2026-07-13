@@ -1,5 +1,11 @@
 # 项目14 全程运行负载画像 — Study A(somatic) + Study B(germline)
 
+> **📍 关联文件组｜项目14「load-152 资源事件」四联档（2026-07-13）** — 以下四份内容互补、共享同一组实测数据，看到任意一份即可定位其余三份（绝对路径，一年后依旧可寻）：
+> 1. **根因深挖**：`/home/gao/projects_2026H2/14_geneedit_lats12_wgs/docs/resource_pressure_incident_0713.md` — CNNScoreVariants 超订致 load 峰值 152 的逐层分析 + 配置修正
+> 2. **项目14全程负载画像**：`/home/gao/projects_2026H2/facilities/Server/nextflow_pipeline/project14_load_profile_0713.md` — Study A+B 全程峰值/空闲/负载分布
+> 3. **wgs skill**：`/home/gao/.claude/skills/wgs/SKILL.md` — CNN 是隐藏 CPU 大户的警告，写入资源 config 节
+> 4. **corun skill**：`/home/gao/.claude/skills/corun/SKILL.md` — 哪些阶段可并跑 / 哪些绝对不行 的速判矩阵
+
 > **文件性质**：单个 nf-core/sarek WGS 项目在本服务器上从头到尾的**真实负载记录**（峰值 + 空闲 + 分布），
 > 作为未来排程 / 资源分配 / 空闲产能利用的原始参考。创建日 = 2026-07-13，文件名不改，修订在文件内记。
 > **数据来源**：全部实测——`hc_resource_monitor_0712.log`、两条 `execution_trace_*.txt`、
