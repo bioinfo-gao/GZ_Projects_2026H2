@@ -79,15 +79,17 @@ sarek germline 的固有行为，任何"分阶段错峰"的假设都不成立。
 ## 4. 对未来资源分配的指令（raw material → 规则）
 
 1. **CNNScoreVariants 必须显式限核**：按实测 ≈9 核声明
-   `withName: '.*CNNSCOREVARIANTS.*' { cpus = 9 }`，使 56/9 ≈ **最多 6 并发**（正好 = 6 个 germline
-   样本，不会再叠更多）。已在 `local_resources_full_machine.config` 写入（见该文件注释）。
+   `withName: '.*CNNSCOREVARIANTS.*' { cpus = 9 }`。已落地到**负载修正终版配置**
+   `scripts/0_common/local_resources_studyB_load_adjusted_FINAL.config`（今后 Study B solo 用它，
+   `full_machine.config` 标记 SUPERSEDED 保留作历史证物）。
 2. **不能只靠内存预算限流**：对"低 RSS、高线程"的进程（CNN、部分 TF/Java 工具），内存自动限流失效，
    **必须显式 `cpus`**。凡实测 %cpu 远高于声明 cpus 的进程，一律显式右调 cpus。
 3. **预算要按"实测 %cpu 求和"核算，而非按声明 cpus**：声明值只决定并发席位数，真正压机器的是
    `Σ(实测 %cpu)`。规划时用 trace 的 %cpu 列，不用 declared。
-4. **考虑相位重叠**：germline 末段 HC 尾巴 + CNN 会叠加。若要稳在 56 线程内，需把
-   HC(cpus=4→席位14) 与 CNN(cpus=9→席位6) 的**并发席位之和 × 实测核数**控制在 ~56，
-   或对 germline 变异调用段整体调低 `executor.cpus`（如 44）留出重叠缓冲。
+4. **考虑相位重叠 + iowait，`executor.cpus` 要压到 48（不是 56）**：germline 末段 HC 尾巴 + CNN 会叠加，
+   且 load 计入 I/O 等待(D状态)线程(MarkDup/TIDDIT 读写数百 G)。若 `cpus=56`，真实核需求顶满再叠 iowait→load 过 56–60。
+   **终版设 `executor.cpus=48`**：真实核需求封顶 48，留 8 线程吸收 iowait/OS → 观测 load 稳在 ~45–56（目标 ≤56），
+   且仍够 5 个 CNN 并发、6 样本顺畅流过。见 `local_resources_studyB_load_adjusted_FINAL.config` 头注。
 5. **内存不是本项目 germline 的约束**（全程余 85G+）。瓶颈永远是 CPU/线程；配置以 CPU 为第一约束。
 
 ## 5. 本次事件的影响评估

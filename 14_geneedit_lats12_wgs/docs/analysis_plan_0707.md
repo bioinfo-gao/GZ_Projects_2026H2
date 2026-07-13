@@ -5,7 +5,9 @@
 - **文档更新记录**:
   - 2026-07-12 — §1 样本表补入每样本 R1/R2 实测文件大小 + 数据集总量（462 GiB / 463 G）
   - 2026-07-13 — Study B germline 出现 load 峰值152(CNNScoreVariants超订)，实测+根因+配置修正另记于
-    `docs/resource_pressure_incident_0713.md`；`full_machine.config` 已加 CNNSCOREVARIANTS cpus=9 限核
+    `docs/resource_pressure_incident_0713.md`；新增负载修正终版配置
+    `scripts/0_common/local_resources_studyB_load_adjusted_FINAL.config`(executor.cpus=48 + CNN cpus=9，
+    目标 load ≤56)，取代 `full_machine.config`(后者标记 SUPERSEDED，保留作历史证物)
 - **Prepared by**: Zhen Gao, PhD, Principal Bioinformatics Scientist, Athenomics
 - **样本**: 12 个 WGS 样本，两组各 6 个（详见 §1）
 - **数据来源**: 待客户/Jing 提供 fastq 路径
