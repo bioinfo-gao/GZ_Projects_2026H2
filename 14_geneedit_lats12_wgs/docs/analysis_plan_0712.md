@@ -1,7 +1,7 @@
 # 项目 14 — 基因编辑肿瘤细胞 + Lats1/2 Hippo 小鼠 WGS 分析方案
 
 - **Project**: 14_geneedit_lats12_wgs
-- **Plan Date**: 2026-07-07
+- **Plan Date**: 2026-07-07（rev 2026-07-12 — §1 样本表补入每样本 R1/R2 实测文件大小）
 - **Prepared by**: Zhen Gao, PhD, Principal Bioinformatics Scientist, Athenomics
 - **样本**: 12 个 WGS 样本，两组各 6 个（详见 §1）
 - **数据来源**: 待客户/Jing 提供 fastq 路径
@@ -24,22 +24,22 @@
 - 页面：https://www.massgeneral.org/obgyn/vcrb/research/wang-lab
 - 实验室方向：**高级别浆液性卵巢癌 (HGSOC)** 与 **多囊卵巢综合征 (PCOS)**。→ HGSOC 起源于输卵管上皮、由 TP53+BRCA1/2 缺失(HRD)驱动，与本项目 Study A(Trp53;Brca1/2;Pten)、Study B(输卵管异常) 高度吻合——**整个项目是卵巢癌 HGSOC 模型**。
 
-**样本表（客户附图 `docs/client_materials/` + 数据 `/home/gao/Dropbox/JinPeng/` 核实）：** 12 样 PE150 NovaSeq X Plus WGS，共 463 GB。
+**样本表（客户附图 `docs/client_materials/` + 数据 `/home/gao/Dropbox/JinPeng/` 核实）：** 12 样 PE150 NovaSeq X Plus WGS，gzip fastq 合计 **462 GiB**（`du -shc` 报 463 G）。文件大小 = `/home/gao/Dropbox/JinPeng/` 实测（2026-07-12）。
 
-| # | 生物学标签 | fastq 前缀 (S#) | Type | 组 | 说明 |
-| :---: | :--- | :---: | :---: | :---: | :--- |
-| 1 | **RO_origin** | 3852R0origin (S65) | Cell | A | **Trp53⁺/⁻;Cas9 未编辑亲本 = Study A matched normal** |
-| 2 | RO_B1TP | 3852R0B1TP (S63) | Cell | A | 电穿孔 sgRNA **Brca1+Pten** KO |
-| 3 | RO_B2TP | 3852R0B2TP (S64) | Cell | A | 电穿孔 sgRNA **Brca2+Pten** KO |
-| 4 | 1st tumor | 3868 (S66) | Cell | A | B1TP/B2TP 成瘤消化 |
-| 5 | 2nd tumor | 7352 (S67) | Cell | A | 同上 |
-| 6 | 3rd tumor | 8599 (S70) | Cell | A | 同上 |
-| 7 | L1L2 · 3M | A2371 (S72) | Tissue | B | |
-| 8 | L1L2H · 3M | A2353 (S71) | Tissue | B | +iHPV |
-| 9 | L1L2 · 12M | 8464 (S68) | Tissue | B | |
-| 10 | L1L2H · 12M | 8465 (S69) | Tissue | B | +iHPV |
-| 11 | L1L2 · 18M | 3685 (S61) | Tissue | B | |
-| 12 | L1L2H · 18M | 3689 (S62) | Tissue | B | +iHPV |
+| # | 生物学标签 | fastq 前缀 (S#) | R1/R2 (GiB) | Type | 组 | 说明 |
+| :---: | :--- | :---: | :---: | :---: | :---: | :--- |
+| 1 | **RO_origin** | 3852R0origin (S65) | 15.5 / 15.4 | Cell | A | **Trp53⁺/⁻;Cas9 未编辑亲本 = Study A matched normal** |
+| 2 | RO_B1TP | 3852R0B1TP (S63) | 19.9 / 19.3 | Cell | A | 电穿孔 sgRNA **Brca1+Pten** KO |
+| 3 | RO_B2TP | 3852R0B2TP (S64) | 19.7 / 19.4 | Cell | A | 电穿孔 sgRNA **Brca2+Pten** KO |
+| 4 | 1st tumor | 3868 (S66) | 20.9 / 20.9 | Cell | A | B1TP/B2TP 成瘤消化 |
+| 5 | 2nd tumor | 7352 (S67) | 15.7 / 15.8 | Cell | A | 同上 |
+| 6 | 3rd tumor | 8599 (S70) | 26.3 / 26.4 | Cell | A | 同上（最大样，~53 GiB） |
+| 7 | L1L2 · 3M | A2371 (S72) | 16.4 / 16.3 | Tissue | B | |
+| 8 | L1L2H · 3M | A2353 (S71) | 15.9 / 16.0 | Tissue | B | +iHPV |
+| 9 | L1L2 · 12M | 8464 (S68) | 24.7 / 24.9 | Tissue | B | |
+| 10 | L1L2H · 12M | 8465 (S69) | 21.4 / 21.2 | Tissue | B | +iHPV |
+| 11 | L1L2 · 18M | 3685 (S61) | 19.1 / 19.0 | Tissue | B | |
+| 12 | L1L2H · 18M | 3689 (S62) | 16.0 / 15.8 | Tissue | B | +iHPV |
 
 > **数据来源**：分组以客户附图（`docs/client_materials/5c617d…png`）+ 实际 fastq 文件名为准；两者一致，附图信息正确、无需修正。数据文件夹内的 `Sample_Sheet_for_interal_use.xlsx`（实验员填写）客户已声明完全错误，不采用。
 > （更正记录：本方案 0707 早前一版曾误称附图把 18M L1L2 标为 "3852" 并"修正"为 3685——那是**我方转录笔误**（把附图的 `3685` 看成 `3852`），附图本身一直是正确的 `3685`。已撤销该"修正"说法。请你对照附图再确认一下 18M 两行的 `3685`/`3689` 与 L1L2/L1L2H 的对应，因为我已暴露过看错数字。）
