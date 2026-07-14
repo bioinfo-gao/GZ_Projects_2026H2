@@ -1,0 +1,37 @@
+#<METADATA>Ln prior of deletion of length 10=-16.55329140985526
+#<METADATA>Ln prior of deletion of length 9=-17.948898535454248
+#<METADATA>Ln prior of deletion of length 8=-15.689302139767824
+#<METADATA>Ln prior of deletion of length 7=-16.77961955828421
+#<METADATA>Ln prior of deletion of length 6=-14.926784363234415
+#<METADATA>Ln prior of deletion of length 5=-15.606649044844985
+#<METADATA>Ln prior of deletion of length 4=-14.124844571758231
+#<METADATA>Ln prior of deletion of length 3=-15.523780528673381
+#<METADATA>Ln prior of deletion of length 2=-14.994669015063687
+#<METADATA>Ln prior of deletion of length 1=-14.40418479694031
+#<METADATA>Ln prior of SNV=-10.966968552260463
+#<METADATA>Ln prior of insertion of length 1=-14.316366102980139
+#<METADATA>Ln prior of insertion of length 2=-14.873257284056127
+#<METADATA>Ln prior of insertion of length 3=-15.28571445314472
+#<METADATA>Ln prior of insertion of length 4=-14.911264114777316
+#<METADATA>Ln prior of insertion of length 5=-15.72409767205152
+#<METADATA>Ln prior of insertion of length 6=-15.926599072721313
+#<METADATA>Ln prior of insertion of length 7=-16.927641321754024
+#<METADATA>Ln prior of insertion of length 8=-16.632280879050185
+#<METADATA>Ln prior of insertion of length 9=-17.373394344785243
+#<METADATA>Ln prior of insertion of length 10=-16.986014109932782
+#<METADATA>Background beta-binomial cluster=weight = 0.1481, alpha = 8.01, beta = 51.28
+#<METADATA>High-AF beta-binomial cluster=weight = 0.0296, alpha = 12.23, beta = 14.15
+#<METADATA>Binomial cluster=weight = 0.5200, mean = 0.111
+#<METADATA>Binomial cluster=weight = 0.1608, mean = 0.111
+#<METADATA>Binomial cluster=weight = 0.1414, mean = 0.111
+#<METADATA>threshold=0.558
+#<METADATA>fdr=0.153
+#<METADATA>sensitivity=0.924
+filter	FP	FDR	FN	FNR
+weak_evidence	4758.37	0.06	3935.14	0.05
+strand_bias	7.66	0.0	0.0	0.0
+normal_artifact	318.44	0.0	122.85	0.0
+orientation	5528.89	0.07	73.21	0.0
+slippage	1.32	0.0	3.02	0.0
+haplotype	5401.93	0.06	790.65	0.01
+germline	101.13	0.0	10.49	0.0

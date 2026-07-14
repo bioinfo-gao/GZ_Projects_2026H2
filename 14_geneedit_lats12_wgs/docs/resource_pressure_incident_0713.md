@@ -14,6 +14,9 @@
 ## 更新记录
 - 2026-07-13 — 建档，记录 07:17–09:32 load 峰值事件全过程 + 根因 + 配置修正。
 - 2026-07-13 — 追加 §7：TIDDIT 尾段并发提速评估（load 仅 1.26 时触发），2 并发理论可行但因存疑暂不启用，实测数据留档。
+- 2026-07-14 — 追加 §7.7：Study B 全部完成后 6 样本 TIDDIT **最终实测**（realtime/peak_rss/SV数）。
+  **关键更正**：germline-SINGLE TIDDIT 实测峰值仅 24–36GB（非当初参照的 41/57GB）→ 内存从不是限制，
+  2 并发本可安全；真正瓶颈是单线程 local-assembly 耗时（1.5–4h），且不随深度线性变化。
 
 ---
 
@@ -200,3 +203,43 @@ sarek germline 的固有行为，任何"分阶段错峰"的假设都不成立。
   （每样本数小时）**。未来若要提速这类样本，方向不是加内存，而是：TIDDIT 线程/拼接并行度，或
   评估是否需要 assembly-based breakpoint（若仅需 CNV/粗结构可考虑轻量模式）——需另测，勿盲改。
 - 数据来源：`work_B/4b/0e01d4519b91c7c15515c71b760cd2/`（`.command.log`、clips 文件大小、`/proc/<pid>/{stat,io,wchan}`）。
+
+---
+
+## 7.7 Study B 6 样本 TIDDIT 最终实测（2026-07-14，全部完成后 · 高参考价值）
+
+Study B 于 **2026-07-13 22:55 成功完成**（`Pipeline completed successfully`，175 成功 / 0 失败 /
+107 缓存，总时长 1d 8h）。以下为 6 个 germline-SINGLE `TIDDIT_SV` 的**最终逐样本实测**，取自
+`output_B/pipeline_info/execution_trace_2026-07-12_14-27-42.txt` + SV 记录数（`zcat|grep -vc '^#'`）：
+
+| 样本 | 深度 | md.cram | **realtime** | **peak_rss** | %cpu | rchar/wchar | SV 记录数 |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| L1L2H_12M | 27.6x | 12G | **4h 03m** ⚠ | 28.0 GB | 128% | 136G/95G | 19,299 |
+| L1L2_18M | 24.8x | 11G | 2h 25m | 24.6 GB | 146% | 114G/82G | 21,038 |
+| L1L2_12M | 31.9x | 15G | 2h 21m | **36.2 GB** | 164% | 145G/124G | 27,337 |
+| L1L2_3M | 21.5x | 9.2G | 1h 35m | 24.4 GB | 158% | 89G/69G | 16,393 |
+| L1L2H_3M | 20.1x | 9.8G | 1h 31m | 26.0 GB | 160% | 93G/75G | 13,201 |
+| L1L2H_18M | 20.5x | 9.2G | 1h 30m | 25.1 GB | 162% | 89G/71G | 16,581 |
+
+**总尾段串行 wall-time ≈ 14.3h**（856 min 之和；实际 07-13 下午 → 22:30 跑完）。
+
+### 三条高价值结论（供未来 germline-single WGS + CIN 样本资源规划直接引用）
+
+1. **★内存从不是限制——这是对 §7.3/§7.4 保守估计的直接更正。**
+   germline-SINGLE TIDDIT 实测峰值仅 **24–36 GB**（非当初参照 RO_origin 的 41GB，更非 somatic 双样本
+   模式的 51–57GB）。据此：`executor.memory=108GB` 下 **2 并发（2×36=72G）绰绰有余，3 并发（3×36=108G）
+   亦可**。当初因"内存存疑"保持串行虽属稳妥，但事后看**在尾段并发 2–3 个本可把 ~14h 压到 ~5–7h**。
+   → **今后 germline-single TIDDIT 提速：直接把 config 里 TIDDIT `memory` 设 ~40GB 开 2 并发，安全。**
+
+2. **真正瓶颈是单线程 local-assembly 耗时，且不随深度/SV 数线性变化。**
+   最慢的 L1L2H_12M（4h03m）既非最深（27.6x）也非 SV 最多（19,299），且 %cpu 最低（128% vs 其余
+   146–164%）→ 更 I/O-bound（疑早段与其它任务争盘）。最深的 L1L2_12M（31.9x/27,337 SV）反而只 2h21m。
+   → 规划 CIN 样本 TIDDIT 时长要按 **1.5–4h/样本**留足冗余，不能只按深度外推。
+
+3. **SV 记录数（1.3万–2.7万/样本）印证 CIN 生物学**：数量随深度大致递增，普遍偏高，符合 Lats1/2-null
+   染色体不稳定的预期（§7.6 clips 爆炸的同一根因）。此为数据质量与生物学一致性的正向佐证。
+
+### 数据来源（本节）
+- 逐样本 realtime/rss/cpu/io：`output_B/pipeline_info/execution_trace_2026-07-12_14-27-42.txt`
+- SV 记录数：`output_B/variant_calling/tiddit/<sample>/<sample>.tiddit.vcf.gz`
+- 完成状态：`logs/sarek_B.log` 尾部 + `.nextflow.log`（`Pipeline completed successfully`, 22:55:50）。

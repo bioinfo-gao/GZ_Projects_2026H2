@@ -1,0 +1,7 @@
+gene	chr	cut_pos	strand	spacer_name
+Brca1	chr11	101422906	+	Brca1_g4
+Brca1	chr11	101422908	-	Brca1_g5
+Brca1	chr11	101422932	-	Brca1_g6
+Pten	chr19	32777278	-	Pten_g1
+Pten	chr19	32777295	-	Pten_g2
+Pten	chr19	32777299	-	Pten_g3

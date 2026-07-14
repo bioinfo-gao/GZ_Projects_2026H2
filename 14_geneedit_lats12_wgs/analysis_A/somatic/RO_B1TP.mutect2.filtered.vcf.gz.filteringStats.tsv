@@ -1,0 +1,37 @@
+#<METADATA>Ln prior of deletion of length 10=-16.467919957501593
+#<METADATA>Ln prior of deletion of length 9=-17.99318238849676
+#<METADATA>Ln prior of deletion of length 8=-15.737057543181878
+#<METADATA>Ln prior of deletion of length 7=-16.568038474087796
+#<METADATA>Ln prior of deletion of length 6=-15.003076084846453
+#<METADATA>Ln prior of deletion of length 5=-15.642078435570886
+#<METADATA>Ln prior of deletion of length 4=-14.194486625311718
+#<METADATA>Ln prior of deletion of length 3=-15.45688374625889
+#<METADATA>Ln prior of deletion of length 2=-15.008554230111011
+#<METADATA>Ln prior of deletion of length 1=-14.36263358678465
+#<METADATA>Ln prior of SNV=-10.906519767261953
+#<METADATA>Ln prior of insertion of length 1=-14.268457734869994
+#<METADATA>Ln prior of insertion of length 2=-14.854577587378158
+#<METADATA>Ln prior of insertion of length 3=-15.212662421775978
+#<METADATA>Ln prior of insertion of length 4=-14.845788808794758
+#<METADATA>Ln prior of insertion of length 5=-15.753185232564075
+#<METADATA>Ln prior of insertion of length 6=-15.83460076903235
+#<METADATA>Ln prior of insertion of length 7=-16.607670218189444
+#<METADATA>Ln prior of insertion of length 8=-16.526145503774202
+#<METADATA>Ln prior of insertion of length 9=-17.26036198056052
+#<METADATA>Ln prior of insertion of length 10=-16.904635745448953
+#<METADATA>Background beta-binomial cluster=weight = 0.1684, alpha = 9.21, beta = 58.38
+#<METADATA>High-AF beta-binomial cluster=weight = 0.0235, alpha = 12.03, beta = 13.15
+#<METADATA>Binomial cluster=weight = 0.4985, mean = 0.113
+#<METADATA>Binomial cluster=weight = 0.1693, mean = 0.113
+#<METADATA>Binomial cluster=weight = 0.1402, mean = 0.113
+#<METADATA>threshold=0.556
+#<METADATA>fdr=0.144
+#<METADATA>sensitivity=0.925
+filter	FP	FDR	FN	FNR
+weak_evidence	4652.3	0.05	4253.33	0.05
+strand_bias	8.69	0.0	0.0	0.0
+normal_artifact	323.07	0.0	133.23	0.0
+orientation	5335.51	0.06	33.32	0.0
+slippage	1.58	0.0	1.86	0.0
+haplotype	5231.33	0.06	819.7	0.01
+germline	117.18	0.0	10.93	0.0

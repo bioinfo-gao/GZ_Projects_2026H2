@@ -1,31 +1,59 @@
 #!/bin/bash
 # ============================================================================
-# Study B / Step 3 — iHPV 构建体整合位点（★首要假设：插入突变致输卵管表型）
-#   方法同 proj13 嵌合读段法：抓 TG_iHPV contig 上读段的 discordant/split 落点 →
-#   聚类整合位点 → 注释落在哪个小鼠基因（是否输卵管相关）。MAPQ≥20 + artifact 黑名单。
-#   仅 L1L2H(3M/12M/18M) 有此构建体；L1L2 为阴性对照（应零覆盖）。
-#   前置：B2 完成（跑在含 TG_iHPV 的混合参考上）。
-#   用法: bash B3_ihpv_integration.sh L1L2H_12M
+# Study B / Step 3 — iHPV 构建体 存在筛查 + 候选整合位点（首要假设：插入突变）
+#   sarek 对齐的是纯 GRCm39 → 构建体来源读段为 unmapped。做法：
+#   (1) 一次 CRAM 扫描抽出 "unmapped 或 mate-unmapped" 读段 → 小 BAM（省 I/O）
+#   (2) unmapped 读段 → 比对 iHPV 标记参考(HPV16+EGFP+Luc) → 构建体读段计数
+#       → L1L2H(带iHPV) 应阳性、L1L2 应阴性（内部特异性对照）
+#   (3) 构建体读段的"基因组锚定"(mapped, mate-unmapped) 落点聚类 = 候选整合位点
+#   ⚠ 局限：TG_iHPV 为标记序列(HPV16/EGFP/Luc)，非 PMC4662542 完整载体图 →
+#     可定"落在哪个基因组区"，碱基级结合部/被打断基因精判需完整载体（报告注明）。
+#   前置：B2 完成；refs/constructs/TG_iHPV.fa 已 bwa-mem2 index。
+#   ⚡ 6 样 3 路并行(xargs -P3)：I/O 密集，负载低时充分用盘。
 # ============================================================================
 set -euo pipefail
-SAMPLE="${1:?用法: bash B3_ihpv_integration.sh <sample>}"
 PROJ="/home/gao/projects_2026H2/14_geneedit_lats12_wgs"
-HYBRID="$PROJ/refs/hybrid/GRCm39_plus_Cas9_iHPV.fa"
-GTF="/Work_bio/references/Mus_musculus/GRCm39/mouse_gencode_M35/gencode.vM35.annotation.gtf"
-OUT="$PROJ/analysis_B/ihpv_integration/$SAMPLE"; mkdir -p "$OUT"
-RUN(){ conda run -n regular_bioinfo "$@"; }; MAPQ=20
-CRAM=$(ls "$PROJ"/output_B/preprocessing/markduplicates/"$SAMPLE"/*.cram 2>/dev/null | head -1)
-[ -z "$CRAM" ] && { echo "ERROR: 无 $SAMPLE CRAM（先跑 B2）"; exit 1; }
+GRCM39="/Work_bio/references/Mus_musculus/GRCm39/mouse_gencode_M35/GRCm39.primary_assembly.genome.fa"
+TG="$PROJ/refs/constructs/TG_iHPV.fa"
+OUT="$PROJ/analysis_B/ihpv_integration"; mkdir -p "$OUT"
+export PROJ GRCM39 TG OUT
 
-TG="TG_iHPV"
-echo "== $SAMPLE @ $TG 覆盖（L1L2 应≈0）=="; RUN samtools coverage -q $MAPQ -r "$TG" "$CRAM" --reference "$HYBRID" | sed 's/^/  /'
-echo "== discordant 配偶落点 → 候选整合位点 =="
-RUN samtools view -q $MAPQ -T "$HYBRID" "$CRAM" "$TG" \
-  | awk -v tg="$TG" '$7!="=" && $7!=tg && $7!="*"{print $7"\t"$8}' \
-  | sort -k1,1 -k2,2n \
-  | awk '{w=int($2/5000); c[$1"\t"w]++; if(!(($1"\t"w)in mn)||$2<mn[$1"\t"w])mn[$1"\t"w]=$2}
-         END{for(k in c) if(c[k]>=3){split(k,a,"\t"); print a[1]"\t"mn[k]"\t"c[k]}}' \
-  | sort -k3,3nr | awk 'BEGIN{print "chrom\tpos\tsupport"}1' | tee "$OUT/ihpv_integration_sites.tsv"
+run_one(){
+  local s="$1"
+  local cram="$PROJ/output_B/preprocessing/markduplicates/$s/$s.md.cram"
+  local sdir="$OUT/$s"; mkdir -p "$sdir"
+  echo "[$(date +%H:%M:%S)] >> $s"
+  conda run -n regular_bioinfo bash -c "
+    # (1) 一次扫描：unmapped 或 mate-unmapped → 小 BAM
+    samtools view -@ 4 --reference '$GRCM39' -b -e 'flag.unmap || flag.munmap' '$cram' 2>/dev/null > '$sdir/sub.bam'
+    # (2) unmapped 读段 → 构建体
+    samtools fastq -f 4 '$sdir/sub.bam' 2>/dev/null > '$sdir/unmapped.fq'
+    bwa-mem2 mem -t 6 -v 1 '$TG' '$sdir/unmapped.fq' 2>/dev/null \
+      | samtools view -b -F 4 -q 20 -o '$sdir/construct_hits.bam' - 2>/dev/null
+    samtools view '$sdir/construct_hits.bam' | cut -f1 | sort -u > '$sdir/hit_names.txt'
+    hpv=\$(samtools view '$sdir/construct_hits.bam' | awk '\$3==\"TG_HPV16\"' | wc -l)
+    egfp=\$(samtools view '$sdir/construct_hits.bam' | awk '\$3==\"TG_EGFP\"' | wc -l)
+    luc=\$(samtools view '$sdir/construct_hits.bam' | awk '\$3==\"TG_Luc\"' | wc -l)
+    tot=\$(wc -l < '$sdir/hit_names.txt')
+    printf '%s\t%s\t%s\t%s\t%s\n' '$s' \"\$tot\" \"\$hpv\" \"\$egfp\" \"\$luc\" > '$sdir/presence.tsv'
+    # (3) 基因组锚定：mapped 且 mate-unmapped，名字∈构建体读段 → 落点聚类
+    samtools view -f 8 -F 4 '$sdir/sub.bam' 2>/dev/null \
+      | awk 'NR==FNR{h[\$1];next}(\$1 in h){print \$3\"\t\"\$4}' '$sdir/hit_names.txt' - \
+      | sort -k1,1 -k2,2n > '$sdir/anchors.tsv'
+    awk '{bin=int(\$2/5000); key=\$1\"\t\"bin*5000; c[key]++} END{for(k in c) print k\"\t\"c[k]}' '$sdir/anchors.tsv' \
+      | sort -k3,3nr | head -15 > '$sdir/candidate_loci.tsv'
+  "
+  echo "[$(date +%H:%M:%S)] DONE $s"
+}
+export -f run_one
 
-echo ">> 注释：整合位点落在哪个小鼠基因（下一步用 GTF overlap；重点看输卵管/上皮/纤毛相关）"
-echo "DONE B3 → $OUT （如需 artifact黑名单/on-off-target 注释，套 proj13 脚本4 完整版）"
+printf '%s\n' L1L2_3M L1L2H_3M L1L2_12M L1L2H_12M L1L2_18M L1L2H_18M \
+  | xargs -P 3 -I{} bash -c 'run_one "$@"' _ {}
+
+# 汇总
+echo -e "sample\tconstruct_reads\tHPV16\tEGFP\tLuc" > "$OUT/construct_presence.tsv"
+for s in L1L2_3M L1L2H_3M L1L2_12M L1L2H_12M L1L2_18M L1L2H_18M; do
+  cat "$OUT/$s/presence.tsv" 2>/dev/null >> "$OUT/construct_presence.tsv"
+done
+echo "== 构建体存在(L1L2H应阳/L1L2应阴) =="; column -t "$OUT/construct_presence.tsv"
+echo "ALL_B3_DONE $(date +%H:%M:%S)"
