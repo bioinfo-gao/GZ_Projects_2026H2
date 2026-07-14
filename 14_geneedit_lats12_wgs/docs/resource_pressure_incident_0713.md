@@ -13,6 +13,7 @@
 
 ## 更新记录
 - 2026-07-13 — 建档，记录 07:17–09:32 load 峰值事件全过程 + 根因 + 配置修正。
+- 2026-07-13 — 追加 §7：TIDDIT 尾段并发提速评估（load 仅 1.26 时触发），2 并发理论可行但因存疑暂不启用，实测数据留档。
 
 ---
 
@@ -104,3 +105,98 @@ sarek germline 的固有行为，任何"分阶段错峰"的假设都不成立。
 - 每进程 %cpu / rss / 时长：`output_B/pipeline_info/execution_trace_2026-07-12_14-27-42.txt`
 - 使用的配置：`scripts/0_common/local_resources_full_machine.config`（.nextflow.log 确认）
 - 测量日期：2026-07-13，服务器 28 物理核 / 56 线程 / ~128 GB RAM。
+
+---
+
+## 7. TIDDIT 尾段并发提速评估（2026-07-13，评估后**未启用**）
+
+**背景**：germline 主体（HaplotypeCaller + CNNScoreVariants）全部完成后，流程进入 TIDDIT
+结构变异检测尾段（6 样本），此时 load 掉到 **1.26**。低负载引出一个问题——能否让 TIDDIT
+并发以尽快收尾？
+
+### 7.1 关键实测数据（TIDDIT，来自 study A `execution_trace_2026-07-08_21-38-32.txt`）
+
+| 模式 | 样本(深度) | 实测 peak_rss | 实测 %cpu | realtime | rchar/wchar |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| germline **SINGLE** | RO_origin (19.4x) | **41.4 GB** | 208%(~2核) | 51m | 76.6G/72.3G |
+| somatic TIDDIT_NORMAL | RO_B2TP (23.6x) | 37.5 GB | 205% | 54m | 76.7G/72.3G |
+| somatic TIDDIT_TUMOR | RO_B1TP (23.3x) | **56.7 GB** | 143% | **3h49m** | 129.6G/110G |
+| somatic TIDDIT_TUMOR | RO_tumor1 (26x) | 53.7 GB | 168% | 2h9m | 112G/101.5G |
+
+**要点**：Study B 走的是 germline **SINGLE** 模式（`.nextflow.log` 确认路径
+`BAM_VARIANT_CALLING_GERMLINE_ALL:BAM_VARIANT_CALLING_SINGLE_TIDDIT`），对应基准是
+**41.4 GB / 51min** 那一档；51–57GB/3–4h 的是 somatic 双样本模式，**不适用** Study B。
+（原 config 注释把 TIDDIT 内存写成"~57G"是误引了 somatic 值——真实 germline-single 仅 ~41GB。）
+
+### 7.2 Study B 六样本深度（`output_B/reports/mosdepth/*.summary.txt`）
+
+| 样本 | 深度 | md.cram |
+| :--- | :---: | :---: |
+| L1L2_12M | 31.9x | 15G |
+| L1L2H_12M | 27.6x | 12G |
+| L1L2_18M | 24.8x | 11G |
+| L1L2_3M | 21.5x | 9.2G |
+| L1L2H_18M | 20.5x | 9.2G |
+| L1L2H_3M | 20.1x | 9.8G |
+
+深度 20–32x，比基准 RO_origin(19.4x) 略高 → TIDDIT peak_rss 估 **~42–50 GB**。
+
+### 7.3 并发可行性
+
+- **内存**：2 并发 = 2×~50 GB = ~100 GB < 整机 125 GB（余 ~25GB + 64GB swap）→ **理论安全**。
+  声明 `memory=50GB` 即可精准卡到 2 并发（108/50=2；3×50>108 自动挡下）。3 并发 =150GB>125 → 触 swap，**不可**。
+- **CPU**：TIDDIT 仅 ~2 核，2 并发 8 核，对 48 核预算无压力。
+
+### 7.4 为何**暂不启用**（用户 2026-07-13 决定：有疑点就别动）
+
+1. **运行时超长（已查明，见 §7.6）**：当时正跑的 L1L2H_12M(27.6x) 耗时 2h45m+ 仍未完，远超基准
+   51min。**已排查：非死锁**，是 clips 文件达 49.7GB 致单线程 local-assembly 阶段极慢（CIN 样本特性）。
+   拼接期 RSS 反而低(~1.85GB)，41GB 峰值仅在前 ~20min 信号采集期。
+2. **I/O 抢占**：单个 TIDDIT rchar/wchar 各 ~70–130G，2 并发争抢磁盘可能堆积 D 状态线程
+   （正是 §4 要压 `executor.cpus=48` 规避的问题），甚至更慢——低 CPU-load 不代表磁盘空闲。
+3. **已有 swap 占用 1.5G + 旁路 python 占 ~1 核**，余量并非全空。
+
+**结论**：内存维度 2 并发可行，但运行时异常 + I/O 抢占两项无法当场排除，**保持 config 串行默认
+（TIDDIT `memory=58GB` → 1 并发）不动，让当前健康但慢的运行自然跑完**（符合"健康但慢绝不杀"原则）。
+本节数据供**未来** germline-single TIDDIT 提速时直接引用：若届时确认样本 TIDDIT 内存/耗时与基准一致、
+且磁盘 I/O 有余量，可将 TIDDIT `memory` 设 50GB 开 2 并发。
+
+### 7.5 数据来源（本节）
+- TIDDIT 实测：`output_A/pipeline_info/execution_trace_2026-07-08_21-38-32.txt`
+- Study B 深度：`output_B/reports/mosdepth/<sample>/<sample>.md.mosdepth.summary.txt`
+- 运行时快照：`ps` etime（L1L2H_12M TIDDIT 2h35m）、`free -h`（available 115G/swap 1.5G）、当时 load 1.26。
+
+---
+
+## 7.6 TIDDIT 单样本超长运行根因排查（2026-07-13，L1L2H_12M 2h45m 未完）
+
+**触发**：§7.4 记录的运行时异常——L1L2H_12M(27.6x) TIDDIT 远超 51min 基准。逐层排查结论：**非死锁，
+属这批 CIN 样本的预期最坏情况，会正常完成但慢。**
+
+### 排查证据（work_B/4b/0e01d4.../）
+
+1. **进程非阻塞**：主进程 `tiddit` 状态 `Sl+`、wchan=`do_select`（等子进程，非 D 状态非 futex）；
+   其 joblib/loky 子进程 `LokyProcess-5` (PID 1983949) 持续 **94–100% CPU / R 状态**，3s 采样
+   CPU tick 推进 312（≈满算）→ **确证在计算，非卡死、非 I/O 阻塞**。
+   ⚠ 注：`top` 里那个"93.8% python"就是 TIDDIT 自己的拼接 worker，**不是外部项目**（先前误判已更正）。
+
+2. **卡在 local-assembly 阶段**：`.command.log` 显示 signal/coverage/cluster 均已完成
+   （`generated clusters in 32s`），10:08 起进入 clips 局部拼接，单线程 loky worker 连续满算 2h+。
+
+3. **根因＝clips 文件异常巨大**：
+   ```
+   clips_L1L2H_12M_L1L2H_12M.fa = 49.7 GB   (单染色体 clips 各 2–3.7 GB)
+   ```
+   正常 germline 对照 clips 小得多。膨胀两因叠加：
+   - **深度更高**（27.6x vs 基准 19.4x）→ 读段/clip 更多；
+   - **★核心＝Lats1/2-null 的 CIN 生物学**：染色体不稳定 → 全基因组结构重排 →
+     断点 soft-clip/split 读段暴增 → clips ~50GB → 单线程拼接被拖到数小时。
+
+### 结论与影响
+
+- **不干预**（健康但慢）。给内存/并发都救不了单样本速度：瓶颈是单线程拼接算法 + 数据特性，
+  且拼接期 RSS 仅 ~1.85GB（不缺内存）。
+- **⚠ 剩余 5 个 study B 样本同为 CIN 类**，尤以 L1L2_12M(31.9x) 更深 → **TIDDIT 尾段整体预计很长
+  （每样本数小时）**。未来若要提速这类样本，方向不是加内存，而是：TIDDIT 线程/拼接并行度，或
+  评估是否需要 assembly-based breakpoint（若仅需 CNV/粗结构可考虑轻量模式）——需另测，勿盲改。
+- 数据来源：`work_B/4b/0e01d4519b91c7c15515c71b760cd2/`（`.command.log`、clips 文件大小、`/proc/<pid>/{stat,io,wchan}`）。
