@@ -1,4 +1,8 @@
 gemini -p "解释一下 loxP 序列在 Cre-lox 系统中的方向性原理"
+
+（Zhen注： 只要把回答存为md格式，各种表和示意图都能正确显示）
+
+
 Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
 Ripgrep is not available. Falling back to GrepTool.
 Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
