@@ -3,12 +3,15 @@
 - **Plan Date（创建，immutable）**: 2026-07-15
 - **Client**: Wenliang Pan
 - **Analyst**: Zhen Gao, PhD — Athenomics
+- **Species**: Homo sapiens (GRCh38 / GATK.GRCh38)
+- **Tissue/Cell**: not specified by client
 - **模式**: `/wgs` Mode A —— standard germline WGS（nf-core/sarek）
 - **原始数据**: `/home/gao/Dropbox/Quote_06202601_Wenliang_Pan/`
 
 ### 更新记录 / change-log
 - 2026-07-15 — 初稿：项目创建、sample table、模式判定、sarek 参数、annotation/rare-variant/HLA/report 步骤。
 - 2026-07-15 — 按 user directive 将本内部计划改为中文撰写（technical terms 保留 English 原文）；内容不变。
+- 2026-07-15 — 按 user directive 在 header 补入 **Species** + **Tissue/Cell**（报告/计划头部必填项）。
 
 ---
 
