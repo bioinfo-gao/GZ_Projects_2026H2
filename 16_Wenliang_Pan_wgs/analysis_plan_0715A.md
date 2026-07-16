@@ -1,13 +1,42 @@
-# Project 16 — Wenliang Pan · Human Germline WGS · Analysis Plan
+# Project 16 — Wenliang Pan · Human Germline WGS · Analysis Plan（EN version）
+
+> ## ⚠️ 状态：英文版，**内容冻结于 2026-07-15 22:08，已严重滞后 —— 不要据此执行**
+>
+> **权威版（canonical）= 中文版 [`analysis_plan_0715.md`](analysis_plan_0715.md)。**
+> 按 CLAUDE.md「内部文档中文优先」，本项目的分析计划以中文版为准；本英文版仅作对照留存
+> （user directive 2026-07-16：一中一英，保留）。
+>
+> **两版规模对比（2026-07-16 实测）**：中文版 465 行 / 43 KB，10+ 条 change-log；
+> 本英文版 134 行 / 8 KB，change-log 仅 1 条 —— **本文缺失 7/16 的全部内容**，包括但不限于：
+>
+> | 中文版已有、本文缺失 | 后果 |
+> | :--- | :--- |
+> | header 的 **Species + Tissue/Cell** 必填项 | 违反 CLAUDE.md 报告头强制规则 |
+> | `--use_gatk_spark` 陷阱与**回退**（§7 反面教训 1） | 照本文执行会重踩 ~15.4 h 的坑 |
+> | ClinVar **`MT`→`chrM`** 改名修复（§7 反面教训 2） | 会静默丢失全部 mito 注释 |
+> | **监控缺位**与常驻看门狗 `pan_watch`（§7 反面教训 3、§6） | 会重演 11 h 无监控 |
+> | annotation DB 的**完整绝对路径**、GATK.GRCh38 持久化路径（§4） | 找不到已下好的参考/DB |
+>
+> **本文按设计就是滞后的历史快照，不需要与中文版同步**（user directive 2026-07-16：脱节没关系）。
+> 中英文并存不属于 CLAUDE.md「single source of truth」要规避的情形 —— 那条规则针对的是**同语言、
+> 可互换的副本**（如 sample sheet 同时存 `.md` 与 `.tsv`）：正因看不出区别，才会有人改了一份、
+> 另一份静默过期却仍显得权威。**中英文一眼即知是两份不同文档，duplication 是刻意且可见的。**
+>
+> 本横幅要传达的只有一件事：**语言差异说明"这是英文版"，但不说明"这是几月几号的版本"** ——
+> 故在此明示时间戳与缺失内容，避免有人据此执行。
 
 - **Plan Date（创建，immutable）**: 2026-07-15
 - **Client**: Wenliang Pan
 - **Analyst**: Zhen Gao, PhD — Athenomics
+- **Species**: Homo sapiens (GRCh38 / GATK.GRCh38)　←（补：原缺，见上表）
+- **Tissue/Cell**: not specified by client　←（补：原缺）
 - **Mode**: `/wgs` Mode A — standard germline WGS (nf-core/sarek)
 - **Source data**: `/home/gao/Dropbox/Quote_06202601_Wenliang_Pan/`
 
 ### 更新记录 / change-log
 - 2026-07-15 — 初稿：项目创建、样本表、模式判定、sarek 参数、注释/稀有变异/HLA/报告步骤。
+- 2026-07-16 — ⚠ 加状态横幅：标注本文为**滞后的英文对照版**，权威版为中文 `analysis_plan_0715.md`；
+  补 header 缺失的 Species / Tissue/Cell。**正文其余部分未同步**（仍是 7/15 22:08 快照）。
 
 ---
 
