@@ -28,6 +28,12 @@ bin/
 *-nf-*
 *.nf
 *.nextflow*
+# Singularity/Apptainer container images & cache (large, auto-pulled, never in git)
+*.img
+*.sif
+singularity_cache/
+**/singularity_cache/
+.singularity/
 *.yml
 */modules/*
 *.html

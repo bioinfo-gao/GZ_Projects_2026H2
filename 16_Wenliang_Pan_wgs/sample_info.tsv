@@ -1,0 +1,3 @@
+sample	client_name	species	seq_type	machine	flowcell_lane	fastq_1	fastq_2	R1_GiB	R2_GiB
+Sample_A	Wenliang Pan	Human	WGS PE150	NovaSeq X Plus	23JCJ2LT3_L4	/home/gao/Dropbox/Quote_06202601_Wenliang_Pan/Sample_A/Sample_A_CKDL260012882-1A_23JCJ2LT3_L4_1.fq.gz	/home/gao/Dropbox/Quote_06202601_Wenliang_Pan/Sample_A/Sample_A_CKDL260012882-1A_23JCJ2LT3_L4_2.fq.gz	17.58	17.67
+Sample_B	Wenliang Pan	Human	WGS PE150	NovaSeq X Plus	23JCJ2LT3_L4	/home/gao/Dropbox/Quote_06202601_Wenliang_Pan/Sample_B/Sample_B_CKDL260012882-1A_23JCJ2LT3_L4_1.fq.gz	/home/gao/Dropbox/Quote_06202601_Wenliang_Pan/Sample_B/Sample_B_CKDL260012882-1A_23JCJ2LT3_L4_2.fq.gz	21.56	21.59
