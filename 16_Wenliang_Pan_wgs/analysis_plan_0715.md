@@ -40,6 +40,25 @@
 - 2026-07-16 — ⚠ **更正 §7 两处未核实的错误结论**（原写「alignment 经 `-resume` 复用」「HC 随即开始」，
   实为 24 个比对只命中 1 个 cache、HC 未启动）；补入已验证根因（Spark flag 改写 BWAMEM2 的 `sort -n`
   → 比对缓存双向作废）与真实代价 ~15.4 h。教训已写入 `/wgs` skill 实测教训段。
+- 2026-07-16 18:44 — ⚠ **variant-calling 阶段限流解除**（`scripts/local_resources.config` 重调 + `-resume` 重启）。
+  症状：HC scatter 阶段 **2 RUNNING / 54 queued**，56 线程只用 ~4.4、load 4.2、110GB RAM 闲置。
+  根因是 **task 形态反转**——`queueSize=2` 按 alignment 阶段（2×BWAMEM2@16cpus=32 threads）设计时完全正确，
+  但流程进入 HC scatter 后变成几十个 ~2-thread 小 task，同一个值就从保护变节流（同 proj14 Study B 的
+  queueSize=3 → 21% 利用率）。**HC 的 cpus 声明值(2) 本来就准**（实测 219% ≈ 2.2 threads）；真正的天花板是
+  **memory 声明虚高**——HC 继承 sarek `base.config` 的 `withLabel:process_low` = 12GB，实测 peak RSS 仅 4.7GB，
+  而 local executor 是**按声明值**算并发的。改动：HC `withName` 声明 cpus=2 / memory=10.GB（仍为实测 2×余地，
+  `-Xmx` 9830M→8192M）；`queueSize` 2→24 改为非绑定，真正的闸门交给 `executor.cpus=52` + `executor.memory=112.GB`
+  （各留 OS 余量）。**BWAMEM2/MARKDUPLICATES 一字未动**——其值嵌进 command 文本，改则 hash 变、cache 炸。
+  实测结果：64 个 task 命中 cache（含全部 24 个 BWAMEM2，`Submitted` 里 BWAMEM2 = 0，8h 比对零损失）；
+  load 4.2 → 18-21（cap 56，余地充足）；avail RAM 111-113GB。并发额度释放后 nextflow 先排空的是积压的
+  Sample_B MANTA + Sample_A VEP/QC，而非只堆 HC——这些此前全被 queueSize=2 挡着。
+  **附带验证**：降 HC memory 改写了 `-Xmx`，但重启前已完成的 2 个 HC 仍命中 cache → 印证 resource directives
+  不进 task hash（与 Spark flag 改写 `sort -n` 那次的性质不同，后者改的是 command 本身）。
+- 2026-07-16 — 📌 **监控 gap（已知，未修）**：本次限流是用户询问时才发现的，看门狗未报——`LOW_CPU_UTILIZATION`
+  阈值 `WD_LOW_LOAD_MIN=240min` 是刻意设长于 markdup 合法单线程阶段(3.5h)以防狼来了，本次低 load 仅持续 25min。
+  即**队列限流最坏要空转 4h 才告警**。可行的补强：限流态（load 低 **且 queue 深**）与合法 markdup（load 低但
+  **queue 浅**）可由 **queue depth** 一击区分，而现有规则没用这个信号。未动手是因为
+  `facilities/Server/nextflow_watchdog.sh` 是跨项目共享脚本，改它影响面超出本项目，留待确认。
 
 ---
 
