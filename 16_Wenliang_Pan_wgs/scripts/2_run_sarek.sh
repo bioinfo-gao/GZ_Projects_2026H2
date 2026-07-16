@@ -30,7 +30,6 @@ run_sarek() {
         --trim_fastq \
         --skip_tools baserecalibrator \
         --tools haplotypecaller,manta,tiddit,cnvkit,vep \
-        --use_gatk_spark markduplicates \
         --download_cache \
         --max_memory 120.GB --max_cpus 56 \
         "$@"
