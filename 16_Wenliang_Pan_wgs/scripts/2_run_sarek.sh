@@ -30,14 +30,17 @@ run_sarek() {
         --trim_fastq \
         --skip_tools baserecalibrator \
         --tools haplotypecaller,manta,tiddit,cnvkit,vep \
+        --use_gatk_spark markduplicates \
         --download_cache \
         --max_memory 120.GB --max_cpus 56 \
         "$@"
 }
 
+# Always use -resume: harmless on a first/clean run (nothing to resume), and lets a manual
+# restart (e.g. after a config change) reuse already-completed tasks from work/ + .nextflow cache.
 echo "=== sarek start $(date) ==="
-if run_sarek; then echo "=== sarek OK (fresh) $(date) ==="; exit 0; fi
-echo "=== fresh run failed, retrying with -resume $(date) ==="
-if run_sarek -resume; then echo "=== sarek OK (resume) $(date) ==="; exit 0; fi
+if run_sarek -resume; then echo "=== sarek OK $(date) ==="; exit 0; fi
+echo "=== run failed, one more -resume $(date) ==="
+if run_sarek -resume; then echo "=== sarek OK (2nd resume) $(date) ==="; exit 0; fi
 echo "=== sarek FAILED even after resume $(date) ==="
 exit 1
