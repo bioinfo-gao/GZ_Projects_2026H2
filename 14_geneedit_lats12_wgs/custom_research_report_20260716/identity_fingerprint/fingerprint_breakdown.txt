@@ -1,0 +1,39 @@
+Sample-identity SNP fingerprint — per-chromosome and per-VAF breakdown
+Reference: RO_origin. A 'private allele' = sample carries ALT with >=3 reads
+while RO_origin has 0 ALT reads at >=10 depth.
+Evaluable sites: 19032; excluding chr3/chr19: 16090
+
+sample        private_all  private_excl  hom_private_excl
+RO_B1TP               245           223                 0
+RO_B2TP               227           216                 0
+RO_tumor1             264           231                 0
+RO_tumor2             219           182                 1
+RO_tumor3            2851           644                 8
+
+RO_tumor3 homozygous private alleles by chromosome
+(a genuinely different animal differs on EVERY chromosome; a localised
+ structural event hits only one or two):
+  chr3      1154
+  chr19       56
+  chr15        6
+  chr8         1
+  chr16        1
+  all other chromosomes combined: 8
+
+RO_tumor3 private-allele VAF spectrum, excluding chr3/chr19
+(inherited/germline differences pile up at VAF ~1.0; clonal somatic
+ mutations sit mid-range):
+  VAF 0.0-0.1    20
+  VAF 0.1-0.2   124
+  VAF 0.2-0.3    81
+  VAF 0.3-0.4    98
+  VAF 0.4-0.5   120
+  VAF 0.5-0.6   124
+  VAF 0.6-0.7    55
+  VAF 0.7-0.8    13
+  VAF 0.8-0.9     1
+  VAF 0.9-1.0     8
+
+Verdict: RO_tumor3 shares RO_origin's germline genome (8 homozygous private alleles outside the aberrant
+windows, vs thousands expected for a different animal). Same animal;
+a sample swap with a different mouse is excluded.

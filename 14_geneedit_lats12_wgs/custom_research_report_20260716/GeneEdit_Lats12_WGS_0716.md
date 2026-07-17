@@ -75,10 +75,10 @@ All three cut sites fall inside **Brca2 exon 3 (CDS)** of the Ensembl-canonical,
 
 - **Guide localisation:** `seqkit locate` of each spacer (both strands) against GRCm39; PAM confirmed by `samtools faidx` of the 3 bp immediately 3' of each protospacer.
 - **Cut-site genotyping:** `bcftools mpileup/call` (MAPQ≥20, BAQ≥15) jointly across all six samples at each cut site ±60 bp — retained for completeness, but see §6.1 for why it is not the primary readout here.
-- **Read-level allele quantification** (`scripts/study_A/A3b_brca2_allele_quant.py`, pysam): reads with MAPQ≥20, duplicates excluded, classified by CIGAR into wild-type (spanning the 150,452,952–150,452,994 core with ≥25 bp flanking margin and no indel/clip), the 31 bp excision allele, other cut-site indels, or cut-site soft-clips (≥20 bp, breakpoint inside the core). Clip breakpoints tabulated per base to separate recurrent (real) from scattered (background) clipping.
+- **Read-level allele quantification** (custom pysam analysis): reads with MAPQ≥20, duplicates excluded, classified by CIGAR into wild-type (spanning the 150,452,952–150,452,994 core with ≥25 bp flanking margin and no indel/clip), the 31 bp excision allele, other cut-site indels, or cut-site soft-clips (≥20 bp, breakpoint inside the core). Clip breakpoints tabulated per base to separate recurrent (real) from scattered (background) clipping.
 - **Depth:** `samtools depth` over the cut window vs the whole Brca2 gene body, per sample, to normalise each sample against its own baseline.
 - **Consequence:** deletion mapped onto GENCODE vM35 CDS coordinates of `ENSMUST00000044620.11`.
-- **Identity fingerprint** (`scripts/study_A/A6_identity_fingerprint.sh` + `A6b_fingerprint_interpret.py`): joint `bcftools mpileup/call` (MAPQ≥20, BAQ≥15) across all six samples over 38 windows × 500 kb (19.0 Mb) spanning all 19 autosomes; biallelic SNPs retained. A "private allele" = sample GT carries ALT with ≥3 supporting reads while RO_origin has **0** ALT reads at ≥10× depth. Results broken down per chromosome and per allele fraction (see §6.7 — the aggregate count alone is misleading).
+- **Identity fingerprint:** joint `bcftools mpileup/call` (MAPQ≥20, BAQ≥15) across all six samples over 38 windows × 500 kb (19.0 Mb) spanning all 19 autosomes; biallelic SNPs retained. A "private allele" = sample GT carries ALT with ≥3 supporting reads while RO_origin has **0** ALT reads at ≥10× depth. Results broken down per chromosome and per allele fraction (see §6.7 — the aggregate count alone is misleading).
 - **Trp53 copy number:** `samtools depth` across chr11:69,471,185–69,482,699 vs a chr11 control window, per sample.
 
 ---
@@ -215,12 +215,21 @@ custom_research_report_20260716/
 │   └── spacer_gene.tsv                       spacer → target gene mapping
 └── identity_fingerprint/
     ├── fingerprint_summary.tsv               private / homozygous-private counts per sample
-    ├── fingerprint_interpretation.txt        per-chromosome + per-VAF breakdown & verdict
-    ├── private_alleles.txt                   raw private-allele counts (see §6.7 caveat)
+    ├── fingerprint_breakdown.txt             per-chromosome + per-VAF breakdown & verdict
     └── regions.bed                           the 38 × 500 kb sampled windows
 ```
 
-The 2026-07-15 delivery (`custom_research_report_20260715/`) is unchanged and remains the reference for all other results (tumor aneuploidy, somatic variants, iHPV integration, Study B).
+**This is an addendum, not a replacement.** It contains only what is new as of 2026-07-16: the Brca2
+cut-site verification (which the Brca2 guides made possible) and the tumor3 identity check. Nothing
+else was re-analysed, so nothing else has changed. The **2026-07-15 delivery
+(`custom_research_report_20260715/`) is unchanged and remains the complete reference** for everything
+else — QC, tumor aneuploidy and copy-number profiles, somatic variants, structural variants, iHPV
+integration, and all of Study B. Please keep the two folders together; read 2026-07-15 first.
+
+The only files that appear in both folders are in `edit_verification/`. Where they differ, **this
+folder's versions supersede** (`cut_sites.tsv` and `spacer_gene.tsv` now carry all 9 guides rather
+than 6); the others are byte-identical to yesterday's and are included so this folder stands on its
+own for the Brca2 question.
 
 ---
 

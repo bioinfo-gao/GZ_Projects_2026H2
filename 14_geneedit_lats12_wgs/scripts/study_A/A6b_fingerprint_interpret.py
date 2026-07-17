@@ -93,6 +93,32 @@ with open(OUT, "w") as fh:
     for s in NAMES:
         fh.write(f"{s}\t{priv_all[s]}\t{priv_ex[s]}\t{hom_ex[s]}\n")
 
+# ---- 英文交付版 breakdown（客户交付物必须全英文；本脚本自身的中文注释/stdout 不进交付folder）----
+if len(sys.argv) > 1:
+    with open(sys.argv[1], "w") as fh:
+        fh.write("Sample-identity SNP fingerprint — per-chromosome and per-VAF breakdown\n")
+        fh.write("Reference: RO_origin. A 'private allele' = sample carries ALT with >=3 reads\n")
+        fh.write(f"while RO_origin has 0 ALT reads at >=%d depth.\n" % MIN_DP_ORIGIN)
+        fh.write(f"Evaluable sites: {n_eval}; excluding chr3/chr19: {n_ex}\n\n")
+        fh.write(f"{'sample':<12}{'private_all':>13}{'private_excl':>14}{'hom_private_excl':>18}\n")
+        for s in NAMES:
+            fh.write(f"{s:<12}{priv_all[s]:>13}{priv_ex[s]:>14}{hom_ex[s]:>18}\n")
+        fh.write("\nRO_tumor3 homozygous private alleles by chromosome\n")
+        fh.write("(a genuinely different animal differs on EVERY chromosome; a localised\n"
+                 " structural event hits only one or two):\n")
+        for c in sorted(t3 := hom_by_chr["RO_tumor3"], key=lambda x: -hom_by_chr["RO_tumor3"][x])[:6]:
+            fh.write(f"  {c:<8}{t3[c]:>6}\n")
+        fh.write(f"  all other chromosomes combined: {sum(v for k, v in t3.items() if k not in ABERRANT)}\n")
+        fh.write("\nRO_tumor3 private-allele VAF spectrum, excluding chr3/chr19\n")
+        fh.write("(inherited/germline differences pile up at VAF ~1.0; clonal somatic\n"
+                 " mutations sit mid-range):\n")
+        for b in range(10):
+            fh.write(f"  VAF {b/10:.1f}-{(b+1)/10:.1f}{vaf_ex['RO_tumor3'][b]:>6}\n")
+        fh.write(f"\nVerdict: RO_tumor3 shares RO_origin's germline genome "
+                 f"({hom_ex['RO_tumor3']} homozygous private alleles outside the aberrant\n"
+                 f"windows, vs thousands expected for a different animal). Same animal;\n"
+                 f"a sample swap with a different mouse is excluded.\n")
+
 # 硬判定：同鼠 <=> 剔除局部异常后 hom-private 接近 0
 t3_hom = hom_ex["RO_tumor3"]
 ctrl = max(hom_ex[s] for s in NAMES if s != "RO_tumor3")
