@@ -7,7 +7,10 @@ set -euo pipefail
 
 PROJ=/home/gao/projects_2026H2/16_Wenliang_Pan_wgs
 HLAIDX=/Work_bio/references/Homo_sapiens/GRCh38/t1k_hlaidx
-FASTA=/Work_bio/references/Homo_sapiens/GRCh38/human_gencode_v45/GRCh38.primary_assembly.genome.fa
+# MUST be the exact reference sarek built the CRAMs with (GATK.GRCh38 / Homo_sapiens_assembly38.fasta).
+# Decoding CRAM with any other GRCh38 build (e.g. gencode primary_assembly) fails on @SQ M5
+# checksum mismatch — the contig sequences/MD5s differ between builds. (2026-07-17 fix)
+FASTA=/Work_bio/references/Homo_sapiens/GRCh38/GATK.GRCh38/Homo_sapiens_assembly38.fasta
 OUT=$PROJ/output_results/hla_typing
 mkdir -p "$OUT"
 

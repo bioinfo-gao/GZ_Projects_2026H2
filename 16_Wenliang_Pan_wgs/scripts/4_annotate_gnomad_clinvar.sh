@@ -16,19 +16,28 @@ GNOMAD=$DB/af-only-gnomad.hg38.vcf.gz
 CLINVAR=$DB/clinvar_GRCh38.chr.vcf.gz
 
 # Locate the per-sample VEP-annotated haplotypecaller VCFs sarek produced.
-mapfile -t VCFS < <(find "$PROJ/output_results/annotation" -name "*haplotypecaller*vep*.vcf.gz" 2>/dev/null | sort)
+# -iname (case-insensitive): sarek names them *.haplotypecaller.filtered_VEP.ann.vcf.gz (uppercase VEP).
+mapfile -t VCFS < <(find "$PROJ/output_results/annotation" -iname "*haplotypecaller*vep*.vcf.gz" 2>/dev/null | sort)
 if [ ${#VCFS[@]} -eq 0 ]; then
     echo "No VEP-annotated haplotypecaller VCFs found; falling back to raw calls."
     mapfile -t VCFS < <(find "$PROJ/output_results/variant_calling/haplotypecaller" -name "*.vcf.gz" ! -name "*.g.vcf.gz" 2>/dev/null | sort)
 fi
 echo "Annotating ${#VCFS[@]} VCF(s)."
 
+# bcftools -h needs a REAL file. Do NOT use process substitution `<(echo ...)`: `conda run`
+# spawns bcftools in a child process that does not inherit the parent shell's /dev/fd/NN,
+# so the header FD resolves to "No such file or directory". Write a plain temp file instead.
+# (2026-07-17 fix — step4 was failing exit 255 at the first annotate call.)
+HDR=$(mktemp "$OUT/.gnomad_hdr.XXXXXX.txt")
+echo '##INFO=<ID=gnomAD_AF,Number=A,Type=Float,Description="gnomAD allele frequency (af-only-gnomad.hg38)">' > "$HDR"
+trap 'rm -f "$HDR"' EXIT
+
 for vcf in "${VCFS[@]}"; do
     s=$(basename "$vcf" | sed -E 's/\..*//')
     echo "--- $s : $vcf ---"
     # 1) gnomAD AF -> INFO/gnomAD_AF
     $CR bcftools annotate -a "$GNOMAD" -c "INFO/gnomAD_AF:=INFO/AF" \
-        -h <(echo '##INFO=<ID=gnomAD_AF,Number=A,Type=Float,Description="gnomAD allele frequency (af-only-gnomad.hg38)">') \
+        -h "$HDR" \
         "$vcf" -Oz -o "$OUT/${s}.gnomad.vcf.gz"
     $CR bcftools index -t "$OUT/${s}.gnomad.vcf.gz"
     # 2) ClinVar CLNSIG / CLNDN
