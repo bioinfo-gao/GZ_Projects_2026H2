@@ -42,12 +42,12 @@ A key methodological point: the engineered elements in Study B are **loxP-only /
 
 | #  | Label     | Study |  Type  | Group  | Genotype / role                                      |
 | :- | :-------- | :---: | :----: | :----: | :--------------------------------------------------- |
-| 1  | RO_origin |   A   |  Cell  | parent | Trp53⁺/⁻; Cas9; unedited — **matched normal** (~20×) |
-| 2  | RO_B1TP   |   A   |  Cell  | edited | Brca1 + Pten KO (~24×)                               |
-| 3  | RO_B2TP   |   A   |  Cell  | edited | Brca2 + Pten KO (~24×)                               |
-| 4  | RO_tumor1 |   A   |  Cell  | tumor  | tumor from B1TP/B2TP injection (~26×)                |
-| 5  | RO_tumor2 |   A   |  Cell  | tumor  | tumor (~19×)                                         |
-| 6  | RO_tumor3 |   A   |  Cell  | tumor  | tumor (~30×)                                         |
+| 1  | RO_origin |   A   |  Cell  | parent | Trp53⁺/⁻; Cas9 transgenic; unedited — **matched normal** (~20×) |
+| 2  | RO_B1TP   |   A   |  Cell  | edited | Parent cells electroporated with **Brca1 + Pten** sgRNAs (~24×) |
+| 3  | RO_B2TP   |   A   |  Cell  | edited | Parent cells electroporated with **Brca2 + Pten** sgRNAs (~24×) |
+| 4  | RO_tumor1 |   A   |  Cell  | tumor  | Cell line from a solid tumor grown after injecting B1TP/B2TP cells into a mouse (~26×) — **resolved here to the B1TP lineage** (§6.2) |
+| 5  | RO_tumor2 |   A   |  Cell  | tumor  | Cell line from a **different** such tumor (~19×) — **resolved here to the B1TP lineage** (§6.2) |
+| 6  | RO_tumor3 |   A   |  Cell  | tumor  | Cell line from a **third** such tumor (~30×) — carries **none** of the intended edits; **resolved here to an un-edited subclone of the parent** (§6.2–6.3) |
 | 7  | L1L2_3M   |   B   | Tissue |  L1L2  | Lats1/2 flox, 3 months (~21×)                        |
 | 8  | L1L2H_3M  |   B   | Tissue | L1L2H  | Lats1/2 flox + iHPV, 3 months (~20×)                 |
 | 9  | L1L2_12M  |   B   | Tissue |  L1L2  | Lats1/2 flox, 12 months (~32×)                       |
@@ -57,19 +57,29 @@ A key methodological point: the engineered elements in Study B are **loxP-only /
 
 Total input: 12 samples, gzip FASTQ 462 GiB (measured on disk 2026-07-12).
 
+**Study A design.** All six Study A samples descend from one parental primary-cell line (RO_origin) taken from a **Trp53⁺/⁻; Cas9** transgenic mouse — it already carries one Trp53-null allele and expresses Cas9 constitutively, and it was **not** edited in vitro. Because Cas9 is already present in the cells, editing required delivering **sgRNA only, by electroporation** — no viral or plasmid vector is involved in Study A, and no donor template was used (knockout by non-homologous end joining at the cut sites). Since RO_origin already carries the Trp53 and Cas9 features, using it as the matched normal subtracts them correctly, leaving only the sgRNA-induced edits and tumor-acquired changes. **Tumors 1–3 are three separate solid tumors** grown after injecting the edited cells into mice, each digested into its own cell line; the client did not record which injected line each tumor came from, and resolving that from the WGS is objective A2 (answered in §6.2). *(The iHPV construct belongs to Study B only — it plays no part in Study A.)*
+
 ### 3.1 CRISPR guides (CRISPRevolution sgRNA EZ Kit, 1.5 nmol each, Modified)
 
-Nine guides supplied as images and converted RNA→DNA. Full table in `edit_verification/sgRNA_guides_reference.md`. The three Brca2 guides:
+Nine guides were supplied as images and converted RNA→DNA. **Every guide was independently verified before use:** each maps to a **single unique site** inside its intended target gene, on the strand its name specifies where one is given, and each carries a **perfect NGG PAM** — confirming the guides are genuine and correctly transcribed. Cut site = 3 bp upstream of the PAM.
 
-| Guide ID (as supplied) | Spacer (DNA, 5'→3')    | GRCm39 location              | Strand | PAM | Predicted cut    |
-| :--------------------- | :--------------------- | :--------------------------: | :----: | :-: | :--------------: |
-| Brca2+150529497        | `GATAAGCCTCAATTGGTTTG` | chr5:150,452,945–150,452,964 |   +    | AGG | chr5:150,452,961 |
-| Brca2−150529492        | `AAAGCTCCTCAAACCAATTG` | chr5:150,452,954–150,452,973 |   −    | AGG | chr5:150,452,957 |
-| Brca2−150529524        | `AGGTTCAGAATTGTATGGGG` | chr5:150,452,986–150,453,005 |   −    | GGG | chr5:150,452,989 |
+| Target | Guide ID (as supplied) | Spacer (DNA, 5'→3')    | GRCm39 location                | Strand | PAM | Predicted cut     | Used in     |
+| :----- | :--------------------- | :--------------------- | :----------------------------: | :----: | :-: | :---------------: | :---------: |
+| Pten   | Pten-32799878          | `GGTGGGTTATGGTCTTCAAA` | chr19:32,777,275–32,777,294    |   −    | AGG | chr19:32,777,278  | B1TP + B2TP |
+| Pten   | Pten-32799895          | `TGATAAGTTCTAGCTGTGGT` | chr19:32,777,292–32,777,311    |   −    | GGG | chr19:32,777,295  | B1TP + B2TP |
+| Pten   | Pten-32799899          | `GGTTTGATAAGTTCTAGCTG` | chr19:32,777,296–32,777,315    |   −    | TGG | chr19:32,777,299  | B1TP + B2TP |
+| Brca1  | (guide 1)              | `GGTTCCGGTAGCCCACGCTC` | chr11:101,422,890–101,422,909  |   +    | TGG | chr11:101,422,906 | B1TP        |
+| Brca1  | (guide 2)              | `GGCGTCGATCATCCAGAGCG` | chr11:101,422,905–101,422,924  |   −    | TGG | chr11:101,422,908 | B1TP        |
+| Brca1  | (guide 3)              | `TTCTTGTGAGCGTTTGAATG` | chr11:101,422,929–101,422,948  |   −    | AGG | chr11:101,422,932 | B1TP        |
+| Brca2  | Brca2+150529497        | `GATAAGCCTCAATTGGTTTG` | chr5:150,452,945–150,452,964   |   +    | AGG | chr5:150,452,961  | B2TP        |
+| Brca2  | Brca2−150529492        | `AAAGCTCCTCAAACCAATTG` | chr5:150,452,954–150,452,973   |   −    | AGG | chr5:150,452,957  | B2TP        |
+| Brca2  | Brca2−150529524        | `AGGTTCAGAATTGTATGGGG` | chr5:150,452,986–150,453,005   |   −    | GGG | chr5:150,452,989  | B2TP        |
 
-Each maps to a single unique site inside Brca2, on the strand its name specifies, each with a perfect NGG PAM — confirming the guides are genuine and correctly transcribed. All three cut sites fall inside **Brca2 exon 3 (CDS)** of the Ensembl-canonical/CCDS transcript `ENSMUST00000044620.11` (*Brca2-201*, CCDS39411.1). Guides 1 and 2 overlap and cut the same point from opposite strands (4 bp apart); guide 3 cuts ~30 bp downstream — a multi-guide design concentrating three cuts into a **33 bp window**, which predicts either small indels or excision of the intervening fragment.
+**All nine cut sites fall inside a coding exon of the Ensembl-canonical transcript of their target** — Pten CDS exon 5 (`ENSMUST00000249247.1`), Brca1 CDS exon 6 (`ENSMUST00000017290.11`), Brca2 CDS exon 3 (`ENSMUST00000044620.11`, *Brca2-201*, CCDS39411.1) — so a disruptive indel at any of them is expected to be loss-of-function rather than silent.
 
-**Note on the guide IDs:** the coordinates embedded in the product names (e.g. `150529497`) **are not GRCm39 positions** — they sit ~76.5 kb from where the guides actually map on GRCm39, so using them directly against GRCm39 retrieves the wrong locus. The offset is most consistent with GRCm38/mm10 numbering, though this was not verified directly (no GRCm38 reference was used here). Every guide was located by sequence, so no result is affected.
+**All three targets use the same multi-guide strategy:** the three guides per gene are clustered within a narrow window (Pten 32,777,278–32,777,299 = 22 bp; Brca1 101,422,906–101,422,932 = 27 bp; Brca2 150,452,957–150,452,989 = 33 bp), with overlapping guides cutting the same point from opposite strands. This predicts either small indels at a cut site or excision of the fragment between the outermost cuts — the latter is exactly what is observed in B2TP (§6.2).
+
+**Note on the guide IDs:** the coordinates embedded in the product names **are not GRCm39 positions**. `Brca2+150529497` sits ~76.5 kb from where that guide actually maps on GRCm39, and `Pten-32799878` ~22.6 kb from its true position — so using these numbers directly against GRCm39 retrieves the wrong locus. That the offset **differs per locus** (76.5 kb vs 22.6 kb) rules out a simple constant shift and is what an assembly coordinate change produces; the numbering is most consistent with GRCm38/mm10, though this was not verified directly (no GRCm38 reference was used here). Every guide was located by sequence, so no result is affected.
 
 ---
 
