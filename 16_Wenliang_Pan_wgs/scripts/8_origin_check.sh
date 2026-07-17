@@ -84,9 +84,16 @@ n=int('$NCLON'); f=float('$TOPF')
 print('non-lymphoid(no V(D)J)' if n<3 else ('monoclonal-lymphoid(cell-line?)' if (n<=20 and f>0.5) else 'polyclonal-lymphoid(blood/tissue)'))")
 
     # ---------- Part B: aneuploidy + LOH ----------
-    CNS=$(find "$PROJ/output_results/variant_calling/cnvkit" -path "*$s*" \( -name "*.call.cns" -o -name "*.cns" \) 2>/dev/null | head -1)
+    # MUST use the *.call.cns (has an integer `cn` column); the pre-call *.cns has only log2.
+    # 2026-07-17 fix: previous code read $5 as CN, but in .call.cns $5 is log2 (a float ~0),
+    # so `cn!=2` was ALWAYS true -> aneuploidy_frac spuriously 1.000 for every sample. Read the
+    # `cn` column BY NAME; if absent (pre-call file), treat as diploid (cn=2) rather than aberrant.
+    CNS=$(find "$PROJ/output_results/variant_calling/cnvkit" -path "*$s*" -name "*.call.cns" 2>/dev/null | head -1)
+    [ -z "$CNS" ] && CNS=$(find "$PROJ/output_results/variant_calling/cnvkit" -path "*$s*" -name "*.cns" 2>/dev/null | head -1)
     if [ -s "$CNS" ]; then
-        read -r ANEU NSEG < <(awk 'NR>1{len=$3-$2; tot+=len; cn=($5!=""?$5:2); if(cn!=2){ab+=len; nseg++}} END{printf "%.3f %d", (tot? ab/tot:0), nseg+0}' "$CNS")
+        read -r ANEU NSEG < <(awk -F'\t' 'NR==1{for(i=1;i<=NF;i++)if($i=="cn")cnc=i; next}
+            {len=$3-$2; tot+=len; cn=(cnc?$cnc:2); if(cn!=2){ab+=len; nseg++}}
+            END{printf "%.3f %d", (tot? ab/tot:0), nseg+0}' "$CNS")
     else ANEU="NA"; NSEG="NA"; fi
 
     VCF=$(find "$PROJ/output_results/variant_calling/haplotypecaller" -path "*$s*" -name "*.vcf.gz" ! -name "*.g.vcf.gz" 2>/dev/null | head -1)

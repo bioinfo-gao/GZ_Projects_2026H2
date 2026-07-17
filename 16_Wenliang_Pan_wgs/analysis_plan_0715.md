@@ -80,6 +80,17 @@
     **待办(需用户定范围,涉及跨项目共享脚本)**:① 每个 `>>> FAIL` 同步写 `watchdog_ALERTS.log`;
     ② 看门狗多目标/sarek 结束后接管 pan_down;③ 编排结尾 `ALL_DONE` 改如实汇总 `DONE:.. FAILED:..`。
 
+- 2026-07-17 — ✅ **客户交付目录生成 `custom_research_report_20260717/`**（英文报告 `Wenliang_Pan_WGS_0717.md`
+  + 7 个分析子目录，copy 不 move，3.1 GB）。**交付前自查抓出并修正一个会误导客户的假结论**:step8 的
+  `aneuploidy_frac` 恒为 **1.000**（两样本都"high-aneuploidy cell-line-like"）——根因是 awk 读 `$5`（=log2 浮点）
+  当 CN 列，`.call.cns` 的整数 `cn` 其实在 `$6`，`cn!=2` 恒真。修脚本按**列名**读 `cn`；直接从 `.call.cns` 重算得
+  真值 **A 0.104 / B 0.049**（90-95% 二倍体，低于 0.15 阈值）。附带发现 V(D)J 信号也假（TRUST4 `bcrtcr=/imgt=`
+  参考为空 → 凌晨 "non-lymphoid" 无意义）。**修正后结论翻转**:两样本以二倍体为主、低 LOH，符合 primary/germline
+  材料，**非**非整倍体细胞系。若未自查,报告会交出完全相反的 origin 结论(proj11 同类失误)。
+  交付关键数字(全部对源核过):human ≥99.95% mapping;coverage A 23.13× / B 28.05×;PASS SNV/indel 5.88M/6.03M;
+  优先变异 4294/4342（ClinVar P/LP 235/248）;manta 6349/7209、tiddit 55326/62469、cnvkit CN!=2 段 192/162;
+  HLA I 类 A/B/C + II 类 DRB1/DQ/DP。⚠ 教训:交付前自查必须核**结论级**数字(离群的 1.000 一眼可疑)，不只看跑通。
+
 ---
 
 ## 1. Sample information 与 input data volume
