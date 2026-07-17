@@ -33,9 +33,10 @@ A key methodological point: the engineered elements in Study B are **loxP-only /
 4. **All three tumors lost Trp53 — the second hit that drove them.** The parent is Trp53⁺/⁻; every tumor has become homozygous at Trp53, while the edited pre-tumor cells have not. In tumor1 the homozygous tract is **focal, centred on Trp53** (92% at 69–70 Mb, against 1–3% just 3 Mb either side) — selection for Trp53 loss, visible directly in the data (§6.5).
 5. **Tumor3 has undergone a whole-genome catastrophe: 95% of its genome has lost heterozygosity, at diploid copy number.** This is genome-wide copy-neutral LOH — loss of one haploid genome followed by duplication of the other. It makes tumor3 homozygous at every tumour suppressor at once, and explains how the one tumor carrying **no** engineered edits still became the most aneuploid (§6.6).
 6. **Study A tumors are aneuploid, each with a distinct karyotype.** The three tumors carry different chromosome-scale gains/losses, and no aneuploidy is shared in the same direction by any two — independent clonal evolution. The parental and edited-but-pre-tumor cells remain diploid.
-7. **Study B tissues are genomically stable — no aneuploidy.** All six Lats1/2-flox tissues (both genotypes, all ages) show a flat, diploid copy-number profile genome-wide (autosomal copy number 1.94–2.08). The reported oviduct phenotype is **not** driven by large-scale chromosomal instability or aneuploidy.
-8. **The iHPV transgene is present specifically in L1L2H mice.** HPV16 E6/E7 and luciferase reads are detected in all three L1L2H samples and are entirely absent from all three L1L2 samples (perfect specificity), at levels consistent with a fixed germline transgene.
-9. **Study B is not congenically pure C57BL/6J.** Each tissue carries ~5–6 million variants against GRCm39 — a genome-wide non-6J inbred background, most likely 129-derived from the ES-cell engineering. This is inherited background, not accumulated mutation, and it shapes how de-novo candidates must be mined (§6.9).
+7. **Study B tissues are genomically stable — no aneuploidy.** All six Lats1/2-flox tissues (both genotypes, all ages) show a flat, diploid copy-number profile genome-wide (autosomal copy number 1.94–2.08). The reported oviduct phenotype is **not** driven by large-scale chromosomal instability or aneuploidy. **However, this excludes one mechanism, not all of them:** the two hypotheses ranked most likely at the design stage — iHPV insertional mutagenesis (integration site unresolved) and leaky loxP recombination (assay not yet valid) — **remain untested**, so this is not a "no genomic cause" result. Status is set out in §6.10.
+8. **The phenotype affects both strains, but only one carries the transgene** — so an iHPV integration cannot be the whole explanation. What the two strains share is the floxed Lats1/2 alleles and a non-C57BL/6J background; both are live candidates, and the first (a hypomorphic floxed allele) is invisible to WGS and needs RNA or protein to test (§6.10).
+9. **The iHPV transgene is present specifically in L1L2H mice.** HPV16 E6/E7 and luciferase reads are detected in all three L1L2H samples and are entirely absent from all three L1L2 samples (perfect specificity), at levels consistent with a fixed germline transgene.
+10. **Study B is not congenically pure C57BL/6J.** Each tissue carries ~5–6 million variants against GRCm39 — a genome-wide non-6J inbred background, most likely 129-derived from the ES-cell engineering. This is inherited background, not accumulated mutation, and it shapes how de-novo candidates must be mined (§6.9).
 
 ---
 
@@ -137,7 +138,7 @@ Every sample is of good and comparable quality; no sample was excluded, and no r
 
 - **Mapping is essentially complete** — 99.99% of QC-passed reads align to GRCm39 in every sample (e.g. RO_origin: 53,411 unmapped of 458.9 M). Upstream, fastp retained 99.0% of raw reads, so ~99% of all sequenced reads are used.
 - **Duplicate rates are low** (7.7–14.3%) and **base quality is high** (mean Q38.4–38.9; Q30 rate 93.8%), with a uniform error rate of ~0.5%.
-- **Depth is 19.2–31.9×**, with 84–92% of the genome covered at ≥10×. This is ample for the copy-number, edit-verification and transgene analyses reported here. It is at the lower end for *sensitive* somatic point-mutation calling, which is one reason the somatic burden is not quoted (§6.10).
+- **Depth is 19.2–31.9×**, with 84–92% of the genome covered at ≥10×. This is ample for the copy-number, edit-verification and transgene analyses reported here. It is at the lower end for *sensitive* somatic point-mutation calling, which is one reason the somatic burden is not quoted (§6.11).
 - **One library characteristic worth noting:** the mean insert size (123–141 bp) is **shorter than the 150 bp read length** in all 12 samples, so read pairs overlap substantially. This is systematic across the batch rather than a per-sample defect. It has two consequences: the effective independent coverage is somewhat below the nominal depth (overlapping mates re-sequence the same molecule), and paired-end SV detection is less sensitive for a given depth — relevant to the SV counts in §6.8, and a reason those are treated as provisional.
 
 Full per-sample reports: `qc/multiqc_studyA.html`, `qc/multiqc_studyB.html`.
@@ -262,16 +263,18 @@ This is the most extreme genomic phenotype in the cohort, and it belongs to **th
 
 Construct-marker reads (unmapped reads aligned to HPV16 + EGFP + luciferase):
 
-| Sample    | Construct reads | HPV16 | Luciferase |
-| :-------- | :-------------: | :---: | :--------: |
-| L1L2_3M   |        0        |   0   |     0      |
-| L1L2H_3M  |       45        |  16   |     71     |
-| L1L2_12M  |        0        |   0   |     0      |
-| L1L2H_12M |       83        |  41   |    123     |
-| L1L2_18M  |        0        |   0   |     0      |
-| L1L2H_18M |       58        |  37   |     75     |
+| Sample    | Construct reads | HPV16 | EGFP | Luciferase |
+| :-------- | :-------------: | :---: | :--: | :--------: |
+| L1L2_3M   |        0        |   0   |  0   |     0      |
+| L1L2H_3M  |       45        |  16   |  0*  |     71     |
+| L1L2_12M  |        0        |   0   |  0   |     0      |
+| L1L2H_12M |       83        |  41   |  0*  |    123     |
+| L1L2_18M  |        0        |   0   |  0   |     0      |
+| L1L2H_18M |       58        |  37   |  0*  |     75     |
 
 **The iHPV transgene is present in all three L1L2H samples and absent in all three L1L2 samples** — a perfectly specific result. Read counts do not increase with age, consistent with a fixed germline transgene rather than an age-accumulating event.
+
+**\* The zero EGFP counts are a limitation of our marker reference, not a biological result — please do not read them as evidence that the EGFP cassette is absent.** The GFP sequence in our marker file encodes the correct protein but uses a low-GC codon variant (714 bp, 40.3% GC) rather than the human-codon-optimised EGFP (~720 bp, 61–62% GC) that a mammalian CAG-driven construct carries. The two differ at roughly 30% of nucleotide positions — far beyond what short-read alignment tolerates — so EGFP-derived reads cannot map to it even when the cassette is physically present. This matters because the EGFP cassette is the **stop** element of the lox-stop-lox: whether it is intact is exactly the test for whether E6/E7 has been de-repressed (§6.10). **That test has therefore not yet been performed**, and this table says nothing either way about it. Resolving it requires the actual EGFP sequence from the vector map.
 
 ### 6.8 Structural variants
 
@@ -319,7 +322,25 @@ The Sanger Mouse Genomes Project (MGP) is a reference catalogue of the DNA varia
 
 Genuine causal de-novo events number in the dozens-to-hundreds, not hundreds of thousands. **Identifying them from this background requires functional restriction to high-impact coding consequences (frameshift / stop-gain / splice, via VEP or snpEff) combined with recurrence and L1L2-vs-L1L2H differential filtering.** That functional-annotation step is the recommended immediate next analysis; the per-sample private call sets are provided for it (`candidates_denovo/*.private.vcf.gz`). Critically, this does not affect the primary Study B conclusion: the copy-number analysis (§6.2) already establishes these genomes are structurally stable and diploid.
 
-### 6.10 Somatic point mutations (Study A) — not yet a usable mutation burden
+### 6.10 The oviduct phenotype — what has and has not been tested
+
+This is the question Study B exists to answer, so we state its status plainly rather than leaving it to be inferred from the sections above. Three mechanisms could produce an age-dependent oviduct phenotype in mice whose engineered elements are, by design, un-activated. **Only one has been tested.**
+
+| Hypothesis (priority) | Status | What we can say |
+| :--- | :--- | :--- |
+| **1. iHPV insertional mutagenesis** — the construct integrates into and disrupts a gene | **Not tested** | We established the transgene is present in L1L2H and absent in L1L2 (§6.7). **Where it integrated is not resolved**, so whether it disrupts a gene is unknown. Needs the full vector map to capture junction-spanning reads. |
+| **2. Leaky / somatic loxP recombination** — age-dependent Cre-independent excision deleting Lats1/2 exons or de-repressing E6/E7 | **Not tested** | The read-out is whether the EGFP "stop" cassette is intact, and our EGFP marker sequence is the wrong codon variant, so the assay never ran (§6.7). Lats1/2 floxed-exon integrity likewise not assessed. |
+| **3. Large-scale genomic instability / aneuploidy** | **Tested — negative** | Flat, diploid copy-number profiles in all six tissues, both genotypes, all ages (§6.2). This mechanism is **excluded**, and that exclusion is solid: the Study A tumors act as a positive control proving the method detects aneuploidy where it exists. |
+| **3b. De-novo point/indel variants** | **Incomplete** | Per-sample private variant sets are produced (§6.9) but not yet restricted to high-impact consequences, so no candidate gene list exists. |
+
+**So the honest position is: we have excluded chromosomal instability as the cause, and have not yet tested the two mechanisms that the study design ranked as most likely.** The report's Study B findings should not be read as "no genomic cause was found".
+
+**One structural observation does bear on the biology now, and it constrains hypothesis 1.** You report the abnormality in **both** strains, but only L1L2H carries the iHPV construct — L1L2 has no transgene at all (§6.7, zero construct reads at every age). An iHPV integration therefore **cannot explain the phenotype in L1L2**. Whatever is shared between the two strains is the more promising place to look, and two things are:
+
+- **The floxed Lats1/2 alleles themselves.** A loxP insertion in an intron can reduce expression of the gene it sits in; a floxed allele is not always phenotypically silent before Cre. If either Lats1/2 allele is hypomorphic, both strains carry reduced Hippo-pathway dosage from birth, which is a plausible route to a slow, age-dependent phenotype with no Cre anywhere. **WGS cannot test this** — it needs Lats1/2 RNA or protein from the affected tissue — but it is consistent with everything seen here, including the genomes being stable and diploid.
+- **The strain background.** These mice are not congenically pure C57BL/6J; they carry a genome-wide non-6J (most likely 129-type) background (§6.9). If "abnormal" was judged against C57BL/6 expectations, part of the phenotype may be strain characteristic rather than a consequence of the engineering. A wild-type littermate of the same background would separate the two immediately.
+
+### 6.11 Somatic point mutations (Study A) — not yet a usable mutation burden
 
 Mutect2 tumor-vs-origin calling was run for all five pairs (`somatic/somatic_counts.tsv`):
 
@@ -378,11 +399,14 @@ One limit, stated precisely: LOH establishes that each tumor retains a **single*
 
 ### 7.3 Remaining analyses (no client input required unless noted)
 
-1. **iHPV integration locus** — construct presence is confirmed, but the base-pair integration junction / disrupted gene is not yet resolved; this requires the full PMC4662542 vector map to capture junction-spanning reads.
-2. **Somatic point-mutation burden** — requires the additional filtering described in §6.10 before numbers are quoted.
-3. **Study B de-novo candidate mining** — functional high-impact annotation (VEP/snpEff) + recurrence / genotype-differential filtering on the provided private call sets (§6.9). Recommended next analysis.
-4. **Study B strain assignment** — optional; would settle whether the background is pure 129 or a 129×B6 mix.
-5. **Which Trp53 haplotype the tumors retained** — the tumors are already shown to be homozygous at Trp53 (§6.5); confirming that the surviving copy is the engineered null rather than the wild-type needs the construct design of that "−" allele from you (§7.2). This is the only item requiring client input, and it refines an interpretation rather than changing a conclusion.
+1. **iHPV integration locus — the highest-value outstanding analysis for Study B.** Construct presence is confirmed, but where it integrated, and whether it disrupts a gene, is unresolved (§6.10, hypothesis 1). Needs the **full vector map** (PMC4662542) to capture junction-spanning reads. Note this can only ever explain L1L2H, not L1L2.
+2. **Integrity of the lox-stop-lox cassette** (§6.10, hypothesis 2) — tests whether E6/E7 has been de-repressed by leaky recombination, and whether the Lats1/2 floxed exons are intact. Needs the **actual EGFP sequence** from the vector map; our marker used the wrong codon variant, so the assay has not yet run (§6.7).
+3. **Lats1/2 expression in the affected tissue** — not a WGS analysis, but the one test that addresses the hypothesis most consistent with the data (a hypomorphic floxed allele affecting both strains, §6.10). Needs RNA or protein from oviduct.
+4. **A wild-type littermate of the same background** — would separate "strain characteristic" from "consequence of the engineering" for the phenotype (§6.10). One WGS or even genotyping would do.
+5. **Somatic point-mutation burden** — requires the additional filtering described in §6.11 before numbers are quoted.
+6. **Study B de-novo candidate mining** — functional high-impact annotation (VEP/snpEff) + recurrence / genotype-differential filtering on the provided private call sets (§6.9). Recommended next analysis.
+7. **Study B strain assignment** — optional; would settle whether the background is pure 129 or a 129×B6 mix.
+8. **Which Trp53 haplotype the tumors retained** — the tumors are already shown to be homozygous at Trp53 (§6.5); confirming that the surviving copy is the engineered null rather than the wild-type needs the construct design of that "−" allele from you (§7.2). This is the only item requiring client input, and it refines an interpretation rather than changing a conclusion.
 
 ---
 
