@@ -4,7 +4,7 @@
 - **来源**: proj16（16_Wenliang_Pan_wgs）整个 WGS 运行（sarek germline + 下游 annotate/HLA/origin）中看门狗暴露的全部情况
 - **用途**: 明天据此生成一个「通用、适合各项目」的 pipeline 监控 skill 的**原始情况清单 + 设计输入**
 - **配套**: 现有实现 `facilities/Server/nextflow_watchdog.sh`（共享脚本）+ 各项目薄封装 `scripts/10_watchdog.sh`；
-  已有教训文档 [`resume缓存失效与空转监控_教训_0716.md`](resume缓存失效与空转监控_教训_0716.md)（0716 那次 ELC 空转事故）。
+  已有教训文档 [`resume缓存失效与空转监控_教训_0716.md`](../nextflow_pipeline/resume缓存失效与空转监控_教训_0716.md)（0716 那次 ELC 空转事故）。
   本文是**它的续篇**，专收 0716→0717 这轮暴露的**新**情况。
 
 ---
