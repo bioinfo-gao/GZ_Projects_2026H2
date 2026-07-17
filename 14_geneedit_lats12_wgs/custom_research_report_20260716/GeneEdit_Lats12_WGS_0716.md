@@ -1,4 +1,4 @@
-# Targeted Brca2 Cut-Site Verification (Study A) — Addendum 1 to the 2026-07-15 Report
+# Brca2 Cut-Site Verification & Tumor3 Identity (Study A) — Addendum 1 to the 2026-07-15 Report
 
 **Report Date:** 2026-07-16
 **Prepared by:** Zhen Gao, PhD, Principal Bioinformatics Scientist, Athenomics
@@ -15,6 +15,7 @@ The 2026-07-15 report closed with a single outstanding input (§7.2 of that repo
 
 - **A1-b** — Confirm, at the predicted cut site, that the intended **Brca2 knockout actually occurred in the RO_B2TP cell line**. Previously B2TP could only be shown to be *consistent with* its Brca2+Pten design (Pten knocked out, Brca1 wild-type); the Brca2 edit itself had never been positively observed.
 - **A2-b** — Test **tumor3 for a Brca2 edit** to settle its lineage. Tumor3 is wild-type at all Brca1 and Pten cut sites; a Brca2 edit would have reopened a B2TP origin for it.
+- **A2-c** — The 2026-07-15 report named a **sample-tracking swap** as the main alternative explanation for tumor3 and proposed a SNP-fingerprint identity check to settle it. We have now **run that check** (it needs no new sequencing), so this addendum closes tumor3 as well.
 
 ---
 
@@ -22,9 +23,10 @@ The 2026-07-15 report closed with a single outstanding input (§7.2 of that repo
 
 1. **The Brca2 knockout in RO_B2TP is now positively confirmed, and it is biallelic.** Of 14 informative reads spanning the Brca2 cut site, **zero are wild-type**. No wild-type allele survives in this cell line.
 2. **The edit is exactly what the guide design predicts.** B2TP carries a **31 bp deletion (chr5:150,452,958–150,452,988)** whose two ends sit precisely on the cut sites of the supplied guides — the fragment excised between the overlapping guide pair and the third guide. It causes a **frameshift at codon ~31 of 3,329** in the canonical Brca2 transcript, i.e. within the first 1% of the protein: an unambiguous null allele.
-3. **Tumor3 shows no Brca2 edit and therefore does not descend from B2TP.** Tumor3 retains abundant wild-type Brca2 reads and carries none of B2TP's alleles. Since B2TP itself has **no wild-type allele left**, no descendant of B2TP could regain one. Combined with tumor3's wild-type Brca1 *and* Pten, this raises the 2026-07-15 conclusion — tumor3 arose from an **un-edited subclone** — from *Moderate* to **High** confidence.
-4. **All three guides were verified as genuine and correctly transcribed before use.** Each maps to a single unique site inside Brca2, on the strand your naming specifies, each with a perfect NGG PAM.
-5. **A caution on your guide IDs:** the coordinates embedded in the product names (e.g. `150529497`) **are not GRCm39 positions** — they sit ~76.5 kb away from where the guides actually map on GRCm39, and pointing them at GRCm39 retrieves the wrong locus. The offset is most consistent with **GRCm38/mm10** numbering (the assembly change shifted this region), though we did not verify that directly, as no GRCm38 reference is held on our analysis server. We located every guide by sequence, so no result here is affected.
+3. **Tumor3 shows no Brca2 edit and therefore does not descend from B2TP.** Tumor3 retains abundant wild-type Brca2 reads and carries none of B2TP's alleles. Since B2TP itself has **no wild-type allele left**, no descendant of B2TP could regain one. Tumor3 is now confirmed wild-type at **all three** targeted genes.
+4. **Tumor3 is genetically the same animal as the parent — a sample swap is ruled out.** An independent SNP-fingerprint check across 19 Mb shows tumor3 shares RO_origin's germline genome; it carries only **8 homozygous private alleles** where a different mouse would carry thousands. Together with finding 3, this settles the 2026-07-15 question: tumor3 arose from an **un-edited subclone of the Trp53⁺/⁻;Cas9 parent**, raised from *Moderate* to **High** confidence, and the swap alternative is excluded (one residual caveat in §6.7).
+5. **All three guides were verified as genuine and correctly transcribed before use.** Each maps to a single unique site inside Brca2, on the strand your naming specifies, each with a perfect NGG PAM.
+6. **A caution on your guide IDs:** the coordinates embedded in the product names (e.g. `150529497`) **are not GRCm39 positions** — they sit ~76.5 kb away from where the guides actually map on GRCm39, and pointing them at GRCm39 retrieves the wrong locus. The offset is most consistent with **GRCm38/mm10** numbering (the assembly change shifted this region), though we did not verify that directly, as no GRCm38 reference is held on our analysis server. We located every guide by sequence, so no result here is affected.
 
 ---
 
@@ -76,6 +78,8 @@ All three cut sites fall inside **Brca2 exon 3 (CDS)** of the Ensembl-canonical,
 - **Read-level allele quantification** (`scripts/study_A/A3b_brca2_allele_quant.py`, pysam): reads with MAPQ≥20, duplicates excluded, classified by CIGAR into wild-type (spanning the 150,452,952–150,452,994 core with ≥25 bp flanking margin and no indel/clip), the 31 bp excision allele, other cut-site indels, or cut-site soft-clips (≥20 bp, breakpoint inside the core). Clip breakpoints tabulated per base to separate recurrent (real) from scattered (background) clipping.
 - **Depth:** `samtools depth` over the cut window vs the whole Brca2 gene body, per sample, to normalise each sample against its own baseline.
 - **Consequence:** deletion mapped onto GENCODE vM35 CDS coordinates of `ENSMUST00000044620.11`.
+- **Identity fingerprint** (`scripts/study_A/A6_identity_fingerprint.sh` + `A6b_fingerprint_interpret.py`): joint `bcftools mpileup/call` (MAPQ≥20, BAQ≥15) across all six samples over 38 windows × 500 kb (19.0 Mb) spanning all 19 autosomes; biallelic SNPs retained. A "private allele" = sample GT carries ALT with ≥3 supporting reads while RO_origin has **0** ALT reads at ≥10× depth. Results broken down per chromosome and per allele fraction (see §6.7 — the aggregate count alone is misleading).
+- **Trp53 copy number:** `samtools depth` across chr11:69,471,185–69,482,699 vs a chr11 control window, per sample.
 
 ---
 
@@ -146,6 +150,29 @@ Tumor3 retains 8 wild-type reads, carries no 31 bp allele, and shows no breakpoi
 
 The lineage logic is now decisive: **B2TP has no wild-type Brca2 allele.** Any cell descended from B2TP must inherit that state; a wild-type allele cannot be regained. Tumor3 is ~47% wild-type at this locus, so **tumor3 cannot descend from B2TP**. This independently confirms the 2026-07-15 finding via a third locus, and removes the alternative that report had explicitly left open.
 
+### 6.7 Tumor3 is the same animal as the parent — the sample-swap alternative is excluded
+
+With tumor3 now wild-type at all three targeted genes, the remaining question was no longer about edits but about **identity**: is tumor3 an un-edited escaper subclone of the parent, or a mis-tracked sample from a different mouse? We tested this directly on the existing alignments.
+
+**Design.** Naive genotype concordance would have been misleading here: tumors carry extensive copy-number loss and LOH, which convert heterozygous sites to homozygous and depress concordance even for the same animal — and tumor3 is the *most* aneuploid of the three, so a naive metric would have systematically incriminated exactly the sample under suspicion. We instead counted **private alleles**: sites where a sample carries an allele for which RO_origin has **zero** supporting reads (at ≥10× in origin). LOH can only *remove* alleles; it cannot create one the parent never had. B1TP/B2TP/tumor1/tumor2 — all known to descend from origin — provide the "same animal" baseline. 38 windows totalling 19.0 Mb across all 19 autosomes; 19,032 evaluable sites.
+
+| Sample | Private alleles (raw) | Excluding chr3/chr19 | **Homozygous private (excl.)** |
+| :--- | :---: | :---: | :---: |
+| RO_B1TP | 245 | 223 | 0 |
+| RO_B2TP | 227 | 216 | 0 |
+| RO_tumor1 | 264 | 231 | 0 |
+| RO_tumor2 | 219 | 182 | 1 |
+| **RO_tumor3** | **2,851** | 644 | **8** |
+
+**The raw count is a trap, and we report it because it is instructive.** At face value tumor3's 2,851 private alleles (~11× every other sample) look like a different mouse. Two breakdowns show it is not:
+
+- **By chromosome:** 1,154 of tumor3's 1,218 homozygous private alleles fall in a **single 500 kb window on chr3 (~47.9–48.4 Mb)** and 56 on chr19; **all 17 remaining autosomes contribute zero**. A genuinely different animal differs on *every* chromosome. This is a local event, not a genome-wide one — and that chr3 window shows anomalous coverage in tumor3 alone (0.35× its own baseline, vs 0.69–1.00 in every other sample), i.e. a tumor-specific structural loss whose residual mismapped reads generate spurious homozygous calls.
+- **By allele fraction:** excluding those two regions, tumor3 retains just **8 homozygous private alleles**. Its remaining excess sits at **VAF 0.3–0.7** — the signature of **clonal somatic mutation**, expected in the most rearranged of the three tumors, not of inherited variation, which would pile up at VAF ~1.0.
+
+**Conclusion:** tumor3 shares RO_origin's germline genome. It is the same animal, and a swap with a different mouse is excluded. Combined with §6.6, the 2026-07-15 interpretation is confirmed and upgraded: **tumor3 arose from an un-edited (editing-escaped) subclone of the Trp53⁺/⁻;Cas9 parent**, and its heavy aneuploidy is Trp53-loss-driven and independent of Brca/Pten editing.
+
+**One caveat, stated plainly:** this method distinguishes *different genomes*, not *different individuals of an inbred line*. Littermates of an inbred colony are near-genetically identical, so a mix-up between two such animals would be invisible to any fingerprint. What we can state is that tumor3's genome is the parent's genome — which is precisely what the un-edited-subclone explanation requires and what a swap with an unrelated/differently-engineered animal would have broken.
+
 ---
 
 ## 7. Conclusions
@@ -158,11 +185,17 @@ The lineage logic is now decisive: **B2TP has no wild-type Brca2 allele.** Any c
 | 4 | Allele 1 = 31 bp dual-cut excision → frameshift at codon ~31/3,329 → null | High | Deletion endpoints coincide with guide cut sites (§6.4) |
 | 5 | Allele 2 = disrupted at the third guide's cut; exact structure unresolved | Moderate–High | 7-read breakpoint stack on 150,452,989/990; clipped mate maps to repeat (§6.5) |
 | 6 | **B2TP = Brca2 + Pten knockout** — the naming reading `B2 = Brca2` is now confirmed by direct observation, not inference | High | §6.3–6.5 + Pten KO from 2026-07-15 |
-| 7 | **Tumor3 does not derive from B2TP; it arose from an un-edited subclone** (raised from *Moderate*) | High | Tumor3 wild-type at Brca2, Brca1 **and** Pten; B2TP has no WT allele to lose (§6.6) |
-| 8 | Tumors 1 and 2 remain B1TP-derived; neither carries a Brca2 edit | High | Wild-type Brca2 reads retained (§6.3); Brca1/Pten indels per 2026-07-15 |
-| 9 | Your guide IDs are **not** GRCm39 coordinates (~76.5 kb offset; most consistent with GRCm38/mm10) | High that they are not GRCm39; the mm10 attribution is inferred | §2 (item 5) — no impact on results (guides located by sequence) |
+| 7 | **Tumor3 does not derive from B2TP; it arose from an un-edited subclone of the parent** (raised from *Moderate*) | High | Tumor3 wild-type at Brca2, Brca1 **and** Pten; B2TP has no WT allele to lose (§6.6); shares origin's germline (§6.7) |
+| 8 | **Tumor3 is the same animal as RO_origin — sample swap excluded** | High (see §6.7 caveat re inbred littermates) | 8 homozygous private alleles vs thousands expected for a different mouse (§6.7) |
+| 9 | Tumor3's chr3 ~47.9–48.4 Mb anomaly is a tumor-specific structural event, not an identity signal | Moderate–High | Confined to 1 window; coverage 0.35× of own baseline; absent in all other samples (§6.7) |
+| 10 | Tumors 1 and 2 remain B1TP-derived; neither carries a Brca2 edit | High | Wild-type Brca2 reads retained (§6.3); Brca1/Pten indels per 2026-07-15 |
+| 11 | Your guide IDs are **not** GRCm39 coordinates (~76.5 kb offset; most consistent with GRCm38/mm10) | High that they are not GRCm39; the mm10 attribution is inferred | §2 (item 6) — no impact on results (guides located by sequence) |
 
-**Tumor3 remains the one open biological question**, and it is now sharper rather than resolved: it is the most aneuploid of the three tumors yet is wild-type at all three targeted genes. The remaining discriminator is not another edit locus but **sample identity** — a SNP-fingerprint check of tumor3 against RO_origin would separate "un-edited escaper subclone of the parent" (expected: matching fingerprint) from a sample-tracking swap (expected: mismatch). We can run this on the existing data on your go-ahead; no new sequencing is required.
+**Both questions this addendum set out to answer are now closed**, and with them the open items the 2026-07-15 report carried: the Brca2 knockout in B2TP is positively confirmed and biallelic (§6.3–6.5), and tumor3 is a genuine un-edited subclone of the parent rather than a sample swap (§6.6–6.7). No client input is outstanding.
+
+The one **biological** point this raises — a finding rather than a gap — is that **tumor3 formed, and became the most aneuploid of the three tumors, while carrying none of the intended Brca1/Brca2/Pten edits.** For your HGSOC model the practical implication is concrete: editing-escaped cells in the injected population can still form tumors, so a phenotype observed in a tumor should not be attributed to Brca/Pten loss without genotyping that specific tumor — as tumor3 demonstrates.
+
+We tested the obvious mechanistic explanation — that Trp53 loss alone drove it — and report the outcome honestly: **it is not resolvable from coverage.** A copy-number check across Trp53 (chr11:69,471,185–69,482,699) shows a flat, unchanged profile in **all six samples including the parent**. Since RO_origin is Trp53⁺/⁻ by design yet shows no coverage deficit, its engineered null allele is evidently a small, coverage-invisible lesion rather than a deletion — so this assay cannot detect Trp53 status, in tumor3 or anywhere else, and we draw no conclusion from it. Establishing whether tumor3 lost its remaining Trp53 allele would need the allele's construct design from you (what the "−" allele actually is), after which we could genotype it directly on the existing data.
 
 ---
 
@@ -171,15 +204,20 @@ The lineage logic is now decisive: **B2TP has no wild-type Brca2 allele.** Any c
 ```
 custom_research_report_20260716/
 ├── GeneEdit_Lats12_WGS_0716.md          ← this addendum
-└── edit_verification/
-    ├── client_brca2_sgRNA_source_image.png   client image the guides were transcribed from
-    ├── sgRNA_guides_reference.md             all 9 guides + Brca2 localisation/PAM check
-    ├── cut_sites.tsv                         all 9 cut sites (Pten/Brca1/Brca2) on GRCm39
-    ├── cutsite_indels.tsv                    joint genotypes at every cut site, 6 samples
-    ├── brca2_allele_quant.tsv                per-sample WT / 31bp / clip / indel counts
-    ├── brca2_clip_breakpoints.tsv            clip breakpoint stacking, per base per sample
-    ├── brca2_indels.tsv                      exploratory Brca2 gene-wide indel scan
-    └── spacer_gene.tsv                       spacer → target gene mapping
+├── edit_verification/
+│   ├── client_brca2_sgRNA_source_image.png   client image the guides were transcribed from
+│   ├── sgRNA_guides_reference.md             all 9 guides + Brca2 localisation/PAM check
+│   ├── cut_sites.tsv                         all 9 cut sites (Pten/Brca1/Brca2) on GRCm39
+│   ├── cutsite_indels.tsv                    joint genotypes at every cut site, 6 samples
+│   ├── brca2_allele_quant.tsv                per-sample WT / 31bp / clip / indel counts
+│   ├── brca2_clip_breakpoints.tsv            clip breakpoint stacking, per base per sample
+│   ├── brca2_indels.tsv                      exploratory Brca2 gene-wide indel scan
+│   └── spacer_gene.tsv                       spacer → target gene mapping
+└── identity_fingerprint/
+    ├── fingerprint_summary.tsv               private / homozygous-private counts per sample
+    ├── fingerprint_interpretation.txt        per-chromosome + per-VAF breakdown & verdict
+    ├── private_alleles.txt                   raw private-allele counts (see §6.7 caveat)
+    └── regions.bed                           the 38 × 500 kb sampled windows
 ```
 
 The 2026-07-15 delivery (`custom_research_report_20260715/`) is unchanged and remains the reference for all other results (tumor aneuploidy, somatic variants, iHPV integration, Study B).

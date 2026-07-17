@@ -1,0 +1,8 @@
+评估位点数(origin DP>=10): 19032
+
+sample      private_alleles  per_10k_sites
+RO_B1TP                245          128.7
+RO_B2TP                227          119.3
+RO_tumor1              264          138.7
+RO_tumor2              219          115.1
+RO_tumor3             2851         1498.0

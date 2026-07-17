@@ -116,9 +116,22 @@
 
 - ~~Study A：Brca2 的 sgRNA（Pten/Brca1 已到）；三个 tumor 谱系（可数据反推）。~~
   → **✅ 2026-07-16 全部了结**：Brca2 sgRNA 已补齐并完成验证；三个 tumor 谱系已反推完毕
-  （tumor1/2 = B1TP；tumor3 = 未编辑亚克隆，非 B1TP/B2TP）。**Study A 唯一剩余开放项 = tumor3 身份**，
-  且已不是编辑位点问题而是**样本 identity 问题** → 待办：tumor3 vs RO_origin 的 SNP-fingerprint 比对，
-  区分"亲本的未编辑逃逸亚克隆"(指纹一致) vs "样本混淆/调包"(指纹不一致)。现有数据即可跑，无需新测序。
+  （tumor1/2 = B1TP；tumor3 = 未编辑亚克隆，非 B1TP/B2TP）。
+  → **✅ tumor3 identity 也已跑完**（`A6_identity_fingerprint.sh` + `A6b_fingerprint_interpret.py`）：
+  剔除局部异常窗后 tumor3 hom-private 仅 **8** 个（对照 0/0/0/1）→ **与 RO_origin 共享 germline = 同一只鼠**
+  → "未编辑逃逸亚克隆"确证（High），**跨个体调包排除**（局限：近交系同窝个体无法区分，已如实写入报告）。
+  **Study A 至此无待办、客户端无待补项。**
+- **⚠ 方法学教训 #2（2026-07-16，聚合指标会说谎）**：fingerprint 的 private_allele **总数**把 tumor3
+  报成 2851 vs 其它 219-264（~11×），**乍看像调包——这个读法是错的**。两个下钻拆穿：
+  (1) **按染色体**：1154/1218 全挤在 chr3 一个 500kb 窗、56 在 chr19，其余 17 条常染色体 = 0
+      （真异体差异应遍布全基因组）；该 chr3 窗在 tumor3 深度仅自身基线 **0.35×**（其它样本 0.69-1.00）
+      → 是 tumor3 自己的**局部结构异常**，残留错配 read 造出假 hom-ALT。
+  (2) **按 VAF**：剔除后 tumor3 多出的 private 全在 **VAF 0.3-0.7**（克隆性体细胞突变，它是重排最重的瘤），
+      hom(≥0.9) 只剩 8 个。
+  → **任何"一个总数"的判据都必须按染色体+按 VAF 下钻再下结论**；否则会得出与事实相反的"样本调包"。
+- **Trp53 状态查不了（2026-07-16 实测，勿重复踩）**：Trp53 全基因 coverage 在**六个样本(含亲本 origin)全平**，
+  无任何 dip → origin 虽为 Trp53⁺/⁻，其工程 null 等位**不是 coverage 可见的 deletion**（应为小病灶/点突变类）
+  → **copy-number 法测不出 Trp53，tumor3 的 Trp53 LOH 无从判定**。要做需客户提供该 "−" 等位的构建体设计。
 - Study B：**iHPV 全构建体序列**（Addgene #13712 E6/E7 可公开下 + PMC4662542 的 CAG-LSL-EGFP-Luc 载体图）；**Lats1/2 loxP 打靶位点**（判断 floxed 外显子位置，查是否有体细胞重组）。均可自行从公开来源+数据补足。
 
 ---

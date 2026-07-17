@@ -1,0 +1,6 @@
+sample	private_all	private_excl_aberrant	hom_private_excl_aberrant
+RO_B1TP	245	223	0
+RO_B2TP	227	216	0
+RO_tumor1	264	231	0
+RO_tumor2	219	182	1
+RO_tumor3	2851	644	8
