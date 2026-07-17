@@ -27,12 +27,13 @@ A key methodological point: the engineered elements in Study B are **loxP-only /
 
 ## 2. Key Findings
 
-1. **All intended CRISPR edits are verified, and the tumor lineages are resolved.** Brca1 + Pten knockout confirmed in B1TP. **Brca2 knockout confirmed in B2TP, and it is biallelic** — no wild-type Brca2 allele survives — alongside its Pten knockout. Tumors 1 and 2 derive from the **B1TP (Brca1+Pten)** lineage.
-2. **Tumor 3 carries none of the intended edits and arose from an un-edited subclone of the parent.** It is wild-type at all three targeted genes (Brca1, Brca2, Pten), yet a SNP-fingerprint check shows it is genetically the **same animal** as the parental line — so it is an editing-escaped subclone, not a mis-tracked sample. **Practical consequence: editing-escaped cells can still form tumors in this model** (tumor3 is in fact the most aneuploid of the three), so a tumor phenotype should not be attributed to Brca/Pten loss without genotyping that specific tumor.
-3. **Study A tumors are aneuploid, each with a distinct karyotype.** The three tumors carry different chromosome-scale gains/losses, consistent with independent clonal evolution. The parental and edited-but-pre-tumor cells remain diploid.
-4. **Study B tissues are genomically stable — no aneuploidy.** All six Lats1/2-flox tissues (both genotypes, all ages) show a flat, diploid copy-number profile genome-wide (autosomal copy number 1.94–2.08). The reported oviduct phenotype is **not** driven by large-scale chromosomal instability or aneuploidy.
-5. **The iHPV transgene is present specifically in L1L2H mice.** HPV16 E6/E7 and luciferase reads are detected in all three L1L2H samples and are entirely absent from all three L1L2 samples (perfect specificity), at levels consistent with a fixed germline transgene.
-6. **Study B is not congenically pure C57BL/6J.** Each tissue carries ~5–6 million variants against GRCm39 — a genome-wide non-6J inbred background, most likely 129-derived from the ES-cell engineering. This is inherited background, not accumulated mutation, and it shapes how de-novo candidates must be mined (§6.6).
+1. **All 12 samples pass QC** — 99.99% of reads map to GRCm39, duplicate rates 7.7–14.3%, mean depth 19.2–31.9× with 84–92% of the genome at ≥10×. No sample was excluded and no conclusion below is limited by data quality (§6.1).
+2. **All intended CRISPR edits are verified, and the tumor lineages are resolved.** Brca1 + Pten knockout confirmed in B1TP. **Brca2 knockout confirmed in B2TP, and it is biallelic** — no wild-type Brca2 allele survives — alongside its Pten knockout. Tumors 1 and 2 derive from the **B1TP (Brca1+Pten)** lineage.
+3. **Tumor 3 carries none of the intended edits and arose from an un-edited subclone of the parent.** It is wild-type at all three targeted genes (Brca1, Brca2, Pten), yet a SNP-fingerprint check shows it is genetically the **same animal** as the parental line — so it is an editing-escaped subclone, not a mis-tracked sample. **Practical consequence: editing-escaped cells can still form tumors in this model** (tumor3 is in fact the most aneuploid of the three), so a tumor phenotype should not be attributed to Brca/Pten loss without genotyping that specific tumor.
+4. **Study A tumors are aneuploid, each with a distinct karyotype.** The three tumors carry different chromosome-scale gains/losses, consistent with independent clonal evolution. The parental and edited-but-pre-tumor cells remain diploid.
+5. **Study B tissues are genomically stable — no aneuploidy.** All six Lats1/2-flox tissues (both genotypes, all ages) show a flat, diploid copy-number profile genome-wide (autosomal copy number 1.94–2.08). The reported oviduct phenotype is **not** driven by large-scale chromosomal instability or aneuploidy.
+6. **The iHPV transgene is present specifically in L1L2H mice.** HPV16 E6/E7 and luciferase reads are detected in all three L1L2H samples and are entirely absent from all three L1L2 samples (perfect specificity), at levels consistent with a fixed germline transgene.
+7. **Study B is not congenically pure C57BL/6J.** Each tissue carries ~5–6 million variants against GRCm39 — a genome-wide non-6J inbred background, most likely 129-derived from the ES-cell engineering. This is inherited background, not accumulated mutation, and it shapes how de-novo candidates must be mined (§6.7).
 
 ---
 
@@ -45,9 +46,9 @@ A key methodological point: the engineered elements in Study B are **loxP-only /
 | 1  | RO_origin |   A   |  Cell  | parent | Trp53⁺/⁻; Cas9 transgenic; unedited — **matched normal** (~20×) |
 | 2  | RO_B1TP   |   A   |  Cell  | edited | Parent cells electroporated with **Brca1 + Pten** sgRNAs (~24×) |
 | 3  | RO_B2TP   |   A   |  Cell  | edited | Parent cells electroporated with **Brca2 + Pten** sgRNAs (~24×) |
-| 4  | RO_tumor1 |   A   |  Cell  | tumor  | Cell line from a solid tumor grown after injecting B1TP/B2TP cells into a mouse (~26×) — **resolved here to the B1TP lineage** (§6.2) |
-| 5  | RO_tumor2 |   A   |  Cell  | tumor  | Cell line from a **different** such tumor (~19×) — **resolved here to the B1TP lineage** (§6.2) |
-| 6  | RO_tumor3 |   A   |  Cell  | tumor  | Cell line from a **third** such tumor (~30×) — carries **none** of the intended edits; **resolved here to an un-edited subclone of the parent** (§6.2–6.3) |
+| 4  | RO_tumor1 |   A   |  Cell  | tumor  | Cell line from a solid tumor grown after injecting B1TP/B2TP cells into a mouse (~26×) — **resolved here to the B1TP lineage** (§6.3) |
+| 5  | RO_tumor2 |   A   |  Cell  | tumor  | Cell line from a **different** such tumor (~19×) — **resolved here to the B1TP lineage** (§6.3) |
+| 6  | RO_tumor3 |   A   |  Cell  | tumor  | Cell line from a **third** such tumor (~30×) — carries **none** of the intended edits; **resolved here to an un-edited subclone of the parent** (§6.3–6.4) |
 | 7  | L1L2_3M   |   B   | Tissue |  L1L2  | Lats1/2 flox, 3 months (~21×)                        |
 | 8  | L1L2H_3M  |   B   | Tissue | L1L2H  | Lats1/2 flox + iHPV, 3 months (~20×)                 |
 | 9  | L1L2_12M  |   B   | Tissue |  L1L2  | Lats1/2 flox, 12 months (~32×)                       |
@@ -57,7 +58,7 @@ A key methodological point: the engineered elements in Study B are **loxP-only /
 
 Total input: 12 samples, gzip FASTQ 462 GiB (measured on disk 2026-07-12).
 
-**Study A design.** All six Study A samples descend from one parental primary-cell line (RO_origin) taken from a **Trp53⁺/⁻; Cas9** transgenic mouse — it already carries one Trp53-null allele and expresses Cas9 constitutively, and it was **not** edited in vitro. Because Cas9 is already present in the cells, editing required delivering **sgRNA only, by electroporation** — no viral or plasmid vector is involved in Study A, and no donor template was used (knockout by non-homologous end joining at the cut sites). Since RO_origin already carries the Trp53 and Cas9 features, using it as the matched normal subtracts them correctly, leaving only the sgRNA-induced edits and tumor-acquired changes. **Tumors 1–3 are three separate solid tumors** grown after injecting the edited cells into mice, each digested into its own cell line; the client did not record which injected line each tumor came from, and resolving that from the WGS is objective A2 (answered in §6.2). *(The iHPV construct belongs to Study B only — it plays no part in Study A.)*
+**Study A design.** All six Study A samples descend from one parental primary-cell line (RO_origin) taken from a **Trp53⁺/⁻; Cas9** transgenic mouse — it already carries one Trp53-null allele and expresses Cas9 constitutively, and it was **not** edited in vitro. Because Cas9 is already present in the cells, editing required delivering **sgRNA only, by electroporation** — no viral or plasmid vector is involved in Study A, and no donor template was used (knockout by non-homologous end joining at the cut sites). Since RO_origin already carries the Trp53 and Cas9 features, using it as the matched normal subtracts them correctly, leaving only the sgRNA-induced edits and tumor-acquired changes. **Tumors 1–3 are three separate solid tumors** grown after injecting the edited cells into mice, each digested into its own cell line; the client did not record which injected line each tumor came from, and resolving that from the WGS is objective A2 (answered in §6.3). *(The iHPV construct belongs to Study B only — it plays no part in Study A.)*
 
 ### 3.1 CRISPR guides (CRISPRevolution sgRNA EZ Kit, 1.5 nmol each, Modified)
 
@@ -77,7 +78,7 @@ Nine guides were supplied as images and converted RNA→DNA. **Every guide was i
 
 **All nine cut sites fall inside a coding exon of the Ensembl-canonical transcript of their target** — Pten CDS exon 5 (`ENSMUST00000249247.1`), Brca1 CDS exon 6 (`ENSMUST00000017290.11`), Brca2 CDS exon 3 (`ENSMUST00000044620.11`, *Brca2-201*, CCDS39411.1) — so a disruptive indel at any of them is expected to be loss-of-function rather than silent.
 
-**All three targets use the same multi-guide strategy:** the three guides per gene are clustered within a narrow window (Pten 32,777,278–32,777,299 = 22 bp; Brca1 101,422,906–101,422,932 = 27 bp; Brca2 150,452,957–150,452,989 = 33 bp), with overlapping guides cutting the same point from opposite strands. This predicts either small indels at a cut site or excision of the fragment between the outermost cuts — the latter is exactly what is observed in B2TP (§6.2).
+**All three targets use the same multi-guide strategy:** the three guides per gene are clustered within a narrow window (Pten 32,777,278–32,777,299 = 22 bp; Brca1 101,422,906–101,422,932 = 27 bp; Brca2 150,452,957–150,452,989 = 33 bp), with overlapping guides cutting the same point from opposite strands. This predicts either small indels at a cut site or excision of the fragment between the outermost cuts — the latter is exactly what is observed in B2TP (§6.3).
 
 **Note on the guide IDs:** the coordinates embedded in the product names **are not GRCm39 positions**. `Brca2+150529497` sits ~76.5 kb from where that guide actually maps on GRCm39, and `Pten-32799878` ~22.6 kb from its true position — so using these numbers directly against GRCm39 retrieves the wrong locus. That the offset **differs per locus** (76.5 kb vs 22.6 kb) rules out a simple constant shift and is what an assembly coordinate change produces; the numbering is most consistent with GRCm38/mm10, though this was not verified directly (no GRCm38 reference was used here). Every guide was located by sequence, so no result is affected.
 
@@ -88,7 +89,7 @@ Nine guides were supplied as images and converted RNA→DNA. **Every guide was i
 | Question                        | Approach & why it works without a dedicated wild-type control                                                                       | Threshold / criterion                                                      |
 | :------------------------------ | :---------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------- |
 | Copy number / aneuploidy        | Ratio of genome-internal coverage → copy number; reference-free. GRCm39 = C57BL/6J ≈ the animals' own normal.                     | Chromosome-median CN ≥2.5 = gain, ≤1.5 = loss                            |
-| Edit verification (A1)          | Read directly at each sgRNA cut site; compare edited/tumor vs the RO_origin parent. **Read/CIGAR level, not caller output** — see §6.2 | Wild-type reads absent ⇒ biallelic knockout; indel present in edited sample, absent (0/0) in RO_origin |
+| Edit verification (A1)          | Read directly at each sgRNA cut site; compare edited/tumor vs the RO_origin parent. **Read/CIGAR level, not caller output** — see §6.3 | Wild-type reads absent ⇒ biallelic knockout; indel present in edited sample, absent (0/0) in RO_origin |
 | Soft-clipped reads as evidence  | This locus is intrinsically clip-prone (~30% of reads clip even in the unedited parent), so clip *fraction* is not specific         | A clip counts only if ≥20 bp **and** its breakpoint **stacks recurrently on a cut-site base** |
 | Negative-control gate           | The unedited parent must score as unedited, or the method is wrong                                                                  | RO_origin must show ~0 editing (asserted in code)                          |
 | Tumor lineage (A2)              | Brca1-KO ⇒ B1TP lineage; Brca2-KO ⇒ B2TP lineage. A line with **no** wild-type allele cannot give rise to a wild-type descendant | Presence/absence of cut-site indel; wild-type read fraction               |
@@ -113,20 +114,48 @@ Nine guides were supplied as images and converted RNA→DNA. **Every guide was i
 
 ## 6. Results
 
-### 6.1 Copy number & aneuploidy (headline)
+### 6.1 Sequencing data quality — all 12 samples pass
+
+Every sample is of good and comparable quality; no sample was excluded, and no result below is limited by data quality.
+
+| Sample    | Mapped % | Duplicate % | Mean depth | Genome ≥10× | Insert size | Mean base quality | Error rate |
+| :-------- | :------: | :---------: | :--------: | :---------: | :---------: | :---------------: | :--------: |
+| RO_origin |  99.99   |    10.78    |   19.4×    |     86%     |    139 bp   |       38.7        |  4.5×10⁻³  |
+| RO_B1TP   |  99.99   |    14.22    |   23.2×    |     89%     |    123 bp   |       38.8        |  4.6×10⁻³  |
+| RO_B2TP   |  99.99   |    14.29    |   23.6×    |     89%     |    128 bp   |       38.7        |  4.8×10⁻³  |
+| RO_tumor1 |  99.99   |    11.83    |   26.0×    |     90%     |    136 bp   |       38.7        |  4.6×10⁻³  |
+| RO_tumor2 |  99.99   |    10.96    |   19.2×    |     84%     |    131 bp   |       38.7        |  4.6×10⁻³  |
+| RO_tumor3 |  99.99   |    14.08    |   31.6×    |     91%     |    125 bp   |       38.4        |  4.8×10⁻³  |
+| L1L2_3M   |  99.99   |     9.43    |   21.5×    |     88%     |    141 bp   |       38.8        |  4.7×10⁻³  |
+| L1L2H_3M  |  99.99   |    11.83    |   20.1×    |     86%     |    132 bp   |       38.5        |  4.7×10⁻³  |
+| L1L2_12M  |  99.99   |     7.68    |   31.9×    |     92%     |    140 bp   |       38.6        |  4.7×10⁻³  |
+| L1L2H_12M |  99.99   |    10.70    |   27.6×    |     92%     |    137 bp   |       38.9        |  4.7×10⁻³  |
+| L1L2_18M  |  99.99   |     9.30    |   24.8×    |     90%     |    139 bp   |       38.7        |  4.8×10⁻³  |
+| L1L2H_18M |  99.99   |    10.30    |   20.5×    |     87%     |    137 bp   |       38.7        |  5.1×10⁻³  |
+
+- **Mapping is essentially complete** — 99.99% of QC-passed reads align to GRCm39 in every sample (e.g. RO_origin: 53,411 unmapped of 458.9 M). Upstream, fastp retained 99.0% of raw reads, so ~99% of all sequenced reads are used.
+- **Duplicate rates are low** (7.7–14.3%) and **base quality is high** (mean Q38.4–38.9; Q30 rate 93.8%), with a uniform error rate of ~0.5%.
+- **Depth is 19.2–31.9×**, with 84–92% of the genome covered at ≥10×. This is ample for the copy-number, edit-verification and transgene analyses reported here. It is at the lower end for *sensitive* somatic point-mutation calling, which is one reason the somatic burden is not quoted (§6.8).
+- **One library characteristic worth noting:** the mean insert size (123–141 bp) is **shorter than the 150 bp read length** in all 12 samples, so read pairs overlap substantially. This is systematic across the batch rather than a per-sample defect. It has two consequences: the effective independent coverage is somewhat below the nominal depth (overlapping mates re-sequence the same molecule), and paired-end SV detection is less sensitive for a given depth — relevant to the SV counts in §6.6, and a reason those are treated as provisional.
+
+Full per-sample reports: `qc/multiqc_studyA.html`, `qc/multiqc_studyB.html`.
+
+### 6.2 Copy number & aneuploidy (headline)
 
 Chromosome-level copy number (autosomes) across the cohort:
 
 - **Study B (all six Lats1/2 tissues):** flat and diploid — autosomal copy number ranges only **1.94–2.08** in every sample, at every age, in both genotypes. No chromosome-scale gain or loss.
 - **Study A parent + edited cells (RO_origin, B1TP, B2TP):** also flat/diploid (1.91–2.14).
-- **Study A tumors:** clearly aneuploid, each distinct —
-  - **tumor1:** gains chr8, chr10, chr11; loss chr18
-  - **tumor2:** gain chr5 (plus milder shifts)
-  - **tumor3:** losses chr8, chr12, chr13, chr14; gain chr15 (most-rearranged genome)
+- **Study A tumors:** clearly aneuploid, each distinct (chromosome-median copy number in brackets; calls at CN ≥2.5 = gain, ≤1.5 = loss — full table in `cnv_ploidy/aneuploidy_calls.tsv`) —
+  - **tumor1:** gains chr8 [2.60], chr10 [2.69], chr11 [2.52]; loss chr18 [1.46]
+  - **tumor2:** gain chr5 [2.52] (plus milder shifts)
+  - **tumor3:** losses chr8 [1.43], chr12 [1.36], chr13 [1.43], chr14 [1.37]; gain chr15 [2.51] — **five affected chromosomes, the most-rearranged genome**
+
+**No aneuploidy is shared in the same direction by any two tumors** — the karyotypes do not overlap. The one chromosome altered in two tumors is **chr8, and in opposite directions** (gained in tumor1 [2.60], lost in tumor3 [1.43]), which reinforces rather than weakens the point. These are three independent clonal events, not one tumor sampled three times — consistent with their distinct lineages (§6.3: tumors 1 and 2 from B1TP, tumor3 from an un-edited subclone).
 
 **Interpretation.** The Study A tumors act as an internal positive control: the pipeline detects clear aneuploidy where it exists. Against that, the uniformly flat Study B profiles are a genuine biological result — **the Lats1/2-flox tissues have stable, diploid genomes with no aneuploidy, so the oviduct phenotype is not explained by large-scale genomic instability.** This is consistent with the engineered elements being un-activated (Lats1/2 not deleted). See `cnv_ploidy/cohort_cn_heatmap.png` and per-sample `*.cn_profile.png`.
 
-### 6.2 CRISPR edit verification (Study A)
+### 6.3 CRISPR edit verification (Study A)
 
 **A methodological point that determines the result.** The joint `bcftools` call reported **no indel at any Brca2 cut site, in any sample**. Taken at face value this reads as "the Brca2 edit did not happen" — and it is wrong. At the B2TP cut site only **1 of 25** reads is a perfect match (`150M`), versus **24 of 34** in the unedited parent: the edited reads are present but carry a 31 bp deletion or are heavily soft-clipped (50–87 bp), which the caller did not resolve at this complex site. The Brca2 conclusions below therefore rest on read/CIGAR-level evidence.
 
@@ -157,7 +186,7 @@ Cut-site genotypes across the three target genes (RO_origin is homozygous refere
 - **tumor1, tumor2:** carry both Brca1 and Pten indels → **B1TP (Brca1+Pten) lineage**; both retain wild-type Brca2, as expected.
 - **tumor3:** wild-type at **all three** targeted genes. Its only Brca2 indel call — a 1 bp deletion at 150,452,983 (2 reads) — falls inside a **7-C homopolymer** (`AAG`**`CCCCCCC`**`ATACAATTCTG`, 150,452,983–150,452,989), the classic context for a sequencing artifact, and is discounted. The lineage logic is decisive: **B2TP has no wild-type Brca2 allele**, so no descendant of B2TP could regain one; tumor3 is ~47% wild-type at this locus and therefore **cannot descend from B2TP**. Pten is equally decisive in the other direction — **both** injected lines carry a Pten edit (B2TP homozygously), so descent from either line would leave a detectable Pten lesion, and tumor3 has none (Pten sites 17–18× reads, unambiguous reference — a true absence of edit, not a coverage gap). Tumor3 descends from neither edited line.
 
-### 6.3 Tumor3 identity — same animal as the parent
+### 6.4 Tumor3 identity — same animal as the parent
 
 Tumor3 being wild-type at all three targeted genes leaves a question of **identity**: an un-edited escaper subclone of the parent, or a mis-tracked sample from a different mouse? B1TP/B2TP/tumor1/tumor2 — all known to descend from origin — provide the "same animal" baseline. 19,032 evaluable sites.
 
@@ -174,11 +203,11 @@ Tumor3 being wild-type at all three targeted genes leaves a question of **identi
 - **By chromosome:** 1,154 of tumor3's 1,218 homozygous private alleles fall in a **single 500 kb window on chr3 (~47.9–48.4 Mb)** and 56 on chr19; **all 17 remaining autosomes contribute zero**. A genuinely different animal differs on *every* chromosome. This is a local event — and that chr3 window shows anomalous coverage in tumor3 alone (0.35× its own baseline, vs 0.69–1.00 in every other sample), i.e. a tumor-specific structural loss whose residual mismapped reads generate spurious homozygous calls.
 - **By allele fraction:** excluding those two regions, tumor3 retains just **8 homozygous private alleles**. Its remaining excess sits at **VAF 0.3–0.7** — the signature of **clonal somatic mutation**, expected in the most rearranged of the three tumors, not of inherited variation, which would pile up at VAF ~1.0.
 
-**Conclusion:** tumor3 shares RO_origin's germline genome. It is the same animal, and a swap with a different mouse is excluded. With §6.2, **tumor3 arose from an un-edited (editing-escaped) subclone of the Trp53⁺/⁻;Cas9 parent** — and its heavy aneuploidy therefore developed independently of any Brca/Pten editing.
+**Conclusion:** tumor3 shares RO_origin's germline genome. It is the same animal, and a swap with a different mouse is excluded. With §6.3, **tumor3 arose from an un-edited (editing-escaped) subclone of the Trp53⁺/⁻;Cas9 parent** — and its heavy aneuploidy therefore developed independently of any Brca/Pten editing.
 
 **One caveat, stated plainly:** this method distinguishes *different genomes*, not *different individuals of an inbred line*. Littermates of an inbred colony are near-genetically identical, so a mix-up between two such animals would be invisible to any fingerprint. What is established is that tumor3's genome is the parent's genome — precisely what the un-edited-subclone explanation requires, and what a swap with an unrelated or differently-engineered animal would have broken.
 
-### 6.4 iHPV transgene detection (Study B)
+### 6.5 iHPV transgene detection (Study B)
 
 Construct-marker reads (unmapped reads aligned to HPV16 + EGFP + luciferase):
 
@@ -193,11 +222,32 @@ Construct-marker reads (unmapped reads aligned to HPV16 + EGFP + luciferase):
 
 **The iHPV transgene is present in all three L1L2H samples and absent in all three L1L2 samples** — a perfectly specific result. Read counts do not increase with age, consistent with a fixed germline transgene rather than an age-accumulating event.
 
-### 6.5 Structural variants
+### 6.6 Structural variants
 
-TIDDIT SV counts are available for all samples (`sv/sv_counts.tsv`). For Study B these are dominated by C57BL/6-versus-reference background SVs and are being refined with the MGP background filter before interpretation; Study A tumor SVs will be reported as tumor-minus-normal somatic events.
+TIDDIT SV calls, PASS-filtered (`sv/sv_counts.tsv`):
 
-### 6.6 De-novo candidate variants (Study B)
+| Sample    | Study | Total | PASS | Deletions | Inversions | Breakends |
+| :-------- | :---: | ----: | ---: | --------: | ---------: | --------: |
+| RO_origin |   A   |  6,073 | 3,803 |  2,869 |  25 |   540 |
+| RO_B1TP   |   A   |  5,417 | 3,725 |  3,001 |  15 |   400 |
+| RO_B2TP   |   A   |  5,925 | 3,857 |  3,114 |  14 |   358 |
+| RO_tumor1 |   A   |  6,444 | 3,880 |  2,993 |  17 |   426 |
+| RO_tumor2 |   A   |  4,724 | 3,362 |  2,694 |  16 |   368 |
+| **RO_tumor3** | A | **10,118** | **5,416** | **4,347** | **27** | 508 |
+| L1L2_3M   |   B   | 16,393 | 10,425 |  8,261 |  71 | 1,250 |
+| L1L2H_3M  |   B   | 13,201 |  8,971 |  7,181 |  75 | 1,040 |
+| L1L2_12M  |   B   | 27,337 | 14,516 | 11,860 |  77 | 1,168 |
+| L1L2H_12M |   B   | 19,299 | 11,331 |  9,103 |  67 | 1,162 |
+| L1L2_18M  |   B   | 21,038 | 12,769 | 10,269 |  75 | 1,364 |
+| L1L2H_18M |   B   | 16,581 | 11,041 |  8,926 |  65 | 1,186 |
+
+**These are raw per-sample calls, not somatic SVs, and the absolute numbers should not be read as SV burden.** They are counts against the reference and therefore include every inherited SV a sample carries. The Study B counts (9,000–14,500 PASS) are two-to-three times the Study A counts for exactly this reason — those tissues sit on a non-6J strain background (§6.7), so most of their "SVs" are inherited strain differences from GRCm39, not lesions. Comparisons are only meaningful *within* an arm, against a matched background.
+
+**Within Study A, one signal survives that caveat: tumor3 is the clear outlier** — 5,416 PASS calls against 3,362–3,880 for the parent, both edited lines and the other two tumors (~1.4× the highest, ~1.6× the lowest), driven mainly by deletions (4,347 vs 2,694–3,114). All six Study A samples share the same genetic background, so this excess is not a background artefact. It is independent corroboration of the copy-number result (§6.2): **tumor3 has the most rearranged genome of the three tumors** — and it is the tumor carrying none of the intended edits (§6.3).
+
+Two limits on interpretation: TIDDIT counts here are per-sample rather than tumor-minus-normal (somatic SV calling against RO_origin is a listed next step, §7.3), and the short insert size (§6.1) reduces paired-end SV sensitivity uniformly across samples. Neither affects the relative comparison within Study A.
+
+### 6.7 De-novo candidate variants (Study B)
 
 The Sanger Mouse Genomes Project (MGP) is a reference catalogue of the DNA variants that distinguish the common laboratory mouse strains (e.g. 129, C57BL/6 substrains, BALB/c) from the GRCm39 reference; subtracting it removes inherited strain background so that only variants genuinely private to a sample remain. Each sample's germline calls were subtracted against the Sanger MGP v8 (all-strain) SNP+indel catalogue on this basis:
 
@@ -216,11 +266,25 @@ The Sanger Mouse Genomes Project (MGP) is a reference catalogue of the DNA varia
 - **Most likely source (educated guess): a 129-derived engineering background.** Gene-targeted and floxed alleles are typically generated in **129-derived embryonic stem cells**, and a 129 background is carried genome-wide unless the line is fully backcrossed to congenic purity on C57BL/6J. This line's ES-cell provenance is not documented in the materials provided, so we present 129 as the leading explanation rather than a certainty — but it is well supported: 129 is both the standard ES-cell donor for this kind of allele and a quantitative match, since **the 129 strain lies ~4–6 million SNPs/indels from the 6J reference — essentially the *whole* of the ~5–6 M observed here.** That near-complete overlap means the background is not a small linked remnant around the engineered loci but a **substantial, genome-wide 129-type genome**. A definitive call on the exact donor strain — and on whether it is pure 129 or a 129×B6 mix — is available on request via a dedicated strain-assignment analysis.
 - After MGP subtraction, **~0.57–0.66 million private variants** remain per sample, distributed uniformly across all chromosomes (proportional to chromosome length) — i.e. residual background divergence not covered by MGP, not localised de-novo events.
 
-Genuine causal de-novo events number in the dozens-to-hundreds, not hundreds of thousands. **Identifying them from this background requires functional restriction to high-impact coding consequences (frameshift / stop-gain / splice, via VEP or snpEff) combined with recurrence and L1L2-vs-L1L2H differential filtering.** That functional-annotation step is the recommended immediate next analysis; the per-sample private call sets are provided for it (`candidates_denovo/*.private.vcf.gz`). Critically, this does not affect the primary Study B conclusion: the copy-number analysis (§6.1) already establishes these genomes are structurally stable and diploid.
+Genuine causal de-novo events number in the dozens-to-hundreds, not hundreds of thousands. **Identifying them from this background requires functional restriction to high-impact coding consequences (frameshift / stop-gain / splice, via VEP or snpEff) combined with recurrence and L1L2-vs-L1L2H differential filtering.** That functional-annotation step is the recommended immediate next analysis; the per-sample private call sets are provided for it (`candidates_denovo/*.private.vcf.gz`). Critically, this does not affect the primary Study B conclusion: the copy-number analysis (§6.2) already establishes these genomes are structurally stable and diploid.
 
-### 6.7 Somatic point mutations (Study A)
+### 6.8 Somatic point mutations (Study A) — not yet a usable mutation burden
 
-Mutect2 tumor-vs-origin calling was run for all five pairs. **The current PASS counts are inflated by artifacts (no contamination table / panel-of-normals) and are not yet a reliable mutation burden;** they are therefore not reported here as findings. This analysis requires additional filtering (VAF/depth thresholds, orientation-bias, PoN) before mutation burdens are quoted. The Study A tumor genome story is presently carried by the copy-number (§6.1), edit-verification (§6.2) and identity (§6.3) results, which are robust.
+Mutect2 tumor-vs-origin calling was run for all five pairs (`somatic/somatic_counts.tsv`):
+
+| Pair (vs RO_origin) | PASS total | SNV | Indel |
+| :------------------ | ---------: | --: | ----: |
+| RO_B1TP             |  90,680 | 49,965 | 22,613 |
+| RO_B2TP             |  87,901 | 48,822 | 22,257 |
+| RO_tumor1           |  86,549 | 49,886 | 21,772 |
+| RO_tumor2           |  79,920 | 47,965 | 18,324 |
+| RO_tumor3           | 305,795 | 247,362 | 45,537 |
+
+**These numbers are shown only to document why they are not usable — please do not quote them as mutation burdens.** The internal control proves the point: **RO_B1TP and RO_B2TP are the parental cells a few passages after sgRNA electroporation.** Biologically they should differ from RO_origin at essentially nothing beyond their intended cut sites — a handful of events. They score ~88,000–91,000. That entire ~90,000-call floor is therefore artefact, not biology, arising because the run lacks a contamination estimate and a panel-of-normals, so recurrent sequencing/alignment errors pass as somatic calls.
+
+Read with that floor in mind, the only feature that stands out is that **tumor3 is ~3.4× above it** (305,795 vs a ~80,000–91,000 baseline) — directionally consistent with its status as the most rearranged genome (§6.2, §6.6). We flag this as consistent, not as a quantitative result: an artefact floor this large cannot be subtracted reliably, and part of the excess may itself reflect tumor3's aneuploidy and structural anomalies degrading local alignment.
+
+Quoting real burdens requires the filtering listed in §7.3 (VAF/depth thresholds, orientation-bias filtering, a panel-of-normals). Meanwhile the Study A conclusions rest on copy number (§6.2), edit verification (§6.3), identity (§6.4) and SV (§6.6), none of which depend on these counts.
 
 ---
 
@@ -229,20 +293,20 @@ Mutect2 tumor-vs-origin calling was run for all five pairs. **The current PASS c
 | Conclusion                                                                     | Confidence | Evidence |
 | :----------------------------------------------------------------------------- | :--------: | :------- |
 | The three Brca2 guides are genuine and target Brca2 exon 3                     |    High    | §3.1 — unique GRCm39 hit each, correct strand, perfect NGG PAM |
-| **B2TP carries the intended Brca2 knockout, and it is biallelic**              |    High    | §6.2 — 0/14 wild-type reads; coverage 0.57× of own baseline at the cut window |
-| Brca2 allele 1 = 31 bp dual-cut excision → frameshift at codon ~31/3,329 → null |    High    | §6.2 — deletion endpoints coincide with guide cut sites |
-| Brca2 allele 2 = disrupted at the third guide's cut; exact structure unresolved | Moderate–High | §6.2 — 7-read breakpoint stack on 150,452,989/990 |
-| **B2TP = Brca2 + Pten knockout**, by direct observation rather than inference   |    High    | §6.2 |
-| B1TP = Brca1 + Pten KO confirmed                                                |    High    | §6.2 |
-| Tumors 1 & 2 arose from the B1TP lineage; neither carries a Brca2 edit          |    High    | §6.2 |
-| **Tumor3 arose from an un-edited subclone of the parent, not B1TP/B2TP**        |    High    | §6.2 (wild-type at all three genes) + §6.3 (shares origin's germline) |
-| **Tumor3 is the same animal as RO_origin — sample swap excluded**               | High (see §6.3 caveat re inbred littermates) | §6.3 — 8 homozygous private alleles vs thousands expected for a different mouse |
-| Tumor3's chr3 ~47.9–48.4 Mb anomaly is a tumor-specific structural event, not an identity signal | Moderate–High | §6.3 — confined to 1 window; coverage 0.35× of own baseline |
-| Study A tumors are aneuploid with distinct karyotypes                           |    High    | §6.1 |
-| Study B tissues have stable diploid genomes; no aneuploidy at any age/genotype  |    High    | §6.1 — flat CN 1.94–2.08 |
-| Oviduct phenotype is not driven by large-scale genomic instability              |    High    | §6.1 + validated positive control |
-| iHPV transgene present specifically in L1L2H                                    |    High    | §6.4 |
-| Study B background is not congenically pure C57BL/6J (~5–6M variants vs GRCm39) |    High    | §6.6 (129-type is the leading, unconfirmed, explanation) |
+| **B2TP carries the intended Brca2 knockout, and it is biallelic**              |    High    | §6.3 — 0/14 wild-type reads; coverage 0.57× of own baseline at the cut window |
+| Brca2 allele 1 = 31 bp dual-cut excision → frameshift at codon ~31/3,329 → null |    High    | §6.3 — deletion endpoints coincide with guide cut sites |
+| Brca2 allele 2 = disrupted at the third guide's cut; exact structure unresolved | Moderate–High | §6.3 — 7-read breakpoint stack on 150,452,989/990 |
+| **B2TP = Brca2 + Pten knockout**, by direct observation rather than inference   |    High    | §6.3 |
+| B1TP = Brca1 + Pten KO confirmed                                                |    High    | §6.3 |
+| Tumors 1 & 2 arose from the B1TP lineage; neither carries a Brca2 edit          |    High    | §6.3 |
+| **Tumor3 arose from an un-edited subclone of the parent, not B1TP/B2TP**        |    High    | §6.3 (wild-type at all three genes) + §6.4 (shares origin's germline) |
+| **Tumor3 is the same animal as RO_origin — sample swap excluded**               | High (see §6.4 caveat re inbred littermates) | §6.4 — 8 homozygous private alleles vs thousands expected for a different mouse |
+| Tumor3's chr3 ~47.9–48.4 Mb anomaly is a tumor-specific structural event, not an identity signal | Moderate–High | §6.4 — confined to 1 window; coverage 0.35× of own baseline |
+| Study A tumors are aneuploid with distinct karyotypes                           |    High    | §6.2 |
+| Study B tissues have stable diploid genomes; no aneuploidy at any age/genotype  |    High    | §6.2 — flat CN 1.94–2.08 |
+| Oviduct phenotype is not driven by large-scale genomic instability              |    High    | §6.2 + validated positive control |
+| iHPV transgene present specifically in L1L2H                                    |    High    | §6.5 |
+| Study B background is not congenically pure C57BL/6J (~5–6M variants vs GRCm39) |    High    | §6.7 (129-type is the leading, unconfirmed, explanation) |
 | Guide IDs are not GRCm39 coordinates (~76.5 kb offset)                          | High that they are not GRCm39; the mm10 attribution is inferred | §3.1 — no impact on results |
 
 ### 7.1 Implication for the model
@@ -256,8 +320,8 @@ Trp53 loss is the obvious candidate, given the Trp53⁺/⁻ parental genotype. *
 ### 7.3 Remaining analyses (no client input required unless noted)
 
 1. **iHPV integration locus** — construct presence is confirmed, but the base-pair integration junction / disrupted gene is not yet resolved; this requires the full PMC4662542 vector map to capture junction-spanning reads.
-2. **Somatic point-mutation burden** — requires the additional filtering described in §6.7 before numbers are quoted.
-3. **Study B de-novo candidate mining** — functional high-impact annotation (VEP/snpEff) + recurrence / genotype-differential filtering on the provided private call sets (§6.6). Recommended next analysis.
+2. **Somatic point-mutation burden** — requires the additional filtering described in §6.8 before numbers are quoted.
+3. **Study B de-novo candidate mining** — functional high-impact annotation (VEP/snpEff) + recurrence / genotype-differential filtering on the provided private call sets (§6.7). Recommended next analysis.
 4. **Study B strain assignment** — optional; would settle whether the background is pure 129 or a 129×B6 mix.
 5. **Trp53 genotyping in tumor3** — needs the Trp53 "−" allele design from you (§7.2).
 
@@ -268,8 +332,12 @@ Trp53 loss is the obvious candidate, given the Trp53⁺/⁻ parental genotype. *
 ```
 custom_research_report_20260716/
 ├── GeneEdit_Lats12_WGS_0716.md       ← this report
-├── qc/                                MultiQC reports (Study A, Study B)
-├── cnv_ploidy/                        cohort CN table, aneuploidy calls, heatmap, per-sample CN profiles
+├── qc/                                MultiQC reports (Study A, Study B) — per-sample QC detail behind §6.1
+├── cnv_ploidy/                        copy-number results behind §6.2
+│   ├── cohort_cn_heatmap.png            all 12 samples, all chromosomes — one figure
+│   ├── cohort_chrom_cn.tsv              chromosome-median copy number, per sample
+│   ├── aneuploidy_calls.tsv             the gain/loss calls (CN ≥2.5 / ≤1.5)
+│   └── *.cn_profile.png                 per-sample genome-wide CN profile (12 files)
 ├── edit_verification/                 guides, cut sites, cut-site genotypes, Brca2 allele quantification
 │   ├── sgRNA_guides_reference.md        all 9 guides + Brca2 localisation / PAM check
 │   ├── client_brca2_sgRNA_source_image.png   client image the Brca2 guides were transcribed from
@@ -283,10 +351,13 @@ custom_research_report_20260716/
 │   ├── fingerprint_summary.tsv          private / homozygous-private counts per sample
 │   ├── fingerprint_breakdown.txt        per-chromosome + per-VAF breakdown & verdict
 │   └── regions.bed                      the 38 × 500 kb sampled windows
-├── ihpv_integration/                  construct-presence table (per-sample HPV16/EGFP/Luc reads)
-├── somatic/                           Mutect2 PASS counts (preliminary), Trp53 locus depth
-├── sv/                                TIDDIT SV counts
-└── candidates_denovo/                 MGP-filtered de-novo candidates (for the §6.6 next step)
+├── ihpv_integration/                  construct-presence table, per-sample HPV16/EGFP/Luc reads (§6.5)
+├── sv/sv_counts.tsv                   TIDDIT SV counts (§6.6) — raw per-sample, not somatic
+├── somatic/
+│   ├── somatic_counts.tsv               Mutect2 PASS counts — ⚠ artefact-inflated, NOT a burden (§6.8)
+│   └── trp53_depth.tsv                  Trp53 locus depth (§7.2 — cannot read Trp53 status)
+└── candidates_denovo/                 MGP-filtered private variants (§6.7) — input for the recommended
+                                        functional-annotation step, not a finished candidate list
 ```
 
 This report and folder are complete and self-contained; they supersede the 2026-07-15 delivery, which is retained unchanged as the record of that round.
