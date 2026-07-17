@@ -420,7 +420,8 @@ custom_research_report_20260716/
 ├── sv/sv_counts.tsv                   TIDDIT SV counts (§6.8) — raw per-sample, not somatic
 ├── somatic/
 │   ├── somatic_counts.tsv               Mutect2 PASS counts — ⚠ artefact-inflated, NOT a burden (§6.10)
-│   └── trp53_depth.tsv                  Trp53 locus depth (§7.2 — cannot read Trp53 status)
+│   └── trp53_depth.tsv                  Trp53 locus depth — flat in all 6 samples; Trp53 status is
+│                                        read from LOH instead (see loh_trp53/, §6.5)
 └── candidates_denovo/                 MGP-filtered private variants (§6.9) — input for the recommended
                                         functional-annotation step, not a finished candidate list
 ```
