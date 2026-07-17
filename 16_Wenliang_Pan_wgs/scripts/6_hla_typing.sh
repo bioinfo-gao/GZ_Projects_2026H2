@@ -21,11 +21,20 @@ fi
 CR="conda run -n hla"
 
 # --- 1) build HLA reference index once ---
+# NOTE (2026-07-17): three bugs fixed here — the previous version silently built NOTHING,
+# leaving t1k_hlaidx/ empty so run-t1k's fastq-extractor died with "Need to use -f":
+#   (a) t1k-build.pl lives in the env's bin/ (on PATH), NOT share/ — the old `find share/`
+#       returned empty, so `perl "" ...` never built anything.
+#   (b) `-d hla` was wrong: -d is an EMBL-ENA .dat file path, not a keyword. The HLA build is
+#       driven by `--download IPD-IMGT/HLA` alone.
+#   (c) default output prefix derives from the -o folder (-> t1k_hlaidx_dna_seq.fa), which does
+#       NOT match the `-f .../hlaidx_dna_seq.fa` run-t1k expects. Pin it with `--prefix hlaidx`.
 if [ ! -s "$HLAIDX/hlaidx_dna_seq.fa" ]; then
     mkdir -p "$HLAIDX"; cd "$HLAIDX"
-    T1KDIR=$($CR bash -lc 'dirname $(dirname $(which run-t1k))')/share
-    T1KBUILD=$(find "$T1KDIR" -name t1k-build.pl 2>/dev/null | head -1)
-    $CR perl "$T1KBUILD" -o "$HLAIDX" -d hla --download IPD-IMGT/HLA
+    $CR t1k-build.pl --download IPD-IMGT/HLA -o "$HLAIDX" --prefix hlaidx
+fi
+if [ ! -s "$HLAIDX/hlaidx_dna_seq.fa" ]; then
+    echo "FATAL: HLA index build failed — $HLAIDX/hlaidx_dna_seq.fa missing/empty" >&2; exit 3
 fi
 
 # --- 2) per sample: extract MHC + unmapped reads -> FASTQ -> T1K ---
@@ -39,8 +48,16 @@ for cram in $(find "$PROJ/output_results/preprocessing" -name "*.recal.cram" -o 
     $CR samtools view -b -T "$FASTA" "$cram" $MHC -o "$OUT/${s}.mhc_region.bam"
     $CR samtools view -b -f 4 -T "$FASTA" "$cram" -o "$OUT/${s}.unmapped.bam"
     $CR samtools merge -f "$tmpb" "$OUT/${s}.mhc_region.bam" "$OUT/${s}.unmapped.bam"
-    $CR samtools collate -Ou "$tmpb" | $CR samtools fastq -1 "$OUT/${s}_R1.fq" -2 "$OUT/${s}_R2.fq" -0 /dev/null -s /dev/null -n
-    $CR run-t1k -1 "$OUT/${s}_R1.fq" -2 "$OUT/${s}_R2.fq" --preset hla -f "$HLAIDX/hlaidx_dna_seq.fa" -t 8 -o "$OUT/${s}_hla" --od "$OUT"
-    rm -f "$OUT/${s}.mhc_region.bam" "$OUT/${s}.unmapped.bam" "$tmpb" "$OUT/${s}_R1.fq" "$OUT/${s}_R2.fq"
+    # Do NOT pipe `collate -Ou | fastq` across two `conda run` invocations: the pipe between two
+    # separate conda-run child processes breaks (BrokenPipe, one side dies before the other).
+    # Collate to a real file, then fastq from it — no cross-process pipe. (2026-07-17 fix)
+    coll="$OUT/${s}.collated.bam"
+    $CR samtools collate -o "$coll" "$tmpb"
+    $CR samtools fastq -1 "$OUT/${s}_R1.fq" -2 "$OUT/${s}_R2.fq" -0 /dev/null -s /dev/null -n "$coll"
+    # T1K: -o is a FILENAME PREFIX (basename only), --od is the directory. Passing an absolute
+    # path to -o while also giving --od makes T1K concatenate $OUT twice ($OUT/$OUT/...prefix),
+    # so fastq-extractor can't write and run-t1k dies. -o must be the bare prefix. (2026-07-17 fix)
+    $CR run-t1k -1 "$OUT/${s}_R1.fq" -2 "$OUT/${s}_R2.fq" --preset hla-wgs -f "$HLAIDX/hlaidx_dna_seq.fa" -t 8 -o "${s}_hla" --od "$OUT"
+    rm -f "$OUT/${s}.mhc_region.bam" "$OUT/${s}.unmapped.bam" "$tmpb" "$coll" "$OUT/${s}_R1.fq" "$OUT/${s}_R2.fq"
 done
 echo "HLA results in $OUT ( *_hla_genotype.tsv )"

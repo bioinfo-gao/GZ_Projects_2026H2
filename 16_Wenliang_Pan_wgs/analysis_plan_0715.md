@@ -60,6 +60,26 @@
   **queue 浅**）可由 **queue depth** 一击区分，而现有规则没用这个信号。未动手是因为
   `facilities/Server/nextflow_watchdog.sh` 是跨项目共享脚本，改它影响面超出本项目，留待确认。
 
+- 2026-07-17 — ✅ **sarek 主流程 02:06 成功完成**;但**下游链凌晨 3/4 失败,自查抓出**(编排 log 尾部 `ALL_DONE`
+  是"软失败也继续"的设计假象,非真成功)。逐个修复后全部补齐:
+  - **step4 注释** 凌晨 exit 255:`bcftools -h <(echo ...)` 进程替换,`conda run` 子进程继承不到 `/dev/fd/63`
+    → 改写真实临时文件(`mktemp` + `trap rm`)。**另修隐藏 bug**:VEP 文件名是大写 `_VEP`,原 glob `*vep*`
+    大小写不匹配一直 fallback 到 raw calls → 改 `-iname`。修复后 gnomAD_AF(Sample_A 497万条)/CLNSIG(5万条)
+    字段确认写入;step5 优先级过滤 Sample_A 4294 / Sample_B 4342(无离群)。
+  - **step6 HLA** 连踩 4 层坑(逐层暴露,前 3 层把最深的病根挡住):① CRAM 用 GATK.GRCh38 建却拿 gencode
+    参考解码 → @SQ M5 不匹配;改用同一 `GATK.GRCh38/Homo_sapiens_assembly38.fasta`(chr1 M5=6aef897c 已核）。
+    ② `samtools collate -Ou | fastq` 跨两个 `conda run` 管道 BrokenPipe → collate 落盘再 fastq,不跨进程管道。
+    ③ T1K `-o` 传全路径 + `--od` 使 `$OUT` 拼两遍 → `-o` 改 basename。④ **根因**:`t1k_hlaidx/` 是空的,
+    build 块 3 个子 bug(`t1k-build.pl` 在 bin/ 却去 share/ find;`-d hla` 应为 `--download IPD-IMGT/HLA`;
+    prefix 需 `--prefix hlaidx`)使凌晨 build 静默失败。重建索引(hla.dat 130MB → dna_seq.fa 80MB)后双样本
+    分型成功:经典 I 类 A/B/C + II 类 DRB1/DQA1/DQB1/DPA1/DPB1,各 37/41 位点有 call。preset 从 `hla` 改
+    `hla-wgs`(数据是 WGS）。
+  - ⚠ **监控盲区(用户第 3 次追问看门狗)**:`10_watchdog.sh` 只传 1 个目标 `pan_wgs:...:sarek_run.log`,
+    作用域仅 sarek;02:10 随 sarek `SESSION_END` 自己退出。下游 `pan_down`(编排器)从未被监控,且编排器
+    `run_step` 设计成软失败静默继续 → 两层都不报警,下游恰是低级 bug 高发区(4 个)却唯一没监控。
+    **待办(需用户定范围,涉及跨项目共享脚本)**:① 每个 `>>> FAIL` 同步写 `watchdog_ALERTS.log`;
+    ② 看门狗多目标/sarek 结束后接管 pan_down;③ 编排结尾 `ALL_DONE` 改如实汇总 `DONE:.. FAILED:..`。
+
 ---
 
 ## 1. Sample information 与 input data volume
