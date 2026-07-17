@@ -382,7 +382,7 @@ One limit, stated precisely: LOH establishes that each tumor retains a **single*
 2. **Somatic point-mutation burden** — requires the additional filtering described in §6.10 before numbers are quoted.
 3. **Study B de-novo candidate mining** — functional high-impact annotation (VEP/snpEff) + recurrence / genotype-differential filtering on the provided private call sets (§6.9). Recommended next analysis.
 4. **Study B strain assignment** — optional; would settle whether the background is pure 129 or a 129×B6 mix.
-5. **Trp53 genotyping in tumor3** — needs the Trp53 "−" allele design from you (§7.2).
+5. **Which Trp53 haplotype the tumors retained** — the tumors are already shown to be homozygous at Trp53 (§6.5); confirming that the surviving copy is the engineered null rather than the wild-type needs the construct design of that "−" allele from you (§7.2). This is the only item requiring client input, and it refines an interpretation rather than changing a conclusion.
 
 ---
 

@@ -10,6 +10,15 @@
     目标 load ≤56)，取代 `full_machine.config`(后者标记 SUPERSEDED，保留作历史证物)
   - 2026-07-15 — §1 新增「B1TP/B2TP 命名歧义排除」小节：显式关闭 "B2TP = Brca1+Pten 第二个重复" 的读法
     （客户注释列 + 数据双向否定），并如实记录 B2TP 的 Brca2 敲除尚未正面证实（缺 Brca2 sgRNA）
+  - 2026-07-16（二） — **LOH 分析：三个 tumor 全部丢 Trp53；tumor3 是全基因组 copy-neutral LOH**。
+    ⚠ **我先只用 coverage 查 Trp53、发现六样本全平就宣布"测不了、需客户给等位设计"——这个结论是错的。**
+    coverage 只看得见 deletion 型等位；判断"是否丢掉剩下那条"该用 **LOH**（origin 杂合 SNP 是否变纯合），
+    **完全不需要等位设计**。换判据后立刻出结果：tumor1/2/3 在 Trp53 分别 92%/93%/94% LOH，
+    B1TP/B2TP 仅 2%（噪声底）；**tumor1 是 focal LOH**（69-70Mb 92%，而 65-66Mb 1%、72-73Mb 3%）
+    → 两侧 3Mb 杂合完好、LOH 精确套住 Trp53 = **选择性丢失的直接证据**。
+    **tumor3 = 全基因组 LOH 95%**（VAF 双峰 0/1）且多数染色体 CN≈2 → **copy-neutral LOH = 单倍化+加倍**，
+    这解释了"唯一没带任何编辑的瘤为何最非整倍体"。新增 `A7_loh_trp53.py` + `A7_chr11_scan.sh`。
+    **教训：「测不到」往往只是「我只试了一种方法」；换判据前不要宣布不可测。**
   - 2026-07-16 — **客户补齐 Brca2×3 sgRNA（邮件附图）→ B2TP 的 Brca2 敲除已正面证实，§1 的 caveat 关闭**：
     三条 guide 均唯一命中 Brca2 exon 3 CDS + 完美 NGG PAM（切点 chr5:150452957/961/989）；B2TP 在切点
     **0/14 条 WT read**（唯一无野生型等位的样本）+ 31bp 双切除（150452958-150452988，frameshift @codon~31/3329）
