@@ -90,20 +90,41 @@ def clip_breakpoints(read):
 # 断点堆叠 = 判定「clip 是真编辑还是本位点固有噪声」的决定性对照。
 # 本位点**所有样本**都有 ~30% 的普通 clip 背景（origin 亦然），故 clip 比例本身不特异；
 # 真编辑的signature是**断点反复堆在同一个切点碱基上**。
+# ⚠⚠ 必须按 **fragment(QNAME)** 计数，不能按 read 计数（2026-07-16 第二次踩坑）：
+#   本批文库 insert size 123-141bp < 读长 150bp（见报告 §6.1）→ **两条 mate 几乎完全重叠、
+#   覆盖同一段 DNA**。按 read 数就是把**同一个分子数两遍**，证据量凭空翻倍。
+#   实测：B2TP 的 31bp 切除"2 条 read"其实是 flag=99/147 同名 mate = **仅 1 个独立分子**；
+#   3bp 缺失同理。初版按 read 计数把"1 个分子"写成"2 条证据"，据此下 High 置信度结论是错的。
+#   → 一律以 unique QNAME 计数；mate 意见不一致时按优先级取一个（indel > clip > WT）。
+PRIORITY = {"del31_g7g8_to_g9": 0, "softclip_at_cut": 2, "WT": 3}
+
+
+def rank(c):
+    if c in PRIORITY:
+        return PRIORITY[c]
+    return 1          # other_indel: 优先级仅次于 del31
+
+
 BP = {}
 rows = []
 for s in SAMPLES:
     cram = f"{PROJ}/output_A/preprocessing/markduplicates/{s}/{s}.md.cram"
     af = pysam.AlignmentFile(cram, "rc", reference_filename=GRCM39)
-    counts = {}
-    bps = {}
+    frag = {}          # QNAME -> 该 fragment 的最终分类
+    bps_frag = {}      # breakpoint -> set(QNAME)
     for read in af.fetch(CHROM, CORE_S - 200, CORE_E + 200):
         c = classify(read)
         if c:
-            counts[c] = counts.get(c, 0) + 1
+            q = read.query_name
+            if q not in frag or rank(c) < rank(frag[q]):
+                frag[q] = c
         if not (read.is_unmapped or read.is_duplicate or read.mapping_quality < 20):
             for b in clip_breakpoints(read):
-                bps[b] = bps.get(b, 0) + 1
+                bps_frag.setdefault(b, set()).add(read.query_name)
+    counts = {}
+    for q, c in frag.items():
+        counts[c] = counts.get(c, 0) + 1
+    bps = {b: len(v) for b, v in bps_frag.items()}
     BP[s] = bps
     af.close()
     wt = counts.get("WT", 0)
@@ -118,7 +139,7 @@ for s in SAMPLES:
     rows.append((s, informative, wt, del31, sc, n_other, frac,
                  "; ".join(f"{k}x{v}" for k, v in sorted(other.items(), key=lambda x: -x[1])[:4]) or "-"))
 
-hdr = ["sample", "informative_reads", "WT", "del31_g7g8_to_g9",
+hdr = ["sample", "informative_fragments", "WT", "del31_g7g8_to_g9",
        "softclip_at_cut", "other_indel", "edited_frac", "other_detail"]
 with open(OUT, "w") as fh:
     fh.write("\t".join(hdr) + "\n")
@@ -127,7 +148,7 @@ with open(OUT, "w") as fh:
 
 w = [max(len(str(x)) for x in [h] + [r[i] if i != 6 else f"{r[6]:.3f}" for r in rows])
      for i, h in enumerate(hdr)]
-print("Brca2 切点等位基因定量 (chr5:150452952-150452994, Brca2 exon 3 CDS)")
+print("Brca2 切点等位定量 —— 按独立 fragment(QNAME) 计数 (chr5:150452952-150452994, exon 3 CDS)")
 print("  ".join(h.ljust(w[i]) for i, h in enumerate(hdr)))
 for r in rows:
     cells = [str(r[i]) if i != 6 else f"{r[6]:.3f}" for i in range(len(hdr))]

@@ -1,7 +1,7 @@
-sample	informative_reads	WT	del31_g7g8_to_g9	softclip_at_cut	other_indel	edited_frac	other_detail
-RO_origin	7	6	0	1	0	0.143	-
-RO_B1TP	11	10	0	1	0	0.091	-
-RO_B2TP	14	0	2	10	2	1.000	other_del_3bp@150452989x2
-RO_tumor1	19	15	0	4	0	0.211	-
-RO_tumor2	12	8	0	4	0	0.333	-
-RO_tumor3	17	8	0	7	2	0.529	other_del_1bp@150452983x2
+sample	informative_fragments	WT	del31_g7g8_to_g9	softclip_at_cut	other_indel	edited_frac	other_detail
+RO_origin	5	4	0	1	0	0.200	-
+RO_B1TP	6	5	0	1	0	0.167	-
+RO_B2TP	9	0	1	7	1	1.000	other_del_3bp@150452989x1
+RO_tumor1	15	11	0	4	0	0.267	-
+RO_tumor2	9	5	0	4	0	0.444	-
+RO_tumor3	12	4	0	7	1	0.667	other_del_1bp@150452983x1
