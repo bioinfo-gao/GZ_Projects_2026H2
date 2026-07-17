@@ -1,0 +1,74 @@
+Loss-of-heterozygosity analysis — Study A
+=========================================
+Method: SNPs that are heterozygous (0/1) in RO_origin at >=10x are tested in each
+descendant. "LOH" = the site has become homozygous (1/1 or 0/0). RO_B1TP and
+RO_B2TP were edited but never passaged through a tumor, so they are the negative
+control and define the noise floor (~2-5%).
+
+HOW TO READ THE TABLES BELOW
+  - Trust only rows with a large "n_het". Chromosomes sampled with few informative
+    SNPs (chr1, chr3, chr4, chr6, chr10, chr13, chr17 — n_het < 130 here) are
+    statistically underpowered and show 20-60% "LOH" even in the control samples;
+    that is noise, not signal. The report quotes only well-powered rows.
+  - The VAF spectrum is the hardest evidence: heterozygosity retained -> one peak
+    at 0.5; LOH -> bimodal at 0 and 1. It does not depend on genotype calling.
+
+HEADLINE RESULTS (see report sections 6.5 and 6.6)
+  - All three tumors are homozygous at Trp53; B1TP/B2TP are not.
+  - tumor1: FOCAL LOH at Trp53 — 92% at chr11 69-70Mb, but 1% at 65-66Mb and
+    3% at 72-73Mb. Heterozygosity intact 3 Mb either side = selection at Trp53.
+  - tumor2: large chr11 regional LOH (55-73Mb) including Trp53.
+  - tumor3: GENOME-WIDE LOH (95%), VAF bimodal, at diploid copy number
+    = copy-neutral LOH (haploidisation followed by endoreduplication).
+
+
+=== Genome-wide LOH per chromosome (origin-het SNPs) ===
+bin           n_het     B1TP     B2TP   tumor1   tumor2   tumor3
+chr1            122      23%      29%      21%      16%      33%
+chr2            563       5%       4%       6%       8%      97%
+chr3             51      55%      57%      51%      51%      78%
+chr4             59      32%      42%      47%      32%      59%
+chr5            726       4%       3%      21%       3%      99%
+chr6             83      47%      45%      48%      46%      61%
+chr7            458       5%       5%      96%      95%      94%
+chr8           1948       3%       2%       4%       3%      99%
+chr9            373       5%       5%       4%      94%      97%
+chr10            59      25%      44%      61%      51%      61%
+chr11           123      33%      23%      38%      50%      80%
+chr12           971       4%       3%       4%      10%      94%
+chr13            47      38%      28%      40%      51%      49%
+chr14           333       5%       5%       7%      10%      96%
+chr15          3439       2%       2%       2%       3%      97%
+chr16           892       2%       2%       4%       3%      97%
+chr17            47      36%      51%      32%      60%      74%
+chr18           799       4%       3%       4%       7%      97%
+chr19           179      12%      11%      11%      14%      96%
+
+=== Genome-wide LOH (all autosomes pooled) ===
+bin           n_het     B1TP     B2TP   tumor1   tumor2   tumor3
+GENOME        11272       5%       4%      10%      13%      95%
+
+=== VAF spectrum at origin-het sites (genome-wide) ===
+  (het retained -> single peak at 0.5 | LOH -> bimodal at 0 and 1)
+VAF          origin     B1TP     B2TP   tumor1   tumor2   tumor3
+0.0-0.1        2.0%     5.1%     4.6%     9.2%     9.6%    40.7%
+0.1-0.2        6.8%     6.1%     6.6%    17.2%     5.8%     2.7%
+0.2-0.3        7.9%     7.9%     7.6%    25.4%     6.5%     0.8%
+0.3-0.4       15.7%    14.8%    12.8%    26.2%     9.0%     0.8%
+0.4-0.5       25.8%    22.9%    26.2%    14.2%    16.7%     0.6%
+0.5-0.6       24.9%    26.2%    26.0%     5.1%    21.4%     0.4%
+0.6-0.7       13.5%    13.7%    13.1%     0.9%    18.3%     0.5%
+0.7-0.8        3.1%     2.5%     2.7%     0.1%     7.4%     0.1%
+0.8-0.9        0.4%     0.6%     0.5%     0.0%     2.6%     0.2%
+0.9-1.0        0.0%     0.2%     0.1%     1.6%     2.6%    53.2%
+n_sites        3433     1711     1865     2430     1010     2528
+
+=== chr11 LOH scan (Trp53 = 69.47 Mb) ===
+bin           n_het     B1TP     B2TP   tumor1   tumor2   tumor3
+10-11Mb          29      66%      34%      48%      38%      48%
+55-56Mb         367       3%       3%       3%      94%      95%
+65-66Mb         634       1%       1%       1%      98%      97%
+69-70Mb         725       2%       2%      92%      93%      94%
+72-73Mb         680       2%       2%       3%      96%      97%
+85-86Mb          21      43%      57%      38%      33%      67%
+100-101Mb        30      20%      13%      17%      23%      97%
