@@ -468,3 +468,30 @@ Integrated the models for results interpretation and reporting.
 
 Total Hours Worked: 35 Hours
 Date of Submission: July 09, 2026
+
+===================
+Weekly Work Report
+Period: July 09, 2026 – July 16, 2026
+Prepared by: Gao Zhen
+Total Billable Hours: 18 Hours
+1. Humanized Knock-in Mouse WGS — Ellen Chen / genetargeting.com (3 Hours)
+Monitored pipeline execution in parallel with the Jinpeng project during a 48-hour continuous run.
+Successfully finalized the data analysis and generated the final report, covering targeted integration verification, copy-number estimation, Knock-In (KI) integrity, zygosity determination, and Neo-cassette status.
+2. Computational Resource Management — Jinpeng Ruan WGS Project (2 Hours)
+Actively monitored the 96-hour continuous pipeline execution for the large-scale MGH project.
+Dynamically reallocated and optimized server computational resources to prevent I/O bottlenecks, ensuring robust stability and maximizing processing speed for the 463 GB dataset.
+3. Gene-Edited Tumor & Lats1/2 Ovarian Cancer Model WGS — Jinpeng Ruan / MGH (10 Hours)
+Successfully completed and delivered the 12-sample, two-study WGS project (463 GB of raw fastq.gz data):
+Study A: Trp53/Brca/Pten CRISPR tumor model with a matched parental normal.
+Study B: Lats1/2-flox Hippo mouse strains across 3/12/18-month ages.
+Performed comprehensive data analysis tackling complex genomic challenges, including mutation profiling, copy number variation (CNV), and zygosity determination.
+Characterized structural rearrangements and mutations specifically targeting relevant oncogenes and tumor suppressor genes.
+Strategic adjustment: Upon discovering exceptionally high background variances during initial analysis, I strategically shifted the mapping pipeline to the most standard reference genome utilized in gene-editing projects. Re-executed the analysis, yielding highly accurate and biologically reasonable results.
+4. WGS Project Initialization — Wenliang Pan (2 Hours)
+Set up the computational environment and pipeline for Wenliang Pan's WGS project.
+Designed a targeted bioinformatics strategy for HLA (Human Leukocyte Antigen) typing and analysis.
+Status: Pipeline execution is nearly complete; final data interpretation and report generation are scheduled for tomorrow.
+5. Client Communication & Project Management (1 Hour)
+Conducted extensive technical communication via WeChat and email to support data analysis, discuss methodologies, and manage material requests across 4 active projects.
+Total Hours Worked: 18 Hours
+Date of Submission: July 17, 2026
