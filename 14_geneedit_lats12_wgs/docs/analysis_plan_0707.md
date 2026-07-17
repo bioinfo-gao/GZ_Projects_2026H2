@@ -10,6 +10,12 @@
     目标 load ≤56)，取代 `full_machine.config`(后者标记 SUPERSEDED，保留作历史证物)
   - 2026-07-15 — §1 新增「B1TP/B2TP 命名歧义排除」小节：显式关闭 "B2TP = Brca1+Pten 第二个重复" 的读法
     （客户注释列 + 数据双向否定），并如实记录 B2TP 的 Brca2 敲除尚未正面证实（缺 Brca2 sgRNA）
+  - 2026-07-16 — **客户补齐 Brca2×3 sgRNA（邮件附图）→ B2TP 的 Brca2 敲除已正面证实，§1 的 caveat 关闭**：
+    三条 guide 均唯一命中 Brca2 exon 3 CDS + 完美 NGG PAM（切点 chr5:150452957/961/989）；B2TP 在切点
+    **0/14 条 WT read**（唯一无野生型等位的样本）+ 31bp 双切除（150452958-150452988，frameshift @codon~31/3329）
+    + g9 切点 7 条 clip 断点堆叠 → **双等位 KO**。tumor3 仍保留 WT Brca2 → **确定不来自 B2TP**
+    （B2TP 无 WT 等位可传），tumor3「未编辑亚克隆」结论由 Moderate 升 High。
+    新增 `scripts/study_A/A3b_brca2_allele_quant.py`；交付 `custom_research_report_20260716/`（Addendum 1）
   - 2026-07-15 — §3 补入「Study B 品系背景 = 实测发现」重要更正：WGS 实测每样本 ~5–6M 变异 vs GRCm39，
     ~90% 命中 MGP 品系目录 → 组织**并非同源纯 C57BL/6J**，携带全基因组范围非-6J（最可能 129 型）背景。
     这**推翻了 §3 line 125 早前"背景=C57BL/6≈参考≈其正常"的假设**（原假设仅据客户口述）。量级论证排除
@@ -69,7 +75,17 @@
 
 - **客户注释列（原始来源，非我方推断）**：客户附图样本表 `docs/client_materials/5c617d666e25fdc38f6264130f6f77ee.png` 的描述列白纸黑字分别写着 `RO_B1TP → sgRNA-Brca1-Pten`、`RO_B2TP → sgRNA-Brca2-Pten`。即 `B` 后的 `1/2` 对应 **Brca1/Brca2**（各自显式命名靶基因），**不是** replicate 1/2。读法 (b) 与客户自己的注释列直接冲突。
 - **WGS 数据独立否定 (b)**：编辑验证（切点基因型）中 **B2TP 在 Brca1 切点为 0/0 野生型**、Pten 切点为纯合 indel。若 B2TP 真是"Brca1+Pten 的第二个重复"，它应像 B1TP 一样携带 Brca1 indel——但它没动 Brca1。故数据本身即排除 (b)。
-- **须如实保留的 caveat**：本批客户只提供 Brca1+Pten 的 sgRNA、**未给 Brca2 的 3 条 guide**，因此 B2TP 目前只能确认"**Pten 敲除 + Brca1 野生型**"——此结果**与** Brca2+Pten 一致，但 **Brca2 敲除本身尚未被正面证实**（未见到 Brca2 indel 的直接证据）。现有证据链是"排除 Brca1、符合 Brca2 设计"，而非"看到了 Brca2 的编辑"。→ 待客户补 Brca2 sgRNA 后在切点定向确认（见 §A1 待补项 & 报告 §7）。
+- ~~**须如实保留的 caveat**：本批客户只提供 Brca1+Pten 的 sgRNA、**未给 Brca2 的 3 条 guide**，因此 B2TP 目前只能确认"**Pten 敲除 + Brca1 野生型**"——此结果**与** Brca2+Pten 一致，但 **Brca2 敲除本身尚未被正面证实**（未见到 Brca2 indel 的直接证据）。现有证据链是"排除 Brca1、符合 Brca2 设计"，而非"看到了 Brca2 的编辑"。~~
+  → **✅ 2026-07-16 caveat 已关闭**：客户补齐 Brca2×3 sgRNA，切点定向验证**直接看到了 Brca2 的编辑**——
+  B2TP 在 chr5:150452957/961/989 三切点 **0/14 WT read**（六样本中唯一无野生型等位者）、带 31bp 双切除
+  （150452958-150452988，两端正好落在 guide 切点上，frameshift @ codon~31/3329 → null）+ g9 切点 7 条 clip
+  断点堆叠（第二个被破坏的等位）。证据链已从"排除 Brca1、符合 Brca2 设计"升级为"**直接观察到 Brca2 双等位敲除**"。
+  读法 (a) `B2TP = Brca2+Pten` 至此由**直接观察**确证，不再依赖推断。详见 `custom_research_report_20260716/`。
+- **⚠ 方法学教训（2026-07-16，务必记住）**：Brca2 切点上 `bcftools call` **一条 indel 都没报 = 假阴性**
+  （B2TP 25 条 read 里只有 1 条完美 match，编辑等位全被 soft-clip/31bp-del 漏掉）。若当时信了 caller 的
+  "无 indel"，结论会变成"Brca2 没编辑"——与事实完全相反。**复杂编辑位点必须落到 read/CIGAR 层面看**，
+  不能只信 variant caller。另：本位点 clip 背景高达 ~30%（连未编辑的 origin 都是），故 **clip 比例本身不特异**，
+  真信号靠**断点堆叠在同一切点碱基**；初版判据过松曾把 origin 判成 50% edited（已加硬断言防回归）。
 - **Study B = 基因型 × 年龄时间序列（客户 2026-07-08 详答）**：L1L2 vs L1L2H × 3M/12M/18M，各 n=1。**关键澄清**：
   - **背景 = C57BL/6**（≈ GRCm39 参考本身 → 背景扣除几乎免费，见 §3）。
   - **送样小鼠只有 flox、无 Cre → Lats1/2 未删除**（只带 loxP）；**iHPV 是 Cre 依赖的 lox-stop-lox**（CAG–loxP–EGFP–pA–loxP–E6/E7–IRES–Luc），**无 Cre 时 E6/E7 不表达**（表达 EGFP）。→ **两个工程元件都"上膛未击发"。**
@@ -98,7 +114,11 @@
 
 **仍需/可取的材料（Study A/B 基本齐）：**
 
-- Study A：Brca2 的 sgRNA（Pten/Brca1 已到）；三个 tumor 谱系（可数据反推）。
+- ~~Study A：Brca2 的 sgRNA（Pten/Brca1 已到）；三个 tumor 谱系（可数据反推）。~~
+  → **✅ 2026-07-16 全部了结**：Brca2 sgRNA 已补齐并完成验证；三个 tumor 谱系已反推完毕
+  （tumor1/2 = B1TP；tumor3 = 未编辑亚克隆，非 B1TP/B2TP）。**Study A 唯一剩余开放项 = tumor3 身份**，
+  且已不是编辑位点问题而是**样本 identity 问题** → 待办：tumor3 vs RO_origin 的 SNP-fingerprint 比对，
+  区分"亲本的未编辑逃逸亚克隆"(指纹一致) vs "样本混淆/调包"(指纹不一致)。现有数据即可跑，无需新测序。
 - Study B：**iHPV 全构建体序列**（Addgene #13712 E6/E7 可公开下 + PMC4662542 的 CAG-LSL-EGFP-Luc 载体图）；**Lats1/2 loxP 打靶位点**（判断 floxed 外显子位置，查是否有体细胞重组）。均可自行从公开来源+数据补足。
 
 ---
@@ -182,7 +202,10 @@
 ## 4. Study A 分析设计（编辑细胞 → 肿瘤）
 
 - **比对/QC/去重**：nf-core/sarek（GRCm39，bwa-mem2，skip BQSR）——沿用 13 号项目验证过的配置。
-- **A1 编辑验证（靶点+sgRNA 序列已知）**：**已拿到 sgRNA 序列**（`docs/client_materials/sgRNA_guides.md`：Pten×3、Brca1×3；Brca2×3 待补）。流程：在 GRCm39 定位每条 spacer（+反向互补，配 NGG PAM）→ 预测切点(PAM 上游 3bp) → 在切点比 B1TP·B2TP·三个 tumor **vs RO_origin** 查 indel/frameshift（KO 是否发生、等位比例/合子型），IGV 目视。**用 tumor 里 Brca1 还是 Brca2 被 KO 反推其谱系(B1TP/B2TP)**。Brca2 未给序列 → 先扫 Brca2 全基因 indel。
+- **A1 编辑验证（靶点+sgRNA 序列已知）**：**9 条 sgRNA 全部到手**（`docs/client_materials/sgRNA_guides.md`：
+  Pten×3、Brca1×3、**Brca2×3（2026-07-16 补齐）**）。流程：在 GRCm39 定位每条 spacer（+反向互补，配 NGG PAM）→ 预测切点(PAM 上游 3bp) → 在切点比 B1TP·B2TP·三个 tumor **vs RO_origin** 查 indel/frameshift（KO 是否发生、等位比例/合子型），IGV 目视。**用 tumor 里 Brca1 还是 Brca2 被 KO 反推其谱系(B1TP/B2TP)**。
+  **✅ 已完成**：B1TP=Brca1+Pten KO；B2TP=**Brca2 双等位 KO**+Pten KO；tumor1/2=B1TP 谱系；
+  tumor3 三个靶基因全 WT → 未编辑亚克隆（High）。Brca2 切点定量见 `A3b_brca2_allele_quant.py`。
 - **A2 肿瘤基因组（RO_origin 作 matched normal，配对干净）**：
   - **点突变/indel**：Mutect2 **tumor-vs-origin 配对**（真正体细胞调用；origin 已含 Trp53⁺/⁻+Cas9，背景被正确扣掉）。
   - 
@@ -261,7 +284,7 @@
 
 ## 7. 客户信息状态（已基本齐，可开工）
 
-- ✅ **Study A 齐**：Trp53⁺/⁻;Cas9 亲本、电穿孔 sgRNA、B1TP=Brca1+Pten/B2TP=Brca2+Pten、4/5/6 肿瘤细胞株、RO_origin 配对正常；**Pten×3+Brca1×3 sgRNA 已到手**。
+- ✅ **Study A 齐**：Trp53⁺/⁻;Cas9 亲本、电穿孔 sgRNA、B1TP=Brca1+Pten/B2TP=Brca2+Pten、4/5/6 肿瘤细胞株、RO_origin 配对正常；**9 条 sgRNA 全到手（Pten×3 + Brca1×3 + Brca2×3，Brca2 于 2026-07-16 补齐）→ 客户端已无待补项**。
 - ✅ **Study B 齐**（客户 2026-07-08）：C57BL/6；flox-only 无 Cre；iHPV=Cre 依赖 LSL（Addgene #13712 + PMC4662542）；表型=输卵管异常 >10M。
 - ✅ **数据**：`/home/gao/Dropbox/JinPeng/`（12 样，见 §1；Excel 忽略）。
 - **我方自取（不卡客户）**：Brca2 sgRNA（无则扫全基因）；iHPV 构建体序列（Addgene 13712 + PMC4662542）；Cas9(SpCas9) 序列（公开）；Lats1/2 loxP 坐标（文献/数据自查）；Sanger MGP + 小鼠 dbSNP 下载。
