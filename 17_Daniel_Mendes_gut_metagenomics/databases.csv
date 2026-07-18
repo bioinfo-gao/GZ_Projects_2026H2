@@ -1,0 +1,4 @@
+tool,db_name,db_params,db_type,db_path
+kraken2,k2standard8gb,,short,/Work_bio/references/Metagenomics/kraken2/k2_standard_08gb_20260226/k2_standard_08_GB_20260226.tar.gz
+bracken,k2standard8gb,;-r 150,short,/Work_bio/references/Metagenomics/kraken2/k2_standard_08gb_20260226/k2_standard_08_GB_20260226.tar.gz
+metaphlan,mpa_vJan25,,short,/Work_bio/references/Metagenomics/metaphlan/
