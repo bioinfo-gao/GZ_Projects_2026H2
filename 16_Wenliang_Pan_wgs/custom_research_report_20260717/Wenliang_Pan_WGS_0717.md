@@ -29,6 +29,7 @@ Characterise two human whole-genome sequencing (WGS) samples end-to-end:
 - **Structural and copy-number callsets** were delivered (Manta, TIDDIT, CNVkit). Both genomes are **predominantly diploid**.
 - **HLA genotypes** were typed for both samples, but call confidence varies by locus: class II (**HLA-DRB1/DQB1/DPA1/DPB1/DRB3**) and **HLA-C** are well-supported, whereas the classical class I **HLA-A/B** calls are low-confidence at this WGS depth and should be confirmed by a targeted method before use.
 - **Sample-origin inference: both samples are most consistent with primary / germline material, NOT a high-aneuploidy cell line.** The genome is ~90–95 % diploid and long runs of homozygosity are low (4.5–5.0 % of the autosome).
+- **Genetic sex: Sample_A is male (46,XY) and Sample_B is female (46,XX)** (from sex-chromosome copy number). The two samples are therefore not the same individual.
 
 ## 3. Sample Information
 
@@ -142,11 +143,11 @@ Reading the results:
 - **Single-allele loci** (HLA-C in both samples; HLA-A in Sample_B) may be true homozygotes **or** reflect second-allele dropout — the two cannot be distinguished from this data.
 - **Allele ambiguity:** **DRB4** and some second alleles of **DQA1 / DQB1** are reported as comma-separated candidate lists in the genotype file (the gene is present but the exact allele is unresolvable); the first listed allele is the representative.
 
-**Cross-sample observation.** The two samples share several alleles, including high-confidence class II calls — an apparently identical **HLA-DPA1** genotype (\*02:01:01 + \*01:03:01) and shared **HLA-C\*07:18:01**, **DRB3\*02:02:01**, **DPB1\*04:01:01** and **DQB1\*03:03:02**. They nonetheless differ at other well-supported loci (**HLA-A**, and the leading **DRB1** and **DQB1** alleles), so they are **not the same individual**. This degree of sharing is consistent with either related individuals carrying a common HLA haplotype or coincidental sharing of frequent alleles; if the two samples were expected to be unrelated, the client may wish to verify sample provenance.
+**Cross-sample observation.** The two samples share several alleles, including high-confidence class II calls — an apparently identical **HLA-DPA1** genotype (\*02:01:01 + \*01:03:01) and shared **HLA-C\*07:18:01**, **DRB3\*02:02:01**, **DPB1\*04:01:01** and **DQB1\*03:03:02**. They nonetheless differ at other well-supported loci (**HLA-A**, and the leading **DRB1** and **DQB1** alleles), and are of **different genetic sex** (Sample_A male, Sample_B female — see §6.6), so they are **definitively not the same individual**. The shared alleles are consistent with either related individuals carrying a common HLA haplotype or coincidental sharing of frequent alleles; if the two samples were expected to be unrelated, the client may wish to verify sample provenance.
 
 Full per-locus genotypes with quality and abundance are in `hla_typing/*_hla_genotype.tsv`.
 
-### 6.6 Sample-origin inference
+### 6.6 Sample-origin inference and genetic sex
 
 | signal                                       |   Sample_A   |   Sample_B   | interpretation                          |
 | :------------------------------------------- | :----------: | :----------: | :-------------------------------------- |
@@ -155,6 +156,15 @@ Full per-locus genotypes with quality and abundance are in `hla_typing/*_hla_gen
 | V(D)J clonotypes                             | not assessed | not assessed | TRUST4 reference unavailable this round |
 
 Both samples are **most consistent with primary / germline material**. The genome is ~90–95 % diploid and ROH is low — this is **not** the extensive aneuploidy or long LOH tracts characteristic of a passaged/clonal cell line. This is a data-driven inference and **does not replace the client stating the actual tissue/cell of origin**; V(D)J-based lymphoid profiling was not assessable this round (reference not configured) and can be added on request.
+
+**Genetic sex.** From sex-chromosome copy number (CNVkit), the two samples are of **different genetic sex**:
+
+| sample | chrX | chrY | genetic sex |
+| :--- | :---: | :---: | :---: |
+| Sample_A | 1 copy (log2 ≈ −1 vs diploid autosomes) | present (1 copy) | **male (46,XY)** |
+| Sample_B | 2 copies (log2 ≈ 0) | absent (log2 ≈ −15, no reads) | **female (46,XX)** |
+
+This is a high-confidence call (the chrX log2 offset and chrY depletion are the canonical XY / XX signatures). Because the two samples differ in genetic sex, they are **definitively not the same individual** — consistent with, and stronger than, the HLA differences noted in §6.5. Different sex does **not** exclude a familial relationship.
 
 ## 7. Conclusions
 
@@ -166,6 +176,7 @@ Both samples are **most consistent with primary / germline material**. The genom
 | 4 | SV and CNV callsets delivered; genomes predominantly diploid           | Manta/TIDDIT/CNVkit; CN ≠ 2 over ~5–10 % of genome length               |
 | 5 | HLA typed; class II + HLA-C well-supported, class I HLA-A/B low-confidence | T1K`hla-wgs`; per-locus quality tiering in §6.5                     |
 | 6 | Origin most consistent with primary/germline material, not a cell line | aneuploidy 0.05–0.10, ROH 0.045–0.050 (both below cell-line thresholds) |
+| 7 | Genetic sex differs: Sample_A male, Sample_B female → not the same individual | chrX/chrY copy number (Sample_A XY, Sample_B XX) |
 
 **Caveats.** Prioritised variants and ClinVar annotations are screening-level and require expert curation; germline CNV (no matched normal) is baseline-relative; HLA class I (especially HLA-A/B) is low-confidence at this depth and needs orthogonal confirmation, and some loci carry allele ambiguity; origin is an inference, not a substitute for known provenance.
 
