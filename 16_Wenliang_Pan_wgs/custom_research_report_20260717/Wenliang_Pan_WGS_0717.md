@@ -142,6 +142,8 @@ Reading the results:
 - **Single-allele loci** (HLA-C in both samples; HLA-A in Sample_B) may be true homozygotes **or** reflect second-allele dropout — the two cannot be distinguished from this data.
 - **Allele ambiguity:** **DRB4** and some second alleles of **DQA1 / DQB1** are reported as comma-separated candidate lists in the genotype file (the gene is present but the exact allele is unresolvable); the first listed allele is the representative.
 
+**Cross-sample observation.** The two samples share several alleles, including high-confidence class II calls — an apparently identical **HLA-DPA1** genotype (\*02:01:01 + \*01:03:01) and shared **HLA-C\*07:18:01**, **DRB3\*02:02:01**, **DPB1\*04:01:01** and **DQB1\*03:03:02**. They nonetheless differ at other well-supported loci (**HLA-A**, and the leading **DRB1** and **DQB1** alleles), so they are **not the same individual**. This degree of sharing is consistent with either related individuals carrying a common HLA haplotype or coincidental sharing of frequent alleles; if the two samples were expected to be unrelated, the client may wish to verify sample provenance.
+
 Full per-locus genotypes with quality and abundance are in `hla_typing/*_hla_genotype.tsv`.
 
 ### 6.6 Sample-origin inference
