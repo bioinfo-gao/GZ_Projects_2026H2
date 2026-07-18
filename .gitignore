@@ -233,3 +233,20 @@ Thumbs.db
 client_credentials.env
 13_Ellen_knockin_wgs/custom_research_report_20260711/qc/
 13_Ellen_knockin_wgs/analysis/**/*.mosdepth.global.dist.txt
+
+# 17_Daniel_Mendes 大型可再生中间/输出（HUMAnN 输出 167G + taxprofiler nextflow work 91G，永不进 git）
+17_Daniel_Mendes_gut_metagenomics/humann_out/
+17_Daniel_Mendes_gut_metagenomics/work_taxprofiler/
+
+# 通用：nextflow work 目录（任意 work_ 前缀）与 HUMAnN 输出，任意项目层级
+humann_out/
+**/humann_out/
+work_taxprofiler/
+**/work_taxprofiler/
+work_*/
+**/work_*/
+# Kraken2/Bracken 数据库与 metaphlan bowtie2out 大文件
+*.k2d
+*.bowtie2out.txt
+*_bowtie2_aligned.tsv
+*.ffn
