@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Shim 修 HUMAnN 3.9 ↔ MetaPhlAn 4.2.4 两处不兼容：
+#  1) `--version`：HUMAnN 取输出最后一行第3列解析版本，但 4.2.4 多打一行 → 解析崩。对 --version 只回干净一行。
+#  2) `--bowtie2out`：HUMAnN 3.9 用旧 flag，MetaPhlAn 4.2.4 改名 `--mapout` → 透传时翻译。
+REAL=/Work_bio/gao/configs/.conda/envs/mag_biobakery/bin/metaphlan
+if [ "${1:-}" = "--version" ] || [ "${1:-}" = "-v" ]; then
+  echo "MetaPhlAn version 4.2.4 (21 Oct 2025)"
+  exit 0
+fi
+args=()
+for a in "$@"; do
+  case "$a" in
+    --bowtie2out) args+=("--mapout") ;;
+    *)            args+=("$a") ;;
+  esac
+done
+exec "$REAL" "${args[@]}"

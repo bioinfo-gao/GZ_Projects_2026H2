@@ -7,6 +7,12 @@
   已有教训文档 [`resume缓存失效与空转监控_教训_0716.md`](../nextflow_pipeline/resume缓存失效与空转监控_教训_0716.md)（0716 那次 ELC 空转事故）。
   本文是**它的续篇**，专收 0716→0717 这轮暴露的**新**情况。
 
+**更新记录 / change-log**（创建日期不变，修订在此追加）：
+- 2026-07-17 — ① 三个脚本已从 `facilities/Server/` 根目录迁至 `facilities/Server/monitoring_alerting/`
+  子目录，本文开头「配套」及正文中出现的旧根路径 `facilities/Server/<脚本>` 均应读作
+  `.../Server/monitoring_alerting/<脚本>`。② 本文已作为原始输入固化为 skill `/watchdog`
+  （`~/.claude/skills/watchdog/SKILL.md`）——§3 的 TODO 清单在 skill §8「已知缺口」中承接。
+
 ---
 
 ## 0. 一句话结论

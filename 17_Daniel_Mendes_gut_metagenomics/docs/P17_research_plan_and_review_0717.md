@@ -8,7 +8,27 @@
 - **状态**: ⏸ **执行已暂停，等待客户/用户 review 本文档后批准再跑**（脚本已就位、已 dry-check，未启动任何计算）
 
 ## 更新记录 / change-log
-- 2026-07-17 — 初稿：完成数据勘察、路线抉择、资源规划、脚本落地；一度启动 Phase 1 预热（GTDB 下载/建索引），随即按用户要求**全部停止并清理**，改为先出完整思考文档待批。
+- 2026-07-17 — 初稿：完成数据勘察、路线抉择、资源规划、脚本落地；一度启动 Phase 1 预热，随即按用户要求**全部停止并清理**，改为先出完整思考文档待批。
+- 2026-07-17 — **用户批准**：采纳全部建议，(b) Phase 1 + Phase 2 MAG。附加要求：(i) Phase 1 必须先跑通、用户 review 并提交后再推进；(ii) **图要美观**（客户是生物学家，主要看图）；(iii) 全流程含结果提交。Open Q 决议：MAG=做；HUMAnN=做；Kraken2=Standard-8GB；实验设计按**独立两组**默认（ID 配对含义未反馈，保留配对敏感性分析为可选）。已启动执行。
+- 2026-07-18 — **Phase 1 运行中踩坑与修复记录（运维）**：
+  1. `--taxpasta_add_name/rank/lineage` 需 `--taxpasta_taxonomy_dir`(NCBI taxdump)，本地未备 → **撤掉这三个 flag**；物种名改由下游 R 从 MetaPhlAn `combined_reports.txt`(clade lineage) + Bracken combined 的 name 列解析。
+  2. **Bracken 崩在 `BRACKEN_COMBINEBRACKENOUTPUTS` input file name collision**：`databases.csv` 里 kraken2 与 bracken 两行共用 `db_name=k2standard8gb` → Bracken 跑两遍出同名文件。**修复：db_name 唯一化**（`k2s8_kraken2` / `k2s8_bracken`），`-resume` 复用了 71 个已完成 process（fastp/去宿主/MetaPhlAn 全缓存），仅重跑 kraken2/bracken。
+  3. **GTDB-Tk r226 实际体积远大于 skill 记的 ~50GB**：tar.gz **141GB**、解压 **271GB**（现代 skani 版布局：taxonomy/markers/pplacer/skani/msa/split）。已下载+解压完成并删掉冗余 tar。→ **应回填更新 `/tax-resemb-mag` skill 的体积说明**。
+  4. CheckM2 预下载失败（`checkm2` 不在 mag_biobakery env）→ 非阻塞，MAG 阶段处理（容器内自带 / 或 Zenodo 直取）。
+  5. **R 库陷阱**：`conda run -n <任意env> Rscript` 的 `.libPaths()` 被全局 `R_LIBS`/`.Renviron` 统一指到 **regular_bioinfo** 的 R library（三个 env 报同样的包可用性即此因）。→ R 包（vegan/ggrepel/patchwork/ape）须装进 **regular_bioinfo**，下游脚本用 regular_bioinfo 跑。
+- 2026-07-18 — **Phase 1 taxonomy+diversity 完成 + 出图自审修复**：
+  - taxprofiler 全绿（227.5M pairs / ~68 Gbp；host 2.2–18.2%）。5 图产出。**Pre-delivery self-audit 抓到并修了 2 处**：
+    (a) **差异丰度图误导**：直接按 |log2FC| 挑 top → 全是环境/污染噪声菌(近零丰度)，且 0 个 FDR 显著(min padj=0.905)。改为**先按 core 过滤(mean RA≥0.1% & ≥5/10 样本)** 再检验，诚实标注"无显著"；
+    (b) **Homo sapiens 混入**：Kraken2 std 库含 human decoy，handling/kit 带入的 human read 被判 Homo sapiens → 从微生物丰度里剔除 host taxa。
+  - 关键结论(诚实)：PERMANOVA n.s.(R²=0.149,p=0.25，between≈within)；alpha 无显著(AL 略高)；无 taxon FDR 显著；**Akkermansia muciniphila 主导且 IF↑趋势(48.7%→64.4%,n.s.)**，与禁食文献一致但 n=5 不够 power。交付目录 `custom_research_report_20260718/` + 英文报告已生成，待用户 review/submit。
+  - **HUMAnN 连环坑（最终解法）**：
+    1. **metaphlan version-check 崩**：HUMAnN 3.9 解析 `metaphlan --version` 取**最后一行**第3列，但 MetaPhlAn 4.2.4 会多打一行("No complete...db"/"Installed databases:") → 解析 `int("MetaPhlAn")` 崩 → `CRITICAL: Can not call software version for metaphlan` → 全样本 FAIL。改 site-packages `config.py` line:-1→0 被 classifier 拦（共享 env）。**解法：PATH 前置 `scripts/mpa_shim/metaphlan` shim**，对 `--version` 只回一行干净版本，其余透传真实 metaphlan。
+    2. **db 代际不匹配**：过了 version 检查后，HUMAnN 报 `taxonomic profile not generated with v3 or vJun23`。本机 HUMAnN 功能库是 **ChocoPhlAn v201901 + UniRef90 201901b（MetaPhlAn v3 代）**，只认 v3/vJun23 profile；装的 metaphlan 默认出 **vJan25** 被拒。v3 db 已 404 下架。**解法：下 vJun23 db（22GB，~9.6MB/s ~35min）**，让内部 metaphlan 用 `--index mpa_vJun23 --db_dir <vJun23>` 产 vJun23 profile → HUMAnN 接受。
+    3. **第三坑 `--bowtie2out`**：过了 version + db 代际后，HUMAnN 3.9 调 metaphlan 用旧 flag `--bowtie2out`，MetaPhlAn 4.2.4 已改名 `--mapout` → `unrecognized arguments` 全 FAIL。**解法：shim 里把 `--bowtie2out`→`--mapout` 翻译**。
+    4. **最终验证通过**：单样本 + 全量都过了 metaphlan→nucleotide→diamond translated（内部 unbuffered log 确认，0 FAIL）。3 并行运行中，数小时。
+    5. 编排：`8_orchestrate_humann.sh`(orch17) 等 vJun23 下载完 → 自动启 HUMAnN(humann17)。看门狗监控 `HUMANN_ALL_DONE`。
+    - **踩坑教训**：tee 日志被 conda/buffer 吞，且反复被旧 run 的僵尸 bowtie2/diamond 进程误导 → 判断"在跑"要看 **HUMAnN 内部 `humann_temp/*.log`（unbuffered）+ run_one 的 exit-code DONE/FAIL**，别只看 pgrep。
+  - **Phase 1 taxonomy+diversity 已交付待 review**；functional 自动续跑中；Phase 2 MAG 待用户 review Phase 1 后放行（GTDB r226 已就位）。
 
 ---
 

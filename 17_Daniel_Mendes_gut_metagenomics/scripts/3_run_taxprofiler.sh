@@ -33,7 +33,11 @@ run() {
         --perform_shortread_hostremoval "${IDX_ARG[@]}" \
         --run_kraken2 --run_bracken --run_metaphlan \
         --run_profile_standardisation --run_krona
+    # 注：taxpasta_add_name/rank/lineage 需 --taxpasta_taxonomy_dir(NCBI taxdump)，本地未备；
+    #     下游 R 用 MetaPhlAn lineage + Bracken/Kraken2 per-sample report 的 name 列解析物种名。
 }
-if run;          then echo "taxprofiler OK"; exit 0; fi
-if run -resume;  then echo "taxprofiler OK (resume)"; exit 0; fi
+# 首跑即带 -resume：无缓存时等价于全新跑，有缓存时复用已完成 process
+if run -resume; then echo "taxprofiler OK"; exit 0; fi
+sleep 10
+if run -resume; then echo "taxprofiler OK (retry)"; exit 0; fi
 echo "taxprofiler FAILED after resume"; exit 1

@@ -36,9 +36,11 @@ with open(f"{OUT}/databases.csv", "w", newline="") as fh:
     w.writerow(["tool", "db_name", "db_params", "db_type", "db_path"])
     k2 = "/Work_bio/references/Metagenomics/kraken2/k2_standard_08gb_20260226/k2_standard_08_GB_20260226.tar.gz"
     mpa = "/Work_bio/references/Metagenomics/metaphlan/"
-    w.writerow(["kraken2",   "k2standard8gb", "",       "short", k2])
-    w.writerow(["bracken",   "k2standard8gb", ";-r 150", "short", k2])
-    w.writerow(["metaphlan", "mpa_vJan25",    "",       "short", mpa])
+    # db_name MUST be unique per row — 共用同一 db_name 会让 Bracken 跑两遍并在
+    # BRACKEN_COMBINEBRACKENOUTPUTS 触发 input file name collision（已踩坑，2026-07-18）。
+    w.writerow(["kraken2",   "k2s8_kraken2", "",        "short", k2])
+    w.writerow(["bracken",   "k2s8_bracken", ";-r 150", "short", k2])
+    w.writerow(["metaphlan", "mpa_vJan25",   "",        "short", mpa])
 
 # ---- nf-core/mag samplesheet (5.4.2) ----
 with open(f"{OUT}/samplesheet_mag.csv", "w", newline="") as fh:
