@@ -27,7 +27,7 @@ Characterise two human whole-genome sequencing (WGS) samples end-to-end:
 - **Genome-wide germline variant catalogues were produced**: **5.88 M** PASS SNV/indel for Sample_A and **6.03 M** for Sample_B, each annotated with gene/consequence (VEP), population frequency (gnomAD) and clinical significance (ClinVar).
 - **A prioritised shortlist of rare + functional / clinically flagged variants** was generated: **4,294** for Sample_A and **4,342** for Sample_B (of which **235 / 248** carry a ClinVar Pathogenic/Likely-pathogenic annotation). These are screening candidates, not diagnostic calls.
 - **Structural and copy-number callsets** were delivered (Manta, TIDDIT, CNVkit). Both genomes are **predominantly diploid**.
-- **HLA genotypes** were resolved for class I (**HLA-A/B/C**) and class II (**HLA-DRB1/DQA1/DQB1/DPA1/DPB1**) in both samples.
+- **HLA genotypes** were typed for both samples, but call confidence varies by locus: class II (**HLA-DRB1/DQB1/DPA1/DPB1/DRB3**) and **HLA-C** are well-supported, whereas the classical class I **HLA-A/B** calls are low-confidence at this WGS depth and should be confirmed by a targeted method before use.
 - **Sample-origin inference: both samples are most consistent with primary / germline material, NOT a high-aneuploidy cell line.** The genome is ~90–95 % diploid and long runs of homozygosity are low (4.5–5.0 % of the autosome).
 
 ## 3. Sample Information
@@ -118,22 +118,31 @@ The two samples give closely comparable shortlist sizes (4,294 vs 4,342), as exp
 | CNVkit called segments   |   343   |   303   |
 | — segments with CN ≠ 2 |   192   |   162   |
 
-CNVkit was run in germline mode (no matched normal), so copy-number is relative to a flat/pooled baseline; small aberrant segments in low-mappability/segmental-duplication regions are largely technical. Per-sample CNV scatter plots are provided (`structural_cnv/*-scatter.png`).
+CNVkit was run in germline mode (no matched normal), so copy-number is relative to a flat/pooled baseline; small aberrant segments in low-mappability/segmental-duplication regions are largely technical. Although about half of the called *segments* carry CN ≠ 2, these are mostly short, so by genome *length* only ~5–10 % is non-diploid (see §6.6) — i.e. the genome is predominantly diploid. Per-sample CNV scatter plots are provided (`structural_cnv/*-scatter.png`).
 
 ### 6.5 HLA genotyping (T1K, `hla-wgs`)
 
-Class I and class II genotypes were resolved for both samples (37 of 41 T1K loci returned at least one allele). Principal loci:
+Both samples were typed at class I and class II loci (37 of 41 T1K loci returned at least one allele). **Call confidence differs markedly by locus and must be read alongside the T1K quality score** (higher = better supported; in this run reliable calls score ≥13, weak calls score 0–1). The table below gives the representative genotype per locus with each allele's T1K quality in parentheses:
 
-| locus    | Sample_A                        | Sample_B                        |
-| :------- | :------------------------------ | :------------------------------ |
-| HLA-A    | A\*23:144 / A\*01:01:01         | A\*30:02:01                     |
-| HLA-B    | B\*15:16:01 / B\*35:03:01       | B\*35:03:01 / B\*58:149         |
-| HLA-C    | C\*07:18:01                     | C\*07:18:01                     |
-| HLA-DRB1 | DRB1\*13:03:01 / DRB1\*13:01:01 | DRB1\*13:04 / DRB1\*13:01:01    |
-| HLA-DQB1 | DQB1\*03:03:02 / DQB1\*02:02    | DQB1\*03:19:01 / DQB1\*03:03:02 |
-| HLA-DPB1 | DPB1\*17:01:01 / DPB1\*04:01:01 | DPB1\*11:01:01 / DPB1\*04:01:01 |
+| locus    | Sample_A (allele / T1K quality)          | Sample_B (allele / T1K quality)          | confidence  |
+| :------- | :--------------------------------------- | :--------------------------------------- | :---------: |
+| HLA-A    | A\*23:144 (1) / A\*01:01:01 (0)          | A\*30:02:01 (22) — single                | A: mixed; B: **low** |
+| HLA-B    | B\*15:16:01 (0) / B\*35:03:01 (0)        | B\*35:03:01 (1) / B\*58:149 (1)          | **low**     |
+| HLA-C    | C\*07:18:01 (21) — single                | C\*07:18:01 (27) — single                | high        |
+| HLA-DRB1 | DRB1\*13:03:01 (13) / DRB1\*13:01:01 (4) | DRB1\*13:04 (10) / DRB1\*13:01:01 (5)    | high / mod  |
+| HLA-DRB3 | DRB3\*02:02:01 (31) — single             | DRB3\*02:02:01 (34) — single             | high        |
+| HLA-DQB1 | DQB1\*03:03:02 (18) / DQB1\*02:02 (15)   | DQB1\*03:19:01 (18) / DQB1\*03:03:02 (18)| high        |
+| HLA-DPA1 | DPA1\*02:01:01 (36) / DPA1\*01:03:01 (34)| DPA1\*01:03:01 (33) / DPA1\*02:01:01 (25)| high        |
+| HLA-DPB1 | DPB1\*17:01:01 (27) / DPB1\*04:01:01 (20)| DPB1\*11:01:01 (32) / DPB1\*04:01:01 (33)| high        |
 
-Full per-locus genotypes with quality and abundance are in `hla_typing/*_hla_genotype.tsv`. Note that WGS at moderate depth over the MHC yields **allele-level ambiguity** at some class II loci (the genotype file lists multiple candidate alleles separated by commas; the first is the primary call). Two-field types for A/B/C and DRB1/DQB1 are the most reliable.
+Reading the results:
+
+- **Well-supported (use with confidence):** the class II loci **DRB1, DQB1, DPA1, DPB1, DRB3** (quality 13–36) and **HLA-C** (21–27), plus **HLA-A in Sample_B** (22). The class II calls are internally coherent — both samples carry **DRB1\*13 + DRB3\*02:02 and no DRB5**, the canonical DR13 / DR52 haplotype linkage — which corroborates their validity.
+- **Low-confidence (confirm before use):** the classical class I **HLA-A (Sample_A) and HLA-B (both samples)** scored quality **0–1** with low read support (abundance ~1–4 vs ~30–50 for the reliable calls). This is the expected limitation of WGS at this depth over the hyper-polymorphic class I exons 2/3; the **specific allele digits are not reliable** and should be confirmed with a targeted method (amplicon- or long-read-based HLA typing) if clinically required.
+- **Single-allele loci** (HLA-C in both samples; HLA-A in Sample_B) may be true homozygotes **or** reflect second-allele dropout — the two cannot be distinguished from this data.
+- **Allele ambiguity:** **DRB4** and some second alleles of **DQA1 / DQB1** are reported as comma-separated candidate lists in the genotype file (the gene is present but the exact allele is unresolvable); the first listed allele is the representative.
+
+Full per-locus genotypes with quality and abundance are in `hla_typing/*_hla_genotype.tsv`.
 
 ### 6.6 Sample-origin inference
 
@@ -153,10 +162,10 @@ Both samples are **most consistent with primary / germline material**. The genom
 | 2 | Complete, annotated germline SNV/indel catalogues delivered            | 5.88 M / 6.03 M PASS variants with VEP + gnomAD + ClinVar                 |
 | 3 | Prioritised rare/functional shortlists delivered for expert review     | 4,294 / 4,342 variants (235 / 248 ClinVar P/LP)                           |
 | 4 | SV and CNV callsets delivered; genomes predominantly diploid           | Manta/TIDDIT/CNVkit; CN ≠ 2 over ~5–10 % of genome length               |
-| 5 | HLA class I + II genotypes resolved                                    | T1K`hla-wgs`; A/B/C + DRB1/DQA1/DQB1/DPA1/DPB1                          |
+| 5 | HLA typed; class II + HLA-C well-supported, class I HLA-A/B low-confidence | T1K`hla-wgs`; per-locus quality tiering in §6.5                     |
 | 6 | Origin most consistent with primary/germline material, not a cell line | aneuploidy 0.05–0.10, ROH 0.045–0.050 (both below cell-line thresholds) |
 
-**Caveats.** Prioritised variants and ClinVar annotations are screening-level and require expert curation; germline CNV (no matched normal) is baseline-relative; HLA class II carries allele ambiguity; origin is an inference, not a substitute for known provenance.
+**Caveats.** Prioritised variants and ClinVar annotations are screening-level and require expert curation; germline CNV (no matched normal) is baseline-relative; HLA class I (especially HLA-A/B) is low-confidence at this depth and needs orthogonal confirmation, and some loci carry allele ambiguity; origin is an inference, not a substitute for known provenance.
 
 ## 8. Deliverable Files
 
