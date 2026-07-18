@@ -33,7 +33,7 @@ Characterise two human whole-genome sequencing (WGS) samples end-to-end:
 
 ## 3. Sample Information
 
-Canonical sample sheet: `sample_info.tsv`. Raw input sizes measured from disk on 2026-07-15 (source: `/home/gao/Dropbox/Quote_06202601_Wenliang_Pan/`).
+Raw input FASTQ files were provided by the client; input sizes below were measured directly from the delivered files.
 
 | sample   |    client    | species | seq type |    machine    | flowcell/lane | R1 (GiB) | R2 (GiB) | per-sample (GiB) |
 | :------- | :----------: | :-----: | :-------: | :------------: | :-----------: | :------: | :------: | :--------------: |
