@@ -2,6 +2,7 @@
 
 - **创建**: 2026-07-17
 - **用途**: 用本项目两张真实 CNVkit 全基因组 scatter 图，讲清"这种图怎么读、哪些是真信号哪些是噪声、以及怎么一眼判样本性别"。是 [`HLA分型入门_结合本项目数据_0717.md`](HLA分型入门_结合本项目数据_0717.md) 的姊妹篇。
+- **示例项目根目录（worked example）**: `/home/gao/projects_2026H2/16_Wenliang_Pan_wgs/` —— 下文所有 `output_results/…`、`custom_research_report_…/…` 路径均**相对该目录**。
 - **对象图**:
   - `custom_research_report_20260717/structural_cnv/Sample_A.md-scatter.png`（男，46,XY）
   - `custom_research_report_20260717/structural_cnv/Sample_B.md-scatter.png`（女，46,XX）
