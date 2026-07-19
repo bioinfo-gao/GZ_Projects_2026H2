@@ -13,6 +13,7 @@
 - 2026-07-18 — **Phase 1 运行中踩坑与修复记录（运维）**：
   1. `--taxpasta_add_name/rank/lineage` 需 `--taxpasta_taxonomy_dir`(NCBI taxdump)，本地未备 → **撤掉这三个 flag**；物种名改由下游 R 从 MetaPhlAn `combined_reports.txt`(clade lineage) + Bracken combined 的 name 列解析。
   2. **Bracken 崩在 `BRACKEN_COMBINEBRACKENOUTPUTS` input file name collision**：`databases.csv` 里 kraken2 与 bracken 两行共用 `db_name=k2standard8gb` → Bracken 跑两遍出同名文件。**修复：db_name 唯一化**（`k2s8_kraken2` / `k2s8_bracken`），`-resume` 复用了 71 个已完成 process（fastp/去宿主/MetaPhlAn 全缓存），仅重跑 kraken2/bracken。
+- 2026-07-18 — §1 回填 fastp 实测 read 数：新增「Raw read pairs（实测）+ Host removed」两列；订正原 gzip 反推的 ~13M 粗估（**原始 0717 预估行原文保留存档**），实测每样品 17.2–26.5 M pairs（均值 22.8 M）/ 合计 227.6 M，达标 shotgun ≥20M 标准。教训：样本量以 fastp 实测为准，勿用 gzip 大小反推。
   3. **GTDB-Tk r226 实际体积远大于 skill 记的 ~50GB**：tar.gz **141GB**、解压 **271GB**（现代 skani 版布局：taxonomy/markers/pplacer/skani/msa/split）。已下载+解压完成并删掉冗余 tar。→ **应回填更新 `/tax-resemb-mag` skill 的体积说明**。
   4. CheckM2 预下载失败（`checkm2` 不在 mag_biobakery env）→ 非阻塞，MAG 阶段处理（容器内自带 / 或 Zenodo 直取）。
   5. **R 库陷阱**：`conda run -n <任意env> Rscript` 的 `.libPaths()` 被全局 `R_LIBS`/`.Renviron` 统一指到 **regular_bioinfo** 的 R library（三个 env 报同样的包可用性即此因）。→ R 包（vegan/ggrepel/patchwork/ape）须装进 **regular_bioinfo**，下游脚本用 regular_bioinfo 跑。
@@ -43,21 +44,22 @@
 数据源：`/home/gao/Dropbox/QTE_26_06_25_001_Daniel_Mendes/HFD_*`（10 个样品目录，PE150 双端）。
 研究设计：**case-control**——HFD 背景下 **AL（ad libitum 自由采食）vs IF（intermittent fasting 间歇禁食）**，两臂各 5 个生物学重复。
 
-| Sample | Group | R1 (GiB) | R2 (GiB) |
-| :--- | :---: | :---: | :---: |
-| HFD_AL_4_02_25 | AL | 1.5 | 1.5 |
-| HFD_AL_4_03_11 | AL | 1.5 | 1.5 |
-| HFD_AL_6_05_12 | AL | 1.6 | 1.5 |
-| HFD_AL_6_05_22 | AL | 1.7 | 1.7 |
-| HFD_AL_7_06_12 | AL | 1.2 | 1.2 |
-| HFD_IF_4_02_25 | IF | 1.3 | 1.4 |
-| HFD_IF_4_03_11 | IF | 1.1 | 1.1 |
-| HFD_IF_6_05_12 | IF | 1.5 | 1.5 |
-| HFD_IF_6_05_22 | IF | 1.6 | 1.6 |
-| HFD_IF_7_06_12 | IF | 1.5 | 1.5 |
+| Sample | Group | R1 (GiB) | R2 (GiB) | Raw read pairs（实测） | Host removed |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| HFD_AL_4_02_25 | AL | 1.5 | 1.5 | 24.0 M | 6.35% |
+| HFD_AL_4_03_11 | AL | 1.5 | 1.5 | 22.9 M | 5.23% |
+| HFD_AL_6_05_12 | AL | 1.6 | 1.5 | 24.4 M | 18.19% |
+| HFD_AL_6_05_22 | AL | 1.7 | 1.7 | 26.5 M | 10.06% |
+| HFD_AL_7_06_12 | AL | 1.2 | 1.2 | 19.1 M | 6.07% |
+| HFD_IF_4_02_25 | IF | 1.3 | 1.4 | 21.2 M | 7.76% |
+| HFD_IF_4_03_11 | IF | 1.1 | 1.1 | 17.2 M | 2.20% |
+| HFD_IF_6_05_12 | IF | 1.5 | 1.5 | 24.0 M | 2.31% |
+| HFD_IF_6_05_22 | IF | 1.6 | 1.6 | 24.6 M | 6.04% |
+| HFD_IF_7_06_12 | IF | 1.5 | 1.5 | 23.7 M | 3.40% |
 
 - **数据集总量**：10 samples，gzip FASTQ 合计 **≈ 28 GiB**（`du -shc HFD_*` → 28G）。
-- 每样品 PE150 ≈ 1.1–1.7 GiB/端 → **粗估 ~13M read pairs、~4 Gbp/样品**（gzip 反推，非精确；准确值由 fastp 运行时确认后回填）。
+- **【原始 0717 预估，保留存档】** 每样品 PE150 ≈ 1.1–1.7 GiB/端 → 粗估 ~13M read pairs、~4 Gbp/样品（gzip 反推，非精确；准确值由 fastp 运行时确认后回填）。
+- **【0718 实测回填，以此为准】** fastp 运行时统计：**每样品 17.2–26.5 M read pairs（中位 ~24 M，均值 22.8 M）**，合计 **227.6 M read pairs / ~68 Gbp**。全部样品 **≥17 M**，达到并超过当前 shotgun 宏基因组的最低技术标准（≥20 M read pairs；仅 HFD_IF_4_03_11 = 17.2 M 略低于 20 M，但仍在可用范围）。⚠ 教训：上一行 gzip 反推的 ~13M 明显低估（实测均值 22.8 M，低估近 1 倍），**样本量判断必须以 fastp 实测为准，不能用 gzip 大小反推**。
 - 送样单 `Analysis Requirement` 字段：**"Shot gun meta std analysis"**（标准 shotgun 宏基因组分析）。这一点对范围界定很关键，见第 8 节。
 
 ## 2. 核心抉择：assembly-free 优先，assembly-based MAG 作二期（论证）
