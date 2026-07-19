@@ -4,7 +4,7 @@
 技能	说明
 /rnaseq	Bulk RNA-seq 分析全流程搭建
 /wgs	WGS 分析设置(三模式:标准种系 / 定点敲入整合 / 细胞系鉴定+转基因盲鉴)
-/tax-resemb-mag	宏基因组 De-novo 组装·分箱·MAG 重建
+/tax-assembly-mag	宏基因组 De-novo 组装·分箱·MAG 重建
 /taxnom	Shotgun 宏基因组分类学谱分析
 /ftp	sFTP 服务配置 + 客户登录信息
 Superpowers 插件带来的技能(superpowers: 前缀,来自已安装插件,详见下方插件部分):

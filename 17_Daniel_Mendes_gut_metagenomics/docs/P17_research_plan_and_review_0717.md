@@ -14,7 +14,7 @@
   1. `--taxpasta_add_name/rank/lineage` 需 `--taxpasta_taxonomy_dir`(NCBI taxdump)，本地未备 → **撤掉这三个 flag**；物种名改由下游 R 从 MetaPhlAn `combined_reports.txt`(clade lineage) + Bracken combined 的 name 列解析。
   2. **Bracken 崩在 `BRACKEN_COMBINEBRACKENOUTPUTS` input file name collision**：`databases.csv` 里 kraken2 与 bracken 两行共用 `db_name=k2standard8gb` → Bracken 跑两遍出同名文件。**修复：db_name 唯一化**（`k2s8_kraken2` / `k2s8_bracken`），`-resume` 复用了 71 个已完成 process（fastp/去宿主/MetaPhlAn 全缓存），仅重跑 kraken2/bracken。
 - 2026-07-18 — §1 回填 fastp 实测 read 数：新增「Raw read pairs（实测）+ Host removed」两列；订正原 gzip 反推的 ~13M 粗估（**原始 0717 预估行原文保留存档**），实测每样品 17.2–26.5 M pairs（均值 22.8 M）/ 合计 227.6 M，达标 shotgun ≥20M 标准。教训：样本量以 fastp 实测为准，勿用 gzip 大小反推。
-  3. **GTDB-Tk r226 实际体积远大于 skill 记的 ~50GB**：tar.gz **141GB**、解压 **271GB**（现代 skani 版布局：taxonomy/markers/pplacer/skani/msa/split）。已下载+解压完成并删掉冗余 tar。→ **应回填更新 `/tax-resemb-mag` skill 的体积说明**。
+  3. **GTDB-Tk r226 实际体积远大于 skill 记的 ~50GB**：tar.gz **141GB**、解压 **271GB**（现代 skani 版布局：taxonomy/markers/pplacer/skani/msa/split）。已下载+解压完成并删掉冗余 tar。→ **应回填更新 `/tax-assembly-mag` skill 的体积说明**。
   4. CheckM2 预下载失败（`checkm2` 不在 mag_biobakery env）→ 非阻塞，MAG 阶段处理（容器内自带 / 或 Zenodo 直取）。
   5. **R 库陷阱**：`conda run -n <任意env> Rscript` 的 `.libPaths()` 被全局 `R_LIBS`/`.Renviron` 统一指到 **regular_bioinfo** 的 R library（三个 env 报同样的包可用性即此因）。→ R 包（vegan/ggrepel/patchwork/ape）须装进 **regular_bioinfo**，下游脚本用 regular_bioinfo 跑。
 - 2026-07-18 — **Phase 1 taxonomy+diversity 完成 + 出图自审修复**：
@@ -92,7 +92,7 @@
 - **Phase 2（MAG）是超出 std 的加做**——我把它排进来，一是有科学价值（基因组级证据），二是正好吃满机器（你要求"充分利用"），但它要额外拉 102GB 库 + 长时算。**是否真的要做 MAG，请见第 8 节 open question，由你/客户拍板。**
 
 ### 2.5 结论
-**Phase 1 先 assembly-free 出主交付**（直接回答 AL vs IF 的组成/多样性/功能），**Phase 2 视批准再 assembly-based MAG**（group co-assembly 重建基因组、GTDB 分类、跨臂丰度）。两者互补、非二选一。这也符合 `/taxnom` 与 `/tax-resemb-mag` 两个 skill 的选型边界（先看组成→需要基因组再上组装）。
+**Phase 1 先 assembly-free 出主交付**（直接回答 AL vs IF 的组成/多样性/功能），**Phase 2 视批准再 assembly-based MAG**（group co-assembly 重建基因组、GTDB 分类、跨臂丰度）。两者互补、非二选一。这也符合 `/taxnom` 与 `/tax-assembly-mag` 两个 skill 的选型边界（先看组成→需要基因组再上组装）。
 
 ## 3. 备选方案与为何不采（Alternatives considered）
 

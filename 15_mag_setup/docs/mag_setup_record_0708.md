@@ -1,8 +1,8 @@
-# nf-core/mag 5.4.2 — 安装与测试记录（worked example for `/tax-resemb-mag`）
+# nf-core/mag 5.4.2 — 安装与测试记录（worked example for `/tax-assembly-mag`）
 
 Date: 2026-07-08 · Prepared by: Zhen Gao, PhD, Athenomics · Platform: Linux HPC server
 
-This folder is the validated worked example the `/tax-resemb-mag` skill references.
+This folder is the validated worked example the `/tax-assembly-mag` skill references.
 It records how nf-core/mag **5.4.2** (the current release) was set up in the
 `mag_biobakery` conda env and validated with the built-in test profile.
 
@@ -76,5 +76,5 @@ needs the full **GTDB r226 (~102GB)** — download once to a shared references d
 └── test_run/                    ← test-profile run (results/ + logs; work/ pruned after validation)
 ```
 
-Reusable operational knowledge lives in the `/tax-resemb-mag` skill
-(`~/.claude/commands/tax-resemb-mag.md`).
+Reusable operational knowledge lives in the `/tax-assembly-mag` skill
+(`~/.claude/skills/tax-assembly-mag/SKILL.md`).
