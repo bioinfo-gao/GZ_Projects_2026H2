@@ -85,7 +85,7 @@
 | 与主问题匹配 | **直接命中**组成/多样性/功能三问 | 补充——基因组层面证据、发现新/未培养菌 |
 | 对深度的要求 | 低即可（~4 Gbp/样品足够定量常见菌） | 偏高；per-sample ~4 Gbp 对高质量 MAG 偏薄 |
 | 参考依赖 | 依赖库；小鼠肠道 reference-rich，覆盖好 | 不依赖库，能抓库里没有的菌 |
-| 速度/成本 | 轻、快、当天出主结果 | 重（GTDB-Tk r226 ~102GB、组装/分箱耗时耗内存） |
+| 速度/成本 | 轻、快、当天出主结果 | 重（GTDB-Tk r226 ~139G、组装/分箱耗时耗内存） |
 | 交付确定性 | 高（成熟标准流程） | 中（MAG 数量/质量随样本复杂度波动） |
 
 ### 2.3 深度这一条为什么决定"MAG 别当入口"
@@ -94,7 +94,7 @@
 ### 2.4 "std analysis" 的范围含义
 送样单写的是 **std analysis**。业界"标准 shotgun 宏基因组分析"通常 = **taxonomy + diversity + functional profiling（assembly-free）**；**MAG 重建属于 advanced/增值**，一般单独报价。因此：
 - **Phase 1（assembly-free）本身就完整交付了客户下单的 std analysis。**
-- **Phase 2（MAG）是超出 std 的加做**——我把它排进来，一是有科学价值（基因组级证据），二是正好吃满机器（你要求"充分利用"），但它要额外拉 102GB 库 + 长时算。**是否真的要做 MAG，请见第 8 节 open question，由你/客户拍板。**
+- **Phase 2（MAG）是超出 std 的加做**——我把它排进来，一是有科学价值（基因组级证据），二是正好吃满机器（你要求"充分利用"），但它要额外拉 ~139G 库 + 长时算。**是否真的要做 MAG，请见第 8 节 open question，由你/客户拍板。**
 
 ### 2.5 结论
 **Phase 1 先 assembly-free 出主交付**（直接回答 AL vs IF 的组成/多样性/功能），**Phase 2 视批准再 assembly-based MAG**（group co-assembly 重建基因组、GTDB 分类、跨臂丰度）。两者互补、非二选一。这也符合 `/taxnom` 与 `/tax-assembly-mag` 两个 skill 的选型边界（先看组成→需要基因组再上组装）。
@@ -126,8 +126,25 @@
 - **组装**: `--coassemble_group`（AL、IF 各一个 co-assembly，~20 Gbp/组）+ **MEGAHIT**，`--skip_spades`。理由：125GB 内存是本机唯一硬墙，co-assembly 级 metaSPAdes 常要 ~200GB 会 OOM；MEGAHIT 内存友好、co-assembly 首选。
 - **分箱**: MetaBAT2 + MaxBin2 + SemiBin2 → **DAS Tool** 精炼；关掉较慢的 CONCOCT/COMEBin/MetaBinner（小项目性价比低）。
 - **质控**: BUSCO（本地 bacteria_odb10）+ CheckM2（需预下载库）；高污染(>10%)bin 视为潜在嵌合，不当干净基因组交付。
-- **分类**: GTDB-Tk r226，**split-tree（非 full_tree）** 省内存；需预下载 ~102GB 库。
+- **分类**: GTDB-Tk r226，**split-tree（非 full_tree）** 省内存；需预下载 ~139G 库（磁盘实测；解压后）。
 - **注释**: Prodigal/Prokka 基因预测。
+
+#### Phase 2 各阶段预期耗时 / 内存（**预估**，2026-07-18）
+
+> 依据：`local_resources_mag.config` 上限 **24 核 / 110 GB / 96 h** + 每组 co-assembly ~20 Gbp（AL/IF 各 5 样本、去宿主后 ~12 G gzip）+ `15_mag_setup` 经验。**均为预估，非实测**；真实值待 MAG 跑完由 `output_results_mag/pipeline_info/execution_trace_*.txt` 的 `%cpu`/`peak_rss`/`realtime` 回填。两处内存墙：**MEGAHIT co-assembly** 与 **GTDB-Tk 分类**（均设计压在 110 GB 封顶内）。
+
+| 阶段 | 预期耗时 | 峰值内存 | 备注 |
+| :--- | :---: | :---: | :--- |
+| QC (fastp) + 去宿主 (bowtie2 vs GRCm39) | ~1–2 h | ~15–25 GB | 10 样本；宿主索引载入 |
+| **MEGAHIT co-assembly（×2 组）** | **~8–18 h** ⟵主耗时 | **~40–90 GB** ⟵内存墙① | 每组 ~20 Gbp；内存随 k-mer 复杂度，肠道高复杂度偏高 |
+| QUAST 组装评估 | <1 h | <5 GB | |
+| reads 回比 + 分箱 (MetaBAT2/MaxBin2/SemiBin2) | ~4–8 h | ~15–35 GB | SemiBin2/MaxBin2 较慢；回比 bowtie2 出 coverage |
+| DAS Tool 精炼 | ~1–2 h | ~10–20 GB | |
+| BUSCO + CheckM2 质控 | ~2–4 h | ~10–15 GB | CheckM2 DIAMOND；随 bin 数 |
+| **GTDB-Tk r226 分类（split-tree）** | **~2–6 h** | **~55–64 GB** ⟵内存墙② | pplacer/classify；split-tree 省内存(非 full_tree) |
+| Prokka 注释 | ~1–3 h | <10 GB | 随 bin 数 |
+| MultiQC | 分钟级 | <2 GB | |
+| **合计（串行为主）** | **~20–40 h** | **峰值 ≤110 GB（配置封顶）** | co-assembly 与 GTDB-Tk 不重叠即安全 |
 
 ### 下游统计（两 Phase 共用）
 - 相对丰度堆叠图（属/种 Top N + Other）。
@@ -175,12 +192,12 @@
 | mouse Bowtie2 去宿主索引 | ❌ 待建 | `.../mouse_gencode_M35/bowtie2_index/`（脚本 2） |
 | mag_biobakery env / nf-core/mag 5.4.2 | ✅ | `mag_biobakery` conda env（nextflow 26.04.4） |
 | BUSCO bacteria_odb10 | ✅ | `/Work_bio/references/Metagenomics/busco/` |
-| GTDB-Tk r226 (~102GB) | ❌ 待下载 | `/Work_bio/references/Metagenomics/gtdbtk/release226/`（仅 MAG 获批才拉） |
+| GTDB-Tk r226 (~139G) | ✅ 已就位 | `/Work_bio/references/Metagenomics/gtdbtk/release226/`（仅 MAG 获批才拉） |
 | CheckM2 DIAMOND DB | ❌ 待下载 | `/Work_bio/references/Metagenomics/checkm2/`（仅 MAG 获批才拉） |
 
 ## 8. 待你拍板的问题（Open questions）
 
-1. **MAG 二期做不做？** 送样单只写了 std analysis；assembly-free（Phase 1）已完整交付 std。Phase 2 MAG 要额外拉 **~102GB GTDB 库**并长时算，属超出 std 的增值。选项：
+1. **MAG 二期做不做？** 送样单只写了 std analysis；assembly-free（Phase 1）已完整交付 std。Phase 2 MAG 要额外拉 **~139G GTDB 库**并长时算，属超出 std 的增值。选项：
    - (a) 只做 Phase 1（std，保底、最快）；
    - (b) Phase 1 + Phase 2 MAG（本 plan 默认，机器吃满、基因组级证据）。
 2. **实验设计是独立两组还是配对？** 两臂重复编号（4_02_25 / 4_03_11 / 6_05_12 / 6_05_22 / 7_06_12）在 AL 与 IF **一一对应**。若这是 litter/cage/批次配对（而非同一只鼠——鼠不可能既 AL 又 IF），差异分析应把它当 **blocking factor / paired 设计**（统计功效更高）。请确认这些编号的含义。默认按独立两组分析，若确认配对则改用配对模型。
