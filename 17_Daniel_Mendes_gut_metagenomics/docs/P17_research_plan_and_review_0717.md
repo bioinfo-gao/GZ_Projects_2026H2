@@ -35,11 +35,15 @@
   2. `10_orchestrate_mag.sh`(tmux orch_mag17) 轮询 `HUMANN_ALL_DONE`+10/10 pathabundance → 齐后启 `4_run_mag.sh`(mag17)，含 90s 启动自检。
   3. `samplesheet_mag.csv` 补 `short_reads_platform=ILLUMINA` 列（schema `required` 仅 sample+group，platform 非必填但补上更稳）。
   4. **GTDB-Tk r226 体积订正**：磁盘实测 **解压 139G**（skani/ 占 129G），此前记的 271G 有误；已同步修 `/tax-assembly-mag` skill + 记忆。MAG 配置 `--coassemble_group`(AL/IF) + `--skip_spades`(避 125G 内存墙)。
+- 2026-07-19 — **Phase 1 全部完成（含 functional）+ Phase 2 MAG 启动**：
+  - HUMAnN 10/10 成功（0 FAIL），merged 出 genefamilies/pathabundance/pathcoverage。`11_functional_analysis.R` 出 3 图(fig6 功能 PCoA / fig7 差异通路 / fig8 top pathway heatmap)，与 taxonomy 图同风格。**功能结果与分类一致：无显著差异**——功能 PERMANOVA R²=0.155,p=0.22；0 通路 FDR<0.05；趋势=IF 略↑生物合成(AA/核苷酸/肽聚糖)、AL 略↑糖酵解。已并入 `custom_research_report_20260718/function/` 并补报告章节(§6.7 + Key Findings + Conclusions + Methods + Deliverables)。**Phase 1 assembly-free std analysis 交付完整**。
+  - KO/EC regroup 表未生成(regroup 步骤静默失败，非阻塞)，pathabundance/genefamilies 为主交付。
+  - Phase 2 MAG(mag17) 预处理阶段(fastp/FASTQC/PhiX/BUSCO_UNTAR)运行中 0 error；参数走 `params_mag.yaml`(coassemble_group+skip_spades+3 binner+DAStool+BUSCO+CheckM2+GTDB r226)。看门狗 b817p7a4d 监控完成。
 - 2026-07-19 — **HUMAnN 全部完成(10/10 + HUMANN_ALL_DONE)；MAG 首启踩坑并修复后成功启动**：
   1. **Nextflow 布尔 CLI 坑**：新版 Nextflow(26.04.4) 把 bare `--flag`(如 `--coassemble_group`/`--skip_spades`/`--run_checkm2`/`--refine_bins_dastool`) 解析成**字符串 "true"**，被 nf-schema 严格校验拒绝(`Value is [string] but should be [boolean]`) → 全参数校验 FAIL(校验期失败，无算力损失)。
   2. **`--checkm2_db` 要 .dmnd 文件不要目录**：我下载 CheckM2 库后目录非空触发该参数，但传的是目录 → `is not a file, but a directory`。
   3. **修复**：所有 pipeline 参数改走 **`-params-file scripts/params_mag.yaml`**（YAML 布尔=真布尔、路径=字符串），`checkm2_db` 指到 `uniref100.KO.1.dmnd`。改后校验通过、进入 FASTP/BUSCO 执行。
-  4. **MAG 于 12:23 成功启动**(tmux mag17，机器此时 load 0.5 全空闲)；常驻看门狗 `11_mag_watchdog.sh`(mag_wd) + agent 唤醒哨兵已挂。**待办**：HUMAnN 功能结果(humann_merged/)下游差异分析 + 补进交付目录 `function/`。
+  4. **MAG 于 12:23 成功启动**(tmux mag17，机器此时 load 0.5 全空闲)；常驻看门狗 `12_mag_watchdog.sh`(mag_wd) + agent 唤醒哨兵已挂。（脚本原名 11，因与并发会话的 `11_functional_analysis.R` 撞号，改名为 12 恢复编号顺序。）功能下游分析已由并发会话完成并入 `function/`（fig6/7/8）。
 
 ---
 
