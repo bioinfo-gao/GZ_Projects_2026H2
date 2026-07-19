@@ -14,7 +14,7 @@
   1. `--taxpasta_add_name/rank/lineage` 需 `--taxpasta_taxonomy_dir`(NCBI taxdump)，本地未备 → **撤掉这三个 flag**；物种名改由下游 R 从 MetaPhlAn `combined_reports.txt`(clade lineage) + Bracken combined 的 name 列解析。
   2. **Bracken 崩在 `BRACKEN_COMBINEBRACKENOUTPUTS` input file name collision**：`databases.csv` 里 kraken2 与 bracken 两行共用 `db_name=k2standard8gb` → Bracken 跑两遍出同名文件。**修复：db_name 唯一化**（`k2s8_kraken2` / `k2s8_bracken`），`-resume` 复用了 71 个已完成 process（fastp/去宿主/MetaPhlAn 全缓存），仅重跑 kraken2/bracken。
 - 2026-07-18 — §1 回填 fastp 实测 read 数：新增「Raw read pairs（实测）+ Host removed」两列；订正原 gzip 反推的 ~13M 粗估（**原始 0717 预估行原文保留存档**），实测每样品 17.2–26.5 M pairs（均值 22.8 M）/ 合计 227.6 M，达标 shotgun ≥20M 标准。教训：样本量以 fastp 实测为准，勿用 gzip 大小反推。
-  3. **GTDB-Tk r226 实际体积远大于 skill 记的 ~50GB**：tar.gz **141GB**、解压 **271GB**（现代 skani 版布局：taxonomy/markers/pplacer/skani/msa/split）。已下载+解压完成并删掉冗余 tar。→ **应回填更新 `/tax-assembly-mag` skill 的体积说明**。
+  3. **GTDB-Tk r226 实际体积远大于 skill 记的 ~50GB**：tar.gz **141GB**、解压 **139GB**（磁盘实测；原记 271GB 有误）（现代 skani 版布局：taxonomy/markers/pplacer/skani/msa/split）。已下载+解压完成并删掉冗余 tar。→ **应回填更新 `/tax-assembly-mag` skill 的体积说明**。
   4. CheckM2 预下载失败（`checkm2` 不在 mag_biobakery env）→ 非阻塞，MAG 阶段处理（容器内自带 / 或 Zenodo 直取）。
   5. **R 库陷阱**：`conda run -n <任意env> Rscript` 的 `.libPaths()` 被全局 `R_LIBS`/`.Renviron` 统一指到 **regular_bioinfo** 的 R library（三个 env 报同样的包可用性即此因）。→ R 包（vegan/ggrepel/patchwork/ape）须装进 **regular_bioinfo**，下游脚本用 regular_bioinfo 跑。
 - 2026-07-18 — **Phase 1 taxonomy+diversity 完成 + 出图自审修复**：
@@ -30,6 +30,11 @@
     5. 编排：`8_orchestrate_humann.sh`(orch17) 等 vJun23 下载完 → 自动启 HUMAnN(humann17)。看门狗监控 `HUMANN_ALL_DONE`。
     - **踩坑教训**：tee 日志被 conda/buffer 吞，且反复被旧 run 的僵尸 bowtie2/diamond 进程误导 → 判断"在跑"要看 **HUMAnN 内部 `humann_temp/*.log`（unbuffered）+ run_one 的 exit-code DONE/FAIL**，别只看 pgrep。
   - **Phase 1 taxonomy+diversity 已交付待 review**；functional 自动续跑中；Phase 2 MAG 待用户 review Phase 1 后放行（GTDB r226 已就位）。
+- 2026-07-18 — **用户批准 Phase 2 MAG，编排为"HUMAnN 跑完自动启动"**（不与 HUMAnN 54 线程叠跑）：
+  1. `9_predownload_checkm2_db.sh`(tmux ckm2_dl) 趁 HUMAnN 窗口从 Zenodo 下 CheckM2 DIAMOND 库 → MAG 得以 `--run_checkm2` 出污染度（原 predownload 失败留空目录）。
+  2. `10_orchestrate_mag.sh`(tmux orch_mag17) 轮询 `HUMANN_ALL_DONE`+10/10 pathabundance → 齐后启 `4_run_mag.sh`(mag17)，含 90s 启动自检。
+  3. `samplesheet_mag.csv` 补 `short_reads_platform=ILLUMINA` 列（schema `required` 仅 sample+group，platform 非必填但补上更稳）。
+  4. **GTDB-Tk r226 体积订正**：磁盘实测 **解压 139G**（skani/ 占 129G），此前记的 271G 有误；已同步修 `/tax-assembly-mag` skill + 记忆。MAG 配置 `--coassemble_group`(AL/IF) + `--skip_spades`(避 125G 内存墙)。
 
 ---
 
