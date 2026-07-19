@@ -1,0 +1,26 @@
+# nf-core/mag 5.4.2 params (proj17 Phase 2 MAG)
+# 用 -params-file 而非 CLI flags：新版 Nextflow(26.04.4) 把 bare `--flag` 解析成字符串 "true"，
+# 被 nf-schema 严格校验拒绝(Value is [string] but should be [boolean])。YAML 里布尔=真布尔、路径=字符串，绕过该坑。
+# checkm2_db 必须是 .dmnd 文件(format=file-path)，不是目录。
+input: samplesheet_mag.csv
+outdir: output_results_mag
+host_fasta: /Work_bio/references/Mus_musculus/GRCm39/mouse_gencode_M35/GRCm39.primary_assembly.genome.fa
+
+# 组装：AL/IF 组内共组装 + MEGAHIT(避 metaSPAdes 撞 125GB 内存墙)
+coassemble_group: true
+skip_spades: true
+
+# 分箱：留 MetaBAT2 + MaxBin2 + SemiBin2，关较慢的 CONCOCT/COMEBin/MetaBinner
+skip_concoct: true
+skip_comebin: true
+skip_metabinner: true
+refine_bins_dastool: true
+
+# 质控：BUSCO(本地 lineage) + CheckM2(DIAMOND .dmnd 文件)
+busco_db: /Work_bio/references/Metagenomics/busco/bacteria_odb10.2024-01-08.tar.gz
+busco_db_lineage: bacteria_odb10
+run_checkm2: true
+checkm2_db: /Work_bio/references/Metagenomics/checkm2/uniref100.KO.1.dmnd
+
+# 分类：GTDB-Tk r226(目录; split-tree 省内存由 pipeline 默认)
+gtdb_db: /Work_bio/references/Metagenomics/gtdbtk/release226

@@ -24,26 +24,14 @@ cd "$PROJ"
 export NXF_SINGULARITY_CACHEDIR='/Work_bio/gao/configs/.singularity'
 export NXF_ANSI_LOG=false
 
-# GTDB 库未就位则先跳过分类（真实分类需库；库好后 -resume 补跑那步不现实，届时单独跑）
-GTDB_ARG=(--skip_gtdbtk)
-if [ -d "$GTDB_DB" ] && [ -n "$(ls -A "$GTDB_DB" 2>/dev/null)" ]; then
-    GTDB_ARG=(--gtdb_db "$GTDB_DB")
-fi
-CHECKM2_ARG=()
-if [ -d "$CHECKM2_DB" ] && ls "$CHECKM2_DB"/*.dmnd >/dev/null 2>&1; then
-    CHECKM2_ARG=(--run_checkm2 --checkm2_db "$CHECKM2_DB")
-fi
-
+# 所有 pipeline 参数(布尔+路径)走 params_mag.yaml —— 新版 Nextflow 把 CLI bare `--flag`
+# 解析成字符串 "true"，被 nf-schema 严格校验拒绝；YAML 里布尔=真布尔、路径=字符串，绕过该坑。
+# checkm2_db 必须指 .dmnd 文件(非目录)。GTDB/CheckM2 库已就位(见 params_mag.yaml)。
 run() {
     "$NEXTFLOW" run nf-core/mag -r 5.4.2 -profile singularity \
-        -c scripts/local_resources_mag.config "$@" \
-        --input samplesheet_mag.csv --outdir output_results_mag -work-dir work_mag \
-        --host_fasta "$HOST_FA" \
-        --coassemble_group --skip_spades \
-        --skip_concoct --skip_comebin --skip_metabinner \
-        --refine_bins_dastool \
-        --busco_db "$BUSCO_DB" --busco_db_lineage bacteria_odb10 \
-        "${CHECKM2_ARG[@]}" "${GTDB_ARG[@]}"
+        -c scripts/local_resources_mag.config \
+        -params-file scripts/params_mag.yaml \
+        -work-dir work_mag "$@"
 }
 if run;          then echo "mag OK"; exit 0; fi
 if run -resume;  then echo "mag OK (resume)"; exit 0; fi

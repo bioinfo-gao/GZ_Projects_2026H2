@@ -35,6 +35,11 @@
   2. `10_orchestrate_mag.sh`(tmux orch_mag17) 轮询 `HUMANN_ALL_DONE`+10/10 pathabundance → 齐后启 `4_run_mag.sh`(mag17)，含 90s 启动自检。
   3. `samplesheet_mag.csv` 补 `short_reads_platform=ILLUMINA` 列（schema `required` 仅 sample+group，platform 非必填但补上更稳）。
   4. **GTDB-Tk r226 体积订正**：磁盘实测 **解压 139G**（skani/ 占 129G），此前记的 271G 有误；已同步修 `/tax-assembly-mag` skill + 记忆。MAG 配置 `--coassemble_group`(AL/IF) + `--skip_spades`(避 125G 内存墙)。
+- 2026-07-19 — **HUMAnN 全部完成(10/10 + HUMANN_ALL_DONE)；MAG 首启踩坑并修复后成功启动**：
+  1. **Nextflow 布尔 CLI 坑**：新版 Nextflow(26.04.4) 把 bare `--flag`(如 `--coassemble_group`/`--skip_spades`/`--run_checkm2`/`--refine_bins_dastool`) 解析成**字符串 "true"**，被 nf-schema 严格校验拒绝(`Value is [string] but should be [boolean]`) → 全参数校验 FAIL(校验期失败，无算力损失)。
+  2. **`--checkm2_db` 要 .dmnd 文件不要目录**：我下载 CheckM2 库后目录非空触发该参数，但传的是目录 → `is not a file, but a directory`。
+  3. **修复**：所有 pipeline 参数改走 **`-params-file scripts/params_mag.yaml`**（YAML 布尔=真布尔、路径=字符串），`checkm2_db` 指到 `uniref100.KO.1.dmnd`。改后校验通过、进入 FASTP/BUSCO 执行。
+  4. **MAG 于 12:23 成功启动**(tmux mag17，机器此时 load 0.5 全空闲)；常驻看门狗 `11_mag_watchdog.sh`(mag_wd) + agent 唤醒哨兵已挂。**待办**：HUMAnN 功能结果(humann_merged/)下游差异分析 + 补进交付目录 `function/`。
 
 ---
 
