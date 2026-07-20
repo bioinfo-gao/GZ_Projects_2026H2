@@ -44,6 +44,7 @@
   2. **`--checkm2_db` 要 .dmnd 文件不要目录**：我下载 CheckM2 库后目录非空触发该参数，但传的是目录 → `is not a file, but a directory`。
   3. **修复**：所有 pipeline 参数改走 **`-params-file scripts/params_mag.yaml`**（YAML 布尔=真布尔、路径=字符串），`checkm2_db` 指到 `uniref100.KO.1.dmnd`。改后校验通过、进入 FASTP/BUSCO 执行。
   4. **MAG 于 12:23 成功启动**(tmux mag17，机器此时 load 0.5 全空闲)；常驻看门狗 `12_mag_watchdog.sh`(mag_wd) + agent 唤醒哨兵已挂。（脚本原名 11，因与并发会话的 `11_functional_analysis.R` 撞号，改名为 12 恢复编号顺序。）功能下游分析已由并发会话完成并入 `function/`（fig6/7/8）。
+- 2026-07-19 — **报告统计学措辞升级（用户指令）**：把各处非显著结论从光秃 "No/no difference" 改为 **"no statistically reliable difference"**，明确 *underpowered ≠ 证否*；给 effect size（community R²=0.149 / functional R²=0.155 = 解释 ~15–16% 方差）+ power 推断；新增报告 **§7.1 Statistical power & recommendations for a follow-up study**（增样本量/增强度/降组内方差三杠杆 + 配对检验零成本捞 power）。该规范同步进 P17 §下游统计 + 记忆 [[feedback_underpowered_not_null_report_framing]]。（报告仍属 0718 本轮在建，就地编辑不改交付目录日期。）
 
 ---
 
@@ -161,6 +162,11 @@
 - **beta 多样性**（Bray-Curtis + PCoA），量化组内 vs 组间距离比（排序图**必须配数值解读**，不只放图）。
 - **差异丰度**（Maaslin2 / ALDEx2 / Wilcoxon）找 IF 富集/耗竭 taxa 与 pathway。
 - **跨工具交叉验证**：Kraken2/Bracken vs MetaPhlAn Top 物种一致性（Spearman/并排表）。
+
+> **⚠ 非显著结果的报告规范（本项目 n=5/组，几乎注定 underpowered）——见 [[feedback_underpowered_not_null_report_framing]]**：
+> 凡非显著但**效应量非零/趋势方向一致**的结果（本项目 community R²=0.149,p=0.25；functional R²=0.155,p=0.22；Akkermansia IF↑ n.s.），
+> **不写光秃秃 "no difference"**，一律：① 措辞 `no statistically reliable difference`，点明 *underpowered ≠ 证否*；② 报 effect size（R²=解释~15–16%方差，中等效应）；③ 给 power 推断（n 小+组内方差大）；
+> ④ 给**下一步实验设计建议**（增样本量 ~10–12/组 / 增强+标准化禁食强度 / 降组内方差：配对同窝控 cage-coprophagy effect、固定采样时点——功能层尤重）；⑤ 若 ID 是配对/同窝，提 paired/blocked 检验可零成本捞 power。已落地报告 §6.7/§7.1。
 
 ## 5. 执行编排（充分利用机器 · 守 28 核/56 线程 · 125GB 内存硬墙）
 

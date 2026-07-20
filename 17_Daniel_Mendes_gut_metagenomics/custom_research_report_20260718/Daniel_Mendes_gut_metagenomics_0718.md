@@ -8,7 +8,7 @@
 **Tissue / Material:** Stool (fecal pellets)
 **Sequencing:** Illumina NovaSeq X Plus, paired-end 150 bp, shotgun metagenomics
 
-> **Scope of this report.** This document covers the **assembly-free (reference-based) taxonomic and community-diversity analysis** — the core of the standard shotgun-metagenomics deliverable. **Functional pathway profiling (HUMAnN)** is being finalized and will be appended to this same delivery folder. A genome-resolved **metagenome-assembled genome (MAG)** analysis (Phase 2) will follow as a separate, genome-level extension.
+> **Scope of this report.** This document covers the **assembly-free (reference-based) analysis**: taxonomic composition, community diversity, and **functional pathway profiling (HUMAnN)** — the full standard shotgun-metagenomics deliverable. A genome-resolved **metagenome-assembled genome (MAG)** analysis (Phase 2) is running as a separate, genome-level extension and will be delivered subsequently.
 
 ---
 
@@ -26,6 +26,7 @@
 - ***Akkermansia muciniphila* dominates and trends higher under IF.** It is the single most abundant species (mean 48.7% in AL vs 64.4% in IF). A higher *Akkermansia* abundance under fasting is consistent with the published intermittent-fasting literature, but here the difference is **not statistically significant** (Wilcoxon *p* = 0.42).
 - **No taxon reaches statistical significance after multiple-testing correction.** Among 60 core abundant species, none passed FDR < 0.05. Suggestive (non-significant) trends: *Lactococcus* / *Lactobacillus johnsonii* higher in AL; *Akkermansia* and *Paramuribaculum* higher in IF.
 - **Alpha diversity trends slightly higher in AL** across all three indices (Observed, Shannon, Simpson) but not significantly (*p* = 0.31–0.42). IF mice were more homogeneous among themselves (within-group distance 0.256 vs 0.340 for AL).
+- **Functional (metabolic pathway) profiles agree with the taxonomic picture: no *statistically resolvable* diet effect (underpowered, not a demonstrated null).** HUMAnN pathway profiles do not separate AL from IF (PERMANOVA R² = 0.155 — diet still accounts for ~16% of functional variance — *p* = 0.22), and no pathway is significant after FDR correction. The consistent (non-significant) trend is a mild shift toward higher biosynthetic capacity under IF (amino-acid, nucleotide, and peptidoglycan biosynthesis) versus slightly higher glycolysis under AL.
 
 ## 3. Sample Information
 
@@ -64,7 +65,7 @@ Total: **227.5 M read pairs (~68 Gbp)**.
 | Profile merging | taxpasta; MetaPhlAn/Bracken combined abundance tables |
 | Diversity | vegan (Shannon, Simpson, observed richness; Bray-Curtis; PCoA; adonis2 PERMANOVA) |
 | Differential abundance | Wilcoxon rank-sum on relative abundance, Benjamini-Hochberg FDR; core filter (≥0.1% mean, ≥5/10 prevalence) |
-| Functional profiling *(in progress)* | HUMAnN 3.9 (ChocoPhlAn + UniRef90); pathway & gene-family abundance |
+| Functional profiling | HUMAnN 3.9 (ChocoPhlAn + UniRef90, vJun23 taxonomic prescreen); MetaCyc pathway & UniRef90 gene-family abundance; community-level pathways compared AL vs IF (Wilcoxon + BH, core filter; Bray-Curtis PCoA + PERMANOVA) |
 
 Analysis was orchestrated with resource caps within server policy (≤ 28 cores). All figures are provided as both 300-dpi PNG and vector PDF.
 
@@ -80,7 +81,7 @@ The mouse fecal community is dominated by *Akkermansia*, unclassified/uncultured
 Ad-libitum samples trended toward higher within-sample diversity than intermittent-fasting samples across all three indices (Observed richness, Shannon, Simpson), but none of the differences were statistically significant (Wilcoxon *p* = 0.31, 0.31, 0.42 respectively). Note that observed-richness values are inflated by the k-mer classifier's low-abundance tail and should be read as a relative comparison, not an absolute species count; the abundance-weighted Shannon and Simpson indices are more robust and show the same non-significant trend.
 
 ### 6.4 Beta diversity (Figure 3) — *ordination interpretation*
-Bray-Curtis PCoA places the first two axes at **66.9% (PCo1)** and **16.8% (PCo2)** of variance (83.7% combined). **The AL and IF samples do not separate:** their 80% confidence ellipses overlap almost entirely, and quantitatively the mean between-arm community distance (0.295) is indistinguishable from the mean within-arm distance (0.298) — a between/within ratio of 0.99. PERMANOVA confirms no significant partitioning by diet (**R² = 0.149, *p* = 0.25**, 999 permutations); i.e. diet explains only ~15% of community variation, not more than expected by chance at this sample size. One secondary observation: the IF mice are more similar to one another (within-group distance 0.256) than the AL mice are (0.340), i.e. fasting may tighten the community toward a more consistent state, though this is descriptive only.
+Bray-Curtis PCoA places the first two axes at **66.9% (PCo1)** and **16.8% (PCo2)** of variance (83.7% combined). **The AL and IF samples do not separate:** their 80% confidence ellipses overlap almost entirely, and quantitatively the mean between-arm community distance (0.295) is indistinguishable from the mean within-arm distance (0.298) — a between/within ratio of 0.99. PERMANOVA finds no statistically reliable partitioning by diet (**R² = 0.149, *p* = 0.25**, 999 permutations); diet explains ~15% of community variation — a modest but non-zero effect that is not statistically resolvable at this sample size (an underpowered test, not evidence of no effect; see §7.1). One secondary observation: the IF mice are more similar to one another (within-group distance 0.256) than the AL mice are (0.340), i.e. fasting may tighten the community toward a more consistent state, though this is descriptive only.
 
 ### 6.5 Differential abundance (Figure 4)
 Across the 60 core abundant species, **no species reached FDR < 0.05** (smallest adjusted *p* = 0.60). The strongest *trends* (all non-significant) were: *Akkermansia muciniphila* and *Paramuribaculum intestinale* higher under IF; *Lactobacillus johnsonii*, *Lactococcus* spp., and *Clostridium* sp. higher under AL. The *Akkermansia* trend is directionally consistent with the fasting/metabolic-health literature and is the most biologically noteworthy signal, but the present cohort (n = 5/arm, high individual variability) is not powered to establish it statistically.
@@ -88,18 +89,36 @@ Across the 60 core abundant species, **no species reached FDR < 0.05** (smallest
 ### 6.6 Cross-tool concordance (Figure 5)
 Bracken and MetaPhlAn agreed moderately on species-level mean abundances (Spearman ρ = 0.64). Bracken systematically reported higher abundances than MetaPhlAn, and the two tools disagreed on the identity of the dominant taxon: Bracken assigns ~50% to *Akkermansia muciniphila*, whereas MetaPhlAn distributes much of the dominant signal to unnamed species-level genome bins (SGBs). This is a known consequence of the two databases' differing taxonomies and should be kept in mind when quoting absolute percentages; both tools agree the community is *Akkermansia*-rich.
 
+### 6.7 Functional pathway profiling (Figures 6–8)
+HUMAnN reconstructed **1,243 MetaCyc pathway features** across the cohort (community-level and species-stratified); analysis focused on the 128 well-represented community pathways. The functional picture closely mirrors the taxonomic one:
+- **Beta diversity (Figure 6):** pathway-level Bray-Curtis PCoA shows AL and IF overlapping heavily, with no statistically reliable separation (**PERMANOVA R² = 0.155, *p* = 0.22**; PCo1 = 59.2%). Note that R² = 0.155 means diet still accounts for ~16% of the between-sample variation in functional potential — a modest but non-negligible effect size that this 5-vs-5 design is underpowered to resolve; the non-significance reflects limited power, not a demonstrated absence of effect (see §7.1, Recommendations).
+- **Differential pathways (Figure 7):** **no pathway is significant after FDR correction** (smallest adjusted *p* = 0.76). The directional trends are biologically coherent: biosynthetic pathways — UDP-N-acetylmuramoyl-pentapeptide / peptidoglycan biosynthesis, branched-chain and aromatic amino-acid biosynthesis, UMP and purine nucleotide biosynthesis — trend modestly higher under **IF**, while glycolysis IV and one arginine-biosynthesis route trend higher under **AL**. This is consistent with a mild fasting-associated shift toward biosynthetic/anabolic capacity, but it is a trend only, not a significant finding.
+- **Pathway landscape (Figure 8):** the top-25 most abundant pathways (dominated by nucleotide, amino-acid, and cofactor biosynthesis and central carbon metabolism) are present and comparably abundant in both arms, confirming a shared core metabolic repertoire.
+
 ## 7. Conclusions
 
 | Question | Result |
 | :--- | :--- |
-| Overall community structure differs AL vs IF? | **No** — PERMANOVA n.s. (R²=0.149, *p*=0.25); between ≈ within-group distance |
-| Alpha diversity differs? | **No significant difference**; AL trends slightly higher (*p*=0.31–0.42) |
-| Any taxon significantly differential? | **None at FDR<0.05**; trends only |
+| Overall community structure differs AL vs IF? | **No statistically reliable difference** — PERMANOVA n.s. (R² = 0.149, i.e. diet accounts for ~15% of variance, *p* = 0.25); between ≈ within-group distance. This is an *underpowered* test at n = 5/arm, not a demonstrated absence of effect |
+| Alpha diversity differs? | **No statistically reliable difference**; AL trends slightly higher and in the *same direction across all three indices* (*p* = 0.31–0.42) — a consistent but underpowered signal |
+| Any taxon significantly differential? | **None reaches FDR < 0.05** (n = 5/arm is underpowered for per-taxon testing after multiple-testing correction); directional trends only |
 | Dominant taxon | *Akkermansia muciniphila* (~49% AL, ~64% IF), trending higher under IF (n.s.) |
 | Notable non-significant trends | ↑IF: *Akkermansia*, *Paramuribaculum*; ↑AL: *Lactobacillus johnsonii*, *Lactococcus* |
 | Cross-tool agreement | Moderate (Spearman ρ=0.64); both agree community is *Akkermansia*-rich |
+| Functional pathways differ AL vs IF? | **No statistically reliable difference** — PERMANOVA n.s. (R² = 0.155, i.e. diet accounts for ~16% of functional variance, *p* = 0.22); no pathway at FDR < 0.05. Underpowered, not a demonstrated null |
+| Functional trend | Mild ↑ biosynthesis (amino acid/nucleotide/peptidoglycan) in IF; ↑ glycolysis in AL (n.s.) |
 
-**Overall interpretation.** In this HFD cohort, intermittent fasting did not produce a statistically distinct fecal microbiome relative to ad-libitum feeding at the whole-community level. The data are of high quality and the dominant, biologically plausible signal is a fasting-associated enrichment of *Akkermansia muciniphila* that does not reach significance with five mice per arm. Increasing replication would be the primary route to resolving this trend. Forthcoming functional profiling (HUMAnN) and the genome-resolved MAG analysis will test whether diet effects are more apparent at the pathway or strain level than at the species-composition level.
+**Overall interpretation.** In this HFD cohort, intermittent fasting did not produce a *statistically resolvable* difference in the fecal microbiome relative to ad-libitum feeding — at the level of community structure, species composition, or metabolic-pathway potential. Importantly, this should be read as an **underpowered result, not as evidence that diet has no effect**: across every layer the estimated effect size is modest but non-zero and directionally coherent (community R² = 0.149, functional R² = 0.155 — i.e. diet accounts for ~15–16% of variance; the *Akkermansia*/biosynthesis trends all point the same way), and a 5-vs-5 design with high inter-individual variability is simply not powered to resolve an effect of this size. The dominant, biologically plausible signal is a fasting-associated enrichment of *Akkermansia muciniphila* with a coherent mild shift toward biosynthetic pathway capacity. We regard these as **real candidate effects worth confirming**, and outline below how a follow-up could be powered to test them. The genome-resolved MAG analysis (Phase 2, in progress) will separately test whether diet effects are more apparent at the strain/genome level than at the species-composition or pathway level.
+
+### 7.1 Statistical power and recommendations for a follow-up study
+
+The recurring theme across all analyses is **low statistical power**, not absence of biological effect. An effect explaining ~15–16% of community/functional variance (R² ≈ 0.15) is, when significant, a publishable microbiome effect; here it falls short of significance only because n = 5/arm against high individual variability leaves little power. A confirmatory study could be designed to resolve these trends by acting on the three levers that drive PERMANOVA / rank-test power:
+
+1. **Increase replication.** This is the single most reliable lever. Roughly doubling to **≈10–12 animals per arm** would substantially raise power for an effect of the observed size; a formal power estimate can be produced from the current variance if a target effect size is agreed.
+2. **Strengthen and standardize the intervention.** A longer or more strictly enforced fasting window widens the AL-vs-IF physiological contrast, enlarging the between-arm effect (R²) rather than only fighting variance. Standardizing the regimen across animals also shrinks within-arm spread.
+3. **Reduce within-arm variance.** Co-house or use cage-/litter-matched littermates to control the strong **cage/coprophagy effect** (in mice the cage is often the single largest source of gut-microbiome variance), and collect stool at a **fixed point in the fasting cycle** so each animal's snapshot is comparable — this matters *more for the functional than the taxonomic layer*, because gene/pathway activity tracks feeding state. The IF arm is already the more homogeneous of the two (within-arm Bray–Curtis 0.256 vs 0.340 for AL), so tightening the **AL arm** in particular should yield the most gain.
+
+**Leverage the existing data at no extra cost:** if the recurring replicate identifiers (e.g. `4_02_25`, `6_05_12`) correspond to cage- or litter-matched pairs across the two arms, a **paired / blocked test** (PERMANOVA with the pair as a stratum, or a paired Wilcoxon) would already recover power from the samples in hand — we can re-run this immediately if the pairing is confirmed. Note also that even with a significant global test, individual pathway/taxon calls face multiple-testing correction and need their own power, so per-feature claims should still be interpreted cautiously.
 
 ## 8. Deliverable Files
 
@@ -123,7 +142,13 @@ custom_research_report_20260718/
 │   ├── braycurtis_distance.tsv
 │   ├── differential_abundance_CORE_bracken.tsv   ← core species tested
 │   └── differential_abundance_ALL_bracken.tsv    ← full table (for reference)
-└── function/                                 ← HUMAnN functional profiling (to be added)
+└── function/                                 ← HUMAnN functional profiling
+    ├── fig6_functional_pcoa.(png|pdf)        ← pathway Bray-Curtis PCoA + PERMANOVA
+    ├── fig7_pathway_differential.(png|pdf)   ← diet-associated pathway trends
+    ├── fig8_top_pathways_heatmap.(png|pdf)   ← top-25 pathway landscape
+    ├── differential_pathways_humann.tsv      ← pathway Wilcoxon/BH results
+    ├── pathway_abundance_relab.tsv           ← MetaCyc pathway relative abundance (all samples)
+    └── genefamilies_cpm.tsv                  ← UniRef90 gene-family abundance (CPM)
 ```
 
 ---
