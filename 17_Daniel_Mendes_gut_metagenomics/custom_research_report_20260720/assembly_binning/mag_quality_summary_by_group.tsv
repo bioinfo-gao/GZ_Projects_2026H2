@@ -1,0 +1,3 @@
+group	total_MAGs	high_quality_gt90comp_lt5cont	medium_quality_50to90comp_lt10cont	low_quality	gtdb_classified	gtdb_unclassified
+AL	95	44	43	8	87	8
+IF	89	35	46	8	80	9
