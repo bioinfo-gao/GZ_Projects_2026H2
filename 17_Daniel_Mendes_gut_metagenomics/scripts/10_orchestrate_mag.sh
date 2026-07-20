@@ -48,6 +48,26 @@ if tmux has-session -t mag17 2>/dev/null; then
     log "WARN: early error keyword in mag_run.log — 需人工核查。"
   fi
 else
-  log "ERROR: mag17 tmux 未起来 — MAG 启动失败，需人工核查 logs/mag_run.log。"
+  log "ERROR: mag17 tmux 未起来 — MAG 启动失败，需人工核查 logs/mag_run.log。exiting watchdog."
+  exit 1
 fi
-log "orchestrator done (MAG launched)."
+
+# ---- 5) Phase-2 常驻看门狗：每 15min 查 mag17 存活 + .nextflow.log mtime 是否推进 ----
+NFLOG="$PROJ/.nextflow.log"
+STALL=0
+while tmux has-session -t mag17 2>/dev/null; do
+  sleep 900
+  tmux has-session -t mag17 2>/dev/null || break
+  now=$(date +%s); mt=$(stat -c %Y "$NFLOG" 2>/dev/null || echo "$now"); age=$(( (now-mt)/60 ))
+  ld=$(uptime | sed 's/.*load average: //')
+  last=$(tail -n 1 "$NFLOG" 2>/dev/null | cut -c1-120)
+  if [ "$age" -ge 30 ]; then
+    STALL=$((STALL+1))
+    log "WARN STALLED: .nextflow.log 停更 ${age}min (连续${STALL}次); load=$ld; last: $last"
+    [ "$STALL" -ge 2 ] && log "ALERT: 疑似卡死(≥30min×2)—人工核查 mag17/是否 futex 死锁/OOM。看门狗继续观察不擅自杀。"
+  else
+    STALL=0
+    log "MAG healthy: nflog 更新于 ${age}min 前; load=$ld"
+  fi
+done
+log "mag17 session ended — MAG 收尾/结束。检查 output_results_mag/ 与 MultiQC。orchestrator+watchdog done."
