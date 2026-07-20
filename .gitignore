@@ -266,3 +266,6 @@ custom_research_report_*/**/*_pathabundance.tsv
 # 8. 临时文件、日志与备份
 # ==========
 **/output_results_mag/Annotation/Prokka/*
+# nf-core/mag GenomeBinning：bins/unbinned contigs + BUSCO/CheckM2/DASTool 原始 QC 产物(合计13G+)恒为大文件，只留 bin_summary.tsv
+**/output_results_mag/GenomeBinning/*
+!**/output_results_mag/GenomeBinning/bin_summary.tsv
