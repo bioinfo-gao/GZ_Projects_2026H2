@@ -44,6 +44,7 @@
   2. **`--checkm2_db` 要 .dmnd 文件不要目录**：我下载 CheckM2 库后目录非空触发该参数，但传的是目录 → `is not a file, but a directory`。
   3. **修复**：所有 pipeline 参数改走 **`-params-file scripts/params_mag.yaml`**（YAML 布尔=真布尔、路径=字符串），`checkm2_db` 指到 `uniref100.KO.1.dmnd`。改后校验通过、进入 FASTP/BUSCO 执行。
   4. **MAG 于 12:23 成功启动**(tmux mag17，机器此时 load 0.5 全空闲)；常驻看门狗 `12_mag_watchdog.sh`(mag_wd) + agent 唤醒哨兵已挂。（脚本原名 11，因与并发会话的 `11_functional_analysis.R` 撞号，改名为 12 恢复编号顺序。）功能下游分析已由并发会话完成并入 `function/`（fig6/7/8）。
+- 2026-07-19 — **新增 §10 经验教训/复盘**：把今天所有坑与方法分类归纳（工程/统计/交付三类）+ 标注各自固化位置（skill/facilities/memory），作为可复用 review。
 - 2026-07-19 — **样本 QC / 离群 / 批次结构分析（用户指令，承接 p=0.22 讨论）**：新增报告 **§6.8** + 两图。① `13_sample_qc_outlier.R` → **fig9 样本-样本 Bray-Curtis 距离热图+聚类**：离群量化 AL_4_02_25(0.479 最甚)、IF_4_03_11(0.317)；聚类不按饮食分组、最紧邻对多为跨臂。② `14_aitchison_pca.R` → **fig10 Aitchison PCA(CLR)**：无饮食分离，但 **PC1(59%) 按 ID 前缀 4_ vs 6_/7_ 分开(非饮食)→ 疑似 cage/litter/batch 结构**。③ 协变量检查：离群与深度(r=-0.11)/host(r=+0.07)无关→**生物学非技术**。④ 敏感性：去离群 between/within 0.99→0.88 不升→**null 稳健**（数据在 `diversity/sample_outlier_*.tsv`）。⑤ 报告加**「Question for the client」**：追问 ID 是否配对/同笼/批次（配对则可零成本重跑 paired test 改结论）。§7.1/Overall interpretation 据此收敛（不是"大效应被藏住"，而是组内异质+隐藏批次为主因）。
 - 2026-07-19 — **报告统计学措辞升级（用户指令）**：把各处非显著结论从光秃 "No/no difference" 改为 **"no statistically reliable difference"**，明确 *underpowered ≠ 证否*；给 effect size（community R²=0.149 / functional R²=0.155 = 解释 ~15–16% 方差）+ power 推断；新增报告 **§7.1 Statistical power & recommendations for a follow-up study**（增样本量/增强度/降组内方差三杠杆 + 配对检验零成本捞 power）。该规范同步进 P17 §下游统计 + 记忆 [[feedback_underpowered_not_null_report_framing]]。（报告仍属 0718 本轮在建，就地编辑不改交付目录日期。）
 
@@ -224,3 +225,27 @@
 - `custom_research_report_YYYYMMDD/`：英文 report（签名 Zhen Gao, PhD, Principal Bioinformatics Scientist, Athenomics）+ 分类/功能/多样性/(MAG) 结果表 + 图。
 - 子目录：`qc/`、`taxonomy/`、`function/`、`diversity/`、`mag/`。
 - Report header 注明 Species=*Mus musculus* (GRCm39) + Tissue=Stool。
+
+---
+
+## 10. 经验教训 / 复盘（2026-07-19 归纳）
+
+> 把今天 proj17 踩的坑与得到的方法分类整理，并标注各自已固化到哪（skill / facilities / memory），方便复用。时序细节见上方 change-log。
+
+### A. 工程 / 流水线
+1. **Nextflow 裸布尔 CLI flag 被当字符串 → nf-schema 全灭**（本机 Nextflow 26.04.4）：`--skip_spades` 等 bare flag 被赋成字符串 `"true"`，严格校验拒绝，参数校验期 abort。**解法：所有参数走 `-params-file`(YAML 真布尔)**。`--flag true` 也没用。`-profile test` 测不出。→ 固化：`facilities/Server/nextflow_pipeline/nextflow_bare_bool_flag_变字符串_坑_0719.md`、skill `/tax-assembly-mag`(详)/`/taxnom`/`/wgs`、memory [[reference_nextflow_bare_bool_string_pitfall]]。
+2. **`--checkm2_db` 要 .dmnd 文件不是目录**（schema `format: file-path`）。**传库前先查 `nextflow_schema.json` 该参数是 `file-path`(给文件) 还是 `path`(给目录)**。
+3. **大文件自动拦截**：50MB `genefamilies_cpm.tsv` 差点入 git。**装 pre-commit hook（>10MB 拒绝 commit，`.githooks/pre-commit`+`core.hooksPath`）+ `.gitignore` 忽略 `*genefamilies*.tsv`**，小结果表不误伤。→ 固化：`/git` skill。教训：靠"每次手动扫大文件"不可靠，要系统自动检测。
+4. **GTDB-Tk r226 实测解压 139G**（skani 占 129G），此前记的 271/102/50G 全错。→ 已订正 skill+memory。**大库体积以磁盘 `du` 实测为准，别沿用记忆值**。
+5. **判断长任务"在跑/健康"别只看 pgrep**：tee 日志被 conda/buffer 吞、僵尸进程误导 → 看**内部 unbuffered log + exit-code marker**（HUMAnN 用 `humann_temp/*.log`+DONE/FAIL；nextflow 用 `.nextflow.log` mtime+Submitted/Completed）。DIAMOND/MEGAHIT **无进度条**，健康看 CPU 满+分块文件滚动+mtime，**别因慢就杀**。
+
+### B. 统计 / 科学解读
+6. **非显著 ≠ 无差异**：非显著但 effect size 非零的结果，写 **"no statistically reliable difference"(underpowered)** + 报 R²/effect size + power 推断 + **下一步实验设计建议**，别写成 null。→ 固化：memory [[feedback_underpowered_not_null_report_framing]]、报告 §7.1。
+7. **真限制常是组内异质性，不只是 n 小**：离群分析（AL_4_02_25 mean-within 0.479、IF_4_03_11 0.317）证明**离群是生物学非技术**（与深度 r=-0.11/host r=+0.07 无关）；**敏感性**：去离群 between/within 0.99→0.88 **不升**→ null 稳健（不是大效应被藏住）。→ 报告 §6.8 + fig9 距离热图。
+8. **宏基因组标准排序是 PCoA(Bray-Curtis) 不是 PCA**（成分数据不宜欧氏 PCA）；要"PCA"就用 **Aitchison PCA(CLR)**。本项目 Aitchison PCA(fig10) 还**暴露 ID 前缀 4_ vs 6_/7_ 沿 PC1(59%) 分开(非饮食)→ 疑似 cage/batch 结构**——排序图能挖出隐藏协变量。
+9. **样本 ID 复现于两臂 → 必须追问客户是否配对/同笼/批次**（配对则 paired/blocked 检验可零成本提功效，甚至改显著性结论）。已写进报告「Question for the client」。
+
+### C. 交付 / 协作
+10. **并发多会话协作**：今天有另一个 agent 会话同跑 proj17（做了 functional 分析）。**脚本编号会撞**（两个 `11_`）→ 改名 `12_` 恢复顺序。多会话并行时注意脚本/文档的编号与编辑冲突。
+11. **图要美观、同风格**（客户是生物学家主要看图）：新图 fig9/fig10 沿用既有 Okabe-Ito + `theme_pub` 风格（AL=#0072B2 / IF=#D55E00）。
+12. **报告仍属本轮在建（0718 交付目录）→ 就地编辑不改目录日期**；若已交付后再改才需 bump 日期（见 [[feedback_never_rename_dated_docs]]）。
