@@ -260,3 +260,9 @@ work_*/
 # 交付目录里的大 HUMAnN/丰度数据表（小的 composition/differential/distance 表仍追踪）
 custom_research_report_*/**/genefamilies*.tsv
 custom_research_report_*/**/*_pathabundance.tsv
+
+
+# ==========================================
+# 8. 临时文件、日志与备份
+# ==========
+**/output_results_mag/Annotation/Prokka/*
