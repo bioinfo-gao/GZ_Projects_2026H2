@@ -44,6 +44,7 @@
   2. **`--checkm2_db` 要 .dmnd 文件不要目录**：我下载 CheckM2 库后目录非空触发该参数，但传的是目录 → `is not a file, but a directory`。
   3. **修复**：所有 pipeline 参数改走 **`-params-file scripts/params_mag.yaml`**（YAML 布尔=真布尔、路径=字符串），`checkm2_db` 指到 `uniref100.KO.1.dmnd`。改后校验通过、进入 FASTP/BUSCO 执行。
   4. **MAG 于 12:23 成功启动**(tmux mag17，机器此时 load 0.5 全空闲)；常驻看门狗 `12_mag_watchdog.sh`(mag_wd) + agent 唤醒哨兵已挂。（脚本原名 11，因与并发会话的 `11_functional_analysis.R` 撞号，改名为 12 恢复编号顺序。）功能下游分析已由并发会话完成并入 `function/`（fig6/7/8）。
+- 2026-07-19 — **样本 QC / 离群 / 批次结构分析（用户指令，承接 p=0.22 讨论）**：新增报告 **§6.8** + 两图。① `13_sample_qc_outlier.R` → **fig9 样本-样本 Bray-Curtis 距离热图+聚类**：离群量化 AL_4_02_25(0.479 最甚)、IF_4_03_11(0.317)；聚类不按饮食分组、最紧邻对多为跨臂。② `14_aitchison_pca.R` → **fig10 Aitchison PCA(CLR)**：无饮食分离，但 **PC1(59%) 按 ID 前缀 4_ vs 6_/7_ 分开(非饮食)→ 疑似 cage/litter/batch 结构**。③ 协变量检查：离群与深度(r=-0.11)/host(r=+0.07)无关→**生物学非技术**。④ 敏感性：去离群 between/within 0.99→0.88 不升→**null 稳健**（数据在 `diversity/sample_outlier_*.tsv`）。⑤ 报告加**「Question for the client」**：追问 ID 是否配对/同笼/批次（配对则可零成本重跑 paired test 改结论）。§7.1/Overall interpretation 据此收敛（不是"大效应被藏住"，而是组内异质+隐藏批次为主因）。
 - 2026-07-19 — **报告统计学措辞升级（用户指令）**：把各处非显著结论从光秃 "No/no difference" 改为 **"no statistically reliable difference"**，明确 *underpowered ≠ 证否*；给 effect size（community R²=0.149 / functional R²=0.155 = 解释 ~15–16% 方差）+ power 推断；新增报告 **§7.1 Statistical power & recommendations for a follow-up study**（增样本量/增强度/降组内方差三杠杆 + 配对检验零成本捞 power）。该规范同步进 P17 §下游统计 + 记忆 [[feedback_underpowered_not_null_report_framing]]。（报告仍属 0718 本轮在建，就地编辑不改交付目录日期。）
 
 ---
