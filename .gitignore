@@ -250,3 +250,13 @@ work_*/
 *.bowtie2out.txt
 *_bowtie2_aligned.tsv
 *.ffn
+
+# ==========================================
+# 7. 大型数据表（交付目录/HUMAnN）—— pre-commit hook 按大小兜底(.githooks/pre-commit)
+# ==========================================
+# HUMAnN gene-family 表恒为数十 MB，任何位置都不入库
+*genefamilies*.tsv
+*_genefamilies.tsv
+# 交付目录里的大 HUMAnN/丰度数据表（小的 composition/differential/distance 表仍追踪）
+custom_research_report_*/**/genefamilies*.tsv
+custom_research_report_*/**/*_pathabundance.tsv
