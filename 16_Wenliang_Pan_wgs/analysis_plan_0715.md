@@ -91,6 +91,22 @@
   优先变异 4294/4342（ClinVar P/LP 235/248）;manta 6349/7209、tiddit 55326/62469、cnvkit CN!=2 段 192/162;
   HLA I 类 A/B/C + II 类 DRB1/DQ/DP。⚠ 教训:交付前自查必须核**结论级**数字(离群的 1.000 一眼可疑)，不只看跑通。
 
+- 2026-07-20 — ⚠ **客户 review 报告后追问 3 项，其中 1 项发现是 6/19 就已答应的 custom 需求被遗漏**：
+  Wenliang review 0717 报告后问 (1) 两样本 shared/unique variant 比对（该需求 6/19 就已与 Jianjun 谈妥、
+  明确是 custom 收费项，但因讨论到交付相隔太久，写报告时未追溯到，遗漏未做——非故意舍弃，是自查疏漏）
+  (2) prioritised 表缺 zygosity 列 (3) SV/CNV 缺 gene-level 注释报告。三项均确认属实（非客户误解）。
+  **处理**：不做全流程重跑，只做补充分析 + 新建 `custom_research_report_20260720_addendum/`（0717 交付目录
+  原样不动）。①比对：限定在已交付的 prioritised（rare+functional）变异集合上做 shared/unique（非全量
+  raw callset——两个不同性别个体比全量 raw 变异会被群体多态性淹没，无意义），shared 2144 / unique_A 2150 /
+  unique_B 2198（prioritised 总数 A 4294 B 4342，与 0717 报告一致）；因是本方疏漏，客户沟通后**该项免费**。
+  ②zygosity：从 annotation VCF 的 GT 字段直接推导（het 7565 / hom 1071），无额外收费。③SV/CNV 注释：
+  轻量级 bedtools+GENCODE v45 gene-overlap（非 AnnotSV 级临床注释），Manta PASS overlap 3815/6349、
+  4367/7209，CNVkit 非二倍体段 overlap 142/192、123/162；预估 1h/$120，已告知客户。
+  **踩坑**：GT 查找脚本初版按逗号拆分 multi-allelic ALT 与 prioritised.tsv 原始未拆分的 ALT 字符串对不上
+  → 408 行 zygosity 缺失；改为不拆分、按原始 ALT 整串做 key 后归零。GT `1/2` 这类 multi-allelic het 也需
+  通用化判断逻辑（两等位不同即 het），不能只硬编码 `0/1`/`1/1`。脚本：`scripts/11_sv_cnv_gene_overlap.py`、
+  `scripts/12_zygosity_and_comparison.py`；说明文档 `custom_research_report_20260720_addendum/README_addendum_0720.md`。
+
 ---
 
 ## 1. Sample information 与 input data volume
