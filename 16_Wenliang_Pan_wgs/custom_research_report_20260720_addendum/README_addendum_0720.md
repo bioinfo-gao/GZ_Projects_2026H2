@@ -9,7 +9,7 @@
 > re-analysis** — the original delivery folder and every file in it are unchanged. Nothing here
 > alters the conclusions already reported on 2026-07-17; it adds detail that was requested afterward.
 
-## 1. Comparison analysis: shared vs. sample-specific variants (Sample_A vs Sample_B)
+## x
 
 **File:** `comparison_A_vs_B/prioritised_variant_comparison_A_vs_B.tsv`
 
@@ -24,11 +24,11 @@ let us know and we can generate that separately.
 
 **Result:**
 
-| | Sample_A | Sample_B |
-| :--- | :---: | :---: |
-| Prioritised variants (total) | 4,294 | 4,342 |
-| **Shared** with the other sample | 2,144 | 2,144 |
-| **Unique** to this sample | 2,150 | 2,198 |
+|                                        | Sample_A | Sample_B |
+| :------------------------------------- | :------: | :------: |
+| Prioritised variants (total)           |  4,294  |  4,342  |
+| **Shared** with the other sample |  2,144  |  2,144  |
+| **Unique** to this sample        |  2,150  |  2,198  |
 
 **Important context — genetic sex.** As already reported in §6 of the main report, Sample_A is
 genetically male (46,XY) and Sample_B is genetically female (46,XX): they are two distinct
