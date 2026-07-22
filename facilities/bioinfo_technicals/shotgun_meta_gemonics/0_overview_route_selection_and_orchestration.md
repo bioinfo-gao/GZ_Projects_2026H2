@@ -17,22 +17,26 @@
 
 ---
 
-## 决策：这个项目跑哪几条？
+## 决策：这个项目跑哪几条？（MANDATORY — user directive 2026-07-21）
 
 ```
-送样单 "std analysis"（标准 shotgun）
-   └─ 业界惯例 = 组成 + 多样性 + 功能（assembly-free）→ 跑 /taxnom + /tax-functional-humann
-                                                          （这就完整覆盖 std 下单内容）
-   └─ MAG 是 advanced/增值（单独报价）→ 仅在以下情况加做：
-        · 客户/你要基因组级证据、发现新/未培养菌、pangenome
-        · 想吃满机器（有空闲算力）
-      且数据够深：per-sample ≥10 Gbp 才稳出高质量 MAG；
-      深度薄（如 ~4 Gbp/样本）→ 必须 group co-assembly（同臂合并）提升低丰度菌信号，
-      MAG 天然是"二期增值"定位，不是回答主问题的入口。
+任何 shotgun 宏基因组项目
+   └─ Phase 1 assembly-free = 组成 + 功能 → 默认自动做 /taxnom + /tax-functional-humann，
+      两者捆绑为 Phase 1 的标准交付，不是"按需附加"。
+      **除非用户明确说不做功能（"不要HUMAnN"/"只要taxonomy"这类），否则 HUMAnN 一律跟上。**
+      客户送样单里较窄的措辞（如只写"taxonomic profiling"）不构成跳过功能的理由——
+      默认判据是"用户（Gao）有没有明确说不做"，不是"客户报价单写了什么"。拿不准就两条都跑，
+      而不是回退到只做组成再等着被问。
+   └─ Phase 2 assembly-based MAG = 永远不自动跑，等 Gao 看完 Phase 1 数据/结构后明确批准。
+      Phase 1 交付完成时必须主动告知 Gao"Phase 2 MAG 已具备条件，等你批准"——不是等他来问。
 ```
 
-- **组成 + 功能** 覆盖绝大多数干预对照类问题（IF vs AL、疾病 vs 健康…）的主诉求。
-- **MAG** gated 在"值不值得 + 深度够不够 + 有没有算力"三问之后，且通常等前两条出完主交付、机器空出来再放行（组装/GTDB-Tk 比 HUMAnN 更吃 CPU/RAM，别叠加）。
+- **组成 + 功能** 是 Phase 1 assembly-free 的标准组合，覆盖绝大多数干预对照类问题（IF vs AL、疾病 vs
+  健康…）的主诉求，默认一起跑。
+- **MAG** 永远 gated 在人工批准之后，且通常等 Phase 1 出完主交付、机器空出来再放行（组装/GTDB-Tk 比
+  HUMAnN 更吃 CPU/RAM，别叠加）。深度判据（per-sample ≥10 Gbp 才稳出高质量 MAG；深度薄如 ~4 Gbp/样本
+  → 必须 group co-assembly 提升低丰度菌信号）仍然适用，只是现在触发点是"批准之后"而非"要不要做"的
+  前置筛选。
 
 ---
 
@@ -45,11 +49,12 @@ Phase 1  ── /taxnom (taxprofiler)  → QC/去宿主 + Kraken2/Bracken + Meta
    │
 Phase 1b ── /tax-functional-humann (HUMAnN)  ← 复用 Phase 1 的 clean reads
    │            └─ diamond ~8h/样本、3 并行；功能表 join/renorm/regroup → 补进同一交付
-   │            └─ 【与 Phase 1 一起构成 std analysis 完整交付】
+   │            └─ 【默认自动跟上，与 Phase 1 一起构成"Phase 1 assembly-free"完整交付——
+   │                不是可选项，除非 Gao 明确说不做】
    │
-   ▼  （用户 review Phase 1 主交付 + 决定是否放行 MAG）
+   ▼  Phase 1 交付完成 → 主动告知 Gao：Phase 2 MAG 已具备条件，等待批准（不是等他来问）
    │
-Phase 2  ── /tax-assembly-mag (nf-core/mag)  ← 仅获批 + 深度够 + 有算力才跑
+Phase 2  ── /tax-assembly-mag (nf-core/mag)  ← 永远等 Gao 明确批准才跑，不自动触发
                 └─ 先备好 GTDB r226（~271GB）；group co-assembly；GTDB 分类 + bin 丰度
 ```
 
