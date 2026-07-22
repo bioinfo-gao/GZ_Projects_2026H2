@@ -12,7 +12,7 @@
 | Project ID | QTE_26_06_25_001_Daniel_Mendes |
 | Species | *Mus musculus*（host genome GRCm39） |
 | Tissue/Material | Stool（fecal pellets） |
-| 研究设计 | HFD（高脂饮食）小鼠，case-control：**AL**（ad libitum，自由采食）vs **IF**（intermittent fasting，间歇禁食），每臂 n=5，共 10 样本 |
+| 研究设计 | **HFD**（High-Fat Diet，高脂饮食）小鼠，case-control：**AL**（ad libitum，自由采食）vs **IF**（intermittent fasting，间歇禁食），每臂 n=5，共 10 样本 |
 | 测序平台 | Illumina NovaSeq X Plus，PE150，shotgun metagenomics |
 | 数据量 | 单样本 17.2–26.5 M read pairs（均值 22.8M），**合计 227.5 M read pairs（~68 Gbp）**。原 plan 用 gzip 文件大小反推 ~13M/样本，实测几乎翻倍，已在 plan 文档订正回填 |
 | Host content | 2.2%–18.2%（均值 ~6.8%），符合粪便样本预期，微生物信号充足 |
@@ -24,8 +24,8 @@
 
 | Phase | 路线 | Pipeline | 交付日期 | 交付目录 |
 | :--- | :--- | :--- | :---: | :--- |
-| Phase 1 | 组成 taxonomy + diversity | nf-core/taxprofiler 2.0.1（Kraken2+Bracken / MetaPhlAn 4） | 2026-07-18 | `custom_research_report_20260718/` |
-| Phase 1b | 功能 function | HUMAnN 3.9（mag_biobakery env） | 2026-07-19（并入 0718 目录 `function/`） | 同上 |
+| Phase 1 | 组成 taxonomy + diversity | nf-core/taxprofiler 2.0.1（Kraken2+Bracken / MetaPhlAn 4） | 分析完成 2026-07-18 | `custom_research_report_20260722/`（原 `_20260718/`，0722 因发出前 review 措辞改动而改名，见更新记录） |
+| Phase 1b | 功能 function | HUMAnN 3.9（mag_biobakery env） | 分析完成 2026-07-19（并入同目录 `function/`） | 同上 |
 | Phase 2 | 基因组 MAG | nf-core/mag 5.4.2 | 2026-07-20 | `custom_research_report_20260720/` |
 
 编排原则：Phase1 → Phase1b 复用去宿主 reads，构成标准分析完整交付；Phase2 是增值项，在数据深度评估（~4 Gbp/样本，不足以单样本组装，改为按 diet arm group co-assembly）确认后才开跑，且未与 HUMAnN 满载线程叠跑。
@@ -84,10 +84,10 @@
 
 | 交付轮次 | 目录 | 内容 |
 | :--- | :--- | :--- |
-| 第一轮（2026-07-18） | `custom_research_report_20260718/` | 报告 + `qc/`（multiqc）+ `taxonomy/`（组成图表+丰度表）+ `diversity/`（alpha/beta/差异丰度/离群样本分析）+ `function/`（HUMAnN pathway 结果） |
+| 第一轮（分析完成 2026-07-18，报告 0722 发出前 review 改名） | `custom_research_report_20260722/`（原 `_20260718/`） | 报告 + `qc/`（multiqc）+ `taxonomy/`（组成图表+丰度表）+ `diversity/`（alpha/beta/差异丰度/离群样本分析）+ `function/`（HUMAnN pathway 结果） |
 | 第二轮（2026-07-20） | `custom_research_report_20260720/` | 报告 + `qc/`（MAG pipeline multiqc）+ `assembly_binning/`（final_MAG_catalog.tsv + 质量分布图 + 分类组成图） |
 
-两轮目录均保持原封不动（deliverable 不可改写原则），互为补充阅读（0720 报告 Scope 声明已注明）。
+**两轮均尚未实际发给客户**（截至 0722，用户明确表示"未全面审查完毕不发出"）。第一轮因发出前 review 时改进了 §7.1/Key Findings 的措辞（"ask"→"suggest" + 补充配对分析为何能还原真实处理效果的解释），按"发出前 review 原地改+改名到今天"规则改名为 `_20260722/`；第二轮尚未审阅，暂未改动/改名。两轮目录一旦实际发出，即视为冻结的历史记录，之后如需新分析则另开新日期目录，不再改写。
 
 ## 9. 关键技术坑与经验教训（内部记录，不对客户展示）
 
@@ -107,3 +107,8 @@
 ## 更新记录
 
 - 2026-07-20 — 文档创建，汇总 Phase1（组成+多样性）、Phase1b（功能 HUMAnN）、Phase2（MAG）全部结果。
+- 2026-07-21 — §1 补全 HFD 缩写全称（High-Fat Diet）。
+- 2026-07-22 — 第一轮报告发出前 review：改进 §7.1/Key Findings 措辞（"ask the client"→更礼貌的
+  "suggest"，并给实验学家补充"为什么配对分析能还原真实处理效果"的解释）；因未实际发出，原地改+
+  文件夹/报告文件改名 `_20260718/…_0718.md` → `_20260722/…_0722.md`（发出前 review 规则）。同步修正
+  0720 报告里指向旧路径的交叉引用。§2/§8 表格路径同步更新。

@@ -8,7 +8,7 @@
 **Tissue / Material:** Stool (fecal pellets)
 **Sequencing:** Illumina NovaSeq X Plus, paired-end 150 bp, shotgun metagenomics
 
-> **Scope of this report.** This document covers **Phase 2: genome-resolved analysis** — de novo co-assembly, binning, quality control, and taxonomic classification of metagenome-assembled genomes (MAGs). It extends the **Phase 1** deliverable (`custom_research_report_20260718/Daniel_Mendes_gut_metagenomics_0718.md`), which covers taxonomic composition, diversity, and HUMAnN functional pathway profiling from the same ten samples. The two reports are complementary and should be read together; Phase 1 is not repeated here except where needed to interpret Phase 2 findings.
+> **Scope of this report.** This document covers **Phase 2: genome-resolved analysis** — de novo co-assembly, binning, quality control, and taxonomic classification of metagenome-assembled genomes (MAGs). It extends the **Phase 1** deliverable (`custom_research_report_20260722/Daniel_Mendes_gut_metagenomics_0722.md`), which covers taxonomic composition, diversity, and HUMAnN functional pathway profiling from the same ten samples. The two reports are complementary and should be read together; Phase 1 is not repeated here except where needed to interpret Phase 2 findings.
 
 ---
 

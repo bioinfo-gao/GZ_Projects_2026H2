@@ -53,6 +53,16 @@
   3. MIMAG 分级（CheckM2 口径，非 DASTool 自身打分）：184 个非冗余 genome 中 High 79 / Medium 89 / Low 16；GTDB 分类 167/184(91%)。`scripts/16_mag_summary_plots.R` 出 fig11(completeness-contamination 散点)/fig12(门水平组成柱状图)，风格延续 fig1-10(Okabe-Ito AL/IF 配色)。
   4. **关键发现**：*Akkermansia muciniphila* 仅在 group-AL 组装出 genome(Medium quality,100%完整/5.18%污染)，group-IF 未成功分箱——尽管 Phase 1 read 丰度 IF 更高(64.4% vs 48.7%)。查该 bin 跨 AL 5 只小鼠的 depth 呈 31×–238× 8 倍差，判断为个体/株系异质性导致该组装图局部碎片化，非"IF 真的没有"；已写入报告作为"两种方法互补而非矛盾"的诚实讨论点，而非掩盖。`Oscillibacter`/`Paramuribaculum` 两个 Phase 1 提及的属在 MAG 属级重现，属交叉验证。
   5. **交付**：新建 `custom_research_report_20260720/`(0718 交付目录完全不动，按"新分析→新日期新目录"规则)，含 `assembly_binning/`(final_MAG_catalog.tsv + quality summary + fig11/12) + `qc/multiqc_report_mag.html` + 顶层报告 `Daniel_Mendes_gut_metagenomics_0720.md`(8 节标准结构，Scope 说明本报告为 Phase 2、与 0718 互补阅读)。至此**三路线(组成/功能/MAG)全部交付完毕**。
+- 2026-07-21 — **补建共享 mouse Bowtie2 去宿主索引**（§7 资源表 0717 原记 ❌ 待建，本条补上并订正状态）：`regular_bioinfo` env 无 bowtie2；`mag_biobakery` 有但 v2.2.3(2014，无 `--threads`，太老)，project 18 同日也踩到同一个坑。改用 taxprofiler 实跑时缓存下来的 singularity 镜像（`depot.galaxyproject.org-singularity-bowtie2-2.4.2--py38h1c8e9b9_1.img`）跑 `bowtie2-build --threads 20`，tmux 后台耗时 ~46min 构建成功，6 个索引文件（`GRCm39.{1,2,3,4,rev.1,rev.2}.bt2`）已落盘 `/Work_bio/references/Mus_musculus/GRCm39/mouse_gencode_M35/bowtie2_index/`，供本项目及后续小鼠项目复用。脚本 `scripts/2_prebuild_host_index.sh` 已同步改为 singularity 方式。此坑已归档进跨项目速查表 `projects_2026M7/facilities/software_pitfalls/bowtie2.md`。
+- 2026-07-22 — **第一轮报告发出前 review，改名 `_0718`→`_0722`**：确认 0718/0720 两轮报告**均尚未实际
+  发给客户**（用户："我没有全面审查完毕之外不会发出去"）。改进第一轮报告 §7.1/Key Findings 里关于
+  replicate-ID 配对的措辞——"We ask the client to clarify" 改为更礼貌的 "We would suggest confirming"，
+  并补充一段面向实验学家的解释（为什么配对/blocked 分析能把个体/cage 噪音减掉、还原真实的饮食处理
+  效果，类比 paired vs unpaired t-test）。因未实际发出，按"发出前 review→原地改+改名到今天"规则，
+  `custom_research_report_20260718/` → `_20260722/`，`Daniel_Mendes_gut_metagenomics_0718.md` →
+  `_0722.md`（内部 Report Date/签名日期同步改为 0722）。**旧的 `_0718` 路径不再存在**——同步修正了
+  0720 报告里指向它的交叉引用，以及 `docs/P17_internal_results_summary_0720.md` 里的路径表。上面
+  0718/0719 各条历史日志本身**不改**（保留当时的真实记录），仅此条补记后续改名事件。
 
 ---
 
@@ -212,7 +222,7 @@
 | MetaPhlAn CHOCOPhlAn SGB vJan25 | ✅ | `/Work_bio/references/Metagenomics/metaphlan/` |
 | HUMAnN ChocoPhlAn + UniRef | ✅ | `/Work_bio/references/Metagenomics/humann/` |
 | mouse GRCm39 host fasta | ✅ | `/Work_bio/references/Mus_musculus/GRCm39/mouse_gencode_M35/` |
-| mouse Bowtie2 去宿主索引 | ❌ 待建 | `.../mouse_gencode_M35/bowtie2_index/`（脚本 2） |
+| mouse Bowtie2 去宿主索引 | ✅ 已建（0721，共享复用） | `/Work_bio/references/Mus_musculus/GRCm39/mouse_gencode_M35/bowtie2_index/GRCm39.{1,2,3,4,rev.1,rev.2}.bt2`（脚本 2，改用 singularity 容器内 bowtie2 2.4.2 建，见坑记录） |
 | mag_biobakery env / nf-core/mag 5.4.2 | ✅ | `mag_biobakery` conda env（nextflow 26.04.4） |
 | BUSCO bacteria_odb10 | ✅ | `/Work_bio/references/Metagenomics/busco/` |
 | GTDB-Tk r226 (~139G) | ✅ 已就位 | `/Work_bio/references/Metagenomics/gtdbtk/release226/`（仅 MAG 获批才拉） |

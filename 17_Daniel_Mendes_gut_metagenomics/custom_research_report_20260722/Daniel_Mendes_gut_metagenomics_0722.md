@@ -1,7 +1,7 @@
 # Shotgun Metagenomics of Mouse Gut Microbiome under Ad Libitum vs Intermittent Fasting (High-Fat Diet)
 
 **Project:** QTE_26_06_25_001_Daniel_Mendes
-**Report Date:** 2026-07-18
+**Report Date:** 2026-07-22
 **Prepared by:** Zhen Gao, PhD, Principal Bioinformatics Scientist, Athenomics
 **Analysis Platform:** Linux HPC server
 **Species:** *Mus musculus* (host genome GRCm39)
@@ -27,7 +27,7 @@
 - **No taxon reaches statistical significance after multiple-testing correction.** Among 60 core abundant species, none passed FDR < 0.05. Suggestive (non-significant) trends: *Lactococcus* / *Lactobacillus johnsonii* higher in AL; *Akkermansia* and *Paramuribaculum* higher in IF.
 - **Alpha diversity trends slightly higher in AL** across all three indices (Observed, Shannon, Simpson) but not significantly (*p* = 0.31–0.42). IF mice were more homogeneous among themselves (within-group distance 0.256 vs 0.340 for AL).
 - **Functional (metabolic pathway) profiles agree with the taxonomic picture: no *statistically resolvable* diet effect (underpowered, not a demonstrated null).** HUMAnN pathway profiles do not separate AL from IF (PERMANOVA R² = 0.155 — diet still accounts for ~16% of functional variance — *p* = 0.22), and no pathway is significant after FDR correction. The consistent (non-significant) trend is a mild shift toward higher biosynthetic capacity under IF (amino-acid, nucleotide, and peptidoglycan biosynthesis) versus slightly higher glycolysis under AL.
-- **The real limiter is within-group heterogeneity, likely with a hidden batch/cage structure.** Sample-to-sample variation within each arm rivals the between-arm difference; two animals (AL_4_02_25, IF_4_03_11) are clear biological outliers (not technical — unrelated to depth/host content), and removing them does *not* reveal a diet effect (§6.8). A compositional PCA (Fig 10) shows the main axis of variation tracks the **replicate-ID prefix (`4_…` vs `6_…`/`7_…`), not diet** — the signature of a cage/litter/batch/timepoint effect. **We ask the client to clarify what these identifiers encode** (§7.1): if they mark matched pairs, a paired analysis could materially change the verdict at no extra cost.
+- **The real limiter is within-group heterogeneity, likely with a hidden batch/cage structure.** Sample-to-sample variation within each arm rivals the between-arm difference; two animals (AL_4_02_25, IF_4_03_11) are clear biological outliers (not technical — unrelated to depth/host content), and removing them does *not* reveal a diet effect (§6.8). A compositional PCA (Fig 10) shows the main axis of variation tracks the **replicate-ID prefix (`4_…` vs `6_…`/`7_…`), not diet** — the signature of a cage/litter/batch/timepoint effect. **We would suggest confirming with the client what these identifiers encode** (§7.1): if they mark matched pairs, a paired analysis could materially change the verdict — using the same samples already collected, at no extra cost.
 
 ## 3. Sample Information
 
@@ -131,18 +131,21 @@ The recurring theme across all analyses is **limited power driven by large withi
 2. **Strengthen and standardize the intervention.** A longer or more strictly enforced fasting window widens the AL-vs-IF physiological contrast, enlarging the between-arm effect (R²) rather than only fighting variance. Standardizing the regimen across animals also shrinks within-arm spread.
 3. **Reduce within-arm variance.** Co-house or use cage-/litter-matched littermates to control the strong **cage/coprophagy effect** (in mice the cage is often the single largest source of gut-microbiome variance), and collect stool at a **fixed point in the fasting cycle** so each animal's snapshot is comparable — this matters *more for the functional than the taxonomic layer*, because gene/pathway activity tracks feeding state. The IF arm is already the more homogeneous of the two (within-arm Bray–Curtis 0.256 vs 0.340 for AL), so tightening the **AL arm** in particular should yield the most gain.
 
-> **⚑ Question for the client (needed to finalize this interpretation and design the follow-up).**
-> The replicate identifiers recur across both arms (`4_02_25`, `4_03_11`, `6_05_12`, `6_05_22`, `7_06_12` each appear as one AL and one IF animal), and in the CLR-PCA (Figure 10) the leading digit (`4_…` vs `6_…`/`7_…`) — **not diet** — drives the main axis of variation. This is the signature of a **cage / litter / batch / collection-timepoint** structure. Please tell us **what these identifiers encode**:
-> - If they mark **cage-/litter-/timepoint-matched pairs** across arms, we will immediately re-analyse with a **paired / blocked design** (PERMANOVA with the pair as a stratum; paired Wilcoxon) — this recovers power from the *existing* samples at no extra cost, and could change the significance verdict.
-> - If they mark a **batch/cage** that is *not* matched to diet, we can add it as a covariate to remove that nuisance variance.
-> - Either way it directly informs the follow-up design (matched cages, balanced batches).
+> **⚑ A suggestion, to help finalize this interpretation and design the follow-up study.**
+> The replicate identifiers recur across both arms (`4_02_25`, `4_03_11`, `6_05_12`, `6_05_22`, `7_06_12` each appear as one AL and one IF animal), and in the CLR-PCA (Figure 10) the leading digit (`4_…` vs `6_…`/`7_…`) — **not diet** — drives the main axis of variation. This is the signature of a **cage / litter / batch / collection-timepoint** structure. We would suggest confirming **what these identifiers represent**, since the answer directly affects how much of the diet effect this dataset is able to reveal.
 >
-> Note: even with a significant global test, individual pathway/taxon calls still face multiple-testing correction and need their own power, so per-feature claims should be interpreted cautiously.
+> **Why this matters.** An unpaired, two-independent-group comparison (the design used throughout this report) treats every AL mouse and every IF mouse as unrelated observations pooled into two bins — so any consistent baseline difference between individual animals or cages, unrelated to diet, gets counted as "noise" that a real diet effect has to rise above before it can be called significant. A **paired or blocked analysis** instead compares each matched animal/cage/timepoint to its own counterpart first, and only then asks about the diet difference between those matched pairs — the same logic, and the same gain in sensitivity, as running a paired *t*-test instead of an unpaired one on the same data. Because Figure 10 shows that individual/cage identity — not diet — is already the single largest source of variation in this dataset, it is quite plausible that a real but modest diet effect (every layer we tested here estimates it at roughly R² ≈ 0.15, i.e. diet explains ~15% of the variance) is currently being swamped by exactly this animal-to-animal noise, which is precisely what a paired design would remove. In short: if these identifiers do mark matched pairs, re-analysing as paired data would let us see the diet effect on its own terms, rather than through the "fog" of individual variation — potentially recovering a real result from the samples already in hand, not from collecting anything new.
+>
+> - If these identifiers mark **cage-/litter-/timepoint-matched pairs** across arms, we would suggest re-analysing with a **paired / blocked design** (PERMANOVA with the pair as a stratum; paired Wilcoxon) — this recovers statistical power from the *existing* samples at no extra cost, and could materially change the significance verdict.
+> - If they instead mark a **batch/cage** that is *not* matched to diet, we can add it as a covariate to remove that nuisance variance.
+> - Either way, the answer directly informs the design of a follow-up study (matched cages, balanced batches).
+>
+> Note: even with a significant global test, individual pathway/taxon calls would still face multiple-testing correction and need their own power, so per-feature claims should still be interpreted cautiously.
 
 ## 8. Deliverable Files
 
 ```
-custom_research_report_20260718/
+custom_research_report_20260722/
 ├── Daniel_Mendes_gut_metagenomics_0718.md   ← this report
 ├── qc/
 │   └── multiqc_report.html                  ← per-sample QC (fastp, FastQC, host removal, classifier stats)
@@ -176,4 +179,4 @@ custom_research_report_20260718/
 
 ---
 
-*Prepared by Zhen Gao, PhD, Principal Bioinformatics Scientist, Athenomics — 2026-07-18*
+*Prepared by Zhen Gao, PhD, Principal Bioinformatics Scientist, Athenomics — 2026-07-22*
