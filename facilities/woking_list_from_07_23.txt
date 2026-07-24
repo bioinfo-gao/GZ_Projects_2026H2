@@ -22,7 +22,7 @@ Summarized the analysis results into a final report.
 Set up and monitored the RNA-seq data processing pipeline for 24 mouse samples.
 
 5. Client Communication & Methodology Explanation (4 Hours)
-Conducted extensive email communication to address and resolve complex technical questions from multiple clients.
+Conducted extensive email communications to address and resolve complex technical questions from multiple clients.
 
 6. Methodology & Workflow Setup (3 Hours)
 Iteratively refined and significantly improved the sample submission table to streamline future workflows.
