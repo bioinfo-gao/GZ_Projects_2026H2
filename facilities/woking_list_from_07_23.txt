@@ -31,7 +31,7 @@ Iteratively refined and significantly improved the sample submission table to st
 7. Internal Strategy & Project Management (1.5 Hours)
 Participated in extensive internal discussions regarding project prioritization, server performance, and workload outsourcing.
 Ranked and prioritized all current projects based on urgency and resources.
-Reported on computational performance and estimated timelines for each project/sample for diffeent assay.
+Reported on computational performance and estimated timelines for each project/sample for different assays.
 Continuously coordinated and monitored dropbox data availability for upcoming tasks.
 
 8. System Monitoring & Data Management (1 Hour)
