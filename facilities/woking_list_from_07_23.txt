@@ -1,0 +1,42 @@
+===============================================================================================================================================================================================
+Weekly Work Report
+Period: July 16, 2026 – July 23, 2026
+Prepared by: Gao Zhen
+Total Billable Hours: 23 Hours
+
+1. WGS Project Finished — Wenliang Pan (2 Hours)
+Final data interpretation and report generation.
+Further muataion unification and differences between samples.
+
+2. Daniel_Mendes_gut_metagenomics Mapping and assembly Metagenomics (12 Hours)
+Setup and Finished shotgun metagenomics taxonomic classification
+Setup and Finished shotgun function annoation 
+Setup and Finished shotgun metagenomics de novo assembly
+Constantly monitoring running status and performance.
+Summarize the complex datasets into 2 reports. 
+
+3. Pengpeng Zhou gut_metagenomics Mapping based Metagenomics (2 Hours)
+Setup and Finished shotgun metagenomics taxonomic classification
+Setup and Finished shotgun function annoation 
+Summarize results into the report. 
+
+4. RNA-seq Lijian Wu (1.5 Hours)
+Monitor and setup Lijian Wu (mouse) RNAseq has 24 samples  
+
+5. Client Communication & Method explaination (4 Hours)
+Conducted extensice Email communiation for client complex technical questions from multiple customers.
+
+6. Methodology setup (3 Hours)
+Extensive and Iterative improvement of the sample submission table
+
+7. Extensive interanl discussion about project priority server performance and workload outsource (1.5 Hours)
+Rank all current projects and prioritize them.
+Report the time and performance of each project/samples.
+Constantly asking and monitoring the data availability
+
+8. Monitoring the system and move the data (1 Hours)
+monitoring the syetem for resource and performance
+move 3T data from sold disk to external hard disk
+
+Total Hours Worked: 23 Hours
+Date of Submission: July 23, 2026
