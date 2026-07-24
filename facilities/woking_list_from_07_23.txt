@@ -2,41 +2,40 @@
 Weekly Work Report
 Period: July 16, 2026 – July 23, 2026
 Prepared by: Gao Zhen
-Total Billable Hours: 23 Hours
+Total Billable Hours: 27 Hours
 
-1. WGS Project Finished — Wenliang Pan (2 Hours)
-Final data interpretation and report generation.
-Further muataion unification and differences between samples.
+1. WGS Project – Wenliang Pan (2 Hours)
+Completed final data interpretation and report generation.
+Conducted mutation harmonization and comparative analysis of variants across samples.
 
-2. Daniel_Mendes_gut_metagenomics Mapping and assembly Metagenomics (12 Hours)
-Setup and Finished shotgun metagenomics taxonomic classification
-Setup and Finished shotgun function annoation 
-Setup and Finished shotgun metagenomics de novo assembly
-Constantly monitoring running status and performance.
-Summarize the complex datasets into 2 reports. 
+2. Shotgun Metagenomics (Mapping & De Novo Assembly) – Daniel Mendes (12 Hours)
+Configured and completed taxonomic classification and functional annotation pipelines.
+Successfully executed de novo assembly for the shotgun metagenomics data.
+Continuously monitored pipeline running status and computational performance.
+Summarized the complex datasets into two comprehensive analytical reports.
 
-3. Pengpeng Zhou gut_metagenomics Mapping based Metagenomics (2 Hours)
-Setup and Finished shotgun metagenomics taxonomic classification
-Setup and Finished shotgun function annoation 
-Summarize results into the report. 
+3. Shotgun Metagenomics (Mapping-based) – Pengpeng Zhou (2 Hours)
+Configured and completed taxonomic classification and functional annotation.
+Summarized the analysis results into a final report.
 
-4. RNA-seq Lijian Wu (1.5 Hours)
-Monitor and setup Lijian Wu (mouse) RNAseq has 24 samples  
+4. RNA-seq Analysis – Lijian Wu (1.5 Hours)
+Set up and monitored the RNA-seq data processing pipeline for 24 mouse samples.
 
-5. Client Communication & Method explaination (4 Hours)
-Conducted extensice Email communiation for client complex technical questions from multiple customers.
+5. Client Communication & Methodology Explanation (4 Hours)
+Conducted extensive email communication to address and resolve complex technical questions from multiple clients.
 
-6. Methodology setup (3 Hours)
-Extensive and Iterative improvement of the sample submission table
+6. Methodology & Workflow Setup (3 Hours)
+Iteratively refined and significantly improved the sample submission table to streamline future workflows.
 
-7. Extensive interanl discussion about project priority server performance and workload outsource (1.5 Hours)
-Rank all current projects and prioritize them.
-Report the time and performance of each project/samples.
-Constantly asking and monitoring the data availability
+7. Internal Strategy & Project Management (1.5 Hours)
+Participated in extensive internal discussions regarding project prioritization, server performance, and workload outsourcing.
+Ranked and prioritized all current projects based on urgency and resources.
+Reported on computational performance and estimated timelines for each project/sample for diffeent assay.
+Continuously coordinated and monitored dropbox data availability for upcoming tasks.
 
-8. Monitoring the system and move the data (1 Hours)
-monitoring the syetem for resource and performance
+8. System Monitoring & Data Management (1 Hour)
+Monitored system resources and server performance to ensure optimal computing.
 move 3T data from sold disk to external hard disk
 
-Total Hours Worked: 23 Hours
+Total Hours Worked: 27 Hours
 Date of Submission: July 23, 2026
