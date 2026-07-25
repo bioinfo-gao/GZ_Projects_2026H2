@@ -63,6 +63,19 @@
   `_0722.md`（内部 Report Date/签名日期同步改为 0722）。**旧的 `_0718` 路径不再存在**——同步修正了
   0720 报告里指向它的交叉引用，以及 `docs/P17_internal_results_summary_0720.md` 里的路径表。上面
   0718/0719 各条历史日志本身**不改**（保留当时的真实记录），仅此条补记后续改名事件。
+- 2026-07-24 — **客户 0724 回信澄清"cage-pooled"设计，触发新项目 `21_Daniel_Mendes_gut_meta_redesign`**：
+  Daniel 说明动物群养(3只/笼)、粪便按笼采集，"4/6/7"是不同笼在不同时间点的独立池样（非同一动物重复采样）；
+  要求按 Day-14/Day0/Day+14 三个时间点做 intragroup 时序 + intergroup 同日比较，取代原 AL(n=5) vs IF(n=5)
+  两组独立设计。因对数据结构的整体理解改变，**新开项目 21** 承接这轮重新分析，与本项目(17)紧密关联但独立编号
+  （P17 本身不改动/不重跑）。**Project 21 通过符号链接复用本项目以下产出，未重新计算**（分组变了但每样本的
+  比对/物种谱/功能谱/MAG本身与分组无关，无需重跑）：`output_results/`(taxprofiler：fastp/fastqc/kraken2/
+  bracken/metaphlan/multiqc)、`humann_merged/`(功能通路)、`output_results_mag/`(MAG 组装分箱，**注意**：
+  `coassemble_group: true`，MAG 是 AL/IF 臂级共组装，非按天/笼分层，故 MAG 层在 project 21 里仍只能给出
+  arm-level 结论，无法下沉到 per-day)、两轮交付目录（`custom_research_report_20260720/` +
+  `_mag_20260721/`）、`docs/`(本文档+internal summary)、`samplesheet_taxprofiler.csv`。符号链接位于
+  `projects_2026M7/21_Daniel_Mendes_gut_meta_redesign/reused_data/`，命名遵循
+  `sLk_of_<原文件/目录名>_in_project17` 规范。需要重新计算的只是**下游统计/出图层**（按新的 6 组比较
+  重新做 alpha/beta diversity、differential abundance、functional pathway 检验），详见 P21 plan。
 
 ---
 
